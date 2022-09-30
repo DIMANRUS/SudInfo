@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SudInfo.WPF"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:pages="clr-namespace:SudInfo.WPF.Pages"
         mc:Ignorable="d"
         Title="Суд Инфо 1.0.0"
         MinHeight="700"
@@ -25,11 +26,16 @@
                 <Setter Property="TextAlignment"
                         Value="Center" />
             </Style>
+            <Style TargetType="{x:Type Frame}">
+                <Setter Property="Margin"
+                        Value="10" />
+            </Style>
         </ResourceDictionary>
     </Window.Resources>
     <TabControl materialDesign:ColorZoneAssist.Mode="Standard"
                 materialDesign:ShadowAssist.ShadowDepth="Depth3"
-                Style="{StaticResource MaterialDesignNavigationRailTabControl}">
+                Style="{StaticResource MaterialDesignNavigationRailTabControl}"
+                Background="White">
         <TabItem Width="100">
             <TabItem.Header>
                 <StackPanel>
@@ -37,6 +43,7 @@
                     <TextBlock Text="Компьютеры" />
                 </StackPanel>
             </TabItem.Header>
+            <Frame Source="../Pages/ComputersPage.xaml" />
         </TabItem>
         <TabItem Width="100">
             <TabItem.Header>

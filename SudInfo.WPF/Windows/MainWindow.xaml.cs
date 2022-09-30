@@ -5,6 +5,14 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        WindowDialogStore.OpenAddComputerWindowDialog = () =>
+        {
+            new AddComputerWindow().ShowDialog();
+        };
+        ActionStore.CloseWindow = () =>
+        {
+            Close();
+        };
     }
     #endregion
 }
