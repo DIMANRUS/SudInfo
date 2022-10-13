@@ -1,0 +1,51 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels"
+             xmlns:reactiveUi="http://reactiveui.net"
+             mc:Ignorable="d"
+             xmlns:i="using:Avalonia.Xaml.Interactivity"
+             xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+             d:DesignWidth="800"
+             d:DesignHeight="450"
+             x:Class="SudInfo.Avalonia.Views.Pages.ComputersPage"
+             Name="Root">
+  <UserControl.DataContext>
+    <viewModels:ComputersPageViewModel/>
+  </UserControl.DataContext>
+  <StackPanel>
+    <TextBlock Text="Компьютеры"
+               Margin="10"
+               FontWeight="Bold"
+               FontSize="20"/>
+    <DataGrid Items="{Binding Computers}">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="IP Адрес"
+                            Binding="{Binding Ip}"
+                            IsReadOnly="True"/>
+        <DataGridTextColumn Header="ОС"
+                            Binding="{Binding OS}"
+                            IsReadOnly="True"/>
+        <DataGridTextColumn Header="ФИО Сотрудника"
+                            Binding="{Binding Employee.FirstName}"
+                            IsReadOnly="True"/>
+        <DataGridTemplateColumn>
+          <DataTemplate>
+            <TextBlock
+              x:Name="TxtBlock"
+              Text="Hello"
+              VerticalAlignment="Center">
+              <!--<i:Interaction.Behaviors>
+                <ia:EventTriggerBehavior EventName="Tapped"
+                                         SourceObject="{Binding #TxtBlock}">
+                  <ia:InvokeCommandAction Command="{Binding MoveLeftCommand}"/>
+                </ia:EventTriggerBehavior>
+              </i:Interaction.Behaviors>-->
+            </TextBlock>
+          </DataTemplate>
+        </DataGridTemplateColumn >
+      </DataGrid.Columns>
+    </DataGrid>
+  </StackPanel>
+</UserControl>

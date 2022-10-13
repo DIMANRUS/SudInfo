@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AvaloniaProject">
+    <option name="projectPerEditor">
+      <map>
+        <entry key="SudInfo.Avalonia/App.axaml" value="SudInfo.Avalonia/SudInfo.Avalonia.csproj" />
+        <entry key="SudInfo.Avalonia/MainWindow.axaml" value="SudInfo.Avalonia/SudInfo.Avalonia.csproj" />
+        <entry key="SudInfo.Avalonia/Views/MainWindow.axaml" value="SudInfo.Avalonia/SudInfo.Avalonia.csproj" />
+        <entry key="SudInfo.Avalonia/Views/Windows/MainWindow.axaml" value="SudInfo.Avalonia/SudInfo.Avalonia.csproj" />
+      </map>
+    </option>
+  </component>
+</project>

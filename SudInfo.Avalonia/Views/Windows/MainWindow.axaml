@@ -1,0 +1,13 @@
+﻿<Window xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:app="clr-namespace:SudInfo.Avalonia" xmlns:rxui="clr-namespace:Avalonia.ReactiveUI;assembly=Avalonia.ReactiveUI" mc:Ignorable="d" xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels" xmlns:i="using:Avalonia.Xaml.Interactivity" xmlns:ia="using:Avalonia.Xaml.Interactions.Core" xmlns:reactiveUi="http://reactiveui.net" MinHeight="600" MinWidth="1000" x:Class="SudInfo.Avalonia.Views.Windows.MainWindow" xmlns:vm="using:SudInfo.Avalonia.ViewModels" Title="MainWindow">
+  <Window.DataContext>
+    <viewModels:MainWindowViewModel />
+  </Window.DataContext>
+  <SplitView IsPaneOpen="True" DisplayMode="Inline" OpenPaneLength="300">
+    <SplitView.Pane>
+      <StackPanel>
+        <Button Content="Компьютеры" Command="{Binding OpenComputersPage}" Background="Transparent" HorizontalAlignment="Center" Margin="5" />
+      </StackPanel>
+    </SplitView.Pane>
+    <reactiveUi:RoutedViewHost Grid.Row="0" Router="{Binding Router}"></reactiveUi:RoutedViewHost>
+  </SplitView>
+</Window>

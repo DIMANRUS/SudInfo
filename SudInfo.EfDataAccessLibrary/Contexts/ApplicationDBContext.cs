@@ -12,8 +12,8 @@ public class ApplicationDBContext : DbContext
     #region Configuration
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        //optionsBuilder.UseSqlServer("Server = 10.0.0.2; Database = SudInfo; User ID = sa; Password = admin2022@;Integrated Security=True;Connect Timeout=30;");
-        optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=SudInfo;Integrated Security=True;Connect Timeout=30;");
+        optionsBuilder.UseSqlServer("Server = 10.0.0.2; Database = SudInfo; User ID = sa; Password = admin2022@;Connect Timeout=30;");
+        // optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=SudInfo;Connect Timeout=30;");
     }
     #endregion
 

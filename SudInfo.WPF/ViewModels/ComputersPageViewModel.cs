@@ -1,4 +1,6 @@
-﻿namespace SudInfo.WPF.ViewModels;
+﻿using System.Threading.Tasks;
+
+namespace SudInfo.WPF.ViewModels;
 public class ComputersPageViewModel : BaseViewModel
 {
     public ComputersPageViewModel()
@@ -7,9 +9,7 @@ public class ComputersPageViewModel : BaseViewModel
         {
             try
             {
-                using ApplicationDBContext context = new();
-                
-                Computers = new(context.Computers);
+                LoadComputers();
                 OnNotifyPropertyChanged(nameof(Computers));
                 IsLoading = false;
             }
@@ -22,9 +22,18 @@ public class ComputersPageViewModel : BaseViewModel
         OpenAddComputerDialog = new ActionCommand(() =>
         {
             WindowDialogStore.OpenAddComputerWindowDialog();
+            IsLoading = true;
+            LoadComputers();
+            IsLoading = false;
         });
     }
     public ObservableCollection<Computer> Computers { get; set; }
 
     public ICommand OpenAddComputerDialog { get; set; }
+
+    private ICollection<Computer> LoadComputers()
+    {
+        using ApplicationDBContext context = new();
+        return Computers = new(context.Computers);
+    }
 }

@@ -1,0 +1,17 @@
+﻿global using Avalonia;
+global using Avalonia.Controls.ApplicationLifetimes;
+global using Avalonia.Markup.Xaml;
+global using Avalonia.ReactiveUI;
+global using ReactiveUI;
+global using SudInfo.Avalonia.ViewModels;
+global using SudInfo.Avalonia.Views.Windows;
+global using System;
+global using System.Reactive;
+global using System.Runtime.Serialization;
+global using System.Windows.Input;
+global using Splat;
+global using SudInfo.Avalonia.Views.Pages;
+global using System.ComponentModel;
+global using System.Reactive.Linq;
+global using System.Collections.Generic;
+global using SudInfo.EFDataAccessLibrary.Models;
