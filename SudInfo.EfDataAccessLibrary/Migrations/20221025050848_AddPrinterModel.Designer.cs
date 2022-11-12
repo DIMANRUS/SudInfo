@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SudInfo.EFDataAccessLibrary.Contexts;
 
@@ -11,13 +12,14 @@ using SudInfo.EFDataAccessLibrary.Contexts;
 namespace SudInfo.EfDataAccessLibrary.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20221025050848_AddPrinterModel")]
+    partial class AddPrinterModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.9")
+                .HasAnnotation("ProductVersion", "6.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -51,9 +53,6 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                         .IsRequired()
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
-
-                    b.Property<bool>("IsDecommissioned")
-                        .HasColumnType("bit");
 
                     b.Property<int>("OS")
                         .HasColumnType("int");
@@ -129,18 +128,9 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("Cabinet")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("EmployeeId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Ip")
                         .HasMaxLength(12)
                         .HasColumnType("nvarchar(12)");
-
-                    b.Property<bool>("IsDecommissioned")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -152,21 +142,10 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeeId");
-
                     b.ToTable("Printers");
                 });
 
             modelBuilder.Entity("SudInfo.EFDataAccessLibrary.Models.Computer", b =>
-                {
-                    b.HasOne("SudInfo.EFDataAccessLibrary.Models.Employee", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeId");
-
-                    b.Navigation("Employee");
-                });
-
-            modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.Printer", b =>
                 {
                     b.HasOne("SudInfo.EFDataAccessLibrary.Models.Employee", "Employee")
                         .WithMany()

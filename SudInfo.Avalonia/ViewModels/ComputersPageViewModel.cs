@@ -1,32 +1,90 @@
-﻿using System.Diagnostics.Metrics;
+﻿namespace SudInfo.Avalonia.ViewModels;
 
-namespace SudInfo.Avalonia.ViewModels;
-
-public class ComputersPageViewModel : ReactiveObject, IRoutableViewModel
+public class ComputersPageViewModel : BaseViewModel, IRoutableViewModel
 {
-    public string? UrlPathSegment => "/computers";
-
+    #region IRoutableViewModel Realization
+    public string UrlPathSegment => string.Empty;
     public IScreen HostScreen { get; }
+    #endregion
 
-    public IEnumerable<Computer> Computers => new List<Computer>()
+    #region Services
+    private IComputersService _computersService;
+    private IDialogService _dialogService;
+    #endregion
+
+    #region Commands
+    public ICommand OpenAddComputerWindow { get; private set; }
+    public ICommand OpenEditComputerWindow { get; private set; }
+    public ICommand RefreshComputers { get; private set; }
+    public ICommand RemoveComputer { get; private set; }
+    #endregion
+
+    #region Collections
+    [Reactive]
+    public ObservableCollection<Computer> Computers { get; set; }
+    #endregion
+
+    #region Private Variables
+    private EventHandler eventHandlerClosedWindowDialog;
+    #endregion
+
+    #region Constructors
+    public ComputersPageViewModel(INavigationService navigationService, IComputersService computersService, IDialogService dialogService)
     {
-        new()
-        {
-            Ip = "20.44.23.22",
-            Employee = new()
-            {
-                FirstName = "Дмитрий"
-            }
-        }
-    };
+        #region Serives Initialization
+        _dialogService = dialogService;
+        _computersService = computersService;
+        #endregion
 
+        eventHandlerClosedWindowDialog = async (s, e) =>
+        {
+            await LoadComputers();
+        };
+
+        #region Commands Initialization
+        OpenAddComputerWindow = ReactiveCommand.Create(async() =>
+        {
+            await navigationService.ShowComputerWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog);
+        });
+        OpenEditComputerWindow = ReactiveCommand.Create(async (int id) =>
+        {
+            await navigationService.ShowComputerWindowDialog(WindowType.Save, eventHandlerClosedWindowDialog, id);
+        });
+        Initialized = ReactiveCommand.CreateFromTask(LoadComputers);
+        RefreshComputers = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await LoadComputers();
+        });
+        RemoveComputer = ReactiveCommand.CreateFromTask(async (int id) =>
+        {
+            var dialogResult = await dialogService.ShowMessageBox("Сообщение", "Вы действительно хотите удалить компьютер?", buttonEnum: ButtonEnum.YesNo, icon: Icon.Question);
+            if (dialogResult == ButtonResult.No)
+                return;
+            var removeComputerResult = await computersService.RemoveComputerById(id);
+            if (!removeComputerResult.Success)
+            {
+                await _dialogService.ShowMessageBox("Ошибка", $"Ошибка удаления компьютера! Ошибка: {removeComputerResult.Message}", icon: Icon.Error);
+                return;
+            }
+            await LoadComputers();
+        });
+        #endregion
+    }
     public ComputersPageViewModel()
     {
-
-        _editComputer = ReactiveCommand.Create(
-                () => { new MainWindow().Show(); });
     }
+    #endregion
 
-    public ICommand EditComputer => _editComputer;
-    private readonly ReactiveCommand<Unit, Unit> _editComputer;
+    #region Private Methods
+    private async Task LoadComputers()
+    {
+        var computersResult = await _computersService.GetComputers();
+        if (!computersResult.Success)
+        {
+            await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения данных! Ошибка: {computersResult.Message}", icon: Icon.Error);
+            return;
+        }
+        Computers = new(computersResult.Result);
+    }
+    #endregion
 }

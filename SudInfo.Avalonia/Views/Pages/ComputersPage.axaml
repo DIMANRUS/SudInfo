@@ -9,17 +9,46 @@
              xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
              d:DesignWidth="800"
              d:DesignHeight="450"
-             x:Class="SudInfo.Avalonia.Views.Pages.ComputersPage"
-             Name="Root">
-  <UserControl.DataContext>
-    <viewModels:ComputersPageViewModel/>
-  </UserControl.DataContext>
-  <StackPanel>
+             Name="Root"
+             x:Class="SudInfo.Avalonia.Views.Pages.ComputersPage">
+  <i:Interaction.Behaviors>
+    <ia:EventTriggerBehavior EventName="Initialized">
+      <ia:InvokeCommandAction Command="{Binding Initialized}"/>
+    </ia:EventTriggerBehavior>
+  </i:Interaction.Behaviors>
+  <UserControl.Styles>
+    <Style Selector="Image">
+      <Setter Property="Cursor"
+              Value="Hand"/>
+      <Setter Property="Height"
+              Value="30"/>
+    </Style>
+  </UserControl.Styles>
+  <Grid RowDefinitions="40,*"
+        ColumnDefinitions="*, 40, 40">
     <TextBlock Text="Компьютеры"
                Margin="10"
                FontWeight="Bold"
                FontSize="20"/>
-    <DataGrid Items="{Binding Computers}">
+    <Image Source="/Assets/Images/refresh.png"
+           Grid.Column="1">
+      <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="Tapped">
+          <ia:InvokeCommandAction Command="{Binding RefreshComputers}"/>
+        </ia:EventTriggerBehavior>
+      </i:Interaction.Behaviors>
+    </Image>
+    <Image Source="/Assets/Images/add.png"
+           Grid.Column="2">
+      <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="Tapped">
+          <ia:InvokeCommandAction Command="{Binding OpenAddComputerWindow}"/>
+        </ia:EventTriggerBehavior>
+      </i:Interaction.Behaviors>
+    </Image>
+    <DataGrid Items="{Binding Computers}"
+              Grid.Row="1"
+              Grid.ColumnSpan="3">
       <DataGrid.Columns>
         <DataGridTextColumn Header="IP Адрес"
                             Binding="{Binding Ip}"
@@ -27,25 +56,50 @@
         <DataGridTextColumn Header="ОС"
                             Binding="{Binding OS}"
                             IsReadOnly="True"/>
-        <DataGridTextColumn Header="ФИО Сотрудника"
-                            Binding="{Binding Employee.FirstName}"
+        <DataGridTextColumn Header="CPU"
+                            Binding="{Binding CPU}"
                             IsReadOnly="True"/>
+        <DataGridTextColumn Header="ROM"
+                            Binding="{Binding ROM}"
+                            IsReadOnly="True"/>
+        <DataGridTextColumn Header="RAM"
+                            Binding="{Binding RAM}"
+                            IsReadOnly="True"/>
+        <DataGridTextColumn Header="Инвентарный"
+                            Binding="{Binding InventarNumber}"
+                            IsReadOnly="True"/>
+        <DataGridTextColumn Header="Фамилия сотрудника"
+                            Binding="{Binding Employee.LastName}"
+                            IsReadOnly="True"
+                            Width="*"/>
+        <DataGridTextColumn Header="Кабинет"
+                            Binding="{Binding Employee.NumberCabinet}"
+                            IsReadOnly="True"/>
+        <DataGridTemplateColumn Width="40">
+          <DataTemplate>
+            <Image Source="/Assets/Images/edit.png">
+              <i:Interaction.Behaviors>
+                <ia:EventTriggerBehavior EventName="Tapped">
+                  <ia:InvokeCommandAction Command="{Binding DataContext.OpenEditComputerWindow, ElementName=Root}"
+                                          CommandParameter="{Binding Id}"/>
+                </ia:EventTriggerBehavior>
+              </i:Interaction.Behaviors>
+            </Image>
+          </DataTemplate>
+        </DataGridTemplateColumn>
         <DataGridTemplateColumn>
           <DataTemplate>
-            <TextBlock
-              x:Name="TxtBlock"
-              Text="Hello"
-              VerticalAlignment="Center">
-              <!--<i:Interaction.Behaviors>
-                <ia:EventTriggerBehavior EventName="Tapped"
-                                         SourceObject="{Binding #TxtBlock}">
-                  <ia:InvokeCommandAction Command="{Binding MoveLeftCommand}"/>
+            <Image Source="/Assets/Images/remove.png">
+              <i:Interaction.Behaviors>
+                <ia:EventTriggerBehavior EventName="Tapped">
+                  <ia:InvokeCommandAction Command="{Binding DataContext.RemoveComputer, ElementName=Root}"
+                                          CommandParameter="{Binding Id}"/>
                 </ia:EventTriggerBehavior>
-              </i:Interaction.Behaviors>-->
-            </TextBlock>
+              </i:Interaction.Behaviors>
+            </Image>
           </DataTemplate>
-        </DataGridTemplateColumn >
+        </DataGridTemplateColumn>
       </DataGrid.Columns>
     </DataGrid>
-  </StackPanel>
+  </Grid>
 </UserControl>

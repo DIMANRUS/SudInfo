@@ -4,3 +4,4 @@ global using System.ComponentModel.DataAnnotations;
 global using System.ComponentModel.DataAnnotations.Schema;
 global using SudInfo.EFDataAccessLibrary.Contexts;
 global using SudInfo.EFDataAccessLibrary.Models;
+global using Microsoft.Extensions.Configuration;

@@ -1,0 +1,33 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        d:DesignWidth="800"
+        d:DesignHeight="450"
+        xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels;assembly=SudInfo.Avalonia"
+        xmlns:i="using:Avalonia.Xaml.Interactivity"
+        xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+        x:Class="SudInfo.Avalonia.Views.Windows.PrinterWindow"
+        WindowStartupLocation="CenterOwner"
+        x:DataType="viewModels:PrinterWindowViewModel"
+        Title="Принтер">
+  <StackPanel Margin="10">
+    <TextBox Watermark="Название"
+             MaxLength="40"
+             Text="{Binding Printer.Name}"
+             Margin="0 5 0 0"/>
+    <TextBox Watermark="IP Адрес"
+             MaxLength="12"
+             Text="{Binding Printer.Ip}"
+             Margin="0 5 0 0"/>
+    <TextBox Watermark="Номер кабинета"
+             MaxLength="3"
+             Text="{Binding Printer.Cabinet}"
+             Margin="0 5 0 0"/>
+    <ComboBox Items="{Binding PrinterTypes}"
+              SelectedItem="{Binding Printer.Type}"
+              Margin="0 5 0 0">
+    </ComboBox>
+  </StackPanel>
+</Window>

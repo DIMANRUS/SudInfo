@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "SudInfo.Avalonia": {
+      "commandName": "Project"
+    },
+    "WSL": {
+      "commandName": "WSL2",
+      "distributionName": ""
+    }
+  }
+}

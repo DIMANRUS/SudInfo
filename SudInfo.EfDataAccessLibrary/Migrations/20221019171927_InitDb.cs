@@ -4,7 +4,7 @@
 
 namespace SudInfo.EfDataAccessLibrary.Migrations
 {
-    public partial class InitDB : Migration
+    public partial class InitDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -18,8 +18,9 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     LastName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     MiddleName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     NumberCabinet = table.Column<byte>(type: "tinyint", nullable: false),
-                    Phone = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    PhoneLocal = table.Column<byte>(type: "tinyint", nullable: false)
+                    PersonalPhone = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
+                    WorkPhone = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
+                    PhoneLocal = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -34,6 +35,9 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Ip = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
                     OS = table.Column<int>(type: "int", nullable: false),
+                    CPU = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
+                    ROM = table.Column<int>(type: "int", nullable: false),
+                    RAM = table.Column<byte>(type: "tinyint", nullable: false),
                     EmployeeId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>

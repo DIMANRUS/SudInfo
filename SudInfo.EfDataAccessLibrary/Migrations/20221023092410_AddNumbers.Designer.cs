@@ -12,14 +12,14 @@ using SudInfo.EFDataAccessLibrary.Contexts;
 namespace SudInfo.EfDataAccessLibrary.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20220927094519_InitDB")]
-    partial class InitDB
+    [Migration("20221023092410_AddNumbers")]
+    partial class AddNumbers
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.9")
+                .HasAnnotation("ProductVersion", "6.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -32,8 +32,22 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("CPU")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
                     b.Property<int?>("EmployeeId")
                         .HasColumnType("int");
+
+                    b.Property<string>("GPU")
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<string>("InventarNumber")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("Ip")
                         .IsRequired()
@@ -42,6 +56,17 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
 
                     b.Property<int>("OS")
                         .HasColumnType("int");
+
+                    b.Property<byte>("RAM")
+                        .HasColumnType("tinyint");
+
+                    b.Property<int>("ROM")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SerialNumber")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
@@ -75,13 +100,20 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     b.Property<byte>("NumberCabinet")
                         .HasColumnType("tinyint");
 
-                    b.Property<string>("Phone")
+                    b.Property<string>("PersonalPhone")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
 
-                    b.Property<byte>("PhoneLocal")
-                        .HasColumnType("tinyint");
+                    b.Property<string>("PhoneLocal")
+                        .IsRequired()
+                        .HasMaxLength(3)
+                        .HasColumnType("nvarchar(3)");
+
+                    b.Property<string>("WorkPhone")
+                        .IsRequired()
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
 
                     b.HasKey("Id");
 

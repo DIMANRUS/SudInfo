@@ -9,10 +9,4 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
         this.AttachDevTools();
 #endif
     }
-    
-    private void InitializeComponent()
-    {
-        this.WhenActivated(disposables => { });
-        AvaloniaXamlLoader.Load(this);
-    }
 }

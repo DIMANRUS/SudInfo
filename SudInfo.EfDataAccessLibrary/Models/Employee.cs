@@ -8,7 +8,10 @@ public class Employee : BaseModel
     [StringLength(20)]
     public string? MiddleName { get; set; }
     public byte NumberCabinet { get; set; }
-    [StringLength(10)]
-    public string Phone { get; set; }
-    public byte PhoneLocal { get; set; }
+    [StringLength(11)]
+    public string PersonalPhone { get; set; }
+    [StringLength(11)]
+    public string WorkPhone { get; set; }
+    [StringLength(3)]
+    public string PhoneLocal { get; set; }
 }
