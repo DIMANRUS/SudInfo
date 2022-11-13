@@ -3,8 +3,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        d:DesignWidth="800"
-        d:DesignHeight="450"
+        Width="300"
+        Height="500"
+        CanResize="False"
         xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels;assembly=SudInfo.Avalonia"
         xmlns:i="using:Avalonia.Xaml.Interactivity"
         xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
@@ -27,7 +28,14 @@
              Margin="0 5 0 0"/>
     <ComboBox Items="{Binding PrinterTypes}"
               SelectedItem="{Binding Printer.Type}"
-              Margin="0 5 0 0">
-    </ComboBox>
+              Margin="0 5 0 0"
+              HorizontalAlignment="Stretch"/>
+      <Button Content="{Binding SaveButtonText}"
+            Command="{Binding SavePrinter}"
+            Margin="0 5 0 0"
+            Cursor="Hand"
+            FontWeight="Bold"
+            HorizontalAlignment="Stretch"
+            HorizontalContentAlignment="Center"/>
   </StackPanel>
 </Window>

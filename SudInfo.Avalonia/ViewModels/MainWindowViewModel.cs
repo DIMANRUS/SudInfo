@@ -11,7 +11,7 @@ public class MainWindowViewModel : ReactiveObject, IScreen
 
         #region Navigation
 
-        #region Computer Page
+        #region Computers Page
         var canOpenedComputersPage = this
             .WhenAnyObservable(x => x.Router.CurrentViewModel)
             .Select(current => !(current is ComputersPageViewModel));
@@ -41,17 +41,14 @@ public class MainWindowViewModel : ReactiveObject, IScreen
     #endregion
 
     #region IScreen Realization
-    private RoutingState _router = new();
-    public RoutingState Router
-    {
-        get => _router;
-        set => this.RaiseAndSetIfChanged(ref _router, value);
-    }
+    [Reactive]
+    public RoutingState Router { get; set; } = new();
     #endregion
 
     #region Commands
-    public ICommand OpenComputersPage { get; private set; }
-    public ICommand OpenPrintersPage { get; private set; }
-    public ICommand OpenSettingsWindow { get; private set; }
+    public ICommand OpenComputersPage { get; private init; }
+    public ICommand OpenPrintersPage { get; private init; }
+    public ICommand OpenSettingsWindow { get; private init; }
+    public ICommand OpenMonitorsPage { get; private init; }
     #endregion
 }

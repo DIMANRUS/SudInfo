@@ -5,4 +5,5 @@ public interface IPrintersService
     Task<TaskResult<Printer>> GetPrinterById(int id);
     Task<TaskResult> SavePrinter(Printer printer);
     Task<TaskResult> AddPrinter(Printer printer);
+    Task<TaskResult> RemovePrinterById(int id);
 }

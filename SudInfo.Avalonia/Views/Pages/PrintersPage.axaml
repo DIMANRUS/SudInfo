@@ -8,7 +8,8 @@
              xmlns:models="using:SudInfo.EfDataAccessLibrary.Models"
              d:DesignWidth="800"
              d:DesignHeight="450"
-             x:Class="SudInfo.Avalonia.Views.Pages.PrintersPage">
+             x:Class="SudInfo.Avalonia.Views.Pages.PrintersPage"
+             Name="Root">
   <i:Interaction.Behaviors>
     <ia:EventTriggerBehavior EventName="Initialized">
       <ia:InvokeCommandAction Command="{Binding Initialized}"/>
@@ -40,7 +41,7 @@
            Grid.Column="2">
       <i:Interaction.Behaviors>
         <ia:EventTriggerBehavior EventName="Tapped">
-          <ia:InvokeCommandAction Command="{Binding OpenPrinterWindow}"/>
+          <ia:InvokeCommandAction Command="{Binding OpenAddPrinterWindow}"/>
         </ia:EventTriggerBehavior>
       </i:Interaction.Behaviors>
     </Image>
@@ -58,7 +59,32 @@
         <DataGridTextColumn Header="Кабинет"
                             Binding="{Binding Cabinet}"/>
         <DataGridTextColumn Header="Фамилия сотрудника"
-                            Binding="{Binding Employee.LastName}"/>
+                            Binding="{Binding Employee.LastName}"
+                            Width="*"/>
+        <DataGridTemplateColumn Width="40">
+          <DataTemplate>
+            <Image Source="/Assets/Images/edit.png">
+              <i:Interaction.Behaviors>
+                <ia:EventTriggerBehavior EventName="Tapped">
+                  <ia:InvokeCommandAction Command="{Binding DataContext.OpenEditPrinterWindow, ElementName=Root}"
+                    CommandParameter="{Binding Id}"/>
+                </ia:EventTriggerBehavior>
+              </i:Interaction.Behaviors>
+            </Image>
+          </DataTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn>
+          <DataTemplate>
+            <Image Source="/Assets/Images/remove.png">
+              <i:Interaction.Behaviors>
+                <ia:EventTriggerBehavior EventName="Tapped">
+                  <ia:InvokeCommandAction Command="{Binding DataContext.RemovePrinter, ElementName=Root}"
+                                          CommandParameter="{Binding Id}"/>
+                </ia:EventTriggerBehavior>
+              </i:Interaction.Behaviors>
+            </Image>
+          </DataTemplate>
+        </DataGridTemplateColumn>
       </DataGrid.Columns>
     </DataGrid>
   </Grid>

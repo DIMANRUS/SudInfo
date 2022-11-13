@@ -30,15 +30,18 @@
              DisplayMode="Inline"
              OpenPaneLength="200">
     <SplitView.Pane>
-      <Grid RowDefinitions="40,40,*,40">
+      <Grid RowDefinitions="40,40,40,*,40">
         <Button Content="Компьютеры"
                 Command="{Binding OpenComputersPage}"/>
         <Button Content="Принтеры | МФУ"
                 Grid.Row="1"
                 Command="{Binding OpenPrintersPage}"/>
+        <Button Content="Мониторы"
+                Grid.Row="2"
+                Command="{Binding OpenMonitorsPage}"/>
         <Button Content="Настройки"
                 VerticalAlignment="Stretch"
-                Grid.Row="3"
+                Grid.Row="4"
                 Command="{Binding OpenSettingsWindow}"/>
       </Grid>
     </SplitView.Pane>

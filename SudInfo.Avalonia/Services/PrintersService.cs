@@ -87,4 +87,28 @@ public class PrintersService : IPrintersService
             };
         }
     }
+
+    public async Task<TaskResult> RemovePrinterById(int id)
+    {
+        try
+        {
+            var printer = await _applicationDbContext.Printers.FirstOrDefaultAsync(x => x.Id == id);
+            if (printer == null)
+                throw new Exception("Printer not found");
+            _applicationDbContext.Printers.Remove(printer);
+            await _applicationDbContext.SaveChangesAsync();
+            return new()
+            {
+                Success = true
+            };
+        }
+        catch (Exception ex)
+        {
+            return new()
+            {
+                Success = false,
+                Message = ex.Message
+            };
+        }
+    }
 }

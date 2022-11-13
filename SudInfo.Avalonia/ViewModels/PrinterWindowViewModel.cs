@@ -44,7 +44,7 @@ public class PrinterWindowViewModel : BaseModel
     #endregion
 
     #region Constructors
-    public PrinterWindowViewModel(IPrintersService printersService, IDialogService dialogService, IEmployeeService employeeService)
+    public PrinterWindowViewModel(IPrintersService printersService, IDialogService dialogService, IEmployeeService employeeService, IValidationService validationService)
     {
         #region Service Set
         _printersService = printersService;
@@ -68,7 +68,7 @@ public class PrinterWindowViewModel : BaseModel
         {
             try
             {
-                if (false)
+                if (Printer.Name.Length < 5 || !validationService.ValidationIp4(Printer.Ip))
                 {
                     await dialogService.ShowMessageBox(title: "Ошибка", "Проверьте правильность заполнения полей!", icon: Icon.Error);
                     return;
@@ -79,11 +79,11 @@ public class PrinterWindowViewModel : BaseModel
                 {
                     case WindowType.Save:
                         await printersService.SavePrinter(Printer);
-                        await dialogService.ShowMessageBox("Сообщение", "Компьютер сохранён!", true, icon: Icon.Success);
+                        await dialogService.ShowMessageBox("Сообщение", "Принтер сохранён!", true, icon: Icon.Success);
                         break;
                     case WindowType.Add:
                         await printersService.AddPrinter(Printer);
-                        await dialogService.ShowMessageBox("Сообщение", "Компьютер добавлен!", icon: Icon.Success);
+                        await dialogService.ShowMessageBox("Сообщение", "Принтер добавлен!", icon: Icon.Success);
                         break;
                 }
             }

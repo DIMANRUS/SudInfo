@@ -8,7 +8,9 @@ public class PrintersPageViewModel : BaseViewModel, IRoutableViewModel
 
     #region Commands
     public ICommand RefreshPrinters { get; private init; }
-    public ICommand OpenPrinterWindow { get; private init; }
+    public ICommand OpenAddPrinterWindow { get; private init; }
+    public ICommand OpenEditPrinterWindow { get; private init; }
+    public ICommand RemovePrinter { get; private init; }
     #endregion
 
     #region Services
@@ -21,6 +23,10 @@ public class PrintersPageViewModel : BaseViewModel, IRoutableViewModel
     public ObservableCollection<Printer> Printers { get; set; }
     #endregion
 
+    #region Private Variables
+    private EventHandler eventHandlerClosedWindowDialog;
+    #endregion
+
     #region Constructors
     public PrintersPageViewModel(IPrintersService printersService, IDialogService dialogService, INavigationService navigationService)
     {
@@ -29,11 +35,31 @@ public class PrintersPageViewModel : BaseViewModel, IRoutableViewModel
         _dialogService = dialogService;
         #endregion
 
+        eventHandlerClosedWindowDialog = async (s, e) =>
+        {
+            await LoadPrinters();
+        };
+
         #region Commands Initialization
         Initialized = ReactiveCommand.CreateFromTask(LoadPrinters);
         RefreshPrinters = ReactiveCommand.CreateFromTask(LoadPrinters);
-        OpenPrinterWindow = ReactiveCommand.CreateFromTask(async () =>
-            await navigationService.ShowPrinterWindowDialog(WindowType.Add));
+        OpenAddPrinterWindow = ReactiveCommand.CreateFromTask(async () =>
+            await navigationService.ShowPrinterWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog));
+        OpenEditPrinterWindow = ReactiveCommand.Create(async (int id) =>
+            await navigationService.ShowPrinterWindowDialog(WindowType.Save, eventHandlerClosedWindowDialog, id));
+        RemovePrinter = ReactiveCommand.CreateFromTask(async (int id) =>
+        {
+            var dialogResult = await dialogService.ShowMessageBox("Сообщение", "Вы действительно хотите удалить принтер?", buttonEnum: ButtonEnum.YesNo, icon: Icon.Question);
+            if (dialogResult == ButtonResult.No)
+                return;
+            var removePrinterResult = await printersService.RemovePrinterById(id);
+            if (!removePrinterResult.Success)
+            {
+                await _dialogService.ShowMessageBox("Ошибка", $"Ошибка удаления принтера! Ошибка: {removePrinterResult.Message}", icon: Icon.Error);
+                return;
+            }
+            await LoadPrinters();
+        });
         #endregion
     }
     public PrintersPageViewModel() { }

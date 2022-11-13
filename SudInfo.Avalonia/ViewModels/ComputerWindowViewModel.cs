@@ -12,7 +12,6 @@ public class ComputerWindowViewModel : BaseViewModel
 
     #region Collections
     public IEnumerable<OS> OsesList => Enum.GetValues(typeof(OS)).Cast<OS>();
-
     public IEnumerable<Employee> Employees { get; set; }
     #endregion
 

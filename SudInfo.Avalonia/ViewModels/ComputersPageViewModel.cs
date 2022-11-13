@@ -13,10 +13,10 @@ public class ComputersPageViewModel : BaseViewModel, IRoutableViewModel
     #endregion
 
     #region Commands
-    public ICommand OpenAddComputerWindow { get; private set; }
-    public ICommand OpenEditComputerWindow { get; private set; }
-    public ICommand RefreshComputers { get; private set; }
-    public ICommand RemoveComputer { get; private set; }
+    public ICommand OpenAddComputerWindow { get; private init; }
+    public ICommand OpenEditComputerWindow { get; private init; }
+    public ICommand RefreshComputers { get; private init; }
+    public ICommand RemoveComputer { get; private init; }
     #endregion
 
     #region Collections
