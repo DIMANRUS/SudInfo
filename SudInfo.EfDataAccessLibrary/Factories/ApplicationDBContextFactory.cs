@@ -1,12 +1,18 @@
 ﻿//Создано только для миграций, чтобы они могли получить контекст
+using Microsoft.Extensions.Configuration;
+
 namespace EFDataAccessLibrary.Factories;
 internal class ApplicationDBContextFactory : IDesignTimeDbContextFactory<ApplicationDBContext>
 {
+    IConfiguration configuration = new ConfigurationBuilder()
+        .SetBasePath(Environment.CurrentDirectory)
+        .AddJsonFile("appsettings.json")
+        .AddUserSecrets<ApplicationDBContext>()
+        .Build();
     public ApplicationDBContext CreateDbContext(string[] args)
     {
         var optionsBuilder = new DbContextOptionsBuilder<ApplicationDBContext>();
-        //optionsBuilder.UseSqlServer("Data Source = 10.0.0.2; Initial Catalog = SudInfo; User ID = sa; Password = admin2022@;Integrated Security=True;Connect Timeout=30;");
-        optionsBuilder.UseSqlServer("Data Source=DIMANRUS-WIN11\\SQLEXPRESS;Database=SudInfo;Integrated Security=True;Connect Timeout=30;");
+        optionsBuilder.UseSqlServer(configuration.GetConnectionString("SqlExpressDevelop"));
         return new ApplicationDBContext(optionsBuilder.Options);
     }
 }

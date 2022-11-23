@@ -1,6 +1,4 @@
-﻿using SudInfo.EfDataAccessLibrary.Models;
-
-namespace SudInfo.EFDataAccessLibrary.Contexts;
+﻿namespace SudInfo.EFDataAccessLibrary.Contexts;
 public class ApplicationDBContext : DbContext
 {
     #region Constructors
