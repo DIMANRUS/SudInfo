@@ -1,12 +1,8 @@
-using Avalonia.Controls;
-
-namespace SudInfo.Avalonia.Views.Windows
+namespace SudInfo.Avalonia.Views.Windows;
+public partial class SettingsWindow : Window
 {
-    public partial class SettingsWindow : Window
+    public SettingsWindow()
     {
-        public SettingsWindow()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

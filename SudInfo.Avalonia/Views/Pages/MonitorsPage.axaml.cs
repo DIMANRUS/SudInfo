@@ -1,8 +1,7 @@
 namespace SudInfo.Avalonia.Views.Pages;
-
-public partial class ComputersPage : ReactiveUserControl<ComputersPageViewModel>
+public partial class MonitorsPage : ReactiveUserControl<MonitorsPageViewModel>
 {
-    public ComputersPage()
+    public MonitorsPage()
     {
         this.WhenActivated(disposables => { });
         InitializeComponent();

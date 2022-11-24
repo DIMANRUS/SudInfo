@@ -1,11 +1,6 @@
-﻿namespace SudInfo.Avalonia.ViewModels;
-public class PrintersPageViewModel : BaseViewModel, IRoutableViewModel
+﻿namespace SudInfo.Avalonia.ViewModels.PageViewModels;
+public class PrintersPageViewModel : BaseRoutableViewModel
 {
-    #region IRoutableViewModel Realization
-    public string UrlPathSegment => string.Empty;
-    public IScreen HostScreen { get; }
-    #endregion
-
     #region Commands
     public ICommand RefreshPrinters { get; private init; }
     public ICommand OpenAddPrinterWindow { get; private init; }
@@ -62,7 +57,7 @@ public class PrintersPageViewModel : BaseViewModel, IRoutableViewModel
         });
         #endregion
     }
-    public PrintersPageViewModel() { }
+    //public PrintersPageViewModel() { }
     #endregion
 
     #region Private Methods

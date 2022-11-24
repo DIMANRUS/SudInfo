@@ -1,11 +1,7 @@
-﻿namespace SudInfo.Avalonia.ViewModels;
+﻿namespace SudInfo.Avalonia.ViewModels.PageViewModels;
 
-public class ComputersPageViewModel : BaseViewModel, IRoutableViewModel
+public class ComputersPageViewModel : BaseRoutableViewModel
 {
-    #region IRoutableViewModel Realization
-    public string UrlPathSegment => string.Empty;
-    public IScreen HostScreen { get; }
-    #endregion
 
     #region Services
     private IComputersService _computersService;
@@ -42,7 +38,7 @@ public class ComputersPageViewModel : BaseViewModel, IRoutableViewModel
         };
 
         #region Commands Initialization
-        OpenAddComputerWindow = ReactiveCommand.Create(async() =>
+        OpenAddComputerWindow = ReactiveCommand.Create(async () =>
         {
             await navigationService.ShowComputerWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog);
         });
@@ -70,9 +66,9 @@ public class ComputersPageViewModel : BaseViewModel, IRoutableViewModel
         });
         #endregion
     }
-    public ComputersPageViewModel()
-    {
-    }
+    //public ComputersPageViewModel()
+    //{
+    //}
     #endregion
 
     #region Private Methods

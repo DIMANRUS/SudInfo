@@ -1,5 +1,3 @@
-using SudInfo.Avalonia.Extensions;
-
 namespace SudInfo.Avalonia;
 
 public partial class App : Application
@@ -18,6 +16,7 @@ public partial class App : Application
         Locator.CurrentMutable.RegisterConstant<IScreen>(new MainWindowViewModel());
         Locator.CurrentMutable.Register<IViewFor<ComputersPageViewModel>>(() => new ComputersPage());
         Locator.CurrentMutable.Register<IViewFor<PrintersPageViewModel>>(() => new PrintersPage());
+        Locator.CurrentMutable.Register<IViewFor<MonitorsPageViewModel>>(() => new MonitorsPage());
         #endregion
 
         MainWindow mainWindow = new() { DataContext = Locator.Current.GetService<IScreen>() };

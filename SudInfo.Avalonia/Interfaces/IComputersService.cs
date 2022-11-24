@@ -1,6 +1,4 @@
-﻿using SudInfo.Avalonia.Models;
-
-namespace SudInfo.Avalonia.Interfaces;
+﻿namespace SudInfo.Avalonia.Interfaces;
 public interface IComputersService
 {
     #region Get Computer/s

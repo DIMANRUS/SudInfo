@@ -20,6 +20,7 @@ internal static class ServiceCollectionExtension
             .AddTransient<ComputerWindowViewModel>()
             .AddTransient<PrintersPageViewModel>()
             .AddTransient<PrinterWindowViewModel>()
+            .AddTransient<MonitorsPageViewModel>()
             .AddTransient<IComputersService, ComputersService>()
             .AddTransient<IEmployeeService, EmployeeService>()
             .AddSingleton<INavigationService, NavigationService>()

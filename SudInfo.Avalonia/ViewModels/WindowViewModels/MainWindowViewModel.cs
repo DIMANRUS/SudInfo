@@ -1,6 +1,4 @@
-﻿using SudInfo.Avalonia.Extensions;
-
-namespace SudInfo.Avalonia.ViewModels;
+﻿namespace SudInfo.Avalonia.ViewModels.WindowViewModels;
 
 public class MainWindowViewModel : ReactiveObject, IScreen
 {
@@ -14,21 +12,32 @@ public class MainWindowViewModel : ReactiveObject, IScreen
         #region Computers Page
         var canOpenedComputersPage = this
             .WhenAnyObservable(x => x.Router.CurrentViewModel)
-            .Select(current => !(current is ComputersPageViewModel));
-
+            .Select(current => current is not ComputersPageViewModel);
+        var computerPageViewModel = ServiceCollectionExtension.ServiceProvider.GetService<ComputersPageViewModel>();
         OpenComputersPage = ReactiveCommand.CreateFromObservable(
-                () => Router.Navigate.Execute(ServiceCollectionExtension.ServiceProvider.GetService<ComputersPageViewModel>()),
-                canOpenedComputersPage);
+                () => Router.Navigate.Execute(computerPageViewModel), canOpenedComputersPage);
         #endregion
 
         #region Printers Page
         var canOpenedPrintersPage = this
             .WhenAnyObservable(x => x.Router.CurrentViewModel)
-            .Select(current => !(current is PrintersPageViewModel));
+            .Select(current => current is not PrintersPageViewModel);
+
+        var printersPageViewModel = ServiceCollectionExtension.ServiceProvider.GetService<PrintersPageViewModel>();
 
         OpenPrintersPage = ReactiveCommand.CreateFromObservable(
-                () => Router.Navigate.Execute(ServiceCollectionExtension.ServiceProvider.GetService<PrintersPageViewModel>()),
-                canOpenedPrintersPage);
+                () => Router.Navigate.Execute(printersPageViewModel), canOpenedPrintersPage);
+        #endregion
+
+        #region Monitors Page
+        var canOpenedMonitorsPage = this
+            .WhenAnyObservable(x => x.Router.CurrentViewModel)
+            .Select(current => current is not MonitorsPageViewModel);
+
+        var monitorsPageViewModel = ServiceCollectionExtension.ServiceProvider.GetService<MonitorsPageViewModel>();
+
+        OpenMonitorsPage = ReactiveCommand.CreateFromObservable(
+                () => Router.Navigate.Execute(monitorsPageViewModel), canOpenedMonitorsPage); ;
         #endregion
 
         #region Settings Window
@@ -41,7 +50,6 @@ public class MainWindowViewModel : ReactiveObject, IScreen
     #endregion
 
     #region IScreen Realization
-    [Reactive]
     public RoutingState Router { get; set; } = new();
     #endregion
 

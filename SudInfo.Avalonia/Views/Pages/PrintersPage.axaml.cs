@@ -1,6 +1,9 @@
 namespace SudInfo.Avalonia.Views.Pages;
 public partial class PrintersPage : ReactiveUserControl<PrintersPageViewModel>
 {
-    public PrintersPage() =>
+    public PrintersPage()
+    {
+        this.WhenActivated(disposables => { });
         InitializeComponent();
+    }
 }

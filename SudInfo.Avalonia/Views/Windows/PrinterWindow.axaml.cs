@@ -1,5 +1,3 @@
-using SudInfo.Avalonia.Extensions;
-
 namespace SudInfo.Avalonia.Views.Windows;
 public partial class PrinterWindow : ReactiveWindow<PrinterWindowViewModel>
 {
