@@ -1,4 +1,4 @@
-﻿namespace SudInfo.Avalonia.Interfaces;
+﻿namespace SudInfo.DataServices.Interfaces;
 public interface IPrintersService
 {
     Task<TaskResult<List<Printer>>> GetPrinters();

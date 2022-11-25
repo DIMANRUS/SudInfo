@@ -1,4 +1,4 @@
-﻿namespace SudInfo.Avalonia.Interfaces;
+﻿namespace SudInfo.DataServices.Interfaces;
 public interface IComputersService
 {
     #region Get Computer/s

@@ -73,6 +73,7 @@
     <UpToDateCheckInput Remove="Views\Windows\PrinterWindow.axaml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SudInfo.DataServices\SudInfo.DataServices.csproj" />
     <ProjectReference Include="..\SudInfo.EfDataAccessLibrary\SudInfo.EfDataAccessLibrary.csproj" />
   </ItemGroup>
 </Project>

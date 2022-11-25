@@ -1,4 +1,4 @@
-﻿namespace SudInfo.EFDataAccessLibrary.Models;
+﻿namespace SudInfo.EfDataAccessLibrary.Models;
 public class Employee : BaseModel
 {
     [StringLength(20)]

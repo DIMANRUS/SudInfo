@@ -1,4 +1,4 @@
-﻿namespace SudInfo.Avalonia.Services;
+﻿namespace SudInfo.DataServices;
 public class EmployeeService : IEmployeeService
 {
     private readonly ApplicationDBContext _context;

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SudInfo.EFDataAccessLibrary.Contexts;
+using SudInfo.EfDataAccessLibrary.Contexts;
 
 #nullable disable
 
