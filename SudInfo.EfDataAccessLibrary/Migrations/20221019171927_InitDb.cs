@@ -1,4 +1,6 @@
-﻿#nullable disable
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
 
 namespace SudInfo.EfDataAccessLibrary.Migrations
 {

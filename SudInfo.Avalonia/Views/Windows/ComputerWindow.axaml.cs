@@ -1,3 +1,6 @@
+using SudInfo.Avalonia.Extensions;
+using SudInfo.Avalonia.ViewModels.WindowViewModels;
+
 namespace SudInfo.Avalonia.Views.Windows;
 public partial class ComputerWindow : ReactiveWindow<ComputerWindowViewModel>
 {

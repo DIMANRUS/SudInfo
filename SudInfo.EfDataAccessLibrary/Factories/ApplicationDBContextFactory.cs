@@ -1,5 +1,7 @@
 ﻿//Создано только для миграций, чтобы они могли получить контекст
-namespace EfDataAccessLibrary.Factories;
+using Microsoft.Extensions.Configuration;
+
+namespace EFDataAccessLibrary.Factories;
 internal class ApplicationDBContextFactory : IDesignTimeDbContextFactory<ApplicationDBContext>
 {
     IConfiguration configuration = new ConfigurationBuilder()

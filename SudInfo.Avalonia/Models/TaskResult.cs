@@ -1,4 +1,4 @@
-﻿namespace SudInfo.Models;
+﻿namespace SudInfo.Avalonia.Models;
 public class TaskResult<T> where T : class
 {
     public bool Success { get; set; }

@@ -1,4 +1,4 @@
-﻿namespace SudInfo.DataServices.Interfaces;
+﻿namespace SudInfo.Avalonia.Interfaces;
 public interface IEmployeeService
 {
     Task<IEnumerable<Employee>> GetEmployees();

@@ -1,4 +1,4 @@
-﻿namespace SudInfo.DataServices;
+﻿namespace SudInfo.Avalonia.Services;
 public class PrintersService : IPrintersService
 {
     private readonly ApplicationDBContext _applicationDbContext;

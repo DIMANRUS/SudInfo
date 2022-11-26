@@ -1,4 +1,4 @@
-﻿namespace SudInfo.DataServices;
+﻿namespace SudInfo.Avalonia.Services;
 public class ComputersService : IComputersService
 {
     #region Private Variables

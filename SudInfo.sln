@@ -9,10 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SudInfo.EfDataAccessLibrary
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SudInfo.Avalonia", "SudInfo.Avalonia\SudInfo.Avalonia.csproj", "{021BD98D-E1E8-49C4-9DDA-05CDE5C49EDA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SudInfo.DataServices", "SudInfo.DataServices\SudInfo.DataServices.csproj", "{5C7028E2-0601-4060-9D91-F89D2317C7E1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SudInfo.Models", "SudInfo.Models\SudInfo.Models.csproj", "{C51E17B8-1F99-47DC-9C29-A5F176B7DF2F}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		All|Any CPU = All|Any CPU
@@ -38,18 +34,6 @@ Global
 		{021BD98D-E1E8-49C4-9DDA-05CDE5C49EDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{021BD98D-E1E8-49C4-9DDA-05CDE5C49EDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{021BD98D-E1E8-49C4-9DDA-05CDE5C49EDA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5C7028E2-0601-4060-9D91-F89D2317C7E1}.All|Any CPU.ActiveCfg = Debug|Any CPU
-		{5C7028E2-0601-4060-9D91-F89D2317C7E1}.All|Any CPU.Build.0 = Debug|Any CPU
-		{5C7028E2-0601-4060-9D91-F89D2317C7E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5C7028E2-0601-4060-9D91-F89D2317C7E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5C7028E2-0601-4060-9D91-F89D2317C7E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5C7028E2-0601-4060-9D91-F89D2317C7E1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C51E17B8-1F99-47DC-9C29-A5F176B7DF2F}.All|Any CPU.ActiveCfg = Debug|Any CPU
-		{C51E17B8-1F99-47DC-9C29-A5F176B7DF2F}.All|Any CPU.Build.0 = Debug|Any CPU
-		{C51E17B8-1F99-47DC-9C29-A5F176B7DF2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C51E17B8-1F99-47DC-9C29-A5F176B7DF2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C51E17B8-1F99-47DC-9C29-A5F176B7DF2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C51E17B8-1F99-47DC-9C29-A5F176B7DF2F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
