@@ -1,0 +1,75 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        x:Class="SudInfo.Avalonia.Views.Windows.ComputerWindow"
+        xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.WindowViewModels;assembly=SudInfo.Avalonia"
+        xmlns:i="using:Avalonia.Xaml.Interactivity"
+        xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+        Height="485"
+        Width="300"
+        CanResize="False"
+        WindowStartupLocation="CenterOwner"
+        x:DataType="viewModels:ComputerWindowViewModel"
+        Title="Добавление ПК">
+  <StackPanel Margin="10">
+    <TextBox Text="{Binding Computer.Ip}"
+             MaxLength="15"
+             Watermark="IP адрес"
+             Name="IpAdress"/>
+    <ComboBox Margin="0 5 0 0"
+              HorizontalAlignment="Stretch"
+              Items="{Binding OsesList}"
+              SelectedItem="{Binding Computer.OS}"
+              />
+    <TextBox Text="{Binding Computer.CPU}"
+             MaxLength="15"
+             Margin="0 5 0 0"
+             Watermark="CPU"/>
+    <TextBox Text="{Binding Computer.GPU}"
+             MaxLength="15"
+             Margin="0 5 0 0"
+             Watermark="GPU (Необязательно)"/>
+    <TextBox Text="{Binding Computer.ROM}"
+             MaxLength="5"
+             Watermark="Размер диска (ГБ)"
+             Margin="0 5 0 0"/>
+    <TextBox Text="{Binding Computer.RAM}"
+             MaxLength="3"
+             Watermark="Оперативная память (ГБ)"
+             Margin="0 5 0 0"/>
+    <TextBox Text="{Binding Computer.SerialNumber}"
+             MaxLength="20"
+             Watermark="Серийный номер"
+             Margin="0 5 0 0"/>
+    <TextBox Text="{Binding Computer.InventarNumber}"
+             MaxLength="20"
+             Watermark="Инвентарный номер"
+             Margin="0 5 0 5"/>
+    <StackPanel Orientation="Horizontal">
+      <CheckBox Name="IsEmployeeBox"
+                IsChecked="{Binding IsEmployee}"/>
+      <ComboBox
+        Items="{Binding Employees}"
+        SelectedItem="{Binding Computer.Employee}"
+        Width="252"
+        IsEnabled="{Binding #IsEmployeeBox.IsChecked}"
+        AutoScrollToSelectedItem="True"
+        PlaceholderText="Сотрудник">
+        <ComboBox.DataTemplates>
+          <DataTemplate>
+            <TextBlock Text="{Binding FirstName}"/>
+          </DataTemplate>
+        </ComboBox.DataTemplates>
+      </ComboBox>
+    </StackPanel>
+    <Button Content="{Binding SaveButtonText}"
+            Command="{Binding SaveComputer}"
+            Margin="0 5 0 0"
+            Cursor="Hand"
+            FontWeight="Bold"
+            HorizontalAlignment="Stretch"
+            HorizontalContentAlignment="Center"/>
+  </StackPanel>
+</Window>

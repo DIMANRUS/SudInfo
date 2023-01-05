@@ -1,0 +1,28 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="SudInfo.Avalonia.App"
+             xmlns:converters="using:SudInfo.Avalonia.Converters">
+  <Application.Styles>
+    <FluentTheme Mode="Light"/>
+    <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml"/>
+    <Style Selector="Button">
+      <Setter Property="Cursor"
+              Value="Hand"/>
+    </Style>
+    <Style Selector="Window">
+      <Setter Property="Icon"
+              Value="/Assets/Icons/logo.ico"/>
+    </Style>
+    <Style Selector="CheckBox">
+      <Setter Property="Cursor"
+              Value="Hand"/>
+    </Style>
+    <Style Selector="TextBox">
+      <Setter Property="UseFloatingWatermark"
+              Value="True"/>
+    </Style>
+  </Application.Styles>
+  <Application.Resources>
+    <converters:PrinterTypeToTextConverter x:Key="PrinterTypeToTextConverter"/>
+  </Application.Resources>
+</Application>

@@ -1,0 +1,50 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:app="clr-namespace:SudInfo.Avalonia"
+        xmlns:rxui="clr-namespace:Avalonia.ReactiveUI;assembly=Avalonia.ReactiveUI"
+        mc:Ignorable="d"
+        xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels"
+        xmlns:i="using:Avalonia.Xaml.Interactivity"
+        xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+        xmlns:reactiveUi="http://reactiveui.net"
+        MinHeight="600"
+        MinWidth="1000"
+        x:Class="SudInfo.Avalonia.Views.Windows.MainWindow"
+        xmlns:vm="using:SudInfo.Avalonia.ViewModels"
+        Title="MainWindow">
+  <Window.Styles>
+    <Style Selector="Button">
+      <Setter Property="FontWeight"
+              Value="Bold"/>
+      <Setter Property="HorizontalAlignment"
+              Value="Stretch"/>
+      <Setter Property="HorizontalContentAlignment"
+              Value="Center"/>
+      <Setter Property="Margin"
+              Value="10 5 10 5"/>
+    </Style>
+  </Window.Styles>
+  <SplitView IsPaneOpen="True"
+             DisplayMode="Inline"
+             OpenPaneLength="200">
+    <SplitView.Pane>
+      <Grid RowDefinitions="40,40,40,*,40">
+        <Button Content="Компьютеры"
+                Command="{Binding OpenComputersPage}"/>
+        <Button Content="Принтеры | МФУ"
+                Grid.Row="1"
+                Command="{Binding OpenPrintersPage}"/>
+        <Button Content="Мониторы"
+                Grid.Row="2"
+                Command="{Binding OpenMonitorsPage}"/>
+        <Button Content="Настройки"
+                VerticalAlignment="Stretch"
+                Grid.Row="4"
+                Command="{Binding OpenSettingsWindow}"/>
+      </Grid>
+    </SplitView.Pane>
+    <reactiveUi:RoutedViewHost Router="{Binding Router}"/>
+  </SplitView>
+</Window>
