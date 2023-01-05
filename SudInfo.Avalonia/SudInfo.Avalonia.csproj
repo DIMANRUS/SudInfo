@@ -14,6 +14,9 @@
     <None Remove="Assets\Icons\logo.ico" />
     <None Remove="Assets\Images\add.png" />
     <None Remove="Assets\Images\edit.png" />
+    <None Remove="Assets\Images\MenuBar\monitor.png" />
+    <None Remove="Assets\Images\MenuBar\printer.png" />
+    <None Remove="Assets\Images\MenuBar\settings.png" />
     <None Remove="Assets\Images\refresh.png" />
     <None Remove="Assets\Images\remove.png" />
   </ItemGroup>

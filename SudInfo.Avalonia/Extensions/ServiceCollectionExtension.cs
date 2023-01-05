@@ -14,7 +14,7 @@ internal static class ServiceCollectionExtension
             .AddDbContext<ApplicationDBContext>(option =>
             {
                 option.UseSqlServer(configuration.GetConnectionString("SqlExpressDevelop"));
-                //oprion.UseSqlServer(configuration.GetConnectionString("UbuntuServerDevelop"));
+                //option.UseSqlServer(configuration.GetConnectionString("UbuntuServerDevelop"));
             })
             .AddTransient<ComputersPageViewModel>()
             .AddTransient<ComputerWindowViewModel>()
