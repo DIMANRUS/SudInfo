@@ -13,7 +13,7 @@
         MinWidth="1000"
         x:Class="SudInfo.Avalonia.Views.Windows.MainWindow"
         xmlns:vm="using:SudInfo.Avalonia.ViewModels"
-        Title="MainWindow">
+        Title="СудИнфо - Инженер">
   <Window.Styles>
     <Style Selector="Button">
       <Setter Property="FontWeight"

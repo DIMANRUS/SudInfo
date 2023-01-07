@@ -13,24 +13,38 @@
         WindowStartupLocation="CenterOwner"
         x:DataType="viewModels:PrinterWindowViewModel"
         Title="Принтер">
-  <StackPanel Margin="10">
+  <StackPanel Margin="10"
+              Spacing="5">
     <TextBox Watermark="Название"
              MaxLength="40"
-             Text="{Binding Printer.Name}"
-             Margin="0 5 0 0"/>
+             Text="{Binding Printer.Name}"/>
     <TextBox Watermark="IP Адрес"
              MaxLength="12"
-             Text="{Binding Printer.Ip}"
-             Margin="0 5 0 0"/>
+             Text="{Binding Printer.Ip}"/>
     <TextBox Watermark="Номер кабинета"
              MaxLength="3"
-             Text="{Binding Printer.Cabinet}"
-             Margin="0 5 0 0"/>
+             Text="{Binding Printer.Cabinet}"/>
     <ComboBox Items="{Binding PrinterTypes}"
               SelectedItem="{Binding Printer.Type}"
-              Margin="0 5 0 0"
               HorizontalAlignment="Stretch"/>
-      <Button Content="{Binding SaveButtonText}"
+    <StackPanel Orientation="Horizontal">
+      <CheckBox Name="IsEmployeeBox"
+                IsChecked="{Binding IsEmployee}"/>
+      <ComboBox
+        Items="{Binding Employees}"
+        SelectedItem="{Binding Printer.Employee}"
+        Width="252"
+        IsEnabled="{Binding #IsEmployeeBox.IsChecked}"
+        AutoScrollToSelectedItem="True"
+        PlaceholderText="Сотрудник">
+        <ComboBox.DataTemplates>
+          <DataTemplate>
+            <TextBlock Text="{Binding FirstName}"/>
+          </DataTemplate>
+        </ComboBox.DataTemplates>
+      </ComboBox>
+    </StackPanel>
+    <Button Content="{Binding SaveButtonText}"
             Command="{Binding SavePrinter}"
             Margin="0 5 0 0"
             Cursor="Hand"

@@ -2,7 +2,6 @@
 
 public class ComputersPageViewModel : BaseRoutableViewModel
 {
-
     #region Services
     private IComputersService _computersService;
     private IDialogService _dialogService;
@@ -21,7 +20,7 @@ public class ComputersPageViewModel : BaseRoutableViewModel
     #endregion
 
     #region Private Variables
-    private EventHandler eventHandlerClosedWindowDialog;
+    private EventHandler _eventHandlerClosedWindowDialog;
     #endregion
 
     #region Constructors
@@ -32,7 +31,7 @@ public class ComputersPageViewModel : BaseRoutableViewModel
         _computersService = computersService;
         #endregion
 
-        eventHandlerClosedWindowDialog = async (s, e) =>
+        _eventHandlerClosedWindowDialog = async (s, e) =>
         {
             await LoadComputers();
         };
@@ -40,17 +39,14 @@ public class ComputersPageViewModel : BaseRoutableViewModel
         #region Commands Initialization
         OpenAddComputerWindow = ReactiveCommand.Create(async () =>
         {
-            await navigationService.ShowComputerWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog);
+            await navigationService.ShowComputerWindowDialog(WindowType.Add, _eventHandlerClosedWindowDialog);
         });
         OpenEditComputerWindow = ReactiveCommand.Create(async (int id) =>
         {
-            await navigationService.ShowComputerWindowDialog(WindowType.Save, eventHandlerClosedWindowDialog, id);
+            await navigationService.ShowComputerWindowDialog(WindowType.Save, _eventHandlerClosedWindowDialog, id);
         });
         Initialized = ReactiveCommand.CreateFromTask(LoadComputers);
-        RefreshComputers = ReactiveCommand.CreateFromTask(async () =>
-        {
-            await LoadComputers();
-        });
+        RefreshComputers = ReactiveCommand.CreateFromTask(LoadComputers);
         RemoveComputer = ReactiveCommand.CreateFromTask(async (int id) =>
         {
             var dialogResult = await dialogService.ShowMessageBox("Сообщение", "Вы действительно хотите удалить компьютер?", buttonEnum: ButtonEnum.YesNo, icon: Icon.Question);
@@ -66,9 +62,6 @@ public class ComputersPageViewModel : BaseRoutableViewModel
         });
         #endregion
     }
-    //public ComputersPageViewModel()
-    //{
-    //}
     #endregion
 
     #region Private Methods
