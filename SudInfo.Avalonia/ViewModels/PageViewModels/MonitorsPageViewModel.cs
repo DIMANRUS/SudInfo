@@ -42,4 +42,5 @@ public class MonitorsPageViewModel : BaseRoutableViewModel
     private async Task LoadMonitors()
     {
     }
+    #endregion
 }
