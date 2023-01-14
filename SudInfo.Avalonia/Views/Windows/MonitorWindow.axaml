@@ -3,49 +3,34 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        x:Class="SudInfo.Avalonia.Views.Windows.ComputerWindow"
+        x:Class="SudInfo.Avalonia.Views.Windows.MonitorWindow"
+        Title="Монитор"
         xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.WindowViewModels;assembly=SudInfo.Avalonia"
         xmlns:i="using:Avalonia.Xaml.Interactivity"
         xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
-        Height="540"
-        Width="300"
         CanResize="False"
         WindowStartupLocation="CenterOwner"
-        x:DataType="viewModels:ComputerWindowViewModel"
-        Title="Компьютер">
-  <i:Interaction.Behaviors>
-    <ia:EventTriggerBehavior EventName="Initialized">
-      <ia:InvokeCommandAction Command="{Binding Initialized}"/>
-    </ia:EventTriggerBehavior>
-  </i:Interaction.Behaviors>
+        Height="400"
+        Width="300"
+        x:DataType="viewModels:MonitorWindowViewModel">
   <StackPanel Margin="10"
               Spacing="5">
-    <TextBox Text="{Binding Computer.Name}"
+    <TextBox Text="{Binding Monitor.Name}"
              MaxLength="50"
-             Watermark="Название"/>
-    <TextBox Text="{Binding Computer.Ip}"
-             MaxLength="15"
-             Watermark="IP адрес"/>
-    <ComboBox
-      HorizontalAlignment="Stretch"
-      Items="{Binding OsesList}"
-      SelectedItem="{Binding Computer.OS}"/>
-    <TextBox Text="{Binding Computer.CPU}"
-             MaxLength="15"
-             Watermark="CPU"/>
-    <TextBox Text="{Binding Computer.GPU}"
-             MaxLength="15"
-             Watermark="GPU (Необязательно)"/>
-    <TextBox Text="{Binding Computer.ROM}"
-             MaxLength="5"
-             Watermark="Размер диска (ГБ)"/>
-    <TextBox Text="{Binding Computer.RAM}"
-             MaxLength="3"
-             Watermark="Оперативная память (ГБ)"/>
-    <TextBox Text="{Binding Computer.SerialNumber}"
+             Watermark="Название монитора"/>
+    <TextBox Text="{Binding Monitor.ScreenSize}"
+             MaxLength="2"
+             Watermark="Размер экрана"/>
+    <TextBox Text="{Binding Monitor.ScreenResolutionWidth}"
+             MaxLength="4"
+             Watermark="Разрешение экрана (ширина)"/>
+    <TextBox Text="{Binding Monitor.ScreenResolutionHeight}"
+             MaxLength="4"
+             Watermark="Разрешение экрана (высота)"/>
+    <TextBox Text="{Binding Monitor.SerialNumber}"
              MaxLength="20"
              Watermark="Серийный номер"/>
-    <TextBox Text="{Binding Computer.InventarNumber}"
+    <TextBox Text="{Binding Monitor.InventarNumber}"
              MaxLength="20"
              Watermark="Инвентарный номер"/>
     <StackPanel Orientation="Horizontal">
@@ -53,7 +38,7 @@
                 IsChecked="{Binding IsEmployee}"/>
       <ComboBox
         Items="{Binding Employees}"
-        SelectedItem="{Binding Computer.Employee}"
+        SelectedItem="{Binding Monitor.Employee}"
         Width="252"
         IsEnabled="{Binding #IsEmployeeBox.IsChecked}"
         AutoScrollToSelectedItem="True"
@@ -66,7 +51,7 @@
       </ComboBox>
     </StackPanel>
     <Button Content="{Binding SaveButtonText}"
-            Command="{Binding SaveComputer}"
+            Command="{Binding SaveMonitor}"
             Cursor="Hand"
             FontWeight="Bold"
             HorizontalAlignment="Stretch"

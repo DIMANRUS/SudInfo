@@ -17,6 +17,7 @@
     <None Remove="Assets\Images\MenuBar\monitor.png" />
     <None Remove="Assets\Images\MenuBar\printer.png" />
     <None Remove="Assets\Images\MenuBar\settings.png" />
+    <None Remove="Assets\Images\MenuBar\users.png" />
     <None Remove="Assets\Images\refresh.png" />
     <None Remove="Assets\Images\remove.png" />
   </ItemGroup>
@@ -37,13 +38,10 @@
     <PackageReference Include="Avalonia.Xaml.Behaviors" Version="0.10.18" />
     <PackageReference Include="Avalonia.Xaml.Interactions" Version="0.10.18" />
     <PackageReference Include="MessageBox.Avalonia" Version="2.1.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
-    <PackageReference Include="ReactiveUI.Fody" Version="18.3.1" />
-    <PackageReference Include="ReactiveUI.Validation" Version="3.0.1" />
-    <PackageReference Include="XamlNameReferenceGenerator" Version="1.4.2" />
+    <PackageReference Include="ReactiveUI.Fody" Version="18.4.1" />
+    <PackageReference Include="ReactiveUI.Validation" Version="3.0.22" />
+    <PackageReference Include="XamlNameReferenceGenerator" Version="1.5.1" />
   </ItemGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\Images\**" />

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SudInfo.EFDataAccessLibrary.Contexts;
 
@@ -11,9 +12,11 @@ using SudInfo.EFDataAccessLibrary.Contexts;
 namespace SudInfo.EfDataAccessLibrary.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230107182446_AddMonitorsTable")]
+    partial class AddMonitorsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,11 +58,6 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     b.Property<bool>("IsDecommissioned")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
                     b.Property<int>("OS")
                         .HasColumnType("int");
 
@@ -81,7 +79,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     b.ToTable("Computers");
                 });
 
-            modelBuilder.Entity("SudInfo.EFDataAccessLibrary.Models.User", b =>
+            modelBuilder.Entity("SudInfo.EFDataAccessLibrary.Models.Employee", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -123,7 +121,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.Monitor", b =>
@@ -209,7 +207,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
 
             modelBuilder.Entity("SudInfo.EFDataAccessLibrary.Models.Computer", b =>
                 {
-                    b.HasOne("SudInfo.EFDataAccessLibrary.Models.User", "Employee")
+                    b.HasOne("SudInfo.EFDataAccessLibrary.Models.Employee", "Employee")
                         .WithMany()
                         .HasForeignKey("EmployeeId");
 
@@ -218,7 +216,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
 
             modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.Monitor", b =>
                 {
-                    b.HasOne("SudInfo.EFDataAccessLibrary.Models.User", "Employee")
+                    b.HasOne("SudInfo.EFDataAccessLibrary.Models.Employee", "Employee")
                         .WithMany()
                         .HasForeignKey("EmployeeId");
 
@@ -227,7 +225,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
 
             modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.Printer", b =>
                 {
-                    b.HasOne("SudInfo.EFDataAccessLibrary.Models.User", "Employee")
+                    b.HasOne("SudInfo.EFDataAccessLibrary.Models.Employee", "Employee")
                         .WithMany()
                         .HasForeignKey("EmployeeId");
 

@@ -13,6 +13,6 @@ internal class ApplicationDBContextFactory : IDesignTimeDbContextFactory<Applica
     {
         var optionsBuilder = new DbContextOptionsBuilder<ApplicationDBContext>();
         optionsBuilder.UseSqlServer(configuration.GetConnectionString("SqlExpressDevelop"));
-        return new ApplicationDBContext(optionsBuilder.Options);
+        return new ApplicationDBContext();
     }
 }

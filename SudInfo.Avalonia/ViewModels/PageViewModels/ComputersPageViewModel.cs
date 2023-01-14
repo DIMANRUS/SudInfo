@@ -3,8 +3,8 @@
 public class ComputersPageViewModel : BaseRoutableViewModel
 {
     #region Services
-    private IComputersService _computersService;
-    private IDialogService _dialogService;
+    private readonly IComputersService _computersService;
+    private readonly IDialogService _dialogService;
     #endregion
 
     #region Commands
@@ -12,15 +12,22 @@ public class ComputersPageViewModel : BaseRoutableViewModel
     public ICommand OpenEditComputerWindow { get; private init; }
     public ICommand RefreshComputers { get; private init; }
     public ICommand RemoveComputer { get; private init; }
+    public ICommand SearchBoxKeyUp { get; private init; }
     #endregion
 
     #region Collections
     [Reactive]
     public ObservableCollection<Computer> Computers { get; set; }
+    private IEnumerable<Computer> ComputersFromDataBase { get; set; }
     #endregion
 
     #region Private Variables
     private EventHandler _eventHandlerClosedWindowDialog;
+    #endregion
+
+    #region Public properties
+    [Reactive]
+    public string SearchText { get; set; } = string.Empty;
     #endregion
 
     #region Constructors
@@ -60,6 +67,15 @@ public class ComputersPageViewModel : BaseRoutableViewModel
             }
             await LoadComputers();
         });
+        SearchBoxKeyUp = ReactiveCommand.Create(() =>
+        {
+            if (string.IsNullOrEmpty(SearchText))
+            {
+                Computers = new(ComputersFromDataBase);
+                return;
+            }
+            Computers = new(ComputersFromDataBase.Where(x => x.Name.ToLower().Contains(SearchText.ToLower())));
+        });
         #endregion
     }
     #endregion
@@ -74,6 +90,7 @@ public class ComputersPageViewModel : BaseRoutableViewModel
             return;
         }
         Computers = new(computersResult.Result);
+        ComputersFromDataBase = Computers;
     }
     #endregion
 }

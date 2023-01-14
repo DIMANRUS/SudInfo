@@ -24,13 +24,25 @@
     </Style>
   </UserControl.Styles>
   <Grid RowDefinitions="40,*"
-        ColumnDefinitions="*, 40, 40">
+        ColumnDefinitions="180,*, 40, 40">
     <TextBlock Text="Принтеры и МФУ"
                Margin="10"
                FontWeight="Bold"
                FontSize="20"/>
+    <TextBox Watermark="Поиск по названию"
+             Grid.Column="1"
+             Margin="10 5 10 5"
+             UseFloatingWatermark="False"
+             Text="{Binding SearchText}"
+      MaxLength="50">
+      <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="KeyUp">
+          <ia:InvokeCommandAction Command="{Binding SearchBoxKeyUp}"/>
+        </ia:EventTriggerBehavior>
+      </i:Interaction.Behaviors>
+    </TextBox>
     <Image Source="/Assets/Images/refresh.png"
-           Grid.Column="1">
+           Grid.Column="2">
       <i:Interaction.Behaviors>
         <ia:EventTriggerBehavior EventName="Tapped">
           <ia:InvokeCommandAction Command="{Binding RefreshPrinters}"/>
@@ -38,7 +50,7 @@
       </i:Interaction.Behaviors>
     </Image>
     <Image Source="/Assets/Images/add.png"
-           Grid.Column="2">
+           Grid.Column="3">
       <i:Interaction.Behaviors>
         <ia:EventTriggerBehavior EventName="Tapped">
           <ia:InvokeCommandAction Command="{Binding OpenAddPrinterWindow}"/>
@@ -47,27 +59,32 @@
     </Image>
     <DataGrid Items="{Binding Printers}"
               Grid.Row="1"
-              Grid.ColumnSpan="3"
+              Grid.ColumnSpan="4"
               x:DataType="models:Printer">
       <DataGrid.Columns>
         <DataGridTextColumn Header="Название"
-                            Binding="{Binding Name}"/>
+                            Binding="{Binding Name}"
+                            IsReadOnly="True"/>
         <DataGridTextColumn Header="Тип"
-                            Binding="{Binding Type, Converter={StaticResource PrinterTypeToTextConverter}}"/>
+                            Binding="{Binding Type, Converter={StaticResource PrinterTypeToTextConverter}}"
+                            IsReadOnly="True"/>
         <DataGridTextColumn Header="IP Адрес"
-                            Binding="{Binding Ip}"/>
+                            Binding="{Binding Ip}"
+                            IsReadOnly="True"/>
         <DataGridTextColumn Header="Кабинет"
-                            Binding="{Binding Cabinet}"/>
+                            Binding="{Binding Cabinet}"
+                            IsReadOnly="True"/>
         <DataGridTextColumn Header="Фамилия сотрудника"
                             Binding="{Binding Employee.LastName}"
-                            Width="*"/>
+                            Width="*"
+                            IsReadOnly="True"/>
         <DataGridTemplateColumn Width="40">
           <DataTemplate>
             <Image Source="/Assets/Images/edit.png">
               <i:Interaction.Behaviors>
                 <ia:EventTriggerBehavior EventName="Tapped">
                   <ia:InvokeCommandAction Command="{Binding DataContext.OpenEditPrinterWindow, ElementName=Root}"
-                    CommandParameter="{Binding Id}"/>
+                                          CommandParameter="{Binding Id}"/>
                 </ia:EventTriggerBehavior>
               </i:Interaction.Behaviors>
             </Image>

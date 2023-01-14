@@ -13,6 +13,11 @@
         WindowStartupLocation="CenterOwner"
         x:DataType="viewModels:PrinterWindowViewModel"
         Title="Принтер">
+  <i:Interaction.Behaviors>
+    <ia:EventTriggerBehavior EventName="Initialized">
+      <ia:InvokeCommandAction Command="{Binding Initialized}"/>
+    </ia:EventTriggerBehavior>
+  </i:Interaction.Behaviors>
   <StackPanel Margin="10"
               Spacing="5">
     <TextBox Watermark="Название"
@@ -23,7 +28,8 @@
              Text="{Binding Printer.Ip}"/>
     <TextBox Watermark="Номер кабинета"
              MaxLength="3"
-             Text="{Binding Printer.Cabinet}"/>
+             Text="{Binding Printer.Cabinet}"
+             IsEnabled="{Binding !IsChecked, ElementName=IsEmployeeBox}"/>
     <ComboBox Items="{Binding PrinterTypes}"
               SelectedItem="{Binding Printer.Type}"
               HorizontalAlignment="Stretch"/>

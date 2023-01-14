@@ -1,5 +1,5 @@
 ﻿namespace SudInfo.EFDataAccessLibrary.Models;
-public class Employee : BaseModel
+public class User : BaseModel
 {
     [StringLength(20)]
     public string FirstName { get; set; }
@@ -9,9 +9,9 @@ public class Employee : BaseModel
     public string? MiddleName { get; set; }
     public byte NumberCabinet { get; set; }
     [StringLength(11)]
-    public string PersonalPhone { get; set; }
+    public string? PersonalPhone { get; set; }
     [StringLength(11)]
-    public string WorkPhone { get; set; }
+    public string? WorkPhone { get; set; }
     [StringLength(3)]
-    public string PhoneLocal { get; set; }
+    public string? PhoneLocal { get; set; }
 }

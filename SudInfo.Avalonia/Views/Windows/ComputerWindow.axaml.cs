@@ -1,9 +1,7 @@
-using SudInfo.Avalonia.Extensions;
-using SudInfo.Avalonia.ViewModels.WindowViewModels;
-
 namespace SudInfo.Avalonia.Views.Windows;
 public partial class ComputerWindow : ReactiveWindow<ComputerWindowViewModel>
 {
+    #region Constructors
     public ComputerWindow() { }
     public ComputerWindow(WindowType windowType, int? computerId = null)
     {
@@ -12,4 +10,5 @@ public partial class ComputerWindow : ReactiveWindow<ComputerWindowViewModel>
         InitializeComponent();
         computerWindowViewModel.InitializationData(windowType, computerId);
     }
+    #endregion
 }

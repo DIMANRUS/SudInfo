@@ -6,7 +6,6 @@ global using Avalonia.ReactiveUI;
 global using MessageBox.Avalonia.DTO;
 global using MessageBox.Avalonia.Enums;
 global using Microsoft.EntityFrameworkCore;
-global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
 global using ReactiveUI;
 global using ReactiveUI.Fody.Helpers;

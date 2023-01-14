@@ -4,25 +4,18 @@ internal static class ServiceCollectionExtension
     public static IServiceProvider ServiceProvider { get; private set; }
     public static void Init()
     {
-        IConfiguration configuration = new ConfigurationBuilder()
-            .SetBasePath(Environment.CurrentDirectory)
-            .AddJsonFile("appsettings.json")
-            .AddUserSecrets<App>()
-            .Build();
-
         ServiceProvider = new ServiceCollection()
-            .AddDbContext<ApplicationDBContext>(option =>
-            {
-                option.UseSqlServer(configuration.GetConnectionString("SqlExpressDevelop"));
-                //option.UseSqlServer(configuration.GetConnectionString("UbuntuServerDevelop"));
-            })
             .AddTransient<ComputersPageViewModel>()
             .AddTransient<ComputerWindowViewModel>()
             .AddTransient<PrintersPageViewModel>()
             .AddTransient<PrinterWindowViewModel>()
             .AddTransient<MonitorsPageViewModel>()
+            .AddTransient<MonitorWindowViewModel>()
+            .AddTransient<UsersPageViewModel>()
+            .AddTransient<UserWindowViewModel>()
+            .AddTransient<IMonitorsService, MonitorsService>()
             .AddTransient<IComputersService, ComputersService>()
-            .AddTransient<IEmployeeService, EmployeeService>()
+            .AddTransient<IUsersService, UsersService>()
             .AddSingleton<INavigationService, NavigationService>()
             .AddSingleton<IDialogService, DialogService>()
             .AddSingleton<IValidationService, ValidationService>()

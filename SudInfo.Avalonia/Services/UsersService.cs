@@ -1,17 +1,19 @@
 ﻿namespace SudInfo.Avalonia.Services;
-public class PrintersService : IPrintersService
+public class UsersService : IUsersService
 {
-    #region Get Methods
-    public async Task<TaskResult<Printer>> GetPrinterById(int id)
+    #region Get Methods Realization
+    public async Task<TaskResult<User>> GetUserById(int userId)
     {
         try
         {
             using ApplicationDBContext applicationDBContext = new();
-            var printer = await applicationDBContext.Printers.Include(x => x.Employee).FirstOrDefaultAsync(x => x.Id == id);
+            var user = await applicationDBContext.Users.SingleOrDefaultAsync(x => x.Id == userId);
+            if (user == null)
+                throw new Exception("User not Found");
             return new()
             {
                 Success = true,
-                Result = printer
+                Result = user
             };
         }
         catch (Exception ex)
@@ -23,16 +25,16 @@ public class PrintersService : IPrintersService
             };
         }
     }
-    public async Task<TaskResult<List<Printer>>> GetPrinters()
+    public async Task<TaskResult<List<User>>> GetUsers()
     {
         try
         {
             using ApplicationDBContext applicationDBContext = new();
-            var printers = await applicationDBContext.Printers.Include(x => x.Employee).ToListAsync();
+            var users = await applicationDBContext.Users.ToListAsync();
             return new()
             {
                 Success = true,
-                Result = printers
+                Result = users
             };
         }
         catch (Exception ex)
@@ -43,14 +45,18 @@ public class PrintersService : IPrintersService
                 Message = ex.Message
             };
         }
-    } 
+    }
     #endregion
-    public async Task<TaskResult> SavePrinter(Printer printer)
+
+    public async Task<TaskResult> RemoveUserById(int userId)
     {
         try
         {
             using ApplicationDBContext applicationDBContext = new();
-            applicationDBContext.Printers.Update(printer);
+            var user = await applicationDBContext.Users.SingleOrDefaultAsync(x => x.Id == userId);
+            if (user == null)
+                throw new Exception("User not found");
+            applicationDBContext.Remove(user);
             await applicationDBContext.SaveChangesAsync();
             return new()
             {
@@ -66,12 +72,12 @@ public class PrintersService : IPrintersService
             };
         }
     }
-    public async Task<TaskResult> AddPrinter(Printer printer)
+    public async Task<TaskResult> SaveUser(User user)
     {
         try
         {
             using ApplicationDBContext applicationDBContext = new();
-            await applicationDBContext.Printers.AddAsync(printer);
+            applicationDBContext.Update(user);
             await applicationDBContext.SaveChangesAsync();
             return new()
             {
@@ -87,15 +93,12 @@ public class PrintersService : IPrintersService
             };
         }
     }
-    public async Task<TaskResult> RemovePrinterById(int id)
+    public async Task<TaskResult> AddUser(User user)
     {
         try
         {
             using ApplicationDBContext applicationDBContext = new();
-            var printer = await applicationDBContext.Printers.FirstOrDefaultAsync(x => x.Id == id);
-            if (printer == null)
-                throw new Exception("Printer not found");
-            applicationDBContext.Printers.Remove(printer);
+            await applicationDBContext.AddAsync(user);
             await applicationDBContext.SaveChangesAsync();
             return new()
             {

@@ -1,7 +1,7 @@
 ﻿namespace SudInfo.Avalonia.Interfaces;
 public interface IComputersService
 {
-    #region Get Computer/s
+    #region Get Methods
     Task<TaskResult<List<Computer>>> GetComputers();
     Task<TaskResult<Computer>> GetComputerById(int id);
     #endregion

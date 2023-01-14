@@ -5,4 +5,8 @@ public abstract class BaseRoutableViewModel : BaseViewModel, IRoutableViewModel
     public string UrlPathSegment { get; }
     public IScreen HostScreen { get; }
     #endregion
+
+    #region Protected Variables
+    protected EventHandler eventHandlerClosedWindowDialog;
+    #endregion
 }

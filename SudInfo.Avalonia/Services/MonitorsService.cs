@@ -1,17 +1,17 @@
 ﻿namespace SudInfo.Avalonia.Services;
-public class PrintersService : IPrintersService
+public class MonitorsService : IMonitorsService
 {
-    #region Get Methods
-    public async Task<TaskResult<Printer>> GetPrinterById(int id)
+    #region Get Methods Realizations
+    public async Task<TaskResult<List<Monitor>>> GetMonitors()
     {
         try
         {
             using ApplicationDBContext applicationDBContext = new();
-            var printer = await applicationDBContext.Printers.Include(x => x.Employee).FirstOrDefaultAsync(x => x.Id == id);
+            var monitors = await applicationDBContext.Monitors.Include(x => x.Employee).ToListAsync();
             return new()
             {
                 Success = true,
-                Result = printer
+                Result = monitors
             };
         }
         catch (Exception ex)
@@ -23,16 +23,18 @@ public class PrintersService : IPrintersService
             };
         }
     }
-    public async Task<TaskResult<List<Printer>>> GetPrinters()
+    public async Task<TaskResult<Monitor>> GetMonitorById(int id)
     {
         try
         {
             using ApplicationDBContext applicationDBContext = new();
-            var printers = await applicationDBContext.Printers.Include(x => x.Employee).ToListAsync();
+            var monitor = await applicationDBContext.Monitors.Include(x => x.Employee).FirstOrDefaultAsync(x => x.Id == id);
+            if (monitor == null)
+                throw new Exception("Computer not Found");
             return new()
             {
                 Success = true,
-                Result = printers
+                Result = monitor
             };
         }
         catch (Exception ex)
@@ -45,12 +47,37 @@ public class PrintersService : IPrintersService
         }
     } 
     #endregion
-    public async Task<TaskResult> SavePrinter(Printer printer)
+
+    public async Task<TaskResult> RemoveMonitorById(int id)
     {
         try
         {
             using ApplicationDBContext applicationDBContext = new();
-            applicationDBContext.Printers.Update(printer);
+            var monitor = await applicationDBContext.Monitors.FirstOrDefaultAsync(x => x.Id == id);
+            if (monitor == null)
+                throw new Exception("Monitor not found");
+            applicationDBContext.Monitors.Remove(monitor);
+            await applicationDBContext.SaveChangesAsync();
+            return new()    
+            {
+                Success = true
+            };
+        }
+        catch (Exception ex)
+        {
+            return new()
+            {
+                Success = false,
+                Message = ex.Message
+            };
+        }
+    }
+    public async Task<TaskResult> SaveMonitor(Monitor monitor)
+    {
+        try
+        {
+            using ApplicationDBContext applicationDBContext = new();
+            applicationDBContext.Monitors.Update(monitor);
             await applicationDBContext.SaveChangesAsync();
             return new()
             {
@@ -66,36 +93,12 @@ public class PrintersService : IPrintersService
             };
         }
     }
-    public async Task<TaskResult> AddPrinter(Printer printer)
+    public async Task<TaskResult> AddMonitor(Monitor monitor)
     {
         try
         {
             using ApplicationDBContext applicationDBContext = new();
-            await applicationDBContext.Printers.AddAsync(printer);
-            await applicationDBContext.SaveChangesAsync();
-            return new()
-            {
-                Success = true
-            };
-        }
-        catch (Exception ex)
-        {
-            return new()
-            {
-                Success = false,
-                Message = ex.Message
-            };
-        }
-    }
-    public async Task<TaskResult> RemovePrinterById(int id)
-    {
-        try
-        {
-            using ApplicationDBContext applicationDBContext = new();
-            var printer = await applicationDBContext.Printers.FirstOrDefaultAsync(x => x.Id == id);
-            if (printer == null)
-                throw new Exception("Printer not found");
-            applicationDBContext.Printers.Remove(printer);
+            await applicationDBContext.Monitors.AddAsync(monitor);
             await applicationDBContext.SaveChangesAsync();
             return new()
             {

@@ -8,7 +8,7 @@ public class Printer : BaseModel
     public string? Ip { get; set; }
     public int Cabinet { get; set; }
     public bool IsDecommissioned { get; set; }
-    public Employee? Employee { get; set; }
+    public User? Employee { get; set; }
 }
 
 public enum PrinterType

@@ -6,6 +6,7 @@ public class PrintersPageViewModel : BaseRoutableViewModel
     public ICommand OpenAddPrinterWindow { get; private init; }
     public ICommand OpenEditPrinterWindow { get; private init; }
     public ICommand RemovePrinter { get; private init; }
+    public ICommand SearchBoxKeyUp { get; private init; }
     #endregion
 
     #region Services
@@ -16,10 +17,12 @@ public class PrintersPageViewModel : BaseRoutableViewModel
     #region Collections
     [Reactive]
     public ObservableCollection<Printer> Printers { get; set; }
+    private IEnumerable<Printer> PrintersFromDataBase { get; set; }
     #endregion
 
-    #region Private Variables
-    private EventHandler eventHandlerClosedWindowDialog;
+    #region Public properties
+    [Reactive]
+    public string SearchText { get; set; } = string.Empty;
     #endregion
 
     #region Constructors
@@ -39,25 +42,37 @@ public class PrintersPageViewModel : BaseRoutableViewModel
         Initialized = ReactiveCommand.CreateFromTask(LoadPrinters);
         RefreshPrinters = ReactiveCommand.CreateFromTask(LoadPrinters);
         OpenAddPrinterWindow = ReactiveCommand.CreateFromTask(async () =>
-            await navigationService.ShowPrinterWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog));
-        OpenEditPrinterWindow = ReactiveCommand.Create(async (int id) =>
-            await navigationService.ShowPrinterWindowDialog(WindowType.Save, eventHandlerClosedWindowDialog, id));
-        RemovePrinter = ReactiveCommand.CreateFromTask(async (int id) =>
         {
-            var dialogResult = await dialogService.ShowMessageBox("Сообщение", "Вы действительно хотите удалить принтер?", buttonEnum: ButtonEnum.YesNo, icon: Icon.Question);
-            if (dialogResult == ButtonResult.No)
-                return;
-            var removePrinterResult = await printersService.RemovePrinterById(id);
-            if (!removePrinterResult.Success)
+            await navigationService.ShowPrinterWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog);
+        });
+        OpenEditPrinterWindow = ReactiveCommand.Create(async (int id) =>
+        {
+            await navigationService.ShowPrinterWindowDialog(WindowType.Save, eventHandlerClosedWindowDialog, id);
+        });
+        RemovePrinter = ReactiveCommand.CreateFromTask(async (int id) =>
             {
-                await _dialogService.ShowMessageBox("Ошибка", $"Ошибка удаления принтера! Ошибка: {removePrinterResult.Message}", icon: Icon.Error);
+                var dialogResult = await dialogService.ShowMessageBox("Сообщение", "Вы действительно хотите удалить принтер?", buttonEnum: ButtonEnum.YesNo, icon: Icon.Question);
+                if (dialogResult == ButtonResult.No)
+                    return;
+                var removePrinterResult = await printersService.RemovePrinterById(id);
+                if (!removePrinterResult.Success)
+                {
+                    await _dialogService.ShowMessageBox("Ошибка", $"Ошибка удаления принтера! Ошибка: {removePrinterResult.Message}", icon: Icon.Error);
+                    return;
+                }
+                await LoadPrinters();
+            });
+        SearchBoxKeyUp = ReactiveCommand.Create(() =>
+        {
+            if (string.IsNullOrEmpty(SearchText))
+            {
+                Printers = new(PrintersFromDataBase);
                 return;
             }
-            await LoadPrinters();
+            Printers = new(PrintersFromDataBase.Where(x => x.Name.ToLower().Contains(SearchText.ToLower())));
         });
         #endregion
     }
-    //public PrintersPageViewModel() { }
     #endregion
 
     #region Private Methods
@@ -70,6 +85,7 @@ public class PrintersPageViewModel : BaseRoutableViewModel
             return;
         }
         Printers = new(printersResult.Result);
+        PrintersFromDataBase = Printers;
     }
     #endregion
 }

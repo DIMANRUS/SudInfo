@@ -12,7 +12,7 @@ public class ComputerWindowViewModel : BaseViewModel
 
     #region Collections
     public IEnumerable<OS> OsesList => Enum.GetValues(typeof(OS)).Cast<OS>();
-    public IEnumerable<Employee> Employees { get; set; }
+    public IEnumerable<User> Users { get; set; }
     #endregion
 
     #region Properties
@@ -24,23 +24,22 @@ public class ComputerWindowViewModel : BaseViewModel
     #endregion
 
     #region Constructors
-    public ComputerWindowViewModel(IComputersService computersService, IEmployeeService employeeService, IDialogService dialogService, IValidationService validationService)
+    public ComputerWindowViewModel(IComputersService computersService, IUsersService usersService, IDialogService dialogService, IValidationService validationService)
     {
         #region Service Set
         _computersService = computersService;
         _dialogService = dialogService;
         #endregion
 
-        Task.Run(async () =>
+        Initialized = ReactiveCommand.CreateFromTask(async () =>
         {
-            try
-            {
-                Employees = await employeeService.GetEmployees();
-            }
-            catch
+            var usersResult = await usersService.GetUsers();
+            if(!usersResult.Success)
             {
                 await dialogService.ShowMessageBox("Ошибка", "Ошибка загрузки Сотрудников! Компьютер можно добавить, но без сотрудника.", icon: Icon.Error);
+                return;
             }
+            Users = usersResult.Result;
         });
 
         #region Commands Initialization
@@ -82,7 +81,6 @@ public class ComputerWindowViewModel : BaseViewModel
 
     #region Private Fields
     private WindowType _windowType;
-    private int _computerId;
     #endregion
 
     #region Public Methods
@@ -92,11 +90,10 @@ public class ComputerWindowViewModel : BaseViewModel
         if (id != null)
         {
             SaveButtonText = "Сохранить компьютер";
-            _computerId = id.GetValueOrDefault();
             var computerResult = await _computersService.GetComputerById(id.GetValueOrDefault());
             if (!computerResult.Success)
             {
-                await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получени компьютера! Ошибка: {computerResult.Message}", true, icon: Icon.Error);
+                await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения компьютера! Ошибка: {computerResult.Message}", true, icon: Icon.Error);
                 return;
             }
             Computer = computerResult.Result;

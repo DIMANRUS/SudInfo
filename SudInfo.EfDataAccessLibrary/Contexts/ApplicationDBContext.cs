@@ -3,18 +3,23 @@
 namespace SudInfo.EFDataAccessLibrary.Contexts;
 public class ApplicationDBContext : DbContext
 {
-    #region Constructors
-    public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options)
-    {
+    #region Private variables
+    private readonly IConfiguration configuration = new ConfigurationBuilder()
+        .SetBasePath(Environment.CurrentDirectory)
+        .AddJsonFile("appsettings.json")
+        .AddUserSecrets<ApplicationDBContext>()
+        .Build();
+    #endregion
 
-    }
-    public ApplicationDBContext()
+    #region Configuration
+    protected override void OnConfiguring(DbContextOptionsBuilder options)
     {
+        options.UseSqlServer(configuration.GetConnectionString("SqlExpressDevelop"));
     }
     #endregion
 
     #region Tables
-    public DbSet<Employee> Employees { get; set; }
+    public DbSet<User> Users { get; set; }
     public DbSet<Computer> Computers { get; set; }
     public DbSet<Printer> Printers { get; set; }
     public DbSet<Monitor> Monitors { get; set; }

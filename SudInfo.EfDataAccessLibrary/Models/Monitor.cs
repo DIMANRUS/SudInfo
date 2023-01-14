@@ -6,10 +6,12 @@ public class Monitor : BaseModel
     public int ScreenSize { get; set; }
     public int ScreenResolutionWidth { get; set; }
     public int ScreenResolutionHeight { get; set; }
+    [NotMapped]
+    public string ScreenResolution => $"{ScreenResolutionWidth}x{ScreenResolutionHeight}";
     [StringLength(20)]
     public string SerialNumber { get; set; } = string.Empty;
     [StringLength(20)]
     public string InventarNumber { get; set; } = string.Empty;
-    public Employee? Employee { get; set; }
+    public User? Employee { get; set; }
     public bool IsDecommissioned { get; set; }
 }

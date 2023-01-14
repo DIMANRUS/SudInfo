@@ -3,6 +3,8 @@ public class Computer : BaseModel
 {
     [StringLength(15)]
     public string Ip { get; set; } = string.Empty;
+    [StringLength(50)]
+    public string Name { get; set; } = string.Empty;
     public OS OS { get; set; } = OS.Windows7;
     [StringLength(40)]
     public string CPU { get; set; } = string.Empty;
@@ -14,7 +16,7 @@ public class Computer : BaseModel
     public string SerialNumber { get; set; } = string.Empty;
     [StringLength(20)]
     public string InventarNumber { get; set; } = string.Empty;
-    public Employee? Employee { get; set; }
+    public User? Employee { get; set; }
     public bool IsDecommissioned { get; set; }
 }
 

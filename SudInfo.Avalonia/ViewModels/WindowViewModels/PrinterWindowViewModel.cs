@@ -1,5 +1,5 @@
 ﻿namespace SudInfo.Avalonia.ViewModels.WindowViewModels;
-public class PrinterWindowViewModel : BaseModel
+public class PrinterWindowViewModel : BaseViewModel
 {
     #region Services
     private readonly IPrintersService _printersService;
@@ -21,7 +21,6 @@ public class PrinterWindowViewModel : BaseModel
         if (id != null)
         {
             SaveButtonText = "Сохранить принтер";
-            _printerId = id.GetValueOrDefault();
             var printerResult = await _printersService.GetPrinterById(id.GetValueOrDefault());
             if (!printerResult.Success)
             {
@@ -35,33 +34,20 @@ public class PrinterWindowViewModel : BaseModel
 
     #region Private Fields
     private WindowType _windowType;
-    private int _printerId;
     #endregion
 
     #region Collections
     public IEnumerable<PrinterType> PrinterTypes => Enum.GetValues(typeof(PrinterType)).Cast<PrinterType>();
-    public IEnumerable<Employee> Employees { get; private set; }
+    public IEnumerable<User> Users { get; private set; }
     #endregion
 
     #region Constructors
-    public PrinterWindowViewModel(IPrintersService printersService, IDialogService dialogService, IEmployeeService employeeService, IValidationService validationService)
+    public PrinterWindowViewModel(IPrintersService printersService, IDialogService dialogService, IUsersService usersService, IValidationService validationService)
     {
         #region Service Set
         _printersService = printersService;
         _dialogService = dialogService;
         #endregion
-
-        Task.Run(async () =>
-        {
-            try
-            {
-                Employees = await employeeService.GetEmployees();
-            }
-            catch
-            {
-                await dialogService.ShowMessageBox("Ошибка", "Ошибка загрузки Сотрудников! Принтер можно добавить, но без сотрудника.", icon: Icon.Error);
-            }
-        });
 
         #region Commands Realizations
         SavePrinter = ReactiveCommand.CreateFromTask(async () =>
@@ -92,12 +78,19 @@ public class PrinterWindowViewModel : BaseModel
                 await dialogService.ShowMessageBox("Ошибка", $"Ошибка: {ex.Message}", icon: Icon.Error);
             }
         });
+        Initialized = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var usersResult = await usersService.GetUsers();
+            if (!usersResult.Success)
+            {
+                await dialogService.ShowMessageBox("Ошибка", "Ошибка загрузки Сотрудников! Принтер можно добавить, но без сотрудника.", icon: Icon.Error);
+                return;
+            }
+            Users = usersResult.Result;
+        });
         #endregion
     }
-
-    public PrinterWindowViewModel()
-    {
-    }
+    public PrinterWindowViewModel() { }
     #endregion
 
     #region Commands
