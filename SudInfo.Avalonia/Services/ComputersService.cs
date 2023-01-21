@@ -53,6 +53,10 @@ public class ComputersService : IComputersService
         try
         {
             using ApplicationDBContext applicationDBContext = new();
+            if (computer.Employee != null)
+            {
+                computer.Employee = await applicationDBContext.Users.SingleOrDefaultAsync(x => x.Id == computer.Employee.Id);
+            }
             await applicationDBContext.Computers.AddAsync(computer);
             await applicationDBContext.SaveChangesAsync();
             return new()

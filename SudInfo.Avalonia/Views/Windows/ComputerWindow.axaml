@@ -40,7 +40,7 @@
              MaxLength="5"
              Watermark="Размер диска (ГБ)"/>
     <TextBox Text="{Binding Computer.RAM}"
-             MaxLength="3"
+             MaxLength="2"
              Watermark="Оперативная память (ГБ)"/>
     <TextBox Text="{Binding Computer.SerialNumber}"
              MaxLength="20"
@@ -52,7 +52,7 @@
       <CheckBox Name="IsEmployeeBox"
                 IsChecked="{Binding IsEmployee}"/>
       <ComboBox
-        Items="{Binding Employees}"
+        Items="{Binding Users}"
         SelectedItem="{Binding Computer.Employee}"
         Width="252"
         IsEnabled="{Binding #IsEmployeeBox.IsChecked}"
@@ -60,7 +60,7 @@
         PlaceholderText="Сотрудник">
         <ComboBox.DataTemplates>
           <DataTemplate>
-            <TextBlock Text="{Binding FirstName}"/>
+            <TextBlock Text="{Binding FIO}"/>
           </DataTemplate>
         </ComboBox.DataTemplates>
       </ComboBox>

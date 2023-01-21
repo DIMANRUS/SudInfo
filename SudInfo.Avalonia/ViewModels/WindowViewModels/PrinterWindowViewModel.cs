@@ -4,6 +4,7 @@ public class PrinterWindowViewModel : BaseViewModel
     #region Services
     private readonly IPrintersService _printersService;
     private readonly IDialogService _dialogService;
+    private readonly IValidationService _validationService;
     #endregion
 
     #region Properties
@@ -30,6 +31,26 @@ public class PrinterWindowViewModel : BaseViewModel
             Printer = printerResult.Result;
         }
     }
+    public async Task SavePrinter()
+    {
+        if (Printer.Name.Length < 5 || !_validationService.ValidationIp4(Printer.Ip))
+        {
+            await _dialogService.ShowMessageBox(title: "Ошибка", "Проверьте правильность заполнения полей!", icon: Icon.Error);
+            return;
+        }
+        if (!IsEmployee)
+            Printer.Employee = null;
+        TaskResult printerResult = _windowType switch { 
+            WindowType.Add => await _printersService.AddPrinter(Printer),
+            _ => await _printersService.SavePrinter(Printer)
+        };
+        if (!printerResult.Success)
+        {
+            await _dialogService.ShowMessageBox("Ошибка", printerResult.Message, icon: Icon.Error);
+            return;
+        }
+        await _dialogService.ShowMessageBox("Сообщение", "Успешно!", true, icon: Icon.Success);
+    }
     #endregion
 
     #region Private Fields
@@ -38,6 +59,7 @@ public class PrinterWindowViewModel : BaseViewModel
 
     #region Collections
     public IEnumerable<PrinterType> PrinterTypes => Enum.GetValues(typeof(PrinterType)).Cast<PrinterType>();
+    [Reactive]
     public IEnumerable<User> Users { get; private set; }
     #endregion
 
@@ -47,37 +69,10 @@ public class PrinterWindowViewModel : BaseViewModel
         #region Service Set
         _printersService = printersService;
         _dialogService = dialogService;
+        _validationService = validationService;
         #endregion
 
         #region Commands Realizations
-        SavePrinter = ReactiveCommand.CreateFromTask(async () =>
-        {
-            try
-            {
-                if (Printer.Name.Length < 5 || !validationService.ValidationIp4(Printer.Ip))
-                {
-                    await dialogService.ShowMessageBox(title: "Ошибка", "Проверьте правильность заполнения полей!", icon: Icon.Error);
-                    return;
-                }
-                if (!IsEmployee)
-                    Printer.Employee = null;
-                switch (_windowType)
-                {
-                    case WindowType.Save:
-                        await printersService.SavePrinter(Printer);
-                        await dialogService.ShowMessageBox("Сообщение", "Принтер сохранён!", true, icon: Icon.Success);
-                        break;
-                    case WindowType.Add:
-                        await printersService.AddPrinter(Printer);
-                        await dialogService.ShowMessageBox("Сообщение", "Принтер добавлен!", icon: Icon.Success);
-                        break;
-                }
-            }
-            catch (Exception ex)
-            {
-                await dialogService.ShowMessageBox("Ошибка", $"Ошибка: {ex.Message}", icon: Icon.Error);
-            }
-        });
         Initialized = ReactiveCommand.CreateFromTask(async () =>
         {
             var usersResult = await usersService.GetUsers();
@@ -91,9 +86,5 @@ public class PrinterWindowViewModel : BaseViewModel
         #endregion
     }
     public PrinterWindowViewModel() { }
-    #endregion
-
-    #region Commands
-    public ICommand SavePrinter { get; private init; }
     #endregion
 }

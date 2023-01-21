@@ -5,14 +5,7 @@ public class ComputersPageViewModel : BaseRoutableViewModel
     #region Services
     private readonly IComputersService _computersService;
     private readonly IDialogService _dialogService;
-    #endregion
-
-    #region Commands
-    public ICommand OpenAddComputerWindow { get; private init; }
-    public ICommand OpenEditComputerWindow { get; private init; }
-    public ICommand RefreshComputers { get; private init; }
-    public ICommand RemoveComputer { get; private init; }
-    public ICommand SearchBoxKeyUp { get; private init; }
+    private readonly INavigationService _navigationService;
     #endregion
 
     #region Collections
@@ -36,6 +29,7 @@ public class ComputersPageViewModel : BaseRoutableViewModel
         #region Serives Initialization
         _dialogService = dialogService;
         _computersService = computersService;
+        _navigationService = navigationService;
         #endregion
 
         _eventHandlerClosedWindowDialog = async (s, e) =>
@@ -43,40 +37,44 @@ public class ComputersPageViewModel : BaseRoutableViewModel
             await LoadComputers();
         };
 
-        #region Commands Initialization
-        OpenAddComputerWindow = ReactiveCommand.Create(async () =>
-        {
-            await navigationService.ShowComputerWindowDialog(WindowType.Add, _eventHandlerClosedWindowDialog);
-        });
-        OpenEditComputerWindow = ReactiveCommand.Create(async (int id) =>
-        {
-            await navigationService.ShowComputerWindowDialog(WindowType.Save, _eventHandlerClosedWindowDialog, id);
-        });
         Initialized = ReactiveCommand.CreateFromTask(LoadComputers);
-        RefreshComputers = ReactiveCommand.CreateFromTask(LoadComputers);
-        RemoveComputer = ReactiveCommand.CreateFromTask(async (int id) =>
+    }
+    #endregion
+
+    #region Public Methods
+    public async Task OpenAddComputerWindow()
+    {
+        await _navigationService.ShowComputerWindowDialog(WindowType.Add, _eventHandlerClosedWindowDialog);
+    }
+    public async Task OpenEditComputerWindow(int id)
+    {
+        await _navigationService.ShowComputerWindowDialog(WindowType.Save, _eventHandlerClosedWindowDialog, id);
+    }
+    public async Task RefreshComputers()
+    {
+        await LoadComputers();
+    }
+    public async Task RemoveComputer(int id)
+    {
+        var dialogResult = await _dialogService.ShowMessageBox("Сообщение", "Вы действительно хотите удалить компьютер?", buttonEnum: ButtonEnum.YesNo, icon: Icon.Question);
+        if (dialogResult == ButtonResult.No)
+            return;
+        var removeComputerResult = await _computersService.RemoveComputerById(id);
+        if (!removeComputerResult.Success)
         {
-            var dialogResult = await dialogService.ShowMessageBox("Сообщение", "Вы действительно хотите удалить компьютер?", buttonEnum: ButtonEnum.YesNo, icon: Icon.Question);
-            if (dialogResult == ButtonResult.No)
-                return;
-            var removeComputerResult = await computersService.RemoveComputerById(id);
-            if (!removeComputerResult.Success)
-            {
-                await _dialogService.ShowMessageBox("Ошибка", $"Ошибка удаления компьютера! Ошибка: {removeComputerResult.Message}", icon: Icon.Error);
-                return;
-            }
-            await LoadComputers();
-        });
-        SearchBoxKeyUp = ReactiveCommand.Create(() =>
+            await _dialogService.ShowMessageBox("Ошибка", $"Ошибка удаления компьютера! Ошибка: {removeComputerResult.Message}", icon: Icon.Error);
+            return;
+        }
+        await LoadComputers();
+    }
+    public void SearchBoxKeyUp()
+    {
+        if (string.IsNullOrEmpty(SearchText))
         {
-            if (string.IsNullOrEmpty(SearchText))
-            {
-                Computers = new(ComputersFromDataBase);
-                return;
-            }
-            Computers = new(ComputersFromDataBase.Where(x => x.Name.ToLower().Contains(SearchText.ToLower())));
-        });
-        #endregion
+            Computers = new(ComputersFromDataBase);
+            return;
+        }
+        Computers = new(ComputersFromDataBase.Where(x => x.Name.ToLower().Contains(SearchText.ToLower())));
     }
     #endregion
 

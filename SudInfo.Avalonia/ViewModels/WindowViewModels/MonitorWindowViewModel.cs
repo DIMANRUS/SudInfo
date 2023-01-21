@@ -6,11 +6,8 @@ public class MonitorWindowViewModel : BaseViewModel
     private readonly IDialogService _dialogService;
     #endregion
 
-    #region Commands
-    public ICommand SaveMonitor { get; set; }
-    #endregion
-
     #region Collections
+    [Reactive]
     public IEnumerable<User> Users { get; set; }
     #endregion
 
@@ -41,29 +38,6 @@ public class MonitorWindowViewModel : BaseViewModel
             }
             Users = usersResult.Result;
         });
-        SaveMonitor = ReactiveCommand.CreateFromTask(async () =>
-        {
-            try
-            {
-                if (!IsEmployee)
-                    Monitor.Employee = null;
-                switch (_windowType)
-                {
-                    case WindowType.Save:
-                        await monitorService.SaveMonitor(Monitor);
-                        await dialogService.ShowMessageBox("Сообщение", "Монитор сохранён!", true, icon: Icon.Success);
-                        break;
-                    case WindowType.Add:
-                        await monitorService.AddMonitor(Monitor);
-                        await dialogService.ShowMessageBox("Сообщение", "Монитор добавлен!", icon: Icon.Success);
-                        break;
-                }
-            }
-            catch (Exception ex)
-            {
-                await dialogService.ShowMessageBox("Ошибка", $"Ошибка: {ex.Message}", icon: Icon.Error);
-            }
-        });
         #endregion
     }
     #endregion
@@ -87,6 +61,22 @@ public class MonitorWindowViewModel : BaseViewModel
             }
             Monitor = monitorResult.Result;
         }
+    }
+    public async Task SaveMonitor()
+    {
+        if (!IsEmployee)
+            Monitor.Employee = null;
+        TaskResult monitorResult = _windowType switch
+        {
+            WindowType.Add => await _monitorService.AddMonitor(Monitor),
+            _ => await _monitorService.SaveMonitor(Monitor)
+        };
+        if (!monitorResult.Success)
+        {
+            await _dialogService.ShowMessageBox("Ошибка", monitorResult.Message, icon: Icon.Error);
+            return;
+        }
+        await _dialogService.ShowMessageBox("Сообщение", "Успешно!", true, icon: Icon.Success);
     }
     #endregion
 }

@@ -1,17 +1,10 @@
 ﻿namespace SudInfo.Avalonia.ViewModels.PageViewModels;
 public class PrintersPageViewModel : BaseRoutableViewModel
 {
-    #region Commands
-    public ICommand RefreshPrinters { get; private init; }
-    public ICommand OpenAddPrinterWindow { get; private init; }
-    public ICommand OpenEditPrinterWindow { get; private init; }
-    public ICommand RemovePrinter { get; private init; }
-    public ICommand SearchBoxKeyUp { get; private init; }
-    #endregion
-
     #region Services
-    private readonly IPrintersService _printerService;
+    private readonly IPrintersService _printersService;
     private readonly IDialogService _dialogService;
+    private readonly INavigationService _navigationService;
     #endregion
 
     #region Collections
@@ -29,8 +22,9 @@ public class PrintersPageViewModel : BaseRoutableViewModel
     public PrintersPageViewModel(IPrintersService printersService, IDialogService dialogService, INavigationService navigationService)
     {
         #region Services Initialization
-        _printerService = printersService;
+        _printersService = printersService;
         _dialogService = dialogService;
+        _navigationService = navigationService;
         #endregion
 
         eventHandlerClosedWindowDialog = async (s, e) =>
@@ -38,47 +32,51 @@ public class PrintersPageViewModel : BaseRoutableViewModel
             await LoadPrinters();
         };
 
-        #region Commands Initialization
         Initialized = ReactiveCommand.CreateFromTask(LoadPrinters);
-        RefreshPrinters = ReactiveCommand.CreateFromTask(LoadPrinters);
-        OpenAddPrinterWindow = ReactiveCommand.CreateFromTask(async () =>
+    }
+    #endregion
+
+    #region Public Methods
+    public async Task RefreshPrinters()
+    {
+        await LoadPrinters();
+    }
+    public async Task OpenAddPrinterWindow()
+    {
+        await _navigationService.ShowPrinterWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog);
+    }
+    public async Task OpenEditPrinterWindow(int id)
+    {
+        await _navigationService.ShowPrinterWindowDialog(WindowType.Save, eventHandlerClosedWindowDialog, id);
+    }
+    public async Task RemovePrinter(int id)
+    {
+        var dialogResult = await _dialogService.ShowMessageBox("Сообщение", "Вы действительно хотите удалить принтер?", buttonEnum: ButtonEnum.YesNo, icon: Icon.Question);
+        if (dialogResult == ButtonResult.No)
+            return;
+        var removePrinterResult = await _printersService.RemovePrinterById(id);
+        if (!removePrinterResult.Success)
         {
-            await navigationService.ShowPrinterWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog);
-        });
-        OpenEditPrinterWindow = ReactiveCommand.Create(async (int id) =>
+            await _dialogService.ShowMessageBox("Ошибка", $"Ошибка удаления принтера! Ошибка: {removePrinterResult.Message}", icon: Icon.Error);
+            return;
+        }
+        await LoadPrinters();
+    }
+    public void SearchBoxKeyUp()
+    {
+        if (string.IsNullOrEmpty(SearchText))
         {
-            await navigationService.ShowPrinterWindowDialog(WindowType.Save, eventHandlerClosedWindowDialog, id);
-        });
-        RemovePrinter = ReactiveCommand.CreateFromTask(async (int id) =>
-            {
-                var dialogResult = await dialogService.ShowMessageBox("Сообщение", "Вы действительно хотите удалить принтер?", buttonEnum: ButtonEnum.YesNo, icon: Icon.Question);
-                if (dialogResult == ButtonResult.No)
-                    return;
-                var removePrinterResult = await printersService.RemovePrinterById(id);
-                if (!removePrinterResult.Success)
-                {
-                    await _dialogService.ShowMessageBox("Ошибка", $"Ошибка удаления принтера! Ошибка: {removePrinterResult.Message}", icon: Icon.Error);
-                    return;
-                }
-                await LoadPrinters();
-            });
-        SearchBoxKeyUp = ReactiveCommand.Create(() =>
-        {
-            if (string.IsNullOrEmpty(SearchText))
-            {
-                Printers = new(PrintersFromDataBase);
-                return;
-            }
-            Printers = new(PrintersFromDataBase.Where(x => x.Name.ToLower().Contains(SearchText.ToLower())));
-        });
-        #endregion
+            Printers = new(PrintersFromDataBase);
+            return;
+        }
+        Printers = new(PrintersFromDataBase.Where(x => x.Name.ToLower().Contains(SearchText.ToLower())));
     }
     #endregion
 
     #region Private Methods
     private async Task LoadPrinters()
     {
-        var printersResult = await _printerService.GetPrinters();
+        var printersResult = await _printersService.GetPrinters();
         if (!printersResult.Success)
         {
             await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения данных! Ошибка: {printersResult.Message}", icon: Icon.Error);

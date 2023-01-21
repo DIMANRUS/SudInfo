@@ -3,6 +3,7 @@ public class DialogService : IDialogService
 {
     #region Private Variables
     private Window _currentWindow;
+    private Window _mainWindow;
     #endregion
 
     #region Constants
@@ -12,6 +13,8 @@ public class DialogService : IDialogService
     #region Setters
     public void SetCurrentWindow(Window currentWindow) =>
         _currentWindow = currentWindow;
+    public void SetMainWindow(Window mainWindow) =>
+        _mainWindow = mainWindow;
     #endregion
 
     #region MessageBoxes Shows
@@ -30,7 +33,7 @@ public class DialogService : IDialogService
             ButtonDefinitions = buttonEnum,
             Icon = icon,
             Topmost = true
-        }).ShowDialog(_currentWindow);
+        }).ShowDialog(_currentWindow.IsActive == true ? _currentWindow : _mainWindow);
         if (isCLosedWindow)
             _currentWindow.Close();
         return result;

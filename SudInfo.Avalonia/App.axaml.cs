@@ -23,6 +23,7 @@ public partial class App : Application
         MainWindow mainWindow = new() { DataContext = Locator.Current.GetService<IScreen>() };
 
         ServiceCollectionExtension.ServiceProvider.GetService<INavigationService>()?.SetWindow(mainWindow);
+        ServiceCollectionExtension.ServiceProvider.GetService<IDialogService>()?.SetMainWindow(mainWindow);
         ServiceCollectionExtension.ServiceProvider.GetService<IDialogService>()?.SetCurrentWindow(mainWindow);
 
         mainWindow.Show();

@@ -4,14 +4,12 @@ public class ComputerWindowViewModel : BaseViewModel
     #region Services
     private readonly IComputersService _computersService;
     private readonly IDialogService _dialogService;
-    #endregion
-
-    #region Commands
-    public ICommand SaveComputer { get; set; }
+    private readonly IValidationService _validationService;
     #endregion
 
     #region Collections
-    public IEnumerable<OS> OsesList => Enum.GetValues(typeof(OS)).Cast<OS>();
+    public static IEnumerable<OS> OsesList => Enum.GetValues(typeof(OS)).Cast<OS>();
+    [Reactive]
     public IEnumerable<User> Users { get; set; }
     #endregion
 
@@ -29,49 +27,19 @@ public class ComputerWindowViewModel : BaseViewModel
         #region Service Set
         _computersService = computersService;
         _dialogService = dialogService;
+        _validationService = validationService;
         #endregion
 
         Initialized = ReactiveCommand.CreateFromTask(async () =>
         {
             var usersResult = await usersService.GetUsers();
-            if(!usersResult.Success)
+            if (!usersResult.Success)
             {
                 await dialogService.ShowMessageBox("Ошибка", "Ошибка загрузки Сотрудников! Компьютер можно добавить, но без сотрудника.", icon: Icon.Error);
                 return;
             }
             Users = usersResult.Result;
         });
-
-        #region Commands Initialization
-        SaveComputer = ReactiveCommand.CreateFromTask(async () =>
-        {
-            try
-            {
-                if (!validationService.ValidationIp4(Computer.Ip) || Computer.CPU.Length < 5 || Computer.RAM == 0 || Computer.ROM == 0 || Computer.SerialNumber.Length < 2 || Computer.InventarNumber.Length < 5)
-                {
-                    await dialogService.ShowMessageBox(title: "Ошибка", "Проверьте правильность заполнения полей!", icon: Icon.Error);
-                    return;
-                }
-                if (!IsEmployee)
-                    Computer.Employee = null;
-                switch (_windowType)
-                {
-                    case WindowType.Save:
-                        await computersService.SaveComputer(Computer);
-                        await dialogService.ShowMessageBox("Сообщение", "Компьютер сохранён!", true, icon: Icon.Success);
-                        break;
-                    case WindowType.Add:
-                        await computersService.AddComputer(Computer);
-                        await dialogService.ShowMessageBox("Сообщение", "Компьютер добавлен!", icon: Icon.Success);
-                        break;
-                }
-            }
-            catch (Exception ex)
-            {
-                await dialogService.ShowMessageBox("Ошибка", $"Ошибка: {ex.Message}", icon: Icon.Error);
-            }
-        });
-        #endregion
     }
 
     public ComputerWindowViewModel()
@@ -84,6 +52,27 @@ public class ComputerWindowViewModel : BaseViewModel
     #endregion
 
     #region Public Methods
+    public async Task SaveComputer()
+    {
+        if (!_validationService.ValidationIp4(Computer.Ip) || Computer.CPU.Length < 5 || Computer.RAM == 0 || Computer.ROM == 0 || Computer.SerialNumber.Length < 2 || Computer.InventarNumber.Length < 5)
+        {
+            await _dialogService.ShowMessageBox(title: "Ошибка", "Проверьте правильность заполнения полей!", icon: Icon.Error);
+            return;
+        }
+        if (!IsEmployee)
+            Computer.Employee = null;
+        TaskResult computerResult = _windowType switch
+        {
+            WindowType.Add => await _computersService.AddComputer(Computer),
+            _ => await _computersService.SaveComputer(Computer)
+        };
+        if (!computerResult.Success)
+        {
+            await _dialogService.ShowMessageBox("Ошибка", computerResult.Message, icon: Icon.Error);
+            return;
+        }
+        await _dialogService.ShowMessageBox("Сообщение", "Успешно!", true, icon: Icon.Success);
+    }
     public async void InitializationData(WindowType windowType, int? id = null)
     {
         _windowType = windowType;

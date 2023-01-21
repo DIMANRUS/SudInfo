@@ -86,8 +86,8 @@
         <DataGridTextColumn Header="Инвентарный"
                             Binding="{Binding InventarNumber}"
                             IsReadOnly="True"/>
-        <DataGridTextColumn Header="Фамилия сотрудника"
-                            Binding="{Binding Employee.LastName}"
+        <DataGridTextColumn Header="ФИО сотрудника"
+                            Binding="{Binding Employee.FIO}"
                             IsReadOnly="True"
                             Width="*"/>
         <DataGridTextColumn Header="Кабинет"

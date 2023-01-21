@@ -1,4 +1,6 @@
-﻿namespace SudInfo.Avalonia.Services;
+﻿using SudInfo.EFDataAccessLibrary.Models;
+
+namespace SudInfo.Avalonia.Services;
 public class MonitorsService : IMonitorsService
 {
     #region Get Methods Realizations
@@ -98,6 +100,10 @@ public class MonitorsService : IMonitorsService
         try
         {
             using ApplicationDBContext applicationDBContext = new();
+            if (monitor.Employee != null)
+            {
+                monitor.Employee = await applicationDBContext.Users.SingleOrDefaultAsync(x => x.Id == monitor.Employee.Id);
+            }
             await applicationDBContext.Monitors.AddAsync(monitor);
             await applicationDBContext.SaveChangesAsync();
             return new()

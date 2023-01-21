@@ -7,6 +7,8 @@ public class User : BaseModel
     public string LastName { get; set; }
     [StringLength(20)]
     public string? MiddleName { get; set; }
+    [NotMapped]
+    public string FIO => LastName + " " + FirstName + " " + MiddleName;
     public byte NumberCabinet { get; set; }
     [StringLength(11)]
     public string? PersonalPhone { get; set; }

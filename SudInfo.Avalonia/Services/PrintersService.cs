@@ -43,7 +43,7 @@ public class PrintersService : IPrintersService
                 Message = ex.Message
             };
         }
-    } 
+    }
     #endregion
     public async Task<TaskResult> SavePrinter(Printer printer)
     {
@@ -71,6 +71,10 @@ public class PrintersService : IPrintersService
         try
         {
             using ApplicationDBContext applicationDBContext = new();
+            if (printer.Employee != null)
+            {
+                printer.Employee = await applicationDBContext.Users.SingleOrDefaultAsync(x => x.Id == printer.Employee.Id);
+            }
             await applicationDBContext.Printers.AddAsync(printer);
             await applicationDBContext.SaveChangesAsync();
             return new()

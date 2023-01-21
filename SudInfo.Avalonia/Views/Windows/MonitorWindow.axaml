@@ -37,7 +37,7 @@
       <CheckBox Name="IsEmployeeBox"
                 IsChecked="{Binding IsEmployee}"/>
       <ComboBox
-        Items="{Binding Employees}"
+        Items="{Binding Users}"
         SelectedItem="{Binding Monitor.Employee}"
         Width="252"
         IsEnabled="{Binding #IsEmployeeBox.IsChecked}"

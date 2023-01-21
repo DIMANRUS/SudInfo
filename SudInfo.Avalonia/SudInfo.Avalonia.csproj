@@ -69,11 +69,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Update="appsettings.json">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <UpToDateCheckInput Remove="Views\Windows\PrinterWindow.axaml" />
   </ItemGroup>
   <ItemGroup>

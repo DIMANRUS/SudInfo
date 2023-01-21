@@ -4,14 +4,7 @@ public class MonitorsPageViewModel : BaseRoutableViewModel
     #region Services
     private readonly IDialogService _dialogService;
     private readonly IMonitorsService _monitorsService;
-    #endregion
-
-    #region Commands
-    public ICommand OpenAddMonitorWindow { get; private init; }
-    public ICommand OpenEditMonitorWindow { get; private init; }
-    public ICommand RefreshMonitors { get; private init; }
-    public ICommand RemoveMonitor { get; private init; }
-    public ICommand SearchBoxKeyUp { get; private init; }
+    private readonly INavigationService _navigationService;
     #endregion
 
     #region Collections
@@ -31,47 +24,51 @@ public class MonitorsPageViewModel : BaseRoutableViewModel
         #region Serives Initialization
         _dialogService = dialogService;
         _monitorsService = monitorsService;
+        _navigationService = navigationService;
         #endregion
 
         eventHandlerClosedWindowDialog = async (s, e) =>
         {
             await LoadMonitors();
         };
-
-        #region Commands Realizations
         Initialized = ReactiveCommand.CreateFromTask(LoadMonitors);
-        RefreshMonitors = ReactiveCommand.CreateFromTask(LoadMonitors);
-        RemoveMonitor = ReactiveCommand.CreateFromTask(async (int id) =>
+    }
+    #endregion
+
+    #region Public Methods
+    public async Task OpenAddMonitorWindow()
+    {
+        await _navigationService.ShowMonitorWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog);
+    }
+    public async Task OpenEditMonitorWindow(int id)
+    {
+        await _navigationService.ShowMonitorWindowDialog(WindowType.Save, eventHandlerClosedWindowDialog, id);
+    }
+    public async Task RefreshMonitors()
+    {
+        await LoadMonitors();
+    }
+    public async Task RemoveMonitor(int id)
+    {
+        var dialogResult = await _dialogService.ShowMessageBox("Сообщение", "Вы действительно хотите удалить монитор?", buttonEnum: ButtonEnum.YesNo, icon: Icon.Question);
+        if (dialogResult == ButtonResult.No)
+            return;
+        var removeMonitorResult = await _monitorsService.RemoveMonitorById(id);
+        if (!removeMonitorResult.Success)
         {
-            var dialogResult = await dialogService.ShowMessageBox("Сообщение", "Вы действительно хотите удалить монитор?", buttonEnum: ButtonEnum.YesNo, icon: Icon.Question);
-            if (dialogResult == ButtonResult.No)
-                return;
-            var removeMonitorResult = await monitorsService.RemoveMonitorById(id);
-            if (!removeMonitorResult.Success)
-            {
-                await _dialogService.ShowMessageBox("Ошибка", $"Ошибка удаления монитора! Ошибка: {removeMonitorResult.Message}", icon: Icon.Error);
-                return;
-            }
-            await LoadMonitors();
-        });
-        OpenAddMonitorWindow = ReactiveCommand.Create(async () =>
+            await _dialogService.ShowMessageBox("Ошибка", $"Ошибка удаления монитора! Ошибка: {removeMonitorResult.Message}", icon: Icon.Error);
+            return;
+        }
+        await LoadMonitors();
+    }
+    public void SearchBoxKeyUp()
+    {
+        if (string.IsNullOrEmpty(SearchText))
         {
-            await navigationService.ShowMonitorWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog);
-        });
-        OpenEditMonitorWindow = ReactiveCommand.Create(async (int id) =>
-        {
-            await navigationService.ShowMonitorWindowDialog(WindowType.Save, eventHandlerClosedWindowDialog, id);
-        });
-        SearchBoxKeyUp = ReactiveCommand.Create(() =>
-        {
-            if (string.IsNullOrEmpty(SearchText))
-            {
-                Monitors = new(MonitorsFromDataBase);
-                return;
-            }
-            Monitors = new(MonitorsFromDataBase.Where(x => x.Name.ToLower().Contains(SearchText.ToLower())));
-        });
-        #endregion
+            Monitors = new(MonitorsFromDataBase);
+            return;
+        }
+        Monitors = new(MonitorsFromDataBase.Where(x => x.Name.ToLower().Contains(SearchText.ToLower())));
     }
     #endregion
 
