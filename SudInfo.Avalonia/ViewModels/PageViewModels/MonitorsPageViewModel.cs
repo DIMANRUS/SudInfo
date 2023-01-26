@@ -3,7 +3,7 @@ public class MonitorsPageViewModel : BaseRoutableViewModel
 {
     #region Services
     private readonly IDialogService _dialogService;
-    private readonly IMonitorsService _monitorsService;
+    private readonly IMonitorService _monitorsService;
     private readonly INavigationService _navigationService;
     #endregion
 
@@ -19,7 +19,7 @@ public class MonitorsPageViewModel : BaseRoutableViewModel
     #endregion
 
     #region Constructors
-    public MonitorsPageViewModel(INavigationService navigationService, IDialogService dialogService, IMonitorsService monitorsService)
+    public MonitorsPageViewModel(INavigationService navigationService, IDialogService dialogService, IMonitorService monitorsService)
     {
         #region Serives Initialization
         _dialogService = dialogService;
@@ -81,7 +81,7 @@ public class MonitorsPageViewModel : BaseRoutableViewModel
             await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения данных! Ошибка: {monitorsResult.Message}", icon: Icon.Error);
             return;
         }
-        Monitors = new(monitorsResult.Result);
+        Monitors = new(monitorsResult.Object);
         MonitorsFromDataBase = Monitors;
     }
     #endregion

@@ -57,6 +57,14 @@ public class NavigationService : INavigationService
             return;
         _mainWindow = window;
     }
+    public async Task ShowRutokenWindowDialog(WindowType windowType, EventHandler closedEvent = null, int? rutokenId = null)
+    {
+        RutokenWindow rutokenWindow = new(windowType, rutokenId);
+        if (closedEvent != null)
+            rutokenWindow.Closed += closedEvent;
+        _dialogService.SetCurrentWindow(rutokenWindow);
+        await rutokenWindow.ShowDialog(_mainWindow);
+    }
     #endregion
 }
 public enum WindowType

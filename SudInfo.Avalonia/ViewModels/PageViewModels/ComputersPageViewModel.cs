@@ -3,7 +3,7 @@
 public class ComputersPageViewModel : BaseRoutableViewModel
 {
     #region Services
-    private readonly IComputersService _computersService;
+    private readonly IComputerService _computersService;
     private readonly IDialogService _dialogService;
     private readonly INavigationService _navigationService;
     #endregion
@@ -24,7 +24,7 @@ public class ComputersPageViewModel : BaseRoutableViewModel
     #endregion
 
     #region Constructors
-    public ComputersPageViewModel(INavigationService navigationService, IComputersService computersService, IDialogService dialogService)
+    public ComputersPageViewModel(INavigationService navigationService, IComputerService computersService, IDialogService dialogService)
     {
         #region Serives Initialization
         _dialogService = dialogService;
@@ -87,7 +87,7 @@ public class ComputersPageViewModel : BaseRoutableViewModel
             await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения данных! Ошибка: {computersResult.Message}", icon: Icon.Error);
             return;
         }
-        Computers = new(computersResult.Result);
+        Computers = new(computersResult.Object);
         ComputersFromDataBase = Computers;
     }
     #endregion

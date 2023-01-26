@@ -2,7 +2,7 @@
 public class ComputerWindowViewModel : BaseViewModel
 {
     #region Services
-    private readonly IComputersService _computersService;
+    private readonly IComputerService _computersService;
     private readonly IDialogService _dialogService;
     private readonly IValidationService _validationService;
     #endregion
@@ -16,13 +16,13 @@ public class ComputerWindowViewModel : BaseViewModel
     #region Properties
     [Reactive]
     public Computer Computer { get; set; } = new();
-    public bool IsEmployee { get; set; }
+    public bool IsUser { get; set; }
     [Reactive]
     public string SaveButtonText { get; private set; } = "Добавить компьютер";
     #endregion
 
     #region Constructors
-    public ComputerWindowViewModel(IComputersService computersService, IUsersService usersService, IDialogService dialogService, IValidationService validationService)
+    public ComputerWindowViewModel(IComputerService computersService, IUserService usersService, IDialogService dialogService, IValidationService validationService)
     {
         #region Service Set
         _computersService = computersService;
@@ -38,7 +38,7 @@ public class ComputerWindowViewModel : BaseViewModel
                 await dialogService.ShowMessageBox("Ошибка", "Ошибка загрузки Сотрудников! Компьютер можно добавить, но без сотрудника.", icon: Icon.Error);
                 return;
             }
-            Users = usersResult.Result;
+            Users = usersResult.Object;
         });
     }
 
@@ -59,12 +59,12 @@ public class ComputerWindowViewModel : BaseViewModel
             await _dialogService.ShowMessageBox(title: "Ошибка", "Проверьте правильность заполнения полей!", icon: Icon.Error);
             return;
         }
-        if (!IsEmployee)
-            Computer.Employee = null;
-        TaskResult computerResult = _windowType switch
+        if (!IsUser)
+            Computer.User = null;
+        Result computerResult = _windowType switch
         {
             WindowType.Add => await _computersService.AddComputer(Computer),
-            _ => await _computersService.SaveComputer(Computer)
+            _ => await _computersService.UpdateComputer(Computer)
         };
         if (!computerResult.Success)
         {
@@ -85,7 +85,7 @@ public class ComputerWindowViewModel : BaseViewModel
                 await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения компьютера! Ошибка: {computerResult.Message}", true, icon: Icon.Error);
                 return;
             }
-            Computer = computerResult.Result;
+            Computer = computerResult.Object;
         }
     }
     #endregion

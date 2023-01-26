@@ -1,19 +1,17 @@
-﻿using SudInfo.EFDataAccessLibrary.Models;
-
-namespace SudInfo.Avalonia.Services;
-public class MonitorsService : IMonitorsService
+﻿namespace SudInfo.Avalonia.Services;
+public class MonitorService : IMonitorService
 {
     #region Get Methods Realizations
-    public async Task<TaskResult<List<Monitor>>> GetMonitors()
+    public async Task<Result<List<Monitor>>> GetMonitors()
     {
         try
         {
             using ApplicationDBContext applicationDBContext = new();
-            var monitors = await applicationDBContext.Monitors.Include(x => x.Employee).ToListAsync();
+            var monitors = await applicationDBContext.Monitors.Include(x => x.User).ToListAsync();
             return new()
             {
                 Success = true,
-                Result = monitors
+                Object = monitors
             };
         }
         catch (Exception ex)
@@ -25,18 +23,18 @@ public class MonitorsService : IMonitorsService
             };
         }
     }
-    public async Task<TaskResult<Monitor>> GetMonitorById(int id)
+    public async Task<Result<Monitor>> GetMonitorById(int id)
     {
         try
         {
             using ApplicationDBContext applicationDBContext = new();
-            var monitor = await applicationDBContext.Monitors.Include(x => x.Employee).FirstOrDefaultAsync(x => x.Id == id);
+            var monitor = await applicationDBContext.Monitors.Include(x => x.User).FirstOrDefaultAsync(x => x.Id == id);
             if (monitor == null)
                 throw new Exception("Computer not Found");
             return new()
             {
                 Success = true,
-                Result = monitor
+                Object = monitor
             };
         }
         catch (Exception ex)
@@ -47,10 +45,10 @@ public class MonitorsService : IMonitorsService
                 Message = ex.Message
             };
         }
-    } 
+    }
     #endregion
 
-    public async Task<TaskResult> RemoveMonitorById(int id)
+    public async Task<Result> RemoveMonitorById(int id)
     {
         try
         {
@@ -60,7 +58,7 @@ public class MonitorsService : IMonitorsService
                 throw new Exception("Monitor not found");
             applicationDBContext.Monitors.Remove(monitor);
             await applicationDBContext.SaveChangesAsync();
-            return new()    
+            return new()
             {
                 Success = true
             };
@@ -74,7 +72,7 @@ public class MonitorsService : IMonitorsService
             };
         }
     }
-    public async Task<TaskResult> SaveMonitor(Monitor monitor)
+    public async Task<Result> UpdateMonitor(Monitor monitor)
     {
         try
         {
@@ -95,14 +93,14 @@ public class MonitorsService : IMonitorsService
             };
         }
     }
-    public async Task<TaskResult> AddMonitor(Monitor monitor)
+    public async Task<Result> AddMonitor(Monitor monitor)
     {
         try
         {
             using ApplicationDBContext applicationDBContext = new();
-            if (monitor.Employee != null)
+            if (monitor.User != null)
             {
-                monitor.Employee = await applicationDBContext.Users.SingleOrDefaultAsync(x => x.Id == monitor.Employee.Id);
+                monitor.User = await applicationDBContext.Users.SingleOrDefaultAsync(x => x.Id == monitor.User.Id);
             }
             await applicationDBContext.Monitors.AddAsync(monitor);
             await applicationDBContext.SaveChangesAsync();

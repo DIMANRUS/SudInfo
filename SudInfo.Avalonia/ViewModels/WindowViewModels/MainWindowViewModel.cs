@@ -34,5 +34,9 @@ public class MainWindowViewModel : ReactiveObject, IScreen
     {
         Router.Navigate.Execute(ServiceCollectionExtension.ServiceProvider.GetService<MonitorsPageViewModel>());
     }
-    #endregion 
+    public void OpenRutokensPage()
+    {
+        Router.Navigate.Execute(ServiceCollectionExtension.ServiceProvider.GetService<RutokensPageViewModel>());
+    }
+    #endregion
 }

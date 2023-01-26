@@ -2,7 +2,7 @@
 public class UserWindowViewModel : BaseViewModel
 {
     #region Services
-    private readonly IUsersService _usersService;
+    private readonly IUserService _usersService;
     private readonly IDialogService _dialogService;
     #endregion
 
@@ -26,7 +26,7 @@ public class UserWindowViewModel : BaseViewModel
                 await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения пользователя! Ошибка: {userResult.Message}", true, icon: Icon.Error);
                 return;
             }
-            User = userResult.Result;
+            User = userResult.Object;
         }
     }
     #endregion
@@ -36,7 +36,7 @@ public class UserWindowViewModel : BaseViewModel
     #endregion
 
     #region Constructors
-    public UserWindowViewModel(IUsersService usersService, IDialogService dialogService)
+    public UserWindowViewModel(IUserService usersService, IDialogService dialogService)
     {
         #region Service Set
         _usersService = usersService;
@@ -49,9 +49,9 @@ public class UserWindowViewModel : BaseViewModel
     #region Public Methods
     public async Task SaveUser()
     {
-        TaskResult userResult = _windowType switch { 
+        Result userResult = _windowType switch { 
             WindowType.Add => await _usersService.AddUser(User),
-            _ => await _usersService.SaveUser(User)
+            _ => await _usersService.UpdateUser(User)
         };
         if (!userResult.Success)
         {

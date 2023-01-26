@@ -2,7 +2,7 @@
 public class PrintersPageViewModel : BaseRoutableViewModel
 {
     #region Services
-    private readonly IPrintersService _printersService;
+    private readonly IPrinterService _printersService;
     private readonly IDialogService _dialogService;
     private readonly INavigationService _navigationService;
     #endregion
@@ -19,7 +19,7 @@ public class PrintersPageViewModel : BaseRoutableViewModel
     #endregion
 
     #region Constructors
-    public PrintersPageViewModel(IPrintersService printersService, IDialogService dialogService, INavigationService navigationService)
+    public PrintersPageViewModel(IPrinterService printersService, IDialogService dialogService, INavigationService navigationService)
     {
         #region Services Initialization
         _printersService = printersService;
@@ -82,7 +82,7 @@ public class PrintersPageViewModel : BaseRoutableViewModel
             await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения данных! Ошибка: {printersResult.Message}", icon: Icon.Error);
             return;
         }
-        Printers = new(printersResult.Result);
+        Printers = new(printersResult.Object);
         PrintersFromDataBase = Printers;
     }
     #endregion

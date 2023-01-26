@@ -23,5 +23,6 @@ public class ApplicationDBContext : DbContext
     public DbSet<Computer> Computers { get; set; }
     public DbSet<Printer> Printers { get; set; }
     public DbSet<Monitor> Monitors { get; set; }
+    public DbSet<Rutoken> Rutokens { get; set; }
     #endregion
 }

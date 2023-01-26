@@ -78,11 +78,11 @@
                             Binding="{Binding SerialNumber}"
                             IsReadOnly="True"/>
         <DataGridTextColumn Header="Фамилия сотрудника"
-                            Binding="{Binding Employee.LastName}"
+                            Binding="{Binding User.LastName}"
                             IsReadOnly="True"
                             Width="*"/>
         <DataGridTextColumn Header="Кабинет"
-                            Binding="{Binding Employee.NumberCabinet}"
+                            Binding="{Binding User.NumberCabinet}"
                             IsReadOnly="True"/>
         <DataGridTemplateColumn Width="40">
           <DataTemplate>

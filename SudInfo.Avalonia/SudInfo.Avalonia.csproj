@@ -17,9 +17,17 @@
     <None Remove="Assets\Icons\logo.ico" />
     <None Remove="Assets\Images\add.png" />
     <None Remove="Assets\Images\edit.png" />
+    <None Remove="Assets\Images\MenuBar\apps.png" />
+    <None Remove="Assets\Images\MenuBar\contacts.png" />
+    <None Remove="Assets\Images\MenuBar\documents.png" />
+    <None Remove="Assets\Images\MenuBar\journal.png" />
+    <None Remove="Assets\Images\MenuBar\key.png" />
     <None Remove="Assets\Images\MenuBar\monitor.png" />
     <None Remove="Assets\Images\MenuBar\printer.png" />
+    <None Remove="Assets\Images\MenuBar\rutoken.png" />
+    <None Remove="Assets\Images\MenuBar\server.png" />
     <None Remove="Assets\Images\MenuBar\settings.png" />
+    <None Remove="Assets\Images\MenuBar\todo.png" />
     <None Remove="Assets\Images\MenuBar\users.png" />
     <None Remove="Assets\Images\refresh.png" />
     <None Remove="Assets\Images\remove.png" />

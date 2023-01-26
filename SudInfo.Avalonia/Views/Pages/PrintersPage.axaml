@@ -75,7 +75,7 @@
                             Binding="{Binding Cabinet}"
                             IsReadOnly="True"/>
         <DataGridTextColumn Header="Фамилия сотрудника"
-                            Binding="{Binding Employee.LastName}"
+                            Binding="{Binding User.LastName}"
                             Width="*"
                             IsReadOnly="True"/>
         <DataGridTemplateColumn Width="40">

@@ -49,13 +49,13 @@
              MaxLength="20"
              Watermark="Инвентарный номер"/>
     <StackPanel Orientation="Horizontal">
-      <CheckBox Name="IsEmployeeBox"
-                IsChecked="{Binding IsEmployee}"/>
+      <CheckBox Name="IsUserBox"
+                IsChecked="{Binding IsUser}"/>
       <ComboBox
         Items="{Binding Users}"
-        SelectedItem="{Binding Computer.Employee}"
+        SelectedItem="{Binding Computer.User}"
         Width="252"
-        IsEnabled="{Binding #IsEmployeeBox.IsChecked}"
+        IsEnabled="{Binding #IsUserBox.IsChecked}"
         AutoScrollToSelectedItem="True"
         PlaceholderText="Сотрудник">
         <ComboBox.DataTemplates>

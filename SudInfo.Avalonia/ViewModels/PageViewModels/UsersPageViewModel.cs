@@ -2,7 +2,7 @@
 public class UsersPageViewModel : BaseRoutableViewModel
 {
     #region Services
-    private readonly IUsersService _usersService;
+    private readonly IUserService _usersService;
     private readonly IDialogService _dialogService;
     private readonly INavigationService _navigationService;
     #endregion
@@ -19,7 +19,7 @@ public class UsersPageViewModel : BaseRoutableViewModel
     #endregion
 
     #region Constructors
-    public UsersPageViewModel(INavigationService navigationService, IUsersService usersService, IDialogService dialogService)
+    public UsersPageViewModel(INavigationService navigationService, IUserService usersService, IDialogService dialogService)
     {
         #region Serives Initialization
         _dialogService = dialogService;
@@ -81,7 +81,7 @@ public class UsersPageViewModel : BaseRoutableViewModel
             await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения данных! Ошибка: {usersResult.Message}", icon: Icon.Error);
             return;
         }
-        Users = new(usersResult.Result);
+        Users = new(usersResult.Object);
         UsersFromDataBase = Users;
     }
     #endregion

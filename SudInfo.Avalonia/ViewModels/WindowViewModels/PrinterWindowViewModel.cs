@@ -2,7 +2,7 @@
 public class PrinterWindowViewModel : BaseViewModel
 {
     #region Services
-    private readonly IPrintersService _printersService;
+    private readonly IPrinterService _printersService;
     private readonly IDialogService _dialogService;
     private readonly IValidationService _validationService;
     #endregion
@@ -12,7 +12,7 @@ public class PrinterWindowViewModel : BaseViewModel
     public Printer Printer { get; set; } = new();
     [Reactive]
     public string SaveButtonText { get; private set; } = "Добавить принтер";
-    public bool IsEmployee { get; set; }
+    public bool IsUser { get; set; }
     #endregion
 
     #region Public Methods
@@ -28,7 +28,7 @@ public class PrinterWindowViewModel : BaseViewModel
                 await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получени компьютера! Ошибка: {printerResult.Message}", true, icon: Icon.Error);
                 return;
             }
-            Printer = printerResult.Result;
+            Printer = printerResult.Object;
         }
     }
     public async Task SavePrinter()
@@ -38,11 +38,11 @@ public class PrinterWindowViewModel : BaseViewModel
             await _dialogService.ShowMessageBox(title: "Ошибка", "Проверьте правильность заполнения полей!", icon: Icon.Error);
             return;
         }
-        if (!IsEmployee)
-            Printer.Employee = null;
-        TaskResult printerResult = _windowType switch { 
+        if (!IsUser)
+            Printer.User = null;
+        Result printerResult = _windowType switch { 
             WindowType.Add => await _printersService.AddPrinter(Printer),
-            _ => await _printersService.SavePrinter(Printer)
+            _ => await _printersService.UpdatePrinter(Printer)
         };
         if (!printerResult.Success)
         {
@@ -58,13 +58,13 @@ public class PrinterWindowViewModel : BaseViewModel
     #endregion
 
     #region Collections
-    public IEnumerable<PrinterType> PrinterTypes => Enum.GetValues(typeof(PrinterType)).Cast<PrinterType>();
+    public static IEnumerable<PrinterType> PrinterTypes => Enum.GetValues(typeof(PrinterType)).Cast<PrinterType>();
     [Reactive]
     public IEnumerable<User> Users { get; private set; }
     #endregion
 
     #region Constructors
-    public PrinterWindowViewModel(IPrintersService printersService, IDialogService dialogService, IUsersService usersService, IValidationService validationService)
+    public PrinterWindowViewModel(IPrinterService printersService, IDialogService dialogService, IUserService usersService, IValidationService validationService)
     {
         #region Service Set
         _printersService = printersService;
@@ -81,7 +81,7 @@ public class PrinterWindowViewModel : BaseViewModel
                 await dialogService.ShowMessageBox("Ошибка", "Ошибка загрузки Сотрудников! Принтер можно добавить, но без сотрудника.", icon: Icon.Error);
                 return;
             }
-            Users = usersResult.Result;
+            Users = usersResult.Object;
         });
         #endregion
     }

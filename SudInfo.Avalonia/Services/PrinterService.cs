@@ -1,19 +1,17 @@
 ﻿namespace SudInfo.Avalonia.Services;
-public class ComputersService : IComputersService
+public class PrinterService : IPrinterService
 {
-    #region Get Methods Realization
-    public async Task<TaskResult<Computer>> GetComputerById(int id)
+    #region Get Methods
+    public async Task<Result<Printer>> GetPrinterById(int id)
     {
         try
         {
             using ApplicationDBContext applicationDBContext = new();
-            var computer = await applicationDBContext.Computers.Include(x => x.Employee).FirstOrDefaultAsync(x => x.Id == id);
-            if (computer == null)
-                throw new Exception("Computer not Found");
+            var printer = await applicationDBContext.Printers.Include(x => x.User).FirstOrDefaultAsync(x => x.Id == id);
             return new()
             {
                 Success = true,
-                Result = computer
+                Object = printer
             };
         }
         catch (Exception ex)
@@ -25,16 +23,16 @@ public class ComputersService : IComputersService
             };
         }
     }
-    public async Task<TaskResult<List<Computer>>> GetComputers()
+    public async Task<Result<List<Printer>>> GetPrinters()
     {
         try
         {
             using ApplicationDBContext applicationDBContext = new();
-            var computers = await applicationDBContext.Computers.Include(x => x.Employee).ToListAsync();
+            var printers = await applicationDBContext.Printers.Include(x => x.User).ToListAsync();
             return new()
             {
                 Success = true,
-                Result = computers
+                Object = printers
             };
         }
         catch (Exception ex)
@@ -48,16 +46,37 @@ public class ComputersService : IComputersService
     }
     #endregion
 
-    public async Task<TaskResult> AddComputer(Computer computer)
+    public async Task<Result> UpdatePrinter(Printer printer)
     {
         try
         {
             using ApplicationDBContext applicationDBContext = new();
-            if (computer.Employee != null)
+            applicationDBContext.Printers.Update(printer);
+            await applicationDBContext.SaveChangesAsync();
+            return new()
             {
-                computer.Employee = await applicationDBContext.Users.SingleOrDefaultAsync(x => x.Id == computer.Employee.Id);
+                Success = true
+            };
+        }
+        catch (Exception ex)
+        {
+            return new()
+            {
+                Success = false,
+                Message = ex.Message
+            };
+        }
+    }
+    public async Task<Result> AddPrinter(Printer printer)
+    {
+        try
+        {
+            using ApplicationDBContext applicationDBContext = new();
+            if (printer.User != null)
+            {
+                printer.User = await applicationDBContext.Users.SingleOrDefaultAsync(x => x.Id == printer.User.Id);
             }
-            await applicationDBContext.Computers.AddAsync(computer);
+            await applicationDBContext.Printers.AddAsync(printer);
             await applicationDBContext.SaveChangesAsync();
             return new()
             {
@@ -73,36 +92,15 @@ public class ComputersService : IComputersService
             };
         }
     }
-    public async Task<TaskResult> RemoveComputerById(int id)
+    public async Task<Result> RemovePrinterById(int id)
     {
         try
         {
             using ApplicationDBContext applicationDBContext = new();
-            var computer = await applicationDBContext.Computers.FirstOrDefaultAsync(x => x.Id == id);
-            if (computer == null)
-                throw new Exception("Computer not found");
-            applicationDBContext.Computers.Remove(computer);
-            await applicationDBContext.SaveChangesAsync();
-            return new()
-            {
-                Success = true
-            };
-        }
-        catch (Exception ex)
-        {
-            return new()
-            {
-                Success = false,
-                Message = ex.Message
-            };
-        }
-    }
-    public async Task<TaskResult> SaveComputer(Computer computer)
-    {
-        try
-        {
-            using ApplicationDBContext applicationDBContext = new();
-            applicationDBContext.Computers.Update(computer);
+            var printer = await applicationDBContext.Printers.FirstOrDefaultAsync(x => x.Id == id);
+            if (printer == null)
+                throw new Exception("Printer not found");
+            applicationDBContext.Printers.Remove(printer);
             await applicationDBContext.SaveChangesAsync();
             return new()
             {

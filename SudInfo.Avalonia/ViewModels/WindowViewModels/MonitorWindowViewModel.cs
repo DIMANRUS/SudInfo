@@ -2,7 +2,7 @@
 public class MonitorWindowViewModel : BaseViewModel
 {
     #region Services
-    private readonly IMonitorsService _monitorService;
+    private readonly IMonitorService _monitorService;
     private readonly IDialogService _dialogService;
     #endregion
 
@@ -14,13 +14,13 @@ public class MonitorWindowViewModel : BaseViewModel
     #region Properties
     [Reactive]
     public Monitor Monitor { get; set; } = new();
-    public bool IsEmployee { get; set; }
+    public bool IsUser { get; set; }
     [Reactive]
     public string SaveButtonText { get; private set; } = "Добавить компьютер";
     #endregion
 
     #region Constructors
-    public MonitorWindowViewModel(IMonitorsService monitorService, IUsersService usersService, IDialogService dialogService)
+    public MonitorWindowViewModel(IMonitorService monitorService, IUserService usersService, IDialogService dialogService)
     {
         #region Service Set
         _monitorService = monitorService;
@@ -36,7 +36,7 @@ public class MonitorWindowViewModel : BaseViewModel
                 await dialogService.ShowMessageBox("Ошибка", "Ошибка загрузки Сотрудников! Монитор можно добавить, но без сотрудника.", icon: Icon.Error);
                 return;
             }
-            Users = usersResult.Result;
+            Users = usersResult.Object;
         });
         #endregion
     }
@@ -59,17 +59,17 @@ public class MonitorWindowViewModel : BaseViewModel
                 await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения монитора! Ошибка: {monitorResult.Message}", true, icon: Icon.Error);
                 return;
             }
-            Monitor = monitorResult.Result;
+            Monitor = monitorResult.Object;
         }
     }
     public async Task SaveMonitor()
     {
-        if (!IsEmployee)
-            Monitor.Employee = null;
-        TaskResult monitorResult = _windowType switch
+        if (!IsUser)
+            Monitor.User = null;
+        Result monitorResult = _windowType switch
         {
             WindowType.Add => await _monitorService.AddMonitor(Monitor),
-            _ => await _monitorService.SaveMonitor(Monitor)
+            _ => await _monitorService.UpdateMonitor(Monitor)
         };
         if (!monitorResult.Success)
         {

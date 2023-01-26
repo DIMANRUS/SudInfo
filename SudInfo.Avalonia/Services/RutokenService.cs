@@ -1,17 +1,19 @@
 ﻿namespace SudInfo.Avalonia.Services;
-public class PrintersService : IPrintersService
+public class RutokenService : IRutokenService
 {
     #region Get Methods
-    public async Task<TaskResult<Printer>> GetPrinterById(int id)
+    public async Task<Result<Rutoken>> GetRutokenById(int id)
     {
         try
         {
             using ApplicationDBContext applicationDBContext = new();
-            var printer = await applicationDBContext.Printers.Include(x => x.Employee).FirstOrDefaultAsync(x => x.Id == id);
+            var rutoken = await applicationDBContext.Rutokens.Include(x => x.User).FirstOrDefaultAsync(x => x.Id == id);
+            if (rutoken == null)
+                throw new Exception("ЭЦП не найден");
             return new()
             {
                 Success = true,
-                Result = printer
+                Object = rutoken
             };
         }
         catch (Exception ex)
@@ -23,16 +25,16 @@ public class PrintersService : IPrintersService
             };
         }
     }
-    public async Task<TaskResult<List<Printer>>> GetPrinters()
+    public async Task<Result<List<Rutoken>>> GetRutokens()
     {
         try
         {
             using ApplicationDBContext applicationDBContext = new();
-            var printers = await applicationDBContext.Printers.Include(x => x.Employee).ToListAsync();
+            var rutokens = await applicationDBContext.Rutokens.Include(x => x.User).ToListAsync();
             return new()
             {
                 Success = true,
-                Result = printers
+                Object = rutokens
             };
         }
         catch (Exception ex)
@@ -45,12 +47,16 @@ public class PrintersService : IPrintersService
         }
     }
     #endregion
-    public async Task<TaskResult> SavePrinter(Printer printer)
+
+    public async Task<Result> RemoveRutokenById(int id)
     {
         try
         {
             using ApplicationDBContext applicationDBContext = new();
-            applicationDBContext.Printers.Update(printer);
+            var rutoken = await applicationDBContext.Rutokens.FirstOrDefaultAsync(x => x.Id == id);
+            if (rutoken == null)
+                throw new Exception("ЭЦП не найден");
+            applicationDBContext.Rutokens.Remove(rutoken);
             await applicationDBContext.SaveChangesAsync();
             return new()
             {
@@ -66,40 +72,37 @@ public class PrintersService : IPrintersService
             };
         }
     }
-    public async Task<TaskResult> AddPrinter(Printer printer)
+    public async Task<Result> UpdateRutoken(Rutoken rutoken)
     {
         try
         {
             using ApplicationDBContext applicationDBContext = new();
-            if (printer.Employee != null)
+            applicationDBContext.Rutokens.Update(rutoken);
+            await applicationDBContext.SaveChangesAsync();
+            return new()
             {
-                printer.Employee = await applicationDBContext.Users.SingleOrDefaultAsync(x => x.Id == printer.Employee.Id);
+                Success = true
+            };
+        }
+        catch (Exception ex)
+        {
+            return new()
+            {
+                Success = false,
+                Message = ex.Message
+            };
+        }
+    }
+    public async Task<Result> AddRutoken(Rutoken rutoken)
+    {
+        try
+        {
+            using ApplicationDBContext applicationDBContext = new();
+            if (rutoken.User != null)
+            {
+                rutoken.User = await applicationDBContext.Users.SingleOrDefaultAsync(x => x.Id == rutoken.User.Id);
             }
-            await applicationDBContext.Printers.AddAsync(printer);
-            await applicationDBContext.SaveChangesAsync();
-            return new()
-            {
-                Success = true
-            };
-        }
-        catch (Exception ex)
-        {
-            return new()
-            {
-                Success = false,
-                Message = ex.Message
-            };
-        }
-    }
-    public async Task<TaskResult> RemovePrinterById(int id)
-    {
-        try
-        {
-            using ApplicationDBContext applicationDBContext = new();
-            var printer = await applicationDBContext.Printers.FirstOrDefaultAsync(x => x.Id == id);
-            if (printer == null)
-                throw new Exception("Printer not found");
-            applicationDBContext.Printers.Remove(printer);
+            await applicationDBContext.Rutokens.AddAsync(rutoken);
             await applicationDBContext.SaveChangesAsync();
             return new()
             {

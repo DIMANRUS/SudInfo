@@ -13,13 +13,16 @@ internal static class ServiceCollectionExtension
             .AddTransient<MonitorWindowViewModel>()
             .AddTransient<UsersPageViewModel>()
             .AddTransient<UserWindowViewModel>()
-            .AddTransient<IMonitorsService, MonitorsService>()
-            .AddTransient<IComputersService, ComputersService>()
-            .AddTransient<IUsersService, UsersService>()
+            .AddTransient<RutokensPageViewModel>()
+            .AddTransient<RutokenWindowViewModel>()
+            .AddTransient<IMonitorService, MonitorService>()
+            .AddTransient<IComputerService, ComputerService>()
+            .AddTransient<IUserService, UserService>()
             .AddSingleton<INavigationService, NavigationService>()
             .AddSingleton<IDialogService, DialogService>()
             .AddSingleton<IValidationService, ValidationService>()
-            .AddTransient<IPrintersService, PrintersService>()
+            .AddTransient<IPrinterService, PrinterService>()
+            .AddTransient<IRutokenService, RutokenService>()
             .BuildServiceProvider();
     }
 }

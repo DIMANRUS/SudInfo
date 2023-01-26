@@ -17,7 +17,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.1")
+                .HasAnnotation("ProductVersion", "7.0.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -34,9 +34,6 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                         .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
-
-                    b.Property<int?>("EmployeeId")
-                        .HasColumnType("int");
 
                     b.Property<string>("GPU")
                         .HasMaxLength(40)
@@ -74,9 +71,12 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeeId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Computers");
                 });
@@ -107,17 +107,14 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                         .HasColumnType("tinyint");
 
                     b.Property<string>("PersonalPhone")
-                        .IsRequired()
                         .HasMaxLength(11)
                         .HasColumnType("nvarchar(11)");
 
                     b.Property<string>("PhoneLocal")
-                        .IsRequired()
                         .HasMaxLength(3)
                         .HasColumnType("nvarchar(3)");
 
                     b.Property<string>("WorkPhone")
-                        .IsRequired()
                         .HasMaxLength(11)
                         .HasColumnType("nvarchar(11)");
 
@@ -133,9 +130,6 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("EmployeeId")
-                        .HasColumnType("int");
 
                     b.Property<string>("InventarNumber")
                         .IsRequired()
@@ -164,9 +158,12 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeeId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Monitors");
                 });
@@ -180,9 +177,6 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Cabinet")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("EmployeeId")
                         .HasColumnType("int");
 
                     b.Property<string>("Ip")
@@ -200,38 +194,74 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeeId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Printers");
                 });
 
+            modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.Rutoken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("EndDateCertificate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SerialNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Rutokens");
+                });
+
             modelBuilder.Entity("SudInfo.EFDataAccessLibrary.Models.Computer", b =>
                 {
-                    b.HasOne("SudInfo.EFDataAccessLibrary.Models.User", "Employee")
+                    b.HasOne("SudInfo.EFDataAccessLibrary.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("EmployeeId");
+                        .HasForeignKey("UserId");
 
-                    b.Navigation("Employee");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.Monitor", b =>
                 {
-                    b.HasOne("SudInfo.EFDataAccessLibrary.Models.User", "Employee")
+                    b.HasOne("SudInfo.EFDataAccessLibrary.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("EmployeeId");
+                        .HasForeignKey("UserId");
 
-                    b.Navigation("Employee");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.Printer", b =>
                 {
-                    b.HasOne("SudInfo.EFDataAccessLibrary.Models.User", "Employee")
+                    b.HasOne("SudInfo.EFDataAccessLibrary.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("EmployeeId");
+                        .HasForeignKey("UserId");
 
-                    b.Navigation("Employee");
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.Rutoken", b =>
+                {
+                    b.HasOne("SudInfo.EFDataAccessLibrary.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

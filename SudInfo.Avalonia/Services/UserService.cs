@@ -1,8 +1,8 @@
 ﻿namespace SudInfo.Avalonia.Services;
-public class UsersService : IUsersService
+public class UserService : IUserService
 {
     #region Get Methods Realization
-    public async Task<TaskResult<User>> GetUserById(int userId)
+    public async Task<Result<User>> GetUserById(int userId)
     {
         try
         {
@@ -13,7 +13,7 @@ public class UsersService : IUsersService
             return new()
             {
                 Success = true,
-                Result = user
+                Object = user
             };
         }
         catch (Exception ex)
@@ -25,7 +25,7 @@ public class UsersService : IUsersService
             };
         }
     }
-    public async Task<TaskResult<List<User>>> GetUsers()
+    public async Task<Result<List<User>>> GetUsers()
     {
         try
         {
@@ -34,7 +34,7 @@ public class UsersService : IUsersService
             return new()
             {
                 Success = true,
-                Result = users
+                Object = users
             };
         }
         catch (Exception ex)
@@ -48,7 +48,7 @@ public class UsersService : IUsersService
     }
     #endregion
 
-    public async Task<TaskResult> RemoveUserById(int userId)
+    public async Task<Result> RemoveUserById(int userId)
     {
         try
         {
@@ -72,7 +72,7 @@ public class UsersService : IUsersService
             };
         }
     }
-    public async Task<TaskResult> SaveUser(User user)
+    public async Task<Result> UpdateUser(User user)
     {
         try
         {
@@ -93,7 +93,7 @@ public class UsersService : IUsersService
             };
         }
     }
-    public async Task<TaskResult> AddUser(User user)
+    public async Task<Result> AddUser(User user)
     {
         try
         {
