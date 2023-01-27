@@ -54,7 +54,7 @@ public class RutokensPageViewModel : BaseRoutableViewModel
     }
     public async Task OpenEditRutokenWindow(int id)
     {
-        await _navigationService.ShowRutokenWindowDialog(WindowType.Add, _eventHandlerClosedWindowDialog, id);
+        await _navigationService.ShowRutokenWindowDialog(WindowType.Edit, _eventHandlerClosedWindowDialog, id);
     }
     public async Task RefreshRutokens()
     {

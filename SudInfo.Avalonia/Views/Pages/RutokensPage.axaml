@@ -50,9 +50,9 @@
               Grid.ColumnSpan="4">
       <DataGrid.Columns>
         <DataGridTextColumn Header="Серийный номер"
-                           Binding="{Binding SerialNumber}"
-                           IsReadOnly="True"/>
-        <DataGridTextColumn Header="Конец сертификата"
+                            Binding="{Binding SerialNumber}"
+                            IsReadOnly="True"/>
+        <DataGridTextColumn Header="Дата окончания сертификата"
                             Binding="{Binding EndDateCertificate}"
                             IsReadOnly="True"/>
         <DataGridTextColumn Header="ФИО сотрудника"

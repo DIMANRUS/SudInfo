@@ -42,7 +42,7 @@ public class UsersPageViewModel : BaseRoutableViewModel
     }
     public async Task OpenEditUserWindow(int id)
     {
-        await _navigationService.ShowUserWindowDialog(WindowType.Save, eventHandlerClosedWindowDialog, id);
+        await _navigationService.ShowUserWindowDialog(WindowType.Edit, eventHandlerClosedWindowDialog, id);
     }
     public async Task RefreshUsers()
     {

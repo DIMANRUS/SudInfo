@@ -69,5 +69,5 @@ public class NavigationService : INavigationService
 }
 public enum WindowType
 {
-    Save, Add
+    Add, Edit
 }

@@ -42,7 +42,7 @@ public class MonitorsPageViewModel : BaseRoutableViewModel
     }
     public async Task OpenEditMonitorWindow(int id)
     {
-        await _navigationService.ShowMonitorWindowDialog(WindowType.Save, eventHandlerClosedWindowDialog, id);
+        await _navigationService.ShowMonitorWindowDialog(WindowType.Edit, eventHandlerClosedWindowDialog, id);
     }
     public async Task RefreshMonitors()
     {

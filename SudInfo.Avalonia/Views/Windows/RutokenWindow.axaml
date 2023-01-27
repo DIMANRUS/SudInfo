@@ -2,12 +2,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d"
+        d:DesignWidth="800"
+        d:DesignHeight="450"
         x:Class="SudInfo.Avalonia.Views.Windows.RutokenWindow"
         xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.WindowViewModels;assembly=SudInfo.Avalonia"
         xmlns:i="using:Avalonia.Xaml.Interactivity"
         xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
-        Height="250"
+        Height="170"
         Width="300"
         CanResize="False"
         WindowStartupLocation="CenterOwner"
@@ -23,7 +25,8 @@
     <TextBox Text="{Binding Rutoken.SerialNumber}"
              MaxLength="30"
              Watermark="Серийный номер"/>
-    <CalendarDatePicker SelectedDate="{Binding Rutoken.EndDateCertificate}" />
+    <CalendarDatePicker SelectedDate="{Binding Rutoken.EndDateCertificate}"
+                        Width="280"/>
     <StackPanel Orientation="Horizontal">
       <CheckBox Name="IsUserBox"
                 IsChecked="{Binding IsUser}"/>

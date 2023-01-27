@@ -38,5 +38,9 @@ public class MainWindowViewModel : ReactiveObject, IScreen
     {
         Router.Navigate.Execute(ServiceCollectionExtension.ServiceProvider.GetService<RutokensPageViewModel>());
     }
+    public void OpenPeripheryPage()
+    {
+
+    }
     #endregion
 }

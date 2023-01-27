@@ -13,5 +13,6 @@ public class Monitor : BaseModel
     [StringLength(20)]
     public string InventarNumber { get; set; } = string.Empty;
     public User? User { get; set; }
+    public Computer Computer { get; set; } = null!;
     public bool IsDecommissioned { get; set; }
 }

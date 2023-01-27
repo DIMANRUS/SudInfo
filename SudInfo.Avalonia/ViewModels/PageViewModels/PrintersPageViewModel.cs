@@ -47,7 +47,7 @@ public class PrintersPageViewModel : BaseRoutableViewModel
     }
     public async Task OpenEditPrinterWindow(int id)
     {
-        await _navigationService.ShowPrinterWindowDialog(WindowType.Save, eventHandlerClosedWindowDialog, id);
+        await _navigationService.ShowPrinterWindowDialog(WindowType.Edit, eventHandlerClosedWindowDialog, id);
     }
     public async Task RemovePrinter(int id)
     {

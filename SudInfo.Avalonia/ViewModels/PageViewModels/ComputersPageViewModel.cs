@@ -48,7 +48,7 @@ public class ComputersPageViewModel : BaseRoutableViewModel
     }
     public async Task OpenEditComputerWindow(int id)
     {
-        await _navigationService.ShowComputerWindowDialog(WindowType.Save, _eventHandlerClosedWindowDialog, id);
+        await _navigationService.ShowComputerWindowDialog(WindowType.Edit, _eventHandlerClosedWindowDialog, id);
     }
     public async Task RefreshComputers()
     {
