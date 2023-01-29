@@ -3,7 +3,7 @@ public class Printer : BaseModel
 {
     [StringLength(40)]
     public string Name { get; set; } = string.Empty;
-    public PrinterType Type { get; set; } = PrinterType.Printer;
+    public PrinterType Type { get; set; } = PrinterType.Принтер;
     [StringLength(maximumLength: 12)]
     public string? Ip { get; set; }
     public int Cabinet { get; set; }
@@ -14,5 +14,5 @@ public class Printer : BaseModel
 
 public enum PrinterType
 {
-    Printer, MFY
+    Принтер, МФУ
 }

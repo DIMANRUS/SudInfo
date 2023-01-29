@@ -1,6 +1,6 @@
 ﻿using Monitor = SudInfo.EfDataAccessLibrary.Models.Monitor;
 
-namespace SudInfo.EFDataAccessLibrary.Contexts;
+namespace SudInfo.EfDataAccessLibrary.Contexts;
 public class ApplicationDBContext : DbContext
 {
     #region Private variables

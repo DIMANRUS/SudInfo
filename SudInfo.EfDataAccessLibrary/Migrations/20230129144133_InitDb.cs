@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -44,6 +45,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     RAM = table.Column<byte>(type: "tinyint", nullable: false),
                     SerialNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     InventarNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    YearRelease = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: true),
                     IsDecommissioned = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -69,6 +71,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     ScreenResolutionHeight = table.Column<int>(type: "int", nullable: false),
                     SerialNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     InventarNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    YearRelease = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: true),
                     IsDecommissioned = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -92,6 +95,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     Type = table.Column<int>(type: "int", nullable: false),
                     Ip = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: true),
                     Cabinet = table.Column<int>(type: "int", nullable: false),
+                    YearRelease = table.Column<int>(type: "int", nullable: false),
                     IsDecommissioned = table.Column<bool>(type: "bit", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -100,6 +104,26 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     table.PrimaryKey("PK_Printers", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Printers_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Rutokens",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SerialNumber = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
+                    EndDateCertificate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Rutokens", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Rutokens_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -119,6 +143,11 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                 name: "IX_Printers_UserId",
                 table: "Printers",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Rutokens_UserId",
+                table: "Rutokens",
+                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -132,6 +161,9 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
 
             migrationBuilder.DropTable(
                 name: "Printers");
+
+            migrationBuilder.DropTable(
+                name: "Rutokens");
 
             migrationBuilder.DropTable(
                 name: "Users");

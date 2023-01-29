@@ -15,6 +15,7 @@ internal static class ServiceCollectionExtension
             .AddTransient<UserWindowViewModel>()
             .AddTransient<RutokensPageViewModel>()
             .AddTransient<RutokenWindowViewModel>()
+            .AddTransient<PeripheryPageViewModel>()
             .AddTransient<IMonitorService, MonitorService>()
             .AddTransient<IComputerService, ComputerService>()
             .AddTransient<IUserService, UserService>()

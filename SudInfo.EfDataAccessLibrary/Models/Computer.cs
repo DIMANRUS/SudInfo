@@ -1,4 +1,4 @@
-﻿namespace SudInfo.EFDataAccessLibrary.Models;
+﻿namespace SudInfo.EfDataAccessLibrary.Models;
 public class Computer : BaseModel
 {
     [StringLength(15)]

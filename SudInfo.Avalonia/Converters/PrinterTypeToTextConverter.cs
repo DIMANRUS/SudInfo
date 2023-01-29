@@ -5,8 +5,8 @@ public class PrinterTypeToTextConverter : IValueConverter
     {
         return (PrinterType)value switch
         {
-            PrinterType.Printer => "Принтер",
-            PrinterType.MFY => "МФУ",
+            PrinterType.Принтер => "Принтер",
+            PrinterType.МФУ => "МФУ",
             _ => string.Empty
         };
     }

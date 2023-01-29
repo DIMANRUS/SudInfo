@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SudInfo.EFDataAccessLibrary.Contexts;
+using SudInfo.EfDataAccessLibrary.Contexts;
 
 #nullable disable
 
@@ -22,7 +22,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("SudInfo.EFDataAccessLibrary.Models.Computer", b =>
+            modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.Computer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -82,48 +82,6 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Computers");
-                });
-
-            modelBuilder.Entity("SudInfo.EFDataAccessLibrary.Models.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("MiddleName")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<byte>("NumberCabinet")
-                        .HasColumnType("tinyint");
-
-                    b.Property<string>("PersonalPhone")
-                        .HasMaxLength(11)
-                        .HasColumnType("nvarchar(11)");
-
-                    b.Property<string>("PhoneLocal")
-                        .HasMaxLength(3)
-                        .HasColumnType("nvarchar(3)");
-
-                    b.Property<string>("WorkPhone")
-                        .HasMaxLength(11)
-                        .HasColumnType("nvarchar(11)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.Monitor", b =>
@@ -238,9 +196,51 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     b.ToTable("Rutokens");
                 });
 
-            modelBuilder.Entity("SudInfo.EFDataAccessLibrary.Models.Computer", b =>
+            modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.User", b =>
                 {
-                    b.HasOne("SudInfo.EFDataAccessLibrary.Models.User", "User")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("MiddleName")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<byte>("NumberCabinet")
+                        .HasColumnType("tinyint");
+
+                    b.Property<string>("PersonalPhone")
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
+
+                    b.Property<string>("PhoneLocal")
+                        .HasMaxLength(3)
+                        .HasColumnType("nvarchar(3)");
+
+                    b.Property<string>("WorkPhone")
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.Computer", b =>
+                {
+                    b.HasOne("SudInfo.EfDataAccessLibrary.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
@@ -249,7 +249,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
 
             modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.Monitor", b =>
                 {
-                    b.HasOne("SudInfo.EFDataAccessLibrary.Models.User", "User")
+                    b.HasOne("SudInfo.EfDataAccessLibrary.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
@@ -258,7 +258,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
 
             modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.Printer", b =>
                 {
-                    b.HasOne("SudInfo.EFDataAccessLibrary.Models.User", "User")
+                    b.HasOne("SudInfo.EfDataAccessLibrary.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
@@ -267,7 +267,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
 
             modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.Rutoken", b =>
                 {
-                    b.HasOne("SudInfo.EFDataAccessLibrary.Models.User", "User")
+                    b.HasOne("SudInfo.EfDataAccessLibrary.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 

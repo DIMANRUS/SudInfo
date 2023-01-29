@@ -40,7 +40,7 @@ public class MainWindowViewModel : ReactiveObject, IScreen
     }
     public void OpenPeripheryPage()
     {
-
+        Router.Navigate.Execute(ServiceCollectionExtension.ServiceProvider.GetService<PeripheryPageViewModel>());
     }
     #endregion
 }

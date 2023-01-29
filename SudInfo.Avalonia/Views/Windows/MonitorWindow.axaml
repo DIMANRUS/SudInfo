@@ -10,7 +10,7 @@
         xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
         CanResize="False"
         WindowStartupLocation="CenterOwner"
-        Height="420"
+        Height="450"
         Width="300"
         x:DataType="viewModels:MonitorWindowViewModel">
   <StackPanel Margin="10"
@@ -29,7 +29,7 @@
              Watermark="Разрешение экрана (высота)"/>
     <TextBox Watermark="Год выпуска"
              MaxLength="4"
-             Text="{Binding monitor.YearRelease}"/>
+             Text="{Binding Monitor.YearRelease}"/>
     <TextBox Text="{Binding Monitor.SerialNumber}"
              MaxLength="20"
              Watermark="Серийный номер"/>

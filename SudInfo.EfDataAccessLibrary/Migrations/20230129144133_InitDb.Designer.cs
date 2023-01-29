@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SudInfo.EFDataAccessLibrary.Contexts;
+using SudInfo.EfDataAccessLibrary.Contexts;
 
 #nullable disable
 
 namespace SudInfo.EfDataAccessLibrary.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20230121173523_InitDb")]
+    [Migration("20230129144133_InitDb")]
     partial class InitDb
     {
         /// <inheritdoc />
@@ -25,7 +25,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("SudInfo.EFDataAccessLibrary.Models.Computer", b =>
+            modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.Computer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -77,6 +77,9 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
 
+                    b.Property<int>("YearRelease")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
@@ -84,7 +87,119 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     b.ToTable("Computers");
                 });
 
-            modelBuilder.Entity("SudInfo.EFDataAccessLibrary.Models.User", b =>
+            modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.Monitor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("InventarNumber")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<bool>("IsDecommissioned")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("ScreenResolutionHeight")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ScreenResolutionWidth")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ScreenSize")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SerialNumber")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("YearRelease")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Monitors");
+                });
+
+            modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.Printer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Cabinet")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Ip")
+                        .HasMaxLength(12)
+                        .HasColumnType("nvarchar(12)");
+
+                    b.Property<bool>("IsDecommissioned")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("YearRelease")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Printers");
+                });
+
+            modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.Rutoken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("EndDateCertificate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SerialNumber")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Rutokens");
+                });
+
+            modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -126,90 +241,9 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.Monitor", b =>
+            modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.Computer", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("InventarNumber")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<bool>("IsDecommissioned")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("ScreenResolutionHeight")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ScreenResolutionWidth")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ScreenSize")
-                        .HasColumnType("int");
-
-                    b.Property<string>("SerialNumber")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Monitors");
-                });
-
-            modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.Printer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Cabinet")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Ip")
-                        .HasMaxLength(12)
-                        .HasColumnType("nvarchar(12)");
-
-                    b.Property<bool>("IsDecommissioned")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Printers");
-                });
-
-            modelBuilder.Entity("SudInfo.EFDataAccessLibrary.Models.Computer", b =>
-                {
-                    b.HasOne("SudInfo.EFDataAccessLibrary.Models.User", "User")
+                    b.HasOne("SudInfo.EfDataAccessLibrary.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
@@ -218,7 +252,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
 
             modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.Monitor", b =>
                 {
-                    b.HasOne("SudInfo.EFDataAccessLibrary.Models.User", "User")
+                    b.HasOne("SudInfo.EfDataAccessLibrary.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
@@ -227,7 +261,16 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
 
             modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.Printer", b =>
                 {
-                    b.HasOne("SudInfo.EFDataAccessLibrary.Models.User", "User")
+                    b.HasOne("SudInfo.EfDataAccessLibrary.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.Rutoken", b =>
+                {
+                    b.HasOne("SudInfo.EfDataAccessLibrary.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 

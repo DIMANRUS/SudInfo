@@ -19,6 +19,7 @@ public partial class App : Application
         Locator.CurrentMutable.Register<IViewFor<MonitorsPageViewModel>>(() => new MonitorsPage());
         Locator.CurrentMutable.Register<IViewFor<UsersPageViewModel>>(() => new UsersPage());
         Locator.CurrentMutable.Register<IViewFor<RutokensPageViewModel>>(() => new RutokensPage());
+        Locator.CurrentMutable.Register<IViewFor<PeripheryPageViewModel>>(() => new PeripheryPage());
         #endregion
 
         MainWindow mainWindow = new() { DataContext = Locator.Current.GetService<IScreen>() };
