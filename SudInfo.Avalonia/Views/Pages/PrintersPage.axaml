@@ -34,7 +34,7 @@
              Margin="10 5 10 5"
              UseFloatingWatermark="False"
              Text="{Binding SearchText}"
-      MaxLength="50">
+             MaxLength="50">
       <i:Interaction.Behaviors>
         <ia:EventTriggerBehavior EventName="KeyUp">
           <ia:InvokeCommandAction Command="{Binding SearchBoxKeyUp}"/>
@@ -73,6 +73,9 @@
                             IsReadOnly="True"/>
         <DataGridTextColumn Header="Кабинет"
                             Binding="{Binding Cabinet}"
+                            IsReadOnly="True"/>
+        <DataGridTextColumn Header="Год выпуска"
+                            Binding="{Binding YearRelease}"
                             IsReadOnly="True"/>
         <DataGridTextColumn Header="Фамилия сотрудника"
                             Binding="{Binding User.LastName}"

@@ -7,6 +7,7 @@ public class Printer : BaseModel
     [StringLength(maximumLength: 12)]
     public string? Ip { get; set; }
     public int Cabinet { get; set; }
+    public int YearRelease { get; set; }
     public bool IsDecommissioned { get; set; }
     public User? User { get; set; }
 }

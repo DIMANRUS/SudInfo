@@ -12,6 +12,7 @@ public class Monitor : BaseModel
     public string SerialNumber { get; set; } = string.Empty;
     [StringLength(20)]
     public string InventarNumber { get; set; } = string.Empty;
+    public int YearRelease { get; set; }
     public User? User { get; set; }
     public bool IsDecommissioned { get; set; }
 }

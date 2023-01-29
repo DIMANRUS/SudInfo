@@ -7,7 +7,7 @@
         xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.WindowViewModels;assembly=SudInfo.Avalonia"
         xmlns:i="using:Avalonia.Xaml.Interactivity"
         xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
-        Height="540"
+        Height="570"
         Width="300"
         CanResize="False"
         WindowStartupLocation="CenterOwner"
@@ -42,6 +42,9 @@
     <TextBox Text="{Binding Computer.RAM}"
              MaxLength="2"
              Watermark="Оперативная память (ГБ)"/>
+    <TextBox Watermark="Год выпуска"
+             MaxLength="4"
+             Text="{Binding Computer.YearRelease}"/>
     <TextBox Text="{Binding Computer.SerialNumber}"
              MaxLength="20"
              Watermark="Серийный номер"/>

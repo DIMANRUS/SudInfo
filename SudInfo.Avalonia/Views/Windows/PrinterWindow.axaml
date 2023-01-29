@@ -33,6 +33,9 @@
     <ComboBox Items="{Binding PrinterTypes}"
               SelectedItem="{Binding Printer.Type}"
               HorizontalAlignment="Stretch"/>
+    <TextBox Watermark="Год выпуска"
+             MaxLength="4"
+             Text="{Binding Printer.YearRelease}"/>
     <StackPanel Orientation="Horizontal">
       <CheckBox Name="IsUserBox"
                 IsChecked="{Binding IsUser}"/>
