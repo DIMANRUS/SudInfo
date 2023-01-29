@@ -59,13 +59,16 @@
         </ia:EventTriggerBehavior>
       </i:Interaction.Behaviors>
     </Image>
-    <DataGrid Items="{Binding PeripheryList}"
+    <DataGrid Items="{Binding Peripheries}"
               Grid.Row="1"
               Grid.ColumnSpan="4"
               x:DataType="models:Periphery">
       <DataGrid.Columns>
         <DataGridTextColumn Header="Наименование"
                             Binding="{Binding Name}"
+                            IsReadOnly="True"/>
+        <DataGridTextColumn Header="Тип"
+                            Binding="{Binding PeripheryType}"
                             IsReadOnly="True"/>
         <DataGridTextColumn Header="Инвентарный"
                             Binding="{Binding InventarNumber}"

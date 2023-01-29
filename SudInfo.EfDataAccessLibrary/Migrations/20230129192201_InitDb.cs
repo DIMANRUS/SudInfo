@@ -86,6 +86,29 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Peripheries",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false),
+                    SerialNumber = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    InventarNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: true),
+                    IsDecommissioned = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Peripheries", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Peripheries_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Printers",
                 columns: table => new
                 {
@@ -140,6 +163,11 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Peripheries_UserId",
+                table: "Peripheries",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Printers_UserId",
                 table: "Printers",
                 column: "UserId");
@@ -158,6 +186,9 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
 
             migrationBuilder.DropTable(
                 name: "Monitors");
+
+            migrationBuilder.DropTable(
+                name: "Peripheries");
 
             migrationBuilder.DropTable(
                 name: "Printers");

@@ -24,6 +24,7 @@ internal static class ServiceCollectionExtension
             .AddSingleton<IValidationService, ValidationService>()
             .AddTransient<IPrinterService, PrinterService>()
             .AddTransient<IRutokenService, RutokenService>()
+            .AddTransient<IPeripheryService, PeripheryService>()
             .BuildServiceProvider();
     }
 }

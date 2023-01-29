@@ -12,7 +12,7 @@ using SudInfo.EfDataAccessLibrary.Contexts;
 namespace SudInfo.EfDataAccessLibrary.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20230129144133_InitDb")]
+    [Migration("20230129192201_InitDb")]
     partial class InitDb
     {
         /// <inheritdoc />
@@ -135,6 +135,43 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     b.ToTable("Monitors");
                 });
 
+            modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.Periphery", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("InventarNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDecommissioned")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("SerialNumber")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Peripheries");
+                });
+
             modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.Printer", b =>
                 {
                     b.Property<int>("Id")
@@ -251,6 +288,15 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                 });
 
             modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.Monitor", b =>
+                {
+                    b.HasOne("SudInfo.EfDataAccessLibrary.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.Periphery", b =>
                 {
                     b.HasOne("SudInfo.EfDataAccessLibrary.Models.User", "User")
                         .WithMany()
