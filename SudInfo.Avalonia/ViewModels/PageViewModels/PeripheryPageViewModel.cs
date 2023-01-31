@@ -37,19 +37,19 @@ public class PeripheryPageViewModel : BaseRoutableViewModel
     #endregion
 
     #region Public Methods
-    public async Task RefreshPrinters()
+    public async Task RefreshPeriphery()
     {
         await LoadPeripheries();
     }
-    public async Task OpenAddPrinterWindow()
+    public async Task OpenAddPeripheryWindow()
     {
-        //await _navigationService.ShowPrinterWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog);
+        await _navigationService.ShowPeripheryWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog);
     }
-    public async Task OpenEditPrinterWindow(int id)
+    public async Task OpenEditPeripheryWindow(int id)
     {
-        //await _navigationService.ShowPrinterWindowDialog(WindowType.Edit, eventHandlerClosedWindowDialog, id);
+        await _navigationService.ShowPeripheryWindowDialog(WindowType.Edit, eventHandlerClosedWindowDialog, id);
     }
-    public async Task RemovePrinter(int id)
+    public async Task RemovePeriphery(int id)
     {
         var dialogResult = await _dialogService.ShowMessageBox("Сообщение", "Вы действительно хотите удалить периферию?", buttonEnum: ButtonEnum.YesNo, icon: Icon.Question);
         if (dialogResult == ButtonResult.No)
@@ -57,7 +57,7 @@ public class PeripheryPageViewModel : BaseRoutableViewModel
         var removePeripheryResult = await _peripheryService.RemovePeripheryById(id);
         if (!removePeripheryResult.Success)
         {
-            await _dialogService.ShowMessageBox("Ошибка", $"Ошибка удаления принтера! Ошибка: {removePeripheryResult.Message}", icon: Icon.Error);
+            await _dialogService.ShowMessageBox("Ошибка", $"Ошибка удаления периферии! Ошибка: {removePeripheryResult.Message}", icon: Icon.Error);
             return;
         }
         await LoadPeripheries();

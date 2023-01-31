@@ -47,6 +47,22 @@ public class NavigationService : INavigationService
         _dialogService.SetCurrentWindow(userWindow);
         await userWindow.ShowDialog(_mainWindow);
     }
+    public async Task ShowRutokenWindowDialog(WindowType windowType, EventHandler closedEvent = null, int? rutokenId = null)
+    {
+        RutokenWindow rutokenWindow = new(windowType, rutokenId);
+        if (closedEvent != null)
+            rutokenWindow.Closed += closedEvent;
+        _dialogService.SetCurrentWindow(rutokenWindow);
+        await rutokenWindow.ShowDialog(_mainWindow);
+    }
+    public async Task ShowPeripheryWindowDialog(WindowType windowType, EventHandler closedEvent = null, int? peripheryId = null)
+    {
+        PeripheryWindow peripheryWindow = new(windowType, peripheryId);
+        if (closedEvent != null)
+            peripheryWindow.Closed += closedEvent;
+        _dialogService.SetCurrentWindow(peripheryWindow);
+        await peripheryWindow.ShowDialog(_mainWindow);
+    }
     public async Task ShowSettingsWindowDialog()
     {
         await new SettingsWindow().ShowDialog(_mainWindow);
@@ -56,14 +72,6 @@ public class NavigationService : INavigationService
         if (_mainWindow != null)
             return;
         _mainWindow = window;
-    }
-    public async Task ShowRutokenWindowDialog(WindowType windowType, EventHandler closedEvent = null, int? rutokenId = null)
-    {
-        RutokenWindow rutokenWindow = new(windowType, rutokenId);
-        if (closedEvent != null)
-            rutokenWindow.Closed += closedEvent;
-        _dialogService.SetCurrentWindow(rutokenWindow);
-        await rutokenWindow.ShowDialog(_mainWindow);
     }
     #endregion
 }

@@ -1,0 +1,54 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.WindowViewModels;assembly=SudInfo.Avalonia"
+        xmlns:i="using:Avalonia.Xaml.Interactivity"
+        xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+        Height="570"
+        Width="300"
+        CanResize="False"
+        WindowStartupLocation="CenterOwner"
+        x:DataType="viewModels:PeripheryWindowViewModel"
+        Title="Периферия"
+        x:Class="SudInfo.Avalonia.Views.Windows.PeripheryWindow">
+  <i:Interaction.Behaviors>
+    <ia:EventTriggerBehavior EventName="Initialized">
+      <ia:InvokeCommandAction Command="{Binding Initialized}"/>
+    </ia:EventTriggerBehavior>
+  </i:Interaction.Behaviors>
+  <StackPanel Margin="10"
+              Spacing="5">
+    <TextBox Text="{Binding Periphery.Name}"
+             MaxLength="50"
+             Watermark="Название"/>
+    <ComboBox
+      HorizontalAlignment="Stretch"
+      Items="{Binding PeripheryTypes}"
+      SelectedItem="{Binding Periphery.Type}"/>
+    <StackPanel Orientation="Horizontal">
+      <CheckBox Name="IsUserBox"
+                IsChecked="{Binding IsUser}"/>
+      <ComboBox
+        Items="{Binding Users}"
+        SelectedItem="{Binding Periphery.User}"
+        Width="252"
+        IsEnabled="{Binding #IsUserBox.IsChecked}"
+        AutoScrollToSelectedItem="True"
+        PlaceholderText="Сотрудник">
+        <ComboBox.DataTemplates>
+          <DataTemplate>
+            <TextBlock Text="{Binding FIO}"/>
+          </DataTemplate>
+        </ComboBox.DataTemplates>
+      </ComboBox>
+    </StackPanel>
+    <Button Content="{Binding SaveButtonText}"
+            Command="{Binding SavePeriphery}"
+            Cursor="Hand"
+            FontWeight="Bold"
+            HorizontalAlignment="Stretch"
+            HorizontalContentAlignment="Center"/>
+  </StackPanel>
+</Window>
