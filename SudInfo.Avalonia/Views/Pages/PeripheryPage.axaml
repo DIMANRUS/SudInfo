@@ -68,7 +68,7 @@
                             Binding="{Binding Name}"
                             IsReadOnly="True"/>
         <DataGridTextColumn Header="Тип"
-                            Binding="{Binding PeripheryType}"
+                            Binding="{Binding Type}"
                             IsReadOnly="True"/>
         <DataGridTextColumn Header="Инвентарный"
                             Binding="{Binding InventarNumber}"

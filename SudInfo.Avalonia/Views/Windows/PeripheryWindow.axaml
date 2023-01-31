@@ -6,7 +6,7 @@
         xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.WindowViewModels;assembly=SudInfo.Avalonia"
         xmlns:i="using:Avalonia.Xaml.Interactivity"
         xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
-        Height="570"
+        Height="270"
         Width="300"
         CanResize="False"
         WindowStartupLocation="CenterOwner"
@@ -23,6 +23,12 @@
     <TextBox Text="{Binding Periphery.Name}"
              MaxLength="50"
              Watermark="Название"/>
+    <TextBox Text="{Binding Periphery.SerialNumber}"
+             MaxLength="20"
+             Watermark="Серийный номер"/>
+    <TextBox Text="{Binding Periphery.InventarNumber}"
+             MaxLength="20"
+             Watermark="Инвентарный номер"/>
     <ComboBox
       HorizontalAlignment="Stretch"
       Items="{Binding PeripheryTypes}"
