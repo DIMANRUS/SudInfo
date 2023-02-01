@@ -23,6 +23,5 @@
     </Style>
   </Application.Styles>
   <Application.Resources>
-    <converters:PrinterTypeToTextConverter x:Key="PrinterTypeToTextConverter"/>
   </Application.Resources>
 </Application>

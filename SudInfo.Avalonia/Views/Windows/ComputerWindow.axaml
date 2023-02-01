@@ -7,7 +7,7 @@
         xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.WindowViewModels;assembly=SudInfo.Avalonia"
         xmlns:i="using:Avalonia.Xaml.Interactivity"
         xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
-        Height="570"
+        Height="625"
         Width="300"
         CanResize="False"
         WindowStartupLocation="CenterOwner"
@@ -51,6 +51,10 @@
     <TextBox Text="{Binding Computer.InventarNumber}"
              MaxLength="20"
              Watermark="Инвентарный номер"/>
+    <TextBox Text="{Binding Computer.NumberCabinet}"
+             MaxLength="4"
+             Watermark="Кабинет"
+             IsEnabled="{Binding !#IsUserBox.IsChecked}"/>
     <StackPanel Orientation="Horizontal">
       <CheckBox Name="IsUserBox"
                 IsChecked="{Binding IsUser}"/>

@@ -9,8 +9,8 @@
         xmlns:i="using:Avalonia.Xaml.Interactivity"
         xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
         xmlns:reactiveUi="http://reactiveui.net"
-        MinHeight="720"
-        MinWidth="1000"
+        MinHeight="500"
+        MinWidth="500"
         x:Class="SudInfo.Avalonia.Views.Windows.MainWindow"
         xmlns:vm="using:SudInfo.Avalonia.ViewModels"
         Title="СудИнфо - Инженер">

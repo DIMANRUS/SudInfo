@@ -12,6 +12,7 @@ public class Computer : BaseModel
     public string? GPU { get; set; }
     public int ROM { get; set; }
     public byte RAM { get; set; }
+    public int NumberCabinet { get; set; }
     [StringLength(20)]
     public string SerialNumber { get; set; } = string.Empty;
     [StringLength(20)]

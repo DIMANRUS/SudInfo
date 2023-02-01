@@ -66,7 +66,7 @@
                             Binding="{Binding Name}"
                             IsReadOnly="True"/>
         <DataGridTextColumn Header="Тип"
-                            Binding="{Binding Type, Converter={StaticResource PrinterTypeToTextConverter}}"
+                            Binding="{Binding Type}"
                             IsReadOnly="True"/>
         <DataGridTextColumn Header="IP Адрес"
                             Binding="{Binding Ip}"
