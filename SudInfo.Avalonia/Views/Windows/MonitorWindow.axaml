@@ -10,7 +10,7 @@
         xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
         CanResize="False"
         WindowStartupLocation="CenterOwner"
-        Height="450"
+        Height="470"
         Width="300"
         x:DataType="viewModels:MonitorWindowViewModel">
   <StackPanel Margin="10"
@@ -36,6 +36,10 @@
     <TextBox Text="{Binding Monitor.InventarNumber}"
              MaxLength="20"
              Watermark="Инвентарный номер"/>
+    <TextBox Text="{Binding Monitor.NumberCabinet}"
+             MaxLength="4"
+             Watermark="Кабинет"
+             IsEnabled="{Binding !#IsUserBox.IsChecked}"/>
     <StackPanel Orientation="Horizontal">
       <CheckBox Name="IsUserBox"
                 IsChecked="{Binding IsUser}"/>

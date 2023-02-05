@@ -9,19 +9,20 @@ public class PeripheryWindowViewModel : BaseViewModel
     #region Collections
     public static IEnumerable<PeripheryType> PeripheryTypes => Enum.GetValues(typeof(PeripheryType)).Cast<PeripheryType>();
     [Reactive]
-    public IEnumerable<User> Users { get; set; }
+    public IEnumerable<Computer> Computers { get; set; }
     #endregion
 
     #region Properties
     [Reactive]
     public Periphery Periphery { get; set; } = new();
-    public bool IsUser { get; set; }
+    public bool IsComputer { get; set; }
     [Reactive]
     public string SaveButtonText { get; private set; } = "Добавить периферию";
+
     #endregion
 
     #region Constructors
-    public PeripheryWindowViewModel(IPeripheryService peripheryService, IUserService usersService, IDialogService dialogService)
+    public PeripheryWindowViewModel(IPeripheryService peripheryService, IUserService usersService, IDialogService dialogService, IComputerService computerService)
     {
         #region Service Set
         _peripheryService = peripheryService;
@@ -30,13 +31,15 @@ public class PeripheryWindowViewModel : BaseViewModel
 
         Initialized = ReactiveCommand.CreateFromTask(async () =>
         {
-            var usersResult = await usersService.GetUsers();
-            if (!usersResult.Success)
+            //var usersResult = await usersService.GetUsers();
+            var computersResult = await computerService.GetComputerNames();
+            if (/*!usersResult.Success || */!computersResult.Success)
             {
-                await dialogService.ShowMessageBox("Ошибка", "Ошибка загрузки Сотрудников! Периферию можно добавить, но без сотрудника.", icon: Icon.Error);
+                await dialogService.ShowMessageBox("Ошибка", "Ошибка загрузки компьютеров!", icon: Icon.Error);
                 return;
             }
-            Users = usersResult.Object;
+            //Users = usersResult.Object;
+            Computers = computersResult.Object;
         });
     }
 
@@ -52,8 +55,8 @@ public class PeripheryWindowViewModel : BaseViewModel
     #region Public Methods
     public async Task SavePeriphery()
     {
-        if (!IsUser)
-            Periphery.User = null;
+        if (!IsComputer)
+            Periphery.Computer = null;
         Result computerResult = _windowType switch
         {
             WindowType.Add => await _peripheryService.AddPeriphery(Periphery),

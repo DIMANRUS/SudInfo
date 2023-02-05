@@ -1,4 +1,4 @@
-﻿namespace SudInfo.EfDataAccessLibrary.Models;
+﻿namespace SudInfo.EfDataAccessLibrary.Models.BaseModels;
 public abstract class BaseModel
 {
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

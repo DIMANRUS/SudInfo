@@ -76,12 +76,15 @@
         <DataGridTextColumn Header="Серийный"
                             Binding="{Binding SerialNumber}"
                             IsReadOnly="True"/>
+        <DataGridTextColumn Header="Компьютер"
+                            Binding="{Binding Computer.Name}"
+                            IsReadOnly="True"/>
         <DataGridTextColumn Header="ФИО сотрудника"
                             Binding="{Binding User.FIO}"
                             IsReadOnly="True"
                             Width="*"/>
         <DataGridTextColumn Header="Кабинет"
-                            Binding="{Binding User.NumberCabinet}"
+                            Binding="{Binding Cabinet}"
                             IsReadOnly="True"/>
         <DataGridTemplateColumn Width="40">
           <DataTemplate>

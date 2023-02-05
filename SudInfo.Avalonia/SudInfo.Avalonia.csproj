@@ -18,12 +18,15 @@
     <None Remove="Assets\Images\add.png" />
     <None Remove="Assets\Images\edit.png" />
     <None Remove="Assets\Images\MenuBar\apps.png" />
+    <None Remove="Assets\Images\MenuBar\camera.png" />
     <None Remove="Assets\Images\MenuBar\contacts.png" />
     <None Remove="Assets\Images\MenuBar\documents.png" />
     <None Remove="Assets\Images\MenuBar\key.png" />
     <None Remove="Assets\Images\MenuBar\monitor.png" />
+    <None Remove="Assets\Images\MenuBar\paint.png" />
     <None Remove="Assets\Images\MenuBar\printer.png" />
     <None Remove="Assets\Images\MenuBar\processor.png" />
+    <None Remove="Assets\Images\MenuBar\profile.png" />
     <None Remove="Assets\Images\MenuBar\rutoken.png" />
     <None Remove="Assets\Images\MenuBar\server.png" />
     <None Remove="Assets\Images\MenuBar\settings.png" />
@@ -81,8 +84,5 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SudInfo.EfDataAccessLibrary\SudInfo.EfDataAccessLibrary.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Converters\" />
   </ItemGroup>
 </Project>

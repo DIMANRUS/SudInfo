@@ -20,6 +20,11 @@ public class Computer : BaseModel
     public int YearRelease { get; set; }
     public User? User { get; set; }
     public bool IsDecommissioned { get; set; }
+
+    [NotMapped]
+    public int Cabinet => (User == null) ? NumberCabinet : User.NumberCabinet;
+
+    public List<Periphery> Peripheries { get; set; } = new();
 }
 
 public enum OS

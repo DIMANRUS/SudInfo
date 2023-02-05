@@ -46,6 +46,27 @@ public class ComputerService : IComputerService
             };
         }
     }
+    public async Task<Result<List<Computer>>> GetComputerNames()
+    {
+        try
+        {
+            using ApplicationDBContext applicationDBContext = new();
+            var computerNames = await applicationDBContext.Computers.Select(x => new Computer() { Name = x.Name, Id = x.Id }).ToListAsync();
+            return new()
+            {
+                Object = computerNames,
+                Success = true
+            };
+        }
+        catch (Exception ex)
+        {
+            return new()
+            {
+                Message = ex.Message,
+                Success = false
+            };
+        }
+    }
     #endregion
 
     public async Task<Result> AddComputer(Computer computer)

@@ -6,11 +6,12 @@
         xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.WindowViewModels;assembly=SudInfo.Avalonia"
         xmlns:i="using:Avalonia.Xaml.Interactivity"
         xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
-        Height="270"
+        Height="350"
         Width="300"
         CanResize="False"
         WindowStartupLocation="CenterOwner"
         x:DataType="viewModels:PeripheryWindowViewModel"
+        xmlns:models="using:SudInfo.EfDataAccessLibrary.Models"
         Title="Периферия"
         x:Class="SudInfo.Avalonia.Views.Windows.PeripheryWindow">
   <i:Interaction.Behaviors>
@@ -33,19 +34,23 @@
       HorizontalAlignment="Stretch"
       Items="{Binding PeripheryTypes}"
       SelectedItem="{Binding Periphery.Type}"/>
+    <TextBox Text="{Binding Periphery.NumberCabinet}"
+             MaxLength="4"
+             Watermark="Кабинет"
+             IsEnabled="{Binding !#IsUserBox.IsChecked}"/>
     <StackPanel Orientation="Horizontal">
-      <CheckBox Name="IsUserBox"
-                IsChecked="{Binding IsUser}"/>
+      <CheckBox Name="IsComputerBox"
+                IsChecked="{Binding IsComputer}"/>
       <ComboBox
-        Items="{Binding Users}"
-        SelectedItem="{Binding Periphery.User}"
+        Items="{Binding Computers}"
+        SelectedItem="{Binding Periphery.Computer}"
         Width="252"
-        IsEnabled="{Binding #IsUserBox.IsChecked}"
+        IsEnabled="{Binding #IsComputerBox.IsChecked}"
         AutoScrollToSelectedItem="True"
-        PlaceholderText="Сотрудник">
+        PlaceholderText="Компьютер">
         <ComboBox.DataTemplates>
-          <DataTemplate>
-            <TextBlock Text="{Binding FIO}"/>
+          <DataTemplate DataType="models:Computer">
+            <TextBlock Text="{Binding Name}"/>
           </DataTemplate>
         </ComboBox.DataTemplates>
       </ComboBox>

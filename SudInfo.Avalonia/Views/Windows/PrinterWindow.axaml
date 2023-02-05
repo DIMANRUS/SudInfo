@@ -28,7 +28,7 @@
              Text="{Binding Printer.Ip}"/>
     <TextBox Watermark="Номер кабинета"
              MaxLength="3"
-             Text="{Binding Printer.Cabinet}"
+             Text="{Binding Printer.NumberCabinet}"
              IsEnabled="{Binding !IsChecked, ElementName=IsUserBox}"/>
     <ComboBox Items="{Binding PrinterTypes}"
               SelectedItem="{Binding Printer.Type}"

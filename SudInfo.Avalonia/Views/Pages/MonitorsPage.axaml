@@ -85,7 +85,7 @@
                             IsReadOnly="True"
                             Width="*"/>
         <DataGridTextColumn Header="Кабинет"
-                            Binding="{Binding User.NumberCabinet}"
+                            Binding="{Binding Cabinet}"
                             IsReadOnly="True"/>
         <DataGridTemplateColumn Width="40">
           <DataTemplate>

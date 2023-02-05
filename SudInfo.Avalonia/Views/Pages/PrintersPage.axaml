@@ -81,6 +81,9 @@
                             Binding="{Binding User.LastName}"
                             Width="*"
                             IsReadOnly="True"/>
+               <DataGridTextColumn Header="Кабинет"
+                            Binding="{Binding Cabinet}"
+                            IsReadOnly="True"/>
         <DataGridTemplateColumn Width="40">
           <DataTemplate>
             <Image Source="/Assets/Images/edit.png">
