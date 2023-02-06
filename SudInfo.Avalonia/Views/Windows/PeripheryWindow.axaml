@@ -34,10 +34,6 @@
       HorizontalAlignment="Stretch"
       Items="{Binding PeripheryTypes}"
       SelectedItem="{Binding Periphery.Type}"/>
-    <TextBox Text="{Binding Periphery.NumberCabinet}"
-             MaxLength="4"
-             Watermark="Кабинет"
-             IsEnabled="{Binding !#IsUserBox.IsChecked}"/>
     <StackPanel Orientation="Horizontal">
       <CheckBox Name="IsComputerBox"
                 IsChecked="{Binding IsComputer}"/>

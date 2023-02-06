@@ -80,11 +80,11 @@
                             Binding="{Binding Computer.Name}"
                             IsReadOnly="True"/>
         <DataGridTextColumn Header="ФИО сотрудника"
-                            Binding="{Binding User.FIO}"
+                            Binding="{Binding Computer.User.FIO}"
                             IsReadOnly="True"
                             Width="*"/>
         <DataGridTextColumn Header="Кабинет"
-                            Binding="{Binding Cabinet}"
+                            Binding="{Binding Computer.Cabinet}"
                             IsReadOnly="True"/>
         <DataGridTemplateColumn Width="40">
           <DataTemplate>
