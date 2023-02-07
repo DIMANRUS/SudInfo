@@ -18,5 +18,4 @@ public class User : BaseModel
     public string? PhoneLocal { get; set; }
 
     public List<Computer> Computers { get; set; } = new();
-    public List<Monitor> Monitors { get; set; } = new();
 }

@@ -13,6 +13,11 @@
         Height="470"
         Width="300"
         x:DataType="viewModels:MonitorWindowViewModel">
+  <i:Interaction.Behaviors>
+    <ia:EventTriggerBehavior EventName="Initialized">
+      <ia:InvokeCommandAction Command="{Binding Initialized}"/>
+    </ia:EventTriggerBehavior>
+  </i:Interaction.Behaviors>
   <StackPanel Margin="10"
               Spacing="5">
     <TextBox Text="{Binding Monitor.Name}"
@@ -36,23 +41,19 @@
     <TextBox Text="{Binding Monitor.InventarNumber}"
              MaxLength="20"
              Watermark="Инвентарный номер"/>
-    <TextBox Text="{Binding Monitor.NumberCabinet}"
-             MaxLength="4"
-             Watermark="Кабинет"
-             IsEnabled="{Binding !#IsUserBox.IsChecked}"/>
     <StackPanel Orientation="Horizontal">
       <CheckBox Name="IsUserBox"
-                IsChecked="{Binding IsUser}"/>
+                IsChecked="{Binding IsComputer}"/>
       <ComboBox
-        Items="{Binding Users}"
-        SelectedItem="{Binding Monitor.User}"
+        Items="{Binding Computers}"
+        SelectedItem="{Binding Monitor.Computer}"
         Width="252"
         IsEnabled="{Binding #IsUserBox.IsChecked}"
         AutoScrollToSelectedItem="True"
-        PlaceholderText="Сотрудник">
+        PlaceholderText="Компьютер">
         <ComboBox.DataTemplates>
           <DataTemplate>
-            <TextBlock Text="{Binding FirstName}"/>
+            <TextBlock Text="{Binding Name}"/>
           </DataTemplate>
         </ComboBox.DataTemplates>
       </ComboBox>

@@ -45,7 +45,7 @@ public class UserService : IUserService
                 Message = ex.Message
             };
         }
-    }
+    }   
     #endregion
 
     public async Task<Result> RemoveUserById(int userId)

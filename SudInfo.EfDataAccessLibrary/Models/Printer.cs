@@ -9,9 +9,9 @@ public class Printer : BaseModel
     public int NumberCabinet { get; set; }
     public int YearRelease { get; set; }
     public bool IsDecommissioned { get; set; }
-    public User? User { get; set; }
+    public Computer? Computer { get; set; }
     [NotMapped]
-    public int Cabinet => (User == null) ? NumberCabinet : User.NumberCabinet;
+    public int Cabinet => (Computer == null) ? NumberCabinet : Computer.Cabinet;
 }
 
 public enum PrinterType

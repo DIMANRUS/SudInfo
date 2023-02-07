@@ -8,19 +8,19 @@ public class MonitorWindowViewModel : BaseViewModel
 
     #region Collections
     [Reactive]
-    public IEnumerable<User> Users { get; set; }
+    public IEnumerable<Computer> Computers { get; set; }
     #endregion
 
     #region Properties
     [Reactive]
     public Monitor Monitor { get; set; } = new();
-    public bool IsUser { get; set; }
+    public bool IsComputer { get; set; }
     [Reactive]
     public string SaveButtonText { get; private set; } = "Добавить компьютер";
     #endregion
 
     #region Constructors
-    public MonitorWindowViewModel(IMonitorService monitorService, IUserService usersService, IDialogService dialogService)
+    public MonitorWindowViewModel(IMonitorService monitorService, IComputerService computerService, IDialogService dialogService)
     {
         #region Service Set
         _monitorService = monitorService;
@@ -30,13 +30,13 @@ public class MonitorWindowViewModel : BaseViewModel
         #region Commands Initialization
         Initialized = ReactiveCommand.CreateFromTask(async () =>
         {
-            var usersResult = await usersService.GetUsers();
-            if (!usersResult.Success)
+            var computersResult = await computerService.GetComputerNames();
+            if (!computersResult.Success)
             {
-                await dialogService.ShowMessageBox("Ошибка", "Ошибка загрузки Сотрудников! Монитор можно добавить, но без сотрудника.", icon: Icon.Error);
+                await dialogService.ShowMessageBox("Ошибка", "Ошибка загрузки компьютеров!", icon: Icon.Error);
                 return;
             }
-            Users = usersResult.Object;
+            Computers = computersResult.Object;
         });
         #endregion
     }
@@ -64,8 +64,8 @@ public class MonitorWindowViewModel : BaseViewModel
     }
     public async Task SaveMonitor()
     {
-        if (!IsUser)
-            Monitor.User = null;
+        if (!IsComputer)
+            Monitor.Computer = null;
         Result monitorResult = _windowType switch
         {
             WindowType.Add => await _monitorService.AddMonitor(Monitor),

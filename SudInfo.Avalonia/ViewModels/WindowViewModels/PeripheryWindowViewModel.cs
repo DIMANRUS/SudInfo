@@ -22,7 +22,7 @@ public class PeripheryWindowViewModel : BaseViewModel
     #endregion
 
     #region Constructors
-    public PeripheryWindowViewModel(IPeripheryService peripheryService, IUserService usersService, IDialogService dialogService, IComputerService computerService)
+    public PeripheryWindowViewModel(IPeripheryService peripheryService, IDialogService dialogService, IComputerService computerService)
     {
         #region Service Set
         _peripheryService = peripheryService;

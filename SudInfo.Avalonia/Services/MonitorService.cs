@@ -7,7 +7,7 @@ public class MonitorService : IMonitorService
         try
         {
             using ApplicationDBContext applicationDBContext = new();
-            var monitors = await applicationDBContext.Monitors.Include(x => x.User).ToListAsync();
+            var monitors = await applicationDBContext.Monitors.Include(x => x.Computer).ThenInclude(x => x.User).ToListAsync();
             return new()
             {
                 Success = true,
@@ -28,7 +28,7 @@ public class MonitorService : IMonitorService
         try
         {
             using ApplicationDBContext applicationDBContext = new();
-            var monitor = await applicationDBContext.Monitors.Include(x => x.User).FirstOrDefaultAsync(x => x.Id == id);
+            var monitor = await applicationDBContext.Monitors.Include(x => x.Computer).ThenInclude(x => x.User).FirstOrDefaultAsync(x => x.Id == id);
             if (monitor == null)
                 throw new Exception("Computer not Found");
             return new()
@@ -98,9 +98,9 @@ public class MonitorService : IMonitorService
         try
         {
             using ApplicationDBContext applicationDBContext = new();
-            if (monitor.User != null)
+            if (monitor.Computer != null)
             {
-                monitor.User = await applicationDBContext.Users.SingleOrDefaultAsync(x => x.Id == monitor.User.Id);
+                monitor.Computer = await applicationDBContext.Computers.SingleOrDefaultAsync(x => x.Id == monitor.Computer.Id);
             }
             await applicationDBContext.Monitors.AddAsync(monitor);
             await applicationDBContext.SaveChangesAsync();

@@ -17,7 +17,25 @@
       <ia:InvokeCommandAction Command="{Binding Initialized}"/>
     </ia:EventTriggerBehavior>
   </i:Interaction.Behaviors>
- <Grid>
-
+  <Grid RowDefinitions="60,*">
+    <ItemsControl Items="{Binding Users}">
+      <ItemsControl.ItemsPanel>
+        <ItemsPanelTemplate>
+          <WrapPanel Orientation="Horizontal"/>
+        </ItemsPanelTemplate>
+      </ItemsControl.ItemsPanel>
+      <ItemsControl.ItemTemplate>
+        <DataTemplate DataType="models:User">
+          <StackPanel>
+            <Border CornerRadius="10"
+                    Padding="5"
+                    BoxShadow="0 0 15 Black"
+                    Margin="8">
+              <TextBlock Text="{Binding FIO}  "/>
+            </Border>
+          </StackPanel>
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
   </Grid>
 </UserControl>
