@@ -14,8 +14,7 @@ public class ApplicationDBContext : DbContext
     #region Configuration
     protected override void OnConfiguring(DbContextOptionsBuilder options)
     {
-        options.UseLazyLoadingProxies()
-               .UseSqlServer(configuration.GetConnectionString("SqlExpressDevelop"));
+        options.UseSqlServer(configuration.GetConnectionString("SqlExpressDevelop"));
     }
     #endregion
 

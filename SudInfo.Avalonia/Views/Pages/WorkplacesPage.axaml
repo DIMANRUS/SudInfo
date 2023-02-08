@@ -18,7 +18,8 @@
     </ia:EventTriggerBehavior>
   </i:Interaction.Behaviors>
   <Grid RowDefinitions="60,*">
-    <ItemsControl Items="{Binding Users}">
+    <ItemsControl Items="{Binding Users}"
+                  Grid.Row="1">
       <ItemsControl.ItemsPanel>
         <ItemsPanelTemplate>
           <WrapPanel Orientation="Horizontal"/>
@@ -31,7 +32,46 @@
                     Padding="5"
                     BoxShadow="0 0 15 Black"
                     Margin="8">
-              <TextBlock Text="{Binding FIO}  "/>
+              <StackPanel>
+                <TextBlock Text="{Binding FIO}  "/>
+                <ItemsControl Items="{Binding Computers}">
+                  <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                      <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                  </ItemsControl.ItemsPanel>
+                  <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="models:Computer">
+                      <StackPanel>
+                        <TextBlock Text="{Binding Name}"/>
+                        <WrapPanel Orientation="Horizontal">
+                          <ItemsControl Items="{Binding Monitors}">
+                            <ItemsControl.ItemTemplate>
+                              <DataTemplate DataType="models:Monitor">
+                                <TextBlock Text="{Binding Name}"/>
+                              </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                          </ItemsControl>
+                          <ItemsControl Items="{Binding Printers}">
+                            <ItemsControl.ItemTemplate>
+                              <DataTemplate DataType="models:Printer">
+                                <TextBlock Text="{Binding Name}"/>
+                              </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                          </ItemsControl>
+                          <ItemsControl Items="{Binding Peripheries}">
+                            <ItemsControl.ItemTemplate>
+                              <DataTemplate DataType="models:Periphery">
+                                <TextBlock Text="{Binding Name}"/>
+                              </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                          </ItemsControl>
+                        </WrapPanel>
+                      </StackPanel>
+                    </DataTemplate>
+                  </ItemsControl.ItemTemplate>
+                </ItemsControl>
+              </StackPanel>
             </Border>
           </StackPanel>
         </DataTemplate>

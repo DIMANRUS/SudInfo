@@ -7,7 +7,9 @@ public class UserService : IUserService
         try
         {
             using ApplicationDBContext applicationDBContext = new();
-            var user = await applicationDBContext.Users.SingleOrDefaultAsync(x => x.Id == userId);
+            var user = await applicationDBContext.Users
+                .AsNoTracking()
+                .SingleOrDefaultAsync(x => x.Id == userId);
             if (user == null)
                 throw new Exception("User not Found");
             return new()
@@ -30,7 +32,9 @@ public class UserService : IUserService
         try
         {
             using ApplicationDBContext applicationDBContext = new();
-            var users = await applicationDBContext.Users.ToListAsync();
+            var users = await applicationDBContext.Users
+                .AsNoTracking()
+                .ToListAsync();
             return new()
             {
                 Success = true,
@@ -45,7 +49,36 @@ public class UserService : IUserService
                 Message = ex.Message
             };
         }
-    }   
+    }
+    public async Task<Result<List<User>>> GetUsersWithComputers()
+    {
+        try
+        {
+            using ApplicationDBContext applicationDBContext = new();
+            var users = await applicationDBContext.Users
+                .AsNoTracking()
+                .Include(x => x.Computers)
+                .ThenInclude(x => x.Monitors)
+                .Include(x => x.Computers)
+                .ThenInclude(x => x.Printers)
+                .Include(x => x.Computers)
+                .ThenInclude(x => x.Peripheries)
+                .ToListAsync();
+            return new()
+            {
+                Success = true,
+                Object = users
+            };
+        }
+        catch (Exception ex)
+        {
+            return new()
+            {
+                Success = false,
+                Message = ex.Message
+            };
+        }
+    }
     #endregion
 
     public async Task<Result> RemoveUserById(int userId)

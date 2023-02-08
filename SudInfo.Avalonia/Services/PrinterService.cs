@@ -7,7 +7,10 @@ public class PrinterService : IPrinterService
         try
         {
             using ApplicationDBContext applicationDBContext = new();
-            var printer = await applicationDBContext.Printers.Include(x => x.User).FirstOrDefaultAsync(x => x.Id == id);
+            var printer = await applicationDBContext.Printers
+                .AsNoTracking()
+                .Include(x => x.Computer)
+                .FirstOrDefaultAsync(x => x.Id == id);
             return new()
             {
                 Success = true,
@@ -28,7 +31,11 @@ public class PrinterService : IPrinterService
         try
         {
             using ApplicationDBContext applicationDBContext = new();
-            var printers = await applicationDBContext.Printers.Include(x => x.User).ToListAsync();
+            var printers = await applicationDBContext.Printers
+                .AsNoTracking()
+                .Include(x => x.Computer)
+                .ThenInclude(x=>x.User)
+                .ToListAsync();
             return new()
             {
                 Success = true,
@@ -72,9 +79,9 @@ public class PrinterService : IPrinterService
         try
         {
             using ApplicationDBContext applicationDBContext = new();
-            if (printer.User != null)
+            if (printer.Computer != null)
             {
-                printer.User = await applicationDBContext.Users.SingleOrDefaultAsync(x => x.Id == printer.User.Id);
+                printer.Computer = await applicationDBContext.Computers.SingleOrDefaultAsync(x => x.Id == printer.Computer.Id);
             }
             await applicationDBContext.Printers.AddAsync(printer);
             await applicationDBContext.SaveChangesAsync();

@@ -38,17 +38,17 @@
              Text="{Binding Printer.YearRelease}"/>
     <StackPanel Orientation="Horizontal">
       <CheckBox Name="IsUserBox"
-                IsChecked="{Binding IsUser}"/>
+                IsChecked="{Binding IsComputer}"/>
       <ComboBox
-        Items="{Binding Users}"
-        SelectedItem="{Binding Printer.User}"
+        Items="{Binding Computers}"
+        SelectedItem="{Binding Printer.Computer}"
         Width="252"
         IsEnabled="{Binding #IsUserBox.IsChecked}"
         AutoScrollToSelectedItem="True"
-        PlaceholderText="Сотрудник">
+        PlaceholderText="Компьютер">
         <ComboBox.DataTemplates>
           <DataTemplate>
-            <TextBlock Text="{Binding FirstName}"/>
+            <TextBlock Text="{Binding Name}"/>
           </DataTemplate>
         </ComboBox.DataTemplates>
       </ComboBox>

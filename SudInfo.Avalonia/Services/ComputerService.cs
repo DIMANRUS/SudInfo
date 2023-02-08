@@ -7,7 +7,7 @@ public class ComputerService : IComputerService
         try
         {
             using ApplicationDBContext applicationDBContext = new();
-            var computer = await applicationDBContext.Computers.Include(x => x.User).FirstOrDefaultAsync(x => x.Id == id);
+            var computer = await applicationDBContext.Computers.AsNoTracking().Include(x => x.User).FirstOrDefaultAsync(x => x.Id == id);
             if (computer == null)
                 throw new Exception("Computer not Found");
             return new()
@@ -30,7 +30,7 @@ public class ComputerService : IComputerService
         try
         {
             using ApplicationDBContext applicationDBContext = new();
-            var computers = await applicationDBContext.Computers.Include(x => x.User).ToListAsync();
+            var computers = await applicationDBContext.Computers.AsNoTracking().Include(x => x.User).ToListAsync();
             return new()
             {
                 Success = true,
@@ -51,7 +51,7 @@ public class ComputerService : IComputerService
         try
         {
             using ApplicationDBContext applicationDBContext = new();
-            var computerNames = await applicationDBContext.Computers.Select(x => new Computer() { Name = x.Name, Id = x.Id }).ToListAsync();
+            var computerNames = await applicationDBContext.Computers.AsNoTracking().Select(x => new Computer() { Name = x.Name, Id = x.Id }).ToListAsync();
             return new()
             {
                 Object = computerNames,

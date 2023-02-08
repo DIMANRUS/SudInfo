@@ -77,5 +77,5 @@ public class NavigationService : INavigationService
 }
 public enum WindowType
 {
-    Add, Edit
+    Add, Edit, View
 }

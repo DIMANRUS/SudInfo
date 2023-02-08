@@ -1,4 +1,6 @@
-﻿namespace SudInfo.Avalonia.ViewModels.WindowViewModels;
+﻿using SudInfo.Avalonia.Services;
+
+namespace SudInfo.Avalonia.ViewModels.WindowViewModels;
 public class PrinterWindowViewModel : BaseViewModel
 {
     #region Services
@@ -12,7 +14,7 @@ public class PrinterWindowViewModel : BaseViewModel
     public Printer Printer { get; set; } = new();
     [Reactive]
     public string SaveButtonText { get; private set; } = "Добавить принтер";
-    public bool IsUser { get; set; }
+    public bool IsComputer { get; set; }
     #endregion
 
     #region Public Methods
@@ -38,8 +40,8 @@ public class PrinterWindowViewModel : BaseViewModel
             await _dialogService.ShowMessageBox(title: "Ошибка", "Проверьте правильность заполнения полей!", icon: Icon.Error);
             return;
         }
-        if (!IsUser)
-            Printer.User = null;
+        if (!IsComputer)
+            Printer.Computer = null;
         Result printerResult = _windowType switch { 
             WindowType.Add => await _printersService.AddPrinter(Printer),
             _ => await _printersService.UpdatePrinter(Printer)
@@ -60,11 +62,11 @@ public class PrinterWindowViewModel : BaseViewModel
     #region Collections
     public static IEnumerable<PrinterType> PrinterTypes => Enum.GetValues(typeof(PrinterType)).Cast<PrinterType>();
     [Reactive]
-    public IEnumerable<User> Users { get; private set; }
+    public IEnumerable<Computer> Computers { get; private set; }
     #endregion
 
     #region Constructors
-    public PrinterWindowViewModel(IPrinterService printersService, IDialogService dialogService, IUserService usersService, IValidationService validationService)
+    public PrinterWindowViewModel(IPrinterService printersService, IDialogService dialogService, IComputerService computerService, IValidationService validationService)
     {
         #region Service Set
         _printersService = printersService;
@@ -75,13 +77,13 @@ public class PrinterWindowViewModel : BaseViewModel
         #region Commands Realizations
         Initialized = ReactiveCommand.CreateFromTask(async () =>
         {
-            var usersResult = await usersService.GetUsers();
-            if (!usersResult.Success)
+            var computersResult = await computerService.GetComputerNames();
+            if (!computersResult.Success)
             {
-                await dialogService.ShowMessageBox("Ошибка", "Ошибка загрузки Сотрудников! Принтер можно добавить, но без сотрудника.", icon: Icon.Error);
+                await dialogService.ShowMessageBox("Ошибка", "Ошибка загрузки компьютеров!", icon: Icon.Error);
                 return;
             }
-            Users = usersResult.Object;
+            Computers = computersResult.Object;
         });
         #endregion
     }

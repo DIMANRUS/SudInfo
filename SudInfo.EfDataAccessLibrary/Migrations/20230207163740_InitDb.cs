@@ -20,7 +20,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     MiddleName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
-                    NumberCabinet = table.Column<byte>(type: "tinyint", nullable: false),
+                    NumberCabinet = table.Column<int>(type: "int", nullable: false),
                     PersonalPhone = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: true),
                     WorkPhone = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: true),
                     PhoneLocal = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: true)
@@ -43,6 +43,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     GPU = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true),
                     ROM = table.Column<int>(type: "int", nullable: false),
                     RAM = table.Column<byte>(type: "tinyint", nullable: false),
+                    NumberCabinet = table.Column<int>(type: "int", nullable: false),
                     SerialNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     InventarNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     YearRelease = table.Column<int>(type: "int", nullable: false),
@@ -54,79 +55,6 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     table.PrimaryKey("PK_Computers", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Computers_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Monitors",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    ScreenSize = table.Column<int>(type: "int", nullable: false),
-                    ScreenResolutionWidth = table.Column<int>(type: "int", nullable: false),
-                    ScreenResolutionHeight = table.Column<int>(type: "int", nullable: false),
-                    SerialNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    InventarNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    YearRelease = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: true),
-                    IsDecommissioned = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Monitors", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Monitors_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Peripheries",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Type = table.Column<int>(type: "int", nullable: false),
-                    SerialNumber = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    InventarNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<int>(type: "int", nullable: true),
-                    IsDecommissioned = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Peripheries", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Peripheries_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Printers",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
-                    Type = table.Column<int>(type: "int", nullable: false),
-                    Ip = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: true),
-                    Cabinet = table.Column<int>(type: "int", nullable: false),
-                    YearRelease = table.Column<int>(type: "int", nullable: false),
-                    IsDecommissioned = table.Column<bool>(type: "bit", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Printers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Printers_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -152,25 +80,97 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Monitors",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ScreenSize = table.Column<int>(type: "int", nullable: false),
+                    ScreenResolutionWidth = table.Column<int>(type: "int", nullable: false),
+                    ScreenResolutionHeight = table.Column<int>(type: "int", nullable: false),
+                    SerialNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    InventarNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    YearRelease = table.Column<int>(type: "int", nullable: false),
+                    ComputerId = table.Column<int>(type: "int", nullable: true),
+                    IsDecommissioned = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Monitors", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Monitors_Computers_ComputerId",
+                        column: x => x.ComputerId,
+                        principalTable: "Computers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Peripheries",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false),
+                    SerialNumber = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    InventarNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ComputerId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Peripheries", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Peripheries_Computers_ComputerId",
+                        column: x => x.ComputerId,
+                        principalTable: "Computers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Printers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false),
+                    Ip = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: true),
+                    NumberCabinet = table.Column<int>(type: "int", nullable: false),
+                    YearRelease = table.Column<int>(type: "int", nullable: false),
+                    IsDecommissioned = table.Column<bool>(type: "bit", nullable: false),
+                    ComputerId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Printers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Printers_Computers_ComputerId",
+                        column: x => x.ComputerId,
+                        principalTable: "Computers",
+                        principalColumn: "Id");
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Computers_UserId",
                 table: "Computers",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Monitors_UserId",
+                name: "IX_Monitors_ComputerId",
                 table: "Monitors",
-                column: "UserId");
+                column: "ComputerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Peripheries_UserId",
+                name: "IX_Peripheries_ComputerId",
                 table: "Peripheries",
-                column: "UserId");
+                column: "ComputerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Printers_UserId",
+                name: "IX_Printers_ComputerId",
                 table: "Printers",
-                column: "UserId");
+                column: "ComputerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Rutokens_UserId",
@@ -182,9 +182,6 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Computers");
-
-            migrationBuilder.DropTable(
                 name: "Monitors");
 
             migrationBuilder.DropTable(
@@ -195,6 +192,9 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
 
             migrationBuilder.DropTable(
                 name: "Rutokens");
+
+            migrationBuilder.DropTable(
+                name: "Computers");
 
             migrationBuilder.DropTable(
                 name: "Users");

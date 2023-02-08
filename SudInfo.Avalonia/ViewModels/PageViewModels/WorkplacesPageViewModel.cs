@@ -8,10 +8,10 @@ public class WorkplacesPageViewModel : BaseRoutableViewModel
     {
         Initialized = ReactiveCommand.CreateFromTask(async () =>
         {
-            var usersLoadResult = await userService.GetUsers();
+            var usersLoadResult = await userService.GetUsersWithComputers();
             if (!usersLoadResult.Success)
             {
-                await dialogService.ShowMessageBox("Ошибка", "Ошибка зугрзки!", icon: Icon.Error);
+                await dialogService.ShowMessageBox("Ошибка", "Ошибка загрузки!", icon: Icon.Error);
                 return;
             }
             Users = usersLoadResult.Object;

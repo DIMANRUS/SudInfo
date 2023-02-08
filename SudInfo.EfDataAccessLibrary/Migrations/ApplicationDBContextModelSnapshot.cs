@@ -125,17 +125,12 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
                     b.Property<int>("YearRelease")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ComputerId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Monitors");
                 });
@@ -182,6 +177,9 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("ComputerId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Ip")
                         .HasMaxLength(12)
                         .HasColumnType("nvarchar(12)");
@@ -200,15 +198,12 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
                     b.Property<int>("YearRelease")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("ComputerId");
 
                     b.ToTable("Printers");
                 });
@@ -292,12 +287,8 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
             modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.Monitor", b =>
                 {
                     b.HasOne("SudInfo.EfDataAccessLibrary.Models.Computer", "Computer")
-                        .WithMany()
-                        .HasForeignKey("ComputerId");
-
-                    b.HasOne("SudInfo.EfDataAccessLibrary.Models.User", null)
                         .WithMany("Monitors")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("ComputerId");
 
                     b.Navigation("Computer");
                 });
@@ -313,11 +304,11 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
 
             modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.Printer", b =>
                 {
-                    b.HasOne("SudInfo.EfDataAccessLibrary.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
+                    b.HasOne("SudInfo.EfDataAccessLibrary.Models.Computer", "Computer")
+                        .WithMany("Printers")
+                        .HasForeignKey("ComputerId");
 
-                    b.Navigation("User");
+                    b.Navigation("Computer");
                 });
 
             modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.Rutoken", b =>
@@ -331,14 +322,16 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
 
             modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.Computer", b =>
                 {
+                    b.Navigation("Monitors");
+
                     b.Navigation("Peripheries");
+
+                    b.Navigation("Printers");
                 });
 
             modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.User", b =>
                 {
                     b.Navigation("Computers");
-
-                    b.Navigation("Monitors");
                 });
 #pragma warning restore 612, 618
         }

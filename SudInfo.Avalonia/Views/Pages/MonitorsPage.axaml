@@ -63,7 +63,6 @@
       <DataGrid.Columns>
         <DataGridTextColumn Binding="{Binding Name}"
                             Header="Наименование монитора"
-                            Width="*"
                             IsReadOnly="True"/>
         <DataGridTextColumn Binding="{Binding ScreenSize}"
                             Header="Размер экрана"
