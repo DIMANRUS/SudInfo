@@ -19,6 +19,8 @@ public class ComputerWindowViewModel : BaseViewModel
     public bool IsUser { get; set; }
     [Reactive]
     public string SaveButtonText { get; private set; } = "Добавить компьютер";
+    [Reactive]
+    public bool ButtonIsVisible { get; private set; } = false;
     #endregion
 
     #region Constructors
@@ -78,7 +80,11 @@ public class ComputerWindowViewModel : BaseViewModel
         _windowType = windowType;
         if (id != null)
         {
-            SaveButtonText = "Сохранить компьютер";
+            if (windowType != WindowType.View)
+            {
+                ButtonIsVisible = true;
+                SaveButtonText = "Сохранить компьютер";
+            }
             var computerResult = await _computerService.GetComputerById(id.GetValueOrDefault());
             if (!computerResult.Success)
             {

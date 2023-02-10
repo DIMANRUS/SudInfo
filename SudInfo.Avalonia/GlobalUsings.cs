@@ -2,6 +2,8 @@
 global using Avalonia.Controls;
 global using Avalonia.Data.Converters;
 global using Avalonia.Markup.Xaml;
+global using Avalonia.Media.Imaging;
+global using Avalonia.Platform;
 global using Avalonia.ReactiveUI;
 global using MessageBox.Avalonia.DTO;
 global using MessageBox.Avalonia.Enums;
@@ -19,8 +21,8 @@ global using SudInfo.Avalonia.ViewModels.PageViewModels;
 global using SudInfo.Avalonia.ViewModels.WindowViewModels;
 global using SudInfo.Avalonia.Views.Pages;
 global using SudInfo.Avalonia.Views.Windows;
-global using SudInfo.EfDataAccessLibrary.Models;
 global using SudInfo.EfDataAccessLibrary.Contexts;
+global using SudInfo.EfDataAccessLibrary.Models;
 global using System;
 global using System.Collections.Generic;
 global using System.Collections.ObjectModel;

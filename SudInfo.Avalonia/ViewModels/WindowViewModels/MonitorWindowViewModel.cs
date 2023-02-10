@@ -16,6 +16,8 @@ public class MonitorWindowViewModel : BaseViewModel
     public Monitor Monitor { get; set; } = new();
     public bool IsComputer { get; set; }
     [Reactive]
+    public bool IsButtonVisible { get; set; } = false;
+    [Reactive]
     public string SaveButtonText { get; private set; } = "Добавить компьютер";
     #endregion
 
@@ -52,7 +54,11 @@ public class MonitorWindowViewModel : BaseViewModel
         _windowType = windowType;
         if (id != null)
         {
-            SaveButtonText = "Сохранить монитор";
+            if (windowType != WindowType.View)
+            {
+                IsButtonVisible = true;
+                SaveButtonText = "Сохранить монитор";
+            }
             var monitorResult = await _monitorService.GetMonitorById(id.GetValueOrDefault());
             if (!monitorResult.Success)
             {

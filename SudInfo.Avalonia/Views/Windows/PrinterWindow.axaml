@@ -33,6 +33,12 @@
     <ComboBox Items="{Binding PrinterTypes}"
               SelectedItem="{Binding Printer.Type}"
               HorizontalAlignment="Stretch"/>
+    <TextBox Text="{Binding Printer.SerialNumber}"
+             MaxLength="20"
+             Watermark="Серийный номер"/>
+    <TextBox Text="{Binding Printer.InventarNumber}"
+             MaxLength="20"
+             Watermark="Инвентарный номер"/>
     <TextBox Watermark="Год выпуска"
              MaxLength="4"
              Text="{Binding Printer.YearRelease}"/>
@@ -59,6 +65,7 @@
             Cursor="Hand"
             FontWeight="Bold"
             HorizontalAlignment="Stretch"
-            HorizontalContentAlignment="Center"/>
+            HorizontalContentAlignment="Center"
+            IsVisible="{Binding IsButtonVisible}"/>
   </StackPanel>
 </Window>

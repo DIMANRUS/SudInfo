@@ -18,6 +18,8 @@ public class PeripheryWindowViewModel : BaseViewModel
     public bool IsComputer { get; set; }
     [Reactive]
     public string SaveButtonText { get; private set; } = "Добавить периферию";
+    [Reactive]
+    public bool IsButtonVisible { get; set; } = false;
 
     #endregion
 
@@ -31,14 +33,12 @@ public class PeripheryWindowViewModel : BaseViewModel
 
         Initialized = ReactiveCommand.CreateFromTask(async () =>
         {
-            //var usersResult = await usersService.GetUsers();
             var computersResult = await computerService.GetComputerNames();
-            if (/*!usersResult.Success || */!computersResult.Success)
+            if (!computersResult.Success)
             {
                 await dialogService.ShowMessageBox("Ошибка", "Ошибка загрузки компьютеров!", icon: Icon.Error);
                 return;
             }
-            //Users = usersResult.Object;
             Computers = computersResult.Object;
         });
     }
@@ -69,12 +69,16 @@ public class PeripheryWindowViewModel : BaseViewModel
         }
         await _dialogService.ShowMessageBox("Сообщение", "Успешно!", true, icon: Icon.Success);
     }
-    public async void InitializationData(WindowType windowType, int? id = null)
+    public async Task InitializationData(WindowType windowType, int? id = null)
     {
         _windowType = windowType;
         if (id != null)
         {
-            SaveButtonText = "Сохранить периферию";
+            if (windowType != WindowType.View)
+            {
+                IsButtonVisible = true;
+                SaveButtonText = "Сохранить периферию";
+            }
             var peripheryResult = await _peripheryService.GetPeripheryById(id.GetValueOrDefault());
             if (!peripheryResult.Success)
             {

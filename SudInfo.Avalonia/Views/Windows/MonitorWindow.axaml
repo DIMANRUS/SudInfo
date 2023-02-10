@@ -63,6 +63,7 @@
             Cursor="Hand"
             FontWeight="Bold"
             HorizontalAlignment="Stretch"
-            HorizontalContentAlignment="Center"/>
+            HorizontalContentAlignment="Center"
+            IsVisible="{Binding IsButtonVisible}"/>
   </StackPanel>
 </Window>

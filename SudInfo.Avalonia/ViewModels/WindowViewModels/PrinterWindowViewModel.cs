@@ -1,6 +1,4 @@
-﻿using SudInfo.Avalonia.Services;
-
-namespace SudInfo.Avalonia.ViewModels.WindowViewModels;
+﻿namespace SudInfo.Avalonia.ViewModels.WindowViewModels;
 public class PrinterWindowViewModel : BaseViewModel
 {
     #region Services
@@ -14,6 +12,8 @@ public class PrinterWindowViewModel : BaseViewModel
     public Printer Printer { get; set; } = new();
     [Reactive]
     public string SaveButtonText { get; private set; } = "Добавить принтер";
+    [Reactive]
+    public bool IsButtonVisible { get; set; } = false;
     public bool IsComputer { get; set; }
     #endregion
 
@@ -23,7 +23,11 @@ public class PrinterWindowViewModel : BaseViewModel
         _windowType = windowType;
         if (id != null)
         {
-            SaveButtonText = "Сохранить принтер";
+            if (windowType != WindowType.View)
+            {
+                IsButtonVisible = true;
+                SaveButtonText = "Сохранить принтер";
+            }
             var printerResult = await _printersService.GetPrinterById(id.GetValueOrDefault());
             if (!printerResult.Success)
             {
@@ -42,7 +46,8 @@ public class PrinterWindowViewModel : BaseViewModel
         }
         if (!IsComputer)
             Printer.Computer = null;
-        Result printerResult = _windowType switch { 
+        Result printerResult = _windowType switch
+        {
             WindowType.Add => await _printersService.AddPrinter(Printer),
             _ => await _printersService.UpdatePrinter(Printer)
         };

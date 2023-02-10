@@ -19,7 +19,6 @@ public class NavigationService : INavigationService
         ComputerWindow computerWindow = new(windowType, computerId);
         if (closedEvent != null)
             computerWindow.Closed += closedEvent;
-
         _dialogService.SetCurrentWindow(computerWindow);
         await computerWindow.ShowDialog(_mainWindow);
     }

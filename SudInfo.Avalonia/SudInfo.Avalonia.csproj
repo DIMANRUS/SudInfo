@@ -17,6 +17,8 @@
     <None Remove="Assets\Icons\logo.ico" />
     <None Remove="Assets\Images\add.png" />
     <None Remove="Assets\Images\edit.png" />
+    <None Remove="Assets\Images\headphones.png" />
+    <None Remove="Assets\Images\keyboard.png" />
     <None Remove="Assets\Images\MenuBar\apps.png" />
     <None Remove="Assets\Images\MenuBar\camera.png" />
     <None Remove="Assets\Images\MenuBar\contacts.png" />
@@ -32,8 +34,12 @@
     <None Remove="Assets\Images\MenuBar\settings.png" />
     <None Remove="Assets\Images\MenuBar\todo.png" />
     <None Remove="Assets\Images\MenuBar\users.png" />
+    <None Remove="Assets\Images\microphone.png" />
+    <None Remove="Assets\Images\mouse.png" />
     <None Remove="Assets\Images\refresh.png" />
     <None Remove="Assets\Images\remove.png" />
+    <None Remove="Assets\Images\scan.png" />
+    <None Remove="Assets\Images\sound.png" />
   </ItemGroup>
   <ItemGroup>
     <!--This helps with theme dll-s trimming.

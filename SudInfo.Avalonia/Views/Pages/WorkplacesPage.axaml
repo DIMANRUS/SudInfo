@@ -17,7 +17,18 @@
       <ia:InvokeCommandAction Command="{Binding Initialized}"/>
     </ia:EventTriggerBehavior>
   </i:Interaction.Behaviors>
-  <Grid RowDefinitions="60,*">
+  <Grid RowDefinitions="30,*">
+    <TextBox Watermark="Поиск по ФИО, названию и инвентарному номеру"
+             Margin="5"
+             UseFloatingWatermark="False"
+             Text="{Binding SearchText}"
+             MaxLength="50">
+      <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="KeyUp">
+          <ia:InvokeCommandAction Command="{Binding SearchBoxKeyUp}"/>
+        </ia:EventTriggerBehavior>
+      </i:Interaction.Behaviors>
+    </TextBox>
     <ItemsControl Items="{Binding Users}"
                   Grid.Row="1">
       <ItemsControl.ItemsPanel>
@@ -33,7 +44,7 @@
                     BoxShadow="0 0 15 Black"
                     Margin="8">
               <StackPanel>
-                <TextBlock Text="{Binding FIO}  "/>
+                <TextBlock Text="{Binding FIO}"/>
                 <ItemsControl Items="{Binding Computers}">
                   <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -43,30 +54,71 @@
                   <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="models:Computer">
                       <StackPanel>
-                        <TextBlock Text="{Binding Name}"/>
-                        <WrapPanel Orientation="Horizontal">
-                          <ItemsControl Items="{Binding Monitors}">
-                            <ItemsControl.ItemTemplate>
-                              <DataTemplate DataType="models:Monitor">
+                        <TextBlock Text="{Binding Name}"
+                                   FontWeight="Bold"
+                                   Cursor="Hand">
+                          <i:Interaction.Behaviors>
+                            <ia:EventTriggerBehavior EventName="Tapped">
+                              <ia:InvokeCommandAction Command="{Binding DataContext.OpenViewComputerWindow, ElementName=Root }"
+                                                      CommandParameter="{Binding Id}"/>
+                            </ia:EventTriggerBehavior>
+                          </i:Interaction.Behaviors>
+                        </TextBlock>
+                        <ItemsControl Items="{Binding Monitors}">
+                          <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="models:Monitor">
+                              <StackPanel Orientation="Horizontal"
+                                          Cursor="Hand">
+                                <i:Interaction.Behaviors>
+                                  <ia:EventTriggerBehavior EventName="Tapped">
+                                    <ia:InvokeCommandAction Command="{Binding DataContext.OpenViewMonitorWindow, ElementName=Root}"
+                                                            CommandParameter="{Binding Id}"/>
+                                  </ia:EventTriggerBehavior>
+                                </i:Interaction.Behaviors>
+                                <Image Height="30"
+                                       Source="/Assets/Images/MenuBar/monitor.png"/>
                                 <TextBlock Text="{Binding Name}"/>
-                              </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                          </ItemsControl>
-                          <ItemsControl Items="{Binding Printers}">
-                            <ItemsControl.ItemTemplate>
-                              <DataTemplate DataType="models:Printer">
+                              </StackPanel>
+                            </DataTemplate>
+                          </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <ItemsControl Items="{Binding Printers}">
+                          <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="models:Printer">
+                              <StackPanel Orientation="Horizontal"
+                                          Cursor="Hand">
+                                <i:Interaction.Behaviors>
+                                  <ia:EventTriggerBehavior EventName="Tapped">
+                                    <ia:InvokeCommandAction Command="{Binding DataContext.OpenViewPrinterWindow, ElementName=Root}"
+                                                            CommandParameter="{Binding Id}"/>
+                                  </ia:EventTriggerBehavior>
+                                  <EventTriggerBehavior/>
+                                </i:Interaction.Behaviors>
+                                <Image Height="30"
+                                       Source="/Assets/Images/MenuBar/printer.png"/>
                                 <TextBlock Text="{Binding Name}"/>
-                              </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                          </ItemsControl>
-                          <ItemsControl Items="{Binding Peripheries}">
-                            <ItemsControl.ItemTemplate>
-                              <DataTemplate DataType="models:Periphery">
+                              </StackPanel>
+                            </DataTemplate>
+                          </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <ItemsControl Items="{Binding Peripheries}">
+                          <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="models:Periphery">
+                              <StackPanel Orientation="Horizontal"
+                                          Cursor="Hand">
+                                <i:Interaction.Behaviors>
+                                  <EventTriggerBehavior EventName="Tapped">
+                                    <InvokeCommandAction Command="{Binding DataContext.OpenViewPeripheryWindow, ElementName=Root}"
+                                                         CommandParameter="{Binding Id}"/>
+                                  </EventTriggerBehavior>
+                                </i:Interaction.Behaviors>
+                                <Image Height="30"
+                                       Source="{Binding Icon, Converter={StaticResource UriAssetToBitmapConverter}}"/>
                                 <TextBlock Text="{Binding Name}"/>
-                              </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                          </ItemsControl>
-                        </WrapPanel>
+                              </StackPanel>
+                            </DataTemplate>
+                          </ItemsControl.ItemTemplate>
+                        </ItemsControl>
                       </StackPanel>
                     </DataTemplate>
                   </ItemsControl.ItemTemplate>

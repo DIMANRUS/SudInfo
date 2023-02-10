@@ -11,7 +11,7 @@ public partial class PeripheryWindow : ReactiveWindow<PeripheryWindowViewModel>
         var peripheryWindowViewModel = ServiceCollectionExtension.ServiceProvider.GetService<PeripheryWindowViewModel>();
         DataContext = peripheryWindowViewModel;
         InitializeComponent();
-        peripheryWindowViewModel.InitializationData(windowType, peripheryId);
-    } 
+        Task.Run(async () => await peripheryWindowViewModel.InitializationData(windowType, peripheryId));
+    }
     #endregion
 }
