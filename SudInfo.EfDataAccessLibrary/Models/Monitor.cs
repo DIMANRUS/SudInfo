@@ -14,5 +14,4 @@ public class Monitor : BaseModel
     public string InventarNumber { get; set; } = string.Empty;
     public int YearRelease { get; set; }
     public Computer? Computer { get; set; }
-    public bool IsDecommissioned { get; set; }
 }

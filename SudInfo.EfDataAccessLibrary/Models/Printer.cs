@@ -8,7 +8,6 @@ public class Printer : BaseModel
     public string? Ip { get; set; }
     public int NumberCabinet { get; set; }
     public int YearRelease { get; set; }
-    public bool IsDecommissioned { get; set; }
     [StringLength(20)]
     public string SerialNumber { get; set; } = string.Empty;
     [StringLength(20)]

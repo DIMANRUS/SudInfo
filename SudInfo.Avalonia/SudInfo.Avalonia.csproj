@@ -28,12 +28,10 @@
     <None Remove="Assets\Images\MenuBar\paint.png" />
     <None Remove="Assets\Images\MenuBar\printer.png" />
     <None Remove="Assets\Images\MenuBar\processor.png" />
-    <None Remove="Assets\Images\MenuBar\profile.png" />
     <None Remove="Assets\Images\MenuBar\rutoken.png" />
     <None Remove="Assets\Images\MenuBar\server.png" />
     <None Remove="Assets\Images\MenuBar\settings.png" />
     <None Remove="Assets\Images\MenuBar\todo.png" />
-    <None Remove="Assets\Images\MenuBar\users.png" />
     <None Remove="Assets\Images\microphone.png" />
     <None Remove="Assets\Images\mouse.png" />
     <None Remove="Assets\Images\refresh.png" />

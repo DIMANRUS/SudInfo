@@ -208,18 +208,9 @@
           </Image>
         </Border>
         <Border Classes="MenuBarBorder"
-                Grid.Row="9">
-          <Image Source="/Assets/Images/MenuBar/profile.png">
-            <i:Interaction.Behaviors>
-              <ia:EventTriggerBehavior EventName="Tapped">
-                <ia:InvokeCommandAction/>
-              </ia:EventTriggerBehavior>
-            </i:Interaction.Behaviors>
-          </Image>
-        </Border>
-        <Border Classes="MenuBarBorder"
                 Grid.Row="9"
-                Grid.Column="1">
+                Grid.ColumnSpan="2"
+                Width="85">
           <Image Source="/Assets/Images/MenuBar/settings.png">
             <i:Interaction.Behaviors>
               <ia:EventTriggerBehavior EventName="Tapped">

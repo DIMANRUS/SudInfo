@@ -19,7 +19,6 @@ public class Computer : BaseModel
     public string InventarNumber { get; set; } = string.Empty;
     public int YearRelease { get; set; }
     public User? User { get; set; }
-    public bool IsDecommissioned { get; set; }
     [NotMapped]
     public int Cabinet => (User == null) ? NumberCabinet : User.NumberCabinet;
 
@@ -30,5 +29,5 @@ public class Computer : BaseModel
 
 public enum OS
 {
-    Windows7, Windows10, Linux, ESXi, WindowsXP, WindowsServer2003, WindowsServer2008, WindowsServer2012, WindowsServer2016, AstraLinux
+    Windows7, Windows10, Linux, WindowsXP
 }

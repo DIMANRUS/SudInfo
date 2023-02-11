@@ -25,5 +25,6 @@ public class ApplicationDBContext : DbContext
     public DbSet<Monitor> Monitors { get; set; }
     public DbSet<Rutoken> Rutokens { get; set; }
     public DbSet<Periphery> Peripheries { get; set; }
+    public DbSet<Server> Servers { get; set; }
     #endregion
 }
