@@ -2,9 +2,9 @@
 public class User : BaseModel
 {
     [StringLength(20)]
-    public string FirstName { get; set; } = string.Empty;
+    public required string FirstName { get; set; }
     [StringLength(20)]
-    public string LastName { get; set; } = string.Empty;
+    public required string LastName { get; set; }
     [StringLength(20)]
     public string? MiddleName { get; set; }
     [NotMapped]

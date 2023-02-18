@@ -2,11 +2,11 @@
 public class Periphery : BaseModel
 {
     [StringLength(50)]
-    public string Name { get; set; } = string.Empty;
+    public required string Name { get; set; }
     public PeripheryType Type { get; set; }
     [StringLength(30)]
-    public string SerialNumber { get; set; } = string.Empty;
-    public string? InventarNumber { get; set; } = string.Empty;
+    public required string SerialNumber { get; set; }
+    public string? InventarNumber { get; set; }
     public Computer? Computer { get; set; }
     [NotMapped]
     public string Icon => Type switch
