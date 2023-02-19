@@ -2,21 +2,21 @@
 public class Computer : BaseModel
 {
     [StringLength(15)]
-    public required string Ip { get; set; }
+    public string Ip { get; set; } = string.Empty;
     [StringLength(50)]
-    public required string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
     public OS OS { get; set; } = OS.Windows7;
     [StringLength(40)]
-    public string CPU { get; set; }
+    public string CPU { get; set; } = string.Empty;
     [StringLength(40)]
     public string? GPU { get; set; }
     public int ROM { get; set; }
     public byte RAM { get; set; }
     public int NumberCabinet { get; set; }
     [StringLength(20)]
-    public required string SerialNumber { get; set; }
+    public string SerialNumber { get; set; } = string.Empty;
     [StringLength(20)]
-    public required string InventarNumber { get; set; }
+    public string InventarNumber { get; set; } = string.Empty;
     public int YearRelease { get; set; }
     public User? User { get; set; }
     [NotMapped]
