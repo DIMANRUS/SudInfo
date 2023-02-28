@@ -1,62 +1,12 @@
 ﻿namespace SudInfo.Avalonia.Services;
-public class MonitorService
+public class ServerRackService
 {
-    #region Get Methods Realizations
-    public async Task<Result<List<Monitor>>> GetMonitors()
+    public async Task<Result> AddServerRack(ServerRack entity)
     {
         try
         {
             using SudInfoDbContext applicationDBContext = new();
-            var monitors = await applicationDBContext.Monitors.Include(x => x.Computer).ThenInclude(x => x.User).ToListAsync();
-            return new()
-            {
-                Success = true,
-                Object = monitors
-            };
-        }
-        catch (Exception ex)
-        {
-            return new()
-            {
-                Success = false,
-                Message = ex.Message
-            };
-        }
-    }
-    public async Task<Result<Monitor>> GetMonitorById(int id)
-    {
-        try
-        {
-            using SudInfoDbContext applicationDBContext = new();
-            var monitor = await applicationDBContext.Monitors.Include(x => x.Computer).ThenInclude(x => x.User).FirstOrDefaultAsync(x => x.Id == id);
-            if (monitor == null)
-                throw new Exception("Computer not Found");
-            return new()
-            {
-                Success = true,
-                Object = monitor
-            };
-        }
-        catch (Exception ex)
-        {
-            return new()
-            {
-                Success = false,
-                Message = ex.Message
-            };
-        }
-    }
-    #endregion
-
-    public async Task<Result> RemoveMonitorById(int id)
-    {
-        try
-        {
-            using SudInfoDbContext applicationDBContext = new();
-            var monitor = await applicationDBContext.Monitors.FirstOrDefaultAsync(x => x.Id == id);
-            if (monitor == null)
-                throw new Exception("Monitor not found");
-            applicationDBContext.Monitors.Remove(monitor);
+            await applicationDBContext.AddAsync(entity);
             await applicationDBContext.SaveChangesAsync();
             return new()
             {
@@ -72,12 +22,82 @@ public class MonitorService
             };
         }
     }
-    public async Task<Result> UpdateMonitor(Monitor monitor)
+    public async Task<Result<List<ServerRack>>> GetServerRacks()
     {
         try
         {
             using SudInfoDbContext applicationDBContext = new();
-            applicationDBContext.Monitors.Update(monitor);
+            var serverRacks = await applicationDBContext.ServerRacks
+                .AsNoTracking()
+                .ToListAsync();
+            return new()
+            {
+                Success = true,
+                Object = serverRacks
+            };
+        }
+        catch (Exception ex)
+        {
+            return new()
+            {
+                Success = false,
+                Message = ex.Message
+            };
+        }
+    }
+    public async Task<Result<ServerRack>> GetServerRack(int id)
+    {
+        try
+        {
+            using SudInfoDbContext applicationDBContext = new();
+            var serverRack = await applicationDBContext.ServerRacks
+                .AsNoTracking()
+                .SingleOrDefaultAsync(x => x.Id == id);
+            return new()
+            {
+                Success = true,
+                Object = serverRack
+            };
+        }
+        catch (Exception ex)
+        {
+            return new()
+            {
+                Success = false,
+                Message = ex.Message
+            };
+        }
+    }
+    public async Task<Result<int>> GetNumberServerRacks()
+    {
+        try
+        {
+            using SudInfoDbContext sudInfoDbContext = new();
+            int numberServerRacks = await sudInfoDbContext.ServerRacks.CountAsync();
+            return new()
+            {
+                Object = numberServerRacks,
+                Success = true
+            };
+        }
+        catch (Exception ex)
+        {
+            return new()
+            {
+                Message = ex.Message,
+                Success = false
+            };
+        }
+    }
+    public async Task<Result> RemoveServerRack(int id)
+    {
+        try
+        {
+            using SudInfoDbContext applicationDBContext = new();
+            var serverRack = await applicationDBContext.Users.SingleOrDefaultAsync(x => x.Id == id);
+            if (serverRack == null)
+                throw new Exception("ServerRack not found");
+            applicationDBContext.Remove(serverRack);
             await applicationDBContext.SaveChangesAsync();
             return new()
             {
@@ -93,16 +113,12 @@ public class MonitorService
             };
         }
     }
-    public async Task<Result> AddMonitor(Monitor monitor)
+    public async Task<Result> UpdateServerRack(ServerRack entity)
     {
         try
         {
             using SudInfoDbContext applicationDBContext = new();
-            if (monitor.Computer != null)
-            {
-                monitor.Computer = await applicationDBContext.Computers.SingleOrDefaultAsync(x => x.Id == monitor.Computer.Id);
-            }
-            await applicationDBContext.Monitors.AddAsync(monitor);
+            applicationDBContext.Update(entity);
             await applicationDBContext.SaveChangesAsync();
             return new()
             {

@@ -1,0 +1,35 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Width="250"
+        Height="300"
+        x:Class="SudInfo.Avalonia.Views.Windows.ServerWindow"
+        Title="Сервер"
+        xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.WindowViewModels;assembly=SudInfo.Avalonia"
+        WindowStartupLocation="CenterOwner"
+        x:DataType="viewModels:ServerWindowViewModel">
+  <StackPanel Margin="10"
+              Spacing="5">
+    <TextBox Watermark="Название"
+             MaxLength="20"
+             Text="{Binding Server.Name}"/>
+    <TextBox Watermark="Серийный номер"
+             MaxLength="20"
+             Text="{Binding Server.SerialNumber}"/>
+    <TextBox Watermark="Инвентарный номер"
+             MaxLength="20"
+             Text="{Binding Server.InventarNumber}"/>
+    <TextBox Watermark="IP адрес"
+             MaxLength="20"
+             Text="{Binding Server.IpAddress}"/>
+    <Button Content="{Binding SaveButtonText}"
+            Command="{Binding SaveServer}"
+            Margin="0 5 0 0"
+            Cursor="Hand"
+            FontWeight="Bold"
+            HorizontalAlignment="Stretch"
+            HorizontalContentAlignment="Center"/>
+  </StackPanel>
+</Window>

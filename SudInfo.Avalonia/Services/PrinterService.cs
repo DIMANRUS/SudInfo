@@ -1,12 +1,12 @@
 ﻿namespace SudInfo.Avalonia.Services;
-public class PrinterService : IPrinterService
+public class PrinterService
 {
     #region Get Methods
     public async Task<Result<Printer>> GetPrinterById(int id)
     {
         try
         {
-            using ApplicationDBContext applicationDBContext = new();
+            using SudInfoDbContext applicationDBContext = new();
             var printer = await applicationDBContext.Printers
                 .AsNoTracking()
                 .Include(x => x.Computer)
@@ -30,11 +30,11 @@ public class PrinterService : IPrinterService
     {
         try
         {
-            using ApplicationDBContext applicationDBContext = new();
+            using SudInfoDbContext applicationDBContext = new();
             var printers = await applicationDBContext.Printers
                 .AsNoTracking()
                 .Include(x => x.Computer)
-                .ThenInclude(x=>x.User)
+                .ThenInclude(x => x.User)
                 .ToListAsync();
             return new()
             {
@@ -57,7 +57,7 @@ public class PrinterService : IPrinterService
     {
         try
         {
-            using ApplicationDBContext applicationDBContext = new();
+            using SudInfoDbContext applicationDBContext = new();
             applicationDBContext.Printers.Update(printer);
             await applicationDBContext.SaveChangesAsync();
             return new()
@@ -78,7 +78,7 @@ public class PrinterService : IPrinterService
     {
         try
         {
-            using ApplicationDBContext applicationDBContext = new();
+            using SudInfoDbContext applicationDBContext = new();
             if (printer.Computer != null)
             {
                 printer.Computer = await applicationDBContext.Computers.SingleOrDefaultAsync(x => x.Id == printer.Computer.Id);
@@ -103,7 +103,7 @@ public class PrinterService : IPrinterService
     {
         try
         {
-            using ApplicationDBContext applicationDBContext = new();
+            using SudInfoDbContext applicationDBContext = new();
             var printer = await applicationDBContext.Printers.FirstOrDefaultAsync(x => x.Id == id);
             if (printer == null)
                 throw new Exception("Printer not found");

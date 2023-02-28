@@ -2,9 +2,9 @@
 public class PeripheryPageViewModel : BaseRoutableViewModel
 {
     #region Services
-    private readonly IPeripheryService _peripheryService;
-    private readonly IDialogService _dialogService;
-    private readonly INavigationService _navigationService;
+    private readonly PeripheryService _peripheryService;
+    private readonly DialogService _dialogService;
+    private readonly NavigationService _navigationService;
     #endregion
 
     #region Collections
@@ -19,7 +19,7 @@ public class PeripheryPageViewModel : BaseRoutableViewModel
     #endregion
 
     #region Constructors
-    public PeripheryPageViewModel(IPeripheryService peripheryService, IDialogService dialogService, INavigationService navigationService)
+    public PeripheryPageViewModel(PeripheryService peripheryService, DialogService dialogService, NavigationService navigationService)
     {
         #region Services Initialization
         _peripheryService = peripheryService;

@@ -2,9 +2,9 @@
 public class RutokensPageViewModel : BaseRoutableViewModel
 {
     #region Services
-    private readonly IRutokenService _rutokensService;
-    private readonly IDialogService _dialogService;
-    private readonly INavigationService _navigationService;
+    private readonly RutokenService _rutokensService;
+    private readonly DialogService _dialogService;
+    private readonly NavigationService _navigationService;
     #endregion
 
     #region Collections
@@ -13,7 +13,7 @@ public class RutokensPageViewModel : BaseRoutableViewModel
     #endregion
 
     #region Constructors
-    public RutokensPageViewModel(INavigationService navigationService, IRutokenService rutokensService, IDialogService dialogService)
+    public RutokensPageViewModel(NavigationService navigationService, RutokenService rutokensService, DialogService dialogService)
     {
         #region Serives Initialization
         _dialogService = dialogService;

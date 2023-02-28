@@ -2,9 +2,9 @@
 public class MonitorsPageViewModel : BaseRoutableViewModel
 {
     #region Services
-    private readonly IDialogService _dialogService;
-    private readonly IMonitorService _monitorsService;
-    private readonly INavigationService _navigationService;
+    private readonly DialogService _dialogService;
+    private readonly MonitorService _monitorsService;
+    private readonly NavigationService _navigationService;
     #endregion
 
     #region Collections
@@ -19,7 +19,7 @@ public class MonitorsPageViewModel : BaseRoutableViewModel
     #endregion
 
     #region Constructors
-    public MonitorsPageViewModel(INavigationService navigationService, IDialogService dialogService, IMonitorService monitorsService)
+    public MonitorsPageViewModel(NavigationService navigationService, DialogService dialogService, MonitorService monitorsService)
     {
         #region Serives Initialization
         _dialogService = dialogService;

@@ -1,5 +1,5 @@
 ﻿namespace SudInfo.Avalonia.Services;
-public class DialogService : IDialogService
+public class DialogService
 {
     #region Private Variables
     private Window _currentWindow;

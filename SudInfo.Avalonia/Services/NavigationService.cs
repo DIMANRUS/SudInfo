@@ -1,13 +1,13 @@
 ﻿namespace SudInfo.Avalonia.Services;
-public class NavigationService : INavigationService
+public class NavigationService
 {
     #region Private Variables
     private Window _mainWindow;
-    private readonly IDialogService _dialogService;
+    private readonly DialogService _dialogService;
     #endregion
 
     #region Constructors
-    public NavigationService(IDialogService dialogService)
+    public NavigationService(DialogService dialogService)
     {
         _dialogService = dialogService;
     }
@@ -65,6 +65,22 @@ public class NavigationService : INavigationService
     public async Task ShowSettingsWindowDialog()
     {
         await new SettingsWindow().ShowDialog(_mainWindow);
+    }
+    public async Task ShowServerWindowDialog(WindowType windowType, EventHandler closedEvent = null, int? id = null, ServerRack serverRack = null)
+    {
+        ServerWindow serverWindow = new(windowType, id, serverRack);
+        if (closedEvent != null)
+            serverWindow.Closed += closedEvent;
+        _dialogService.SetCurrentWindow(serverWindow);
+        await serverWindow.ShowDialog(_mainWindow);
+    }  
+    public async Task ShowServerRackWindowDialog(WindowType windowType, EventHandler closedEvent = null, int? id = null)
+    {
+        ServerRackWindow serverRackWindow = new(windowType, id);
+        if (closedEvent != null)
+            serverRackWindow.Closed += closedEvent;
+        _dialogService.SetCurrentWindow(serverRackWindow);
+        await serverRackWindow.ShowDialog(_mainWindow);
     }
     public void SetWindow(Window window)
     {

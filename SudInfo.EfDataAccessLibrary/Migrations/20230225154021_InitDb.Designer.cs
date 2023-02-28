@@ -11,8 +11,8 @@ using SudInfo.EfDataAccessLibrary.Contexts;
 
 namespace SudInfo.EfDataAccessLibrary.Migrations
 {
-    [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20230207163740_InitDb")]
+    [DbContext(typeof(SudInfoDbContext))]
+    [Migration("20230225154021_InitDb")]
     partial class InitDb
     {
         /// <inheritdoc />
@@ -52,9 +52,6 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
-                    b.Property<bool>("IsDecommissioned")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -66,8 +63,8 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     b.Property<int>("OS")
                         .HasColumnType("int");
 
-                    b.Property<byte>("RAM")
-                        .HasColumnType("tinyint");
+                    b.Property<int>("RAM")
+                        .HasColumnType("int");
 
                     b.Property<int>("ROM")
                         .HasColumnType("int");
@@ -105,9 +102,6 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
-
-                    b.Property<bool>("IsDecommissioned")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -150,7 +144,9 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("InventarNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -183,12 +179,14 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     b.Property<int?>("ComputerId")
                         .HasColumnType("int");
 
+                    b.Property<string>("InventarNumber")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
                     b.Property<string>("Ip")
                         .HasMaxLength(12)
                         .HasColumnType("nvarchar(12)");
-
-                    b.Property<bool>("IsDecommissioned")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -197,6 +195,11 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
 
                     b.Property<int>("NumberCabinet")
                         .HasColumnType("int");
+
+                    b.Property<string>("SerialNumber")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<int>("Type")
                         .HasColumnType("int");
@@ -234,6 +237,71 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Rutokens");
+                });
+
+            modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.Server", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("InventarNumber")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("IpAddress")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<int>("OperatingSystem")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PosiitionInServerRack")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SerialNumber")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<int?>("ServerRackId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ServerRackId");
+
+                    b.ToTable("Servers");
+                });
+
+            modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.ServerRack", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("InventarNumber")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Position")
+                        .IsUnique();
+
+                    b.ToTable("ServerRacks");
                 });
 
             modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.User", b =>
@@ -323,6 +391,15 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.Server", b =>
+                {
+                    b.HasOne("SudInfo.EfDataAccessLibrary.Models.ServerRack", "ServerRack")
+                        .WithMany("Servers")
+                        .HasForeignKey("ServerRackId");
+
+                    b.Navigation("ServerRack");
+                });
+
             modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.Computer", b =>
                 {
                     b.Navigation("Monitors");
@@ -330,6 +407,11 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     b.Navigation("Peripheries");
 
                     b.Navigation("Printers");
+                });
+
+            modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.ServerRack", b =>
+                {
+                    b.Navigation("Servers");
                 });
 
             modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.User", b =>

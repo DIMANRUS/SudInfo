@@ -12,6 +12,20 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "ServerRacks",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Position = table.Column<int>(type: "int", nullable: false),
+                    InventarNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ServerRacks", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -31,6 +45,30 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Servers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    SerialNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    InventarNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    PosiitionInServerRack = table.Column<int>(type: "int", nullable: true),
+                    IpAddress = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    ServerRackId = table.Column<int>(type: "int", nullable: true),
+                    OperatingSystem = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Servers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Servers_ServerRacks_ServerRackId",
+                        column: x => x.ServerRackId,
+                        principalTable: "ServerRacks",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Computers",
                 columns: table => new
                 {
@@ -42,13 +80,12 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     CPU = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
                     GPU = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true),
                     ROM = table.Column<int>(type: "int", nullable: false),
-                    RAM = table.Column<byte>(type: "tinyint", nullable: false),
+                    RAM = table.Column<int>(type: "int", nullable: false),
                     NumberCabinet = table.Column<int>(type: "int", nullable: false),
                     SerialNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     InventarNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     YearRelease = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: true),
-                    IsDecommissioned = table.Column<bool>(type: "bit", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -93,8 +130,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     SerialNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     InventarNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     YearRelease = table.Column<int>(type: "int", nullable: false),
-                    ComputerId = table.Column<int>(type: "int", nullable: true),
-                    IsDecommissioned = table.Column<bool>(type: "bit", nullable: false)
+                    ComputerId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -115,7 +151,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false),
                     SerialNumber = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    InventarNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    InventarNumber = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     ComputerId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -139,7 +175,8 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     Ip = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: true),
                     NumberCabinet = table.Column<int>(type: "int", nullable: false),
                     YearRelease = table.Column<int>(type: "int", nullable: false),
-                    IsDecommissioned = table.Column<bool>(type: "bit", nullable: false),
+                    SerialNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    InventarNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     ComputerId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -176,6 +213,17 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                 name: "IX_Rutokens_UserId",
                 table: "Rutokens",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ServerRacks_Position",
+                table: "ServerRacks",
+                column: "Position",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Servers_ServerRackId",
+                table: "Servers",
+                column: "ServerRackId");
         }
 
         /// <inheritdoc />
@@ -194,7 +242,13 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                 name: "Rutokens");
 
             migrationBuilder.DropTable(
+                name: "Servers");
+
+            migrationBuilder.DropTable(
                 name: "Computers");
+
+            migrationBuilder.DropTable(
+                name: "ServerRacks");
 
             migrationBuilder.DropTable(
                 name: "Users");

@@ -21,13 +21,14 @@ public partial class App : Application
         Locator.CurrentMutable.Register<IViewFor<RutokensPageViewModel>>(() => new RutokensPage());
         Locator.CurrentMutable.Register<IViewFor<PeripheryPageViewModel>>(() => new PeripheryPage());
         Locator.CurrentMutable.Register<IViewFor<WorkplacesPageViewModel>>(() => new WorkplacesPage());
+        Locator.CurrentMutable.Register<IViewFor<ServersPageViewModel>>(() => new ServersPage());
         #endregion
 
         MainWindow mainWindow = new() { DataContext = Locator.Current.GetService<IScreen>() };
 
-        ServiceCollectionExtension.ServiceProvider.GetService<INavigationService>()?.SetWindow(mainWindow);
-        ServiceCollectionExtension.ServiceProvider.GetService<IDialogService>()?.SetMainWindow(mainWindow);
-        ServiceCollectionExtension.ServiceProvider.GetService<IDialogService>()?.SetCurrentWindow(mainWindow);
+        ServiceCollectionExtension.ServiceProvider.GetService<NavigationService>()?.SetWindow(mainWindow);
+        ServiceCollectionExtension.ServiceProvider.GetService<DialogService>()?.SetMainWindow(mainWindow);
+        ServiceCollectionExtension.ServiceProvider.GetService<DialogService>()?.SetCurrentWindow(mainWindow);
 
         mainWindow.Show();
         base.OnFrameworkInitializationCompleted();

@@ -9,8 +9,8 @@
         xmlns:i="using:Avalonia.Xaml.Interactivity"
         xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
         xmlns:reactiveUi="http://reactiveui.net"
-        MinHeight="500"
-        MinWidth="500"
+        MinHeight="700"
+        MinWidth="1000"
         x:Class="SudInfo.Avalonia.Views.Windows.MainWindow"
         xmlns:vm="using:SudInfo.Avalonia.ViewModels"
         Title="СудИнфо - Инженер">
@@ -160,7 +160,7 @@
           <Image Source="/Assets/Images/MenuBar/server.png">
             <i:Interaction.Behaviors>
               <ia:EventTriggerBehavior EventName="Tapped">
-                <ia:InvokeCommandAction/>
+                <ia:InvokeCommandAction Command="{Binding OpenServersPage}"/>
               </ia:EventTriggerBehavior>
             </i:Interaction.Behaviors>
           </Image>

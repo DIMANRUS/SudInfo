@@ -2,9 +2,9 @@
 public class ComputerWindowViewModel : BaseViewModel
 {
     #region Services
-    private readonly IComputerService _computerService;
-    private readonly IDialogService _dialogService;
-    private readonly IValidationService _validationService;
+    private readonly ComputerService _computerService;
+    private readonly DialogService _dialogService;
+    private readonly ValidationService _validationService;
     #endregion
 
     #region Collections
@@ -24,7 +24,7 @@ public class ComputerWindowViewModel : BaseViewModel
     #endregion
 
     #region Constructors
-    public ComputerWindowViewModel(IComputerService computerService, IUserService usersService, IDialogService dialogService, IValidationService validationService)
+    public ComputerWindowViewModel(ComputerService computerService, UserService usersService, DialogService dialogService, ValidationService validationService)
     {
         #region Service Set
         _computerService = computerService;
@@ -56,7 +56,7 @@ public class ComputerWindowViewModel : BaseViewModel
     #region Public Methods
     public async Task SaveComputer()
     {
-        if (!_validationService.ValidationIp4(Computer.Ip) || Computer.CPU.Length < 5 || Computer.RAM == 0 || Computer.ROM == 0 || Computer.SerialNumber.Length < 2 || Computer.InventarNumber.Length < 5)
+        if (!ValidationService.ValidationIp4(Computer.Ip) || Computer.CPU.Length < 5 || Computer.RAM == 0 || Computer.ROM == 0 || Computer.SerialNumber.Length < 2 || Computer.InventarNumber.Length < 5)
         {
             await _dialogService.ShowMessageBox(title: "Ошибка", "Проверьте правильность заполнения полей!", icon: Icon.Error);
             return;
@@ -78,6 +78,10 @@ public class ComputerWindowViewModel : BaseViewModel
     public async void InitializationData(WindowType windowType, int? id = null)
     {
         _windowType = windowType;
+        if (windowType != WindowType.View)
+        {
+            ButtonIsVisible = true;
+        }
         if (id != null)
         {
             if (windowType != WindowType.View)

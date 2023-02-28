@@ -2,9 +2,9 @@
 public class PrintersPageViewModel : BaseRoutableViewModel
 {
     #region Services
-    private readonly IPrinterService _printersService;
-    private readonly IDialogService _dialogService;
-    private readonly INavigationService _navigationService;
+    private readonly PrinterService _printersService;
+    private readonly DialogService _dialogService;
+    private readonly NavigationService _navigationService;
     #endregion
 
     #region Collections
@@ -19,7 +19,7 @@ public class PrintersPageViewModel : BaseRoutableViewModel
     #endregion
 
     #region Constructors
-    public PrintersPageViewModel(IPrinterService printersService, IDialogService dialogService, INavigationService navigationService)
+    public PrintersPageViewModel(PrinterService printersService, DialogService dialogService, NavigationService navigationService)
     {
         #region Services Initialization
         _printersService = printersService;

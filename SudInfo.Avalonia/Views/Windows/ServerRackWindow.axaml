@@ -1,0 +1,26 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        d:DesignWidth="800"
+        d:DesignHeight="450"
+        x:Class="SudInfo.Avalonia.Views.Windows.ServerRackWindow"
+        Title="Севрерная стойка"
+        xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.WindowViewModels;assembly=SudInfo.Avalonia"
+        WindowStartupLocation="CenterOwner"
+        x:DataType="viewModels:ServerRackViewModel">
+  <StackPanel Margin="10"
+              Spacing="5">
+    <TextBox Watermark="Серийный номер"
+             MaxLength="20"
+             Text="{Binding ServerRack.InventarNumber}"/>
+    <Button Content="{Binding SaveButtonText}"
+            Command="{Binding SaveServerRack}"
+            Margin="0 5 0 0"
+            Cursor="Hand"
+            FontWeight="Bold"
+            HorizontalAlignment="Stretch"
+            HorizontalContentAlignment="Center"/>
+  </StackPanel>
+</Window>

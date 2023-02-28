@@ -2,8 +2,8 @@
 public class UserWindowViewModel : BaseViewModel
 {
     #region Services
-    private readonly IUserService _usersService;
-    private readonly IDialogService _dialogService;
+    private readonly UserService _usersService;
+    private readonly DialogService _dialogService;
     #endregion
 
     #region Properties
@@ -36,7 +36,7 @@ public class UserWindowViewModel : BaseViewModel
     #endregion
 
     #region Constructors
-    public UserWindowViewModel(IUserService usersService, IDialogService dialogService)
+    public UserWindowViewModel(UserService usersService, DialogService dialogService)
     {
         #region Service Set
         _usersService = usersService;

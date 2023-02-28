@@ -2,8 +2,8 @@
 public class RutokenWindowViewModel : BaseViewModel
 {
     #region Services
-    private readonly IRutokenService _rutokenService;
-    private readonly IDialogService _dialogService;
+    private readonly RutokenService _rutokenService;
+    private readonly DialogService _dialogService;
     #endregion
 
     #region Collections
@@ -20,7 +20,7 @@ public class RutokenWindowViewModel : BaseViewModel
     #endregion
 
     #region Constructors
-    public RutokenWindowViewModel(IRutokenService rutokenSerrvice, IUserService usersService, IDialogService dialogService)
+    public RutokenWindowViewModel(RutokenService rutokenSerrvice, UserService usersService, DialogService dialogService)
     {
         #region Service Set
         _rutokenService = rutokenSerrvice;

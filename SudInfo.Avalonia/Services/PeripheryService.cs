@@ -1,13 +1,13 @@
 ﻿namespace SudInfo.Avalonia.Services;
-public class PeripheryService : IPeripheryService
+public class PeripheryService
 {
     #region Get Methods Realization
     public async Task<Result<Periphery>> GetPeripheryById(int id)
     {
         try
         {
-            using ApplicationDBContext applicationDBContext = new();
-            var periphery = await applicationDBContext.Peripheries.Include(x => x.Computer).ThenInclude(x=>x.User).FirstOrDefaultAsync(x => x.Id == id);
+            using SudInfoDbContext applicationDBContext = new();
+            var periphery = await applicationDBContext.Peripheries.Include(x => x.Computer).ThenInclude(x => x.User).FirstOrDefaultAsync(x => x.Id == id);
             if (periphery == null)
                 throw new Exception("Пепреферия не найдена");
             return new()
@@ -29,7 +29,7 @@ public class PeripheryService : IPeripheryService
     {
         try
         {
-            using ApplicationDBContext applicationDBContext = new();
+            using SudInfoDbContext applicationDBContext = new();
             var peripheries = await applicationDBContext.Peripheries.Include(x => x.Computer).ThenInclude(x => x.User).ToListAsync();
             return new()
             {
@@ -52,7 +52,7 @@ public class PeripheryService : IPeripheryService
     {
         try
         {
-            using ApplicationDBContext applicationDBContext = new();
+            using SudInfoDbContext applicationDBContext = new();
             if (periphery.Computer != null)
             {
                 periphery.Computer = await applicationDBContext.Computers.SingleOrDefaultAsync(x => x.Id == periphery.Computer.Id);
@@ -77,7 +77,7 @@ public class PeripheryService : IPeripheryService
     {
         try
         {
-            using ApplicationDBContext applicationDBContext = new();
+            using SudInfoDbContext applicationDBContext = new();
             var periphery = await applicationDBContext.Peripheries.FirstOrDefaultAsync(x => x.Id == id);
             if (periphery == null)
                 throw new Exception("Переферия не найдена");
@@ -101,7 +101,7 @@ public class PeripheryService : IPeripheryService
     {
         try
         {
-            using ApplicationDBContext applicationDBContext = new();
+            using SudInfoDbContext applicationDBContext = new();
             applicationDBContext.Peripheries.Update(periphery);
             await applicationDBContext.SaveChangesAsync();
             return new()

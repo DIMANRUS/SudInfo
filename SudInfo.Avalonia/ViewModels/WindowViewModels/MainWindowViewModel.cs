@@ -28,7 +28,7 @@ public class MainWindowViewModel : ReactiveObject, IScreen
     }
     public void OpenSettingsWindow()
     {
-        ServiceCollectionExtension.ServiceProvider.GetService<INavigationService>().ShowSettingsWindowDialog();
+        ServiceCollectionExtension.ServiceProvider.GetService<NavigationService>().ShowSettingsWindowDialog();
     }
     public void OpenMonitorsPage()
     {
@@ -45,6 +45,10 @@ public class MainWindowViewModel : ReactiveObject, IScreen
     public void OpenWorkplacesPage()
     {
         Router.Navigate.Execute(ServiceCollectionExtension.ServiceProvider.GetService<WorkplacesPageViewModel>());
+    }
+    public void OpenServersPage()
+    {
+        Router.Navigate.Execute(ServiceCollectionExtension.ServiceProvider.GetService<ServersPageViewModel>());
     }
     #endregion
 }

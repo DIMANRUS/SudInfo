@@ -2,8 +2,8 @@
 public class MonitorWindowViewModel : BaseViewModel
 {
     #region Services
-    private readonly IMonitorService _monitorService;
-    private readonly IDialogService _dialogService;
+    private readonly MonitorService _monitorService;
+    private readonly DialogService _dialogService;
     #endregion
 
     #region Collections
@@ -18,11 +18,11 @@ public class MonitorWindowViewModel : BaseViewModel
     [Reactive]
     public bool IsButtonVisible { get; set; } = false;
     [Reactive]
-    public string SaveButtonText { get; private set; } = "Добавить компьютер";
+    public string SaveButtonText { get; private set; } = "Добавить монитор";
     #endregion
 
     #region Constructors
-    public MonitorWindowViewModel(IMonitorService monitorService, IComputerService computerService, IDialogService dialogService)
+    public MonitorWindowViewModel(MonitorService monitorService, ComputerService computerService, DialogService dialogService)
     {
         #region Service Set
         _monitorService = monitorService;
@@ -52,11 +52,12 @@ public class MonitorWindowViewModel : BaseViewModel
     public async void InitializationData(WindowType windowType, int? id = null)
     {
         _windowType = windowType;
+        if (windowType != WindowType.View)
+            IsButtonVisible = true;
         if (id != null)
         {
             if (windowType != WindowType.View)
             {
-                IsButtonVisible = true;
                 SaveButtonText = "Сохранить монитор";
             }
             var monitorResult = await _monitorService.GetMonitorById(id.GetValueOrDefault());

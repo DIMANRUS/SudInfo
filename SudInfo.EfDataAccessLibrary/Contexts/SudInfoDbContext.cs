@@ -1,13 +1,13 @@
 ﻿using Monitor = SudInfo.EfDataAccessLibrary.Models.Monitor;
 
 namespace SudInfo.EfDataAccessLibrary.Contexts;
-public class ApplicationDBContext : DbContext
+public class SudInfoDbContext : DbContext
 {
     #region Private variables
     private readonly IConfiguration configuration = new ConfigurationBuilder()
         .SetBasePath(Environment.CurrentDirectory)
         .AddJsonFile("appsettings.json")
-        .AddUserSecrets<ApplicationDBContext>()
+        .AddUserSecrets<SudInfoDbContext>()
         .Build();
     #endregion
 
@@ -19,12 +19,13 @@ public class ApplicationDBContext : DbContext
     #endregion
 
     #region Tables
-    public DbSet<User> Users { get; set; }
-    public DbSet<Computer> Computers { get; set; }
-    public DbSet<Printer> Printers { get; set; }
-    public DbSet<Monitor> Monitors { get; set; }
-    public DbSet<Rutoken> Rutokens { get; set; }
-    public DbSet<Periphery> Peripheries { get; set; }
-    public DbSet<Server> Servers { get; set; }
+    public DbSet<User> Users => Set<User>();
+    public DbSet<Computer> Computers => Set<Computer>();
+    public DbSet<Printer> Printers => Set<Printer>();
+    public DbSet<Monitor> Monitors => Set<Monitor>();
+    public DbSet<Rutoken> Rutokens => Set<Rutoken>();
+    public DbSet<Periphery> Peripheries => Set<Periphery>();
+    public DbSet<Server> Servers => Set<Server>();
+    public DbSet<ServerRack> ServerRacks => Set<ServerRack>();
     #endregion
 }

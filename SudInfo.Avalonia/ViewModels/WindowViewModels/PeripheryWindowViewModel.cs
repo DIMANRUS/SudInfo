@@ -2,8 +2,8 @@
 public class PeripheryWindowViewModel : BaseViewModel
 {
     #region Services
-    private readonly IPeripheryService _peripheryService;
-    private readonly IDialogService _dialogService;
+    private readonly PeripheryService _peripheryService;
+    private readonly DialogService _dialogService;
     #endregion
 
     #region Collections
@@ -24,7 +24,7 @@ public class PeripheryWindowViewModel : BaseViewModel
     #endregion
 
     #region Constructors
-    public PeripheryWindowViewModel(IPeripheryService peripheryService, IDialogService dialogService, IComputerService computerService)
+    public PeripheryWindowViewModel(PeripheryService peripheryService, DialogService dialogService, ComputerService computerService)
     {
         #region Service Set
         _peripheryService = peripheryService;
@@ -72,11 +72,12 @@ public class PeripheryWindowViewModel : BaseViewModel
     public async Task InitializationData(WindowType windowType, int? id = null)
     {
         _windowType = windowType;
+        if (windowType != WindowType.View)
+            IsButtonVisible = true;
         if (id != null)
         {
             if (windowType != WindowType.View)
             {
-                IsButtonVisible = true;
                 SaveButtonText = "Сохранить периферию";
             }
             var peripheryResult = await _peripheryService.GetPeripheryById(id.GetValueOrDefault());

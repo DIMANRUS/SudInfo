@@ -1,12 +1,12 @@
 ﻿namespace SudInfo.Avalonia.Services;
-public class UserService : IUserService
+public class UserService
 {
     #region Get Methods Realization
     public async Task<Result<User>> GetUserById(int userId)
     {
         try
         {
-            using ApplicationDBContext applicationDBContext = new();
+            using SudInfoDbContext applicationDBContext = new();
             var user = await applicationDBContext.Users
                 .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.Id == userId);
@@ -31,7 +31,7 @@ public class UserService : IUserService
     {
         try
         {
-            using ApplicationDBContext applicationDBContext = new();
+            using SudInfoDbContext applicationDBContext = new();
             var users = await applicationDBContext.Users
                 .AsNoTracking()
                 .ToListAsync();
@@ -54,7 +54,7 @@ public class UserService : IUserService
     {
         try
         {
-            using ApplicationDBContext applicationDBContext = new();
+            using SudInfoDbContext applicationDBContext = new();
             var users = await applicationDBContext.Users
                 .AsNoTracking()
                 .Include(x => x.Computers)
@@ -85,7 +85,7 @@ public class UserService : IUserService
     {
         try
         {
-            using ApplicationDBContext applicationDBContext = new();
+            using SudInfoDbContext applicationDBContext = new();
             var user = await applicationDBContext.Users.SingleOrDefaultAsync(x => x.Id == userId);
             if (user == null)
                 throw new Exception("User not found");
@@ -109,7 +109,7 @@ public class UserService : IUserService
     {
         try
         {
-            using ApplicationDBContext applicationDBContext = new();
+            using SudInfoDbContext applicationDBContext = new();
             applicationDBContext.Update(user);
             await applicationDBContext.SaveChangesAsync();
             return new()
@@ -130,7 +130,7 @@ public class UserService : IUserService
     {
         try
         {
-            using ApplicationDBContext applicationDBContext = new();
+            using SudInfoDbContext applicationDBContext = new();
             await applicationDBContext.AddAsync(user);
             await applicationDBContext.SaveChangesAsync();
             return new()

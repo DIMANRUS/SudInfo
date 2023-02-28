@@ -1,12 +1,12 @@
 ﻿namespace SudInfo.Avalonia.Services;
-public class ComputerService : IComputerService
+public class ComputerService
 {
     #region Get Methods Realization
     public async Task<Result<Computer>> GetComputerById(int id)
     {
         try
         {
-            using ApplicationDBContext applicationDBContext = new();
+            using SudInfoDbContext applicationDBContext = new();
             var computer = await applicationDBContext.Computers.AsNoTracking().Include(x => x.User).FirstOrDefaultAsync(x => x.Id == id);
             if (computer == null)
                 throw new Exception("Computer not Found");
@@ -29,7 +29,7 @@ public class ComputerService : IComputerService
     {
         try
         {
-            using ApplicationDBContext applicationDBContext = new();
+            using SudInfoDbContext applicationDBContext = new();
             var computers = await applicationDBContext.Computers.AsNoTracking().Include(x => x.User).ToListAsync();
             return new()
             {
@@ -50,7 +50,7 @@ public class ComputerService : IComputerService
     {
         try
         {
-            using ApplicationDBContext applicationDBContext = new();
+            using SudInfoDbContext applicationDBContext = new();
             var computerNames = await applicationDBContext.Computers.AsNoTracking().Select(x => new Computer() { Name = x.Name, Id = x.Id }).ToListAsync();
             return new()
             {
@@ -73,7 +73,7 @@ public class ComputerService : IComputerService
     {
         try
         {
-            using ApplicationDBContext applicationDBContext = new();
+            using SudInfoDbContext applicationDBContext = new();
             if (computer.User != null)
             {
                 computer.User = await applicationDBContext.Users.SingleOrDefaultAsync(x => x.Id == computer.User.Id);
@@ -98,7 +98,7 @@ public class ComputerService : IComputerService
     {
         try
         {
-            using ApplicationDBContext applicationDBContext = new();
+            using SudInfoDbContext applicationDBContext = new();
             var computer = await applicationDBContext.Computers.FirstOrDefaultAsync(x => x.Id == id);
             if (computer == null)
                 throw new Exception("Computer not found");
@@ -122,7 +122,7 @@ public class ComputerService : IComputerService
     {
         try
         {
-            using ApplicationDBContext applicationDBContext = new();
+            using SudInfoDbContext applicationDBContext = new();
             applicationDBContext.Computers.Update(computer);
             await applicationDBContext.SaveChangesAsync();
             return new()

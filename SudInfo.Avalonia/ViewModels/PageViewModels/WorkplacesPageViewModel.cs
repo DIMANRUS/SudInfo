@@ -3,7 +3,7 @@
 public class WorkplacesPageViewModel : BaseRoutableViewModel
 {
     #region Private fields
-    private readonly INavigationService _navigationService;
+    private readonly NavigationService _navigationService;
     #endregion
 
     #region Public Properties
@@ -15,7 +15,7 @@ public class WorkplacesPageViewModel : BaseRoutableViewModel
     #endregion
 
     #region Constructors
-    public WorkplacesPageViewModel(IUserService userService, IDialogService dialogService, INavigationService navigationService)
+    public WorkplacesPageViewModel(UserService userService, DialogService dialogService, NavigationService navigationService)
     {
         Initialized = ReactiveCommand.CreateFromTask(async () =>
         {

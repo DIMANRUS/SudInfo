@@ -13,7 +13,6 @@ global using ReactiveUI;
 global using ReactiveUI.Fody.Helpers;
 global using Splat;
 global using SudInfo.Avalonia.Extensions;
-global using SudInfo.Avalonia.Interfaces;
 global using SudInfo.Avalonia.Models;
 global using SudInfo.Avalonia.Services;
 global using SudInfo.Avalonia.ViewModels.BaseViewModels;

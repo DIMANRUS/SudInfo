@@ -2,9 +2,9 @@
 public class UsersPageViewModel : BaseRoutableViewModel
 {
     #region Services
-    private readonly IUserService _usersService;
-    private readonly IDialogService _dialogService;
-    private readonly INavigationService _navigationService;
+    private readonly UserService _usersService;
+    private readonly DialogService _dialogService;
+    private readonly NavigationService _navigationService;
     #endregion
 
     #region Collections
@@ -19,7 +19,7 @@ public class UsersPageViewModel : BaseRoutableViewModel
     #endregion
 
     #region Constructors
-    public UsersPageViewModel(INavigationService navigationService, IUserService usersService, IDialogService dialogService)
+    public UsersPageViewModel(NavigationService navigationService, UserService usersService, DialogService dialogService)
     {
         #region Serives Initialization
         _dialogService = dialogService;

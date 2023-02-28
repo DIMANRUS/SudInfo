@@ -2,9 +2,9 @@
 public class PrinterWindowViewModel : BaseViewModel
 {
     #region Services
-    private readonly IPrinterService _printersService;
-    private readonly IDialogService _dialogService;
-    private readonly IValidationService _validationService;
+    private readonly PrinterService _printersService;
+    private readonly DialogService _dialogService;
+    private readonly ValidationService _validationService;
     #endregion
 
     #region Properties
@@ -21,11 +21,12 @@ public class PrinterWindowViewModel : BaseViewModel
     public async void InitializationData(WindowType windowType, int? id = null)
     {
         _windowType = windowType;
+        if (windowType != WindowType.View)
+            IsButtonVisible = true;
         if (id != null)
         {
             if (windowType != WindowType.View)
             {
-                IsButtonVisible = true;
                 SaveButtonText = "Сохранить принтер";
             }
             var printerResult = await _printersService.GetPrinterById(id.GetValueOrDefault());
@@ -39,7 +40,7 @@ public class PrinterWindowViewModel : BaseViewModel
     }
     public async Task SavePrinter()
     {
-        if (Printer.Name.Length < 5 || !_validationService.ValidationIp4(Printer.Ip))
+        if (Printer.Name.Length < 5 || !ValidationService.ValidationIp4(Printer.Ip))
         {
             await _dialogService.ShowMessageBox(title: "Ошибка", "Проверьте правильность заполнения полей!", icon: Icon.Error);
             return;
@@ -71,7 +72,7 @@ public class PrinterWindowViewModel : BaseViewModel
     #endregion
 
     #region Constructors
-    public PrinterWindowViewModel(IPrinterService printersService, IDialogService dialogService, IComputerService computerService, IValidationService validationService)
+    public PrinterWindowViewModel(PrinterService printersService, DialogService dialogService, ComputerService computerService, ValidationService validationService)
     {
         #region Service Set
         _printersService = printersService;
