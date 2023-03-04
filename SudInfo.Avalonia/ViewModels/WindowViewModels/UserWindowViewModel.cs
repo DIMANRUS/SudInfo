@@ -49,10 +49,7 @@ public class UserWindowViewModel : BaseViewModel
     #region Public Methods
     public async Task SaveUser()
     {
-        if (!ValidationModel(User))
-            return;
-        Result userResult = _windowType switch
-        {
+        Result userResult = _windowType switch { 
             WindowType.Add => await _usersService.AddUser(User),
             _ => await _usersService.UpdateUser(User)
         };

@@ -1,14 +1,14 @@
 ﻿namespace SudInfo.EfDataAccessLibrary.Models;
 public class Periphery : BaseModel
 {
-    [Required(ErrorMessage = Const.FieldRequired)]
-    [StringLength(50, MinimumLength = 2, ErrorMessage = Const.LengthMore2)]
+    [Required]
+    [StringLength(50)]
     public string? Name { get; set; }
     public PeripheryType Type { get; set; }
-    [Required(ErrorMessage = Const.FieldRequired)]
+    [Required]
     [StringLength(30)]
     public string? SerialNumber { get; set; }
-    [Required(ErrorMessage = Const.FieldRequired)]
+    [Required]
     [StringLength(30)]
     public string? InventarNumber { get; set; }
     public Computer? Computer { get; set; }

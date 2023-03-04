@@ -22,14 +22,13 @@ public class ServerRackService
             };
         }
     }
-    public async Task<Result<IReadOnlyList<ServerRack>>> GetServerRacksWithServers()
+    public async Task<Result<List<ServerRack>>> GetServerRacks()
     {
         try
         {
             using SudInfoDbContext applicationDBContext = new();
             var serverRacks = await applicationDBContext.ServerRacks
                 .AsNoTracking()
-                .Include(x=>x.Servers)
                 .ToListAsync();
             return new()
             {
@@ -95,7 +94,9 @@ public class ServerRackService
         try
         {
             using SudInfoDbContext applicationDBContext = new();
-            var serverRack = await applicationDBContext.ServerRacks.SingleOrDefaultAsync(x => x.Id == id) ?? throw new Exception("ServerRack not found");
+            var serverRack = await applicationDBContext.Users.SingleOrDefaultAsync(x => x.Id == id);
+            if (serverRack == null)
+                throw new Exception("ServerRack not found");
             applicationDBContext.Remove(serverRack);
             await applicationDBContext.SaveChangesAsync();
             return new()

@@ -55,8 +55,6 @@ public class PeripheryWindowViewModel : BaseViewModel
     #region Public Methods
     public async Task SavePeriphery()
     {
-        if (ValidationModel(Periphery))
-            return;
         if (!IsComputer)
             Periphery.Computer = null;
         Result computerResult = _windowType switch

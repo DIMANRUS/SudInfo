@@ -3,14 +3,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Width="300"
-        Height="200"
-        CanResize="False"
+        d:DesignWidth="800"
+        d:DesignHeight="450"
         x:Class="SudInfo.Avalonia.Views.Windows.ServerRackWindow"
         Title="Севрерная стойка"
         xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.WindowViewModels;assembly=SudInfo.Avalonia"
         WindowStartupLocation="CenterOwner"
-        x:DataType="viewModels:ServerRackWindowViewModel">
+        x:DataType="viewModels:ServerRackViewModel">
   <StackPanel Margin="10"
               Spacing="5">
     <TextBox Watermark="Серийный номер"

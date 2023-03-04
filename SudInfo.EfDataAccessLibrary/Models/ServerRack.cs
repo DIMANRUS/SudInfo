@@ -5,6 +5,6 @@ public class ServerRack : BaseModel
 {
     public int Position { get; set; } = 1;
     [StringLength(20)]
-    public string? InventarNumber { get; set; }
+    public string InventarNumber { get; set; } = null!;
     public List<Server> Servers { get; set; } = new();
 }

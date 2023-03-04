@@ -4,6 +4,7 @@ public class ComputerWindowViewModel : BaseViewModel
     #region Services
     private readonly ComputerService _computerService;
     private readonly DialogService _dialogService;
+    private readonly ValidationService _validationService;
     #endregion
 
     #region Collections
@@ -23,11 +24,12 @@ public class ComputerWindowViewModel : BaseViewModel
     #endregion
 
     #region Constructors
-    public ComputerWindowViewModel(ComputerService computerService, UserService usersService, DialogService dialogService)
+    public ComputerWindowViewModel(ComputerService computerService, UserService usersService, DialogService dialogService, ValidationService validationService)
     {
         #region Service Set
         _computerService = computerService;
         _dialogService = dialogService;
+        _validationService = validationService;
         #endregion
 
         Initialized = ReactiveCommand.CreateFromTask(async () =>
@@ -54,8 +56,11 @@ public class ComputerWindowViewModel : BaseViewModel
     #region Public Methods
     public async Task SaveComputer()
     {
-        if (!ValidationModel(Computer))
+        if (!ValidationService.ValidationIp4(Computer.Ip) || Computer.CPU.Length < 5 || Computer.RAM == 0 || Computer.ROM == 0 || Computer.SerialNumber.Length < 2 || Computer.InventarNumber.Length < 5)
+        {
+            await _dialogService.ShowMessageBox(title: "Ошибка", "Проверьте правильность заполнения полей!", icon: Icon.Error);
             return;
+        }
         if (!IsUser)
             Computer.User = null;
         Result computerResult = _windowType switch

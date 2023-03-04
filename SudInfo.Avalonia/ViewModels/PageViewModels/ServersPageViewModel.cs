@@ -3,20 +3,17 @@ public class ServersPageViewModel : BaseRoutableViewModel
 {
     #region Services
     private readonly ServerRackService _serverRackService;
-    private readonly ServerService _serverService;
     private readonly DialogService _dialogService;
     private readonly NavigationService _navigationService;
     #endregion
-
     [Reactive]
-    public IReadOnlyList<ServerRack> ServerRacks { get; set; }
+    public List<ServerRack> ServerRacks { get; set; }
 
-    public ServersPageViewModel(ServerRackService serverRackService, DialogService dialogService, NavigationService navigationService, ServerService serverService)
+    public ServersPageViewModel(ServerRackService serverRackService, DialogService dialogService, NavigationService navigationService)
     {
         _navigationService = navigationService;
         _serverRackService = serverRackService;
         _dialogService = dialogService;
-        _serverService = serverService;
 
         Initialized = ReactiveCommand.CreateFromTask(LoadServerRacks);
 
@@ -29,13 +26,15 @@ public class ServersPageViewModel : BaseRoutableViewModel
     #region Private Methods
     private async Task LoadServerRacks()
     {
-        var serverRacksResult = await _serverRackService.GetServerRacksWithServers();
+        var serverRacksResult = await _serverRackService.GetServerRacks();
         if (!serverRacksResult.Success)
         {
             await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения данных! Ошибка: {serverRacksResult.Message}", icon: Icon.Error);
             return;
         }
         ServerRacks = serverRacksResult.Object;
+        foreach (var serverRack in ServerRacks)
+            serverRack.Servers = serverRack.Servers.OrderBy(x => x.PosiitionInServerRack).ToList();
     }
     #endregion
 
@@ -48,35 +47,13 @@ public class ServersPageViewModel : BaseRoutableViewModel
     {
         await _navigationService.ShowServerRackWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog);
     }
-    public async Task RemoveServer(int id)
+    public async Task RemoveServer()
     {
-        var result = await _serverService.RemoveServer(id);
-        if (!result.Success)
-        {
-            await _dialogService.ShowMessageBox("Ошибка", $"Ошибка удаления сервера. Ошибка: {result.Message}", icon: Icon.Error);
-            return;
-        }
-        await _dialogService.ShowMessageBox("Сообщение", $"Сервер удалён", icon: Icon.Success);
-        await LoadServerRacks();
+
     }
-    public async Task ViewServer(int id)
+    public async Task RemoveServerRack()
     {
-        await _navigationService.ShowServerWindowDialog(WindowType.View, id: id);
-    }
-    public async Task EditServer(int id)
-    {
-        await _navigationService.ShowServerWindowDialog(WindowType.Edit, eventHandlerClosedWindowDialog, id);
-    }
-    public async Task RemoveServerRack(int id)
-    {
-        var result = await _serverRackService.RemoveServerRack(id);
-        if (!result.Success)
-        {
-            await _dialogService.ShowMessageBox("Ошибка", $"Ошибка удаления серверной стойки. Ошибка: {result.Message}", icon: Icon.Error);
-            return;
-        }
-        await _dialogService.ShowMessageBox("Сообщение", $"Серверная стойка удалена", icon: Icon.Success);
-        await LoadServerRacks();
+
     }
     #endregion
 }

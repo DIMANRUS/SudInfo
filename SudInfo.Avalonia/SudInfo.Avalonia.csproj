@@ -17,12 +17,12 @@
     <None Remove="Assets\Icons\logo.ico" />
     <None Remove="Assets\Images\add.png" />
     <None Remove="Assets\Images\edit.png" />
-    <None Remove="Assets\Images\eye.png" />
     <None Remove="Assets\Images\headphones.png" />
     <None Remove="Assets\Images\keyboard.png" />
     <None Remove="Assets\Images\MenuBar\apps.png" />
     <None Remove="Assets\Images\MenuBar\camera.png" />
     <None Remove="Assets\Images\MenuBar\contacts.png" />
+    <None Remove="Assets\Images\MenuBar\documents.png" />
     <None Remove="Assets\Images\MenuBar\key.png" />
     <None Remove="Assets\Images\MenuBar\monitor.png" />
     <None Remove="Assets\Images\MenuBar\paint.png" />
@@ -34,7 +34,6 @@
     <None Remove="Assets\Images\MenuBar\todo.png" />
     <None Remove="Assets\Images\microphone.png" />
     <None Remove="Assets\Images\mouse.png" />
-    <None Remove="Assets\Images\ok.png" />
     <None Remove="Assets\Images\refresh.png" />
     <None Remove="Assets\Images\remove.png" />
     <None Remove="Assets\Images\scan.png" />
@@ -58,9 +57,9 @@
     <PackageReference Include="Avalonia.Xaml.Interactions" Version="0.10.18" />
     <PackageReference Include="MessageBox.Avalonia" Version="2.1.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
-    <PackageReference Include="ReactiveUI.Fody" Version="18.4.22" />
-    <PackageReference Include="ReactiveUI.Validation" Version="3.1.7" />
-    <PackageReference Include="XamlNameReferenceGenerator" Version="1.6.1" />
+    <PackageReference Include="ReactiveUI.Fody" Version="18.4.1" />
+    <PackageReference Include="ReactiveUI.Validation" Version="3.0.22" />
+    <PackageReference Include="XamlNameReferenceGenerator" Version="1.5.1" />
   </ItemGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\Images\**" />
