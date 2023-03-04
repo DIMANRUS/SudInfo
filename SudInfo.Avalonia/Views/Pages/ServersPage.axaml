@@ -18,50 +18,108 @@
     </ia:EventTriggerBehavior>
   </i:Interaction.Behaviors>
   <StackPanel HorizontalAlignment="Center"
-              Margin="20"
               Orientation="Horizontal">
     <ItemsControl Items="{Binding ServerRacks}">
+      <ItemsControl.ItemsPanel>
+        <ItemsPanelTemplate>
+          <StackPanel Orientation="Horizontal"/>
+        </ItemsPanelTemplate>
+      </ItemsControl.ItemsPanel>
       <ItemsControl.ItemTemplate>
         <DataTemplate DataType="models:ServerRack">
-          <Border CornerRadius="10"
-                  BorderBrush="Orange"
-                  BorderThickness="2"
-                  Margin="10"
-                  Width="300">
-            <StackPanel>
-              <ItemsControl Items="{Binding Servers}">
-                <ItemsControl.ItemTemplate>
-                  <DataTemplate DataType="models:Server">
-                    <Border Margin="5"
-                            CornerRadius="10"
-                            BorderThickness="2"
-                            BorderBrush="Orange"
-                            Padding="5">
-                      <TextBlock Text="{Binding IpAddress}"/>
-                    </Border>
-                  </DataTemplate>
-                </ItemsControl.ItemTemplate>
-              </ItemsControl>
-              <Border Margin="5"
-                      CornerRadius="10"
-                      BorderThickness="2"
-                      BorderBrush="Orange"
-                      Padding="20">
-                <Image Source="/Assets/Images/add.png"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       Height="50"
-                       Cursor="Hand">
-                  <i:Interaction.Behaviors>
-                    <ia:EventTriggerBehavior EventName="Tapped">
-                      <ia:InvokeCommandAction Command="{Binding DataContext.OpenAddServerWindow, ElementName=Root}"
-                                              CommandParameter="{Binding}"/>
-                    </ia:EventTriggerBehavior>
-                  </i:Interaction.Behaviors>
-                </Image>
-              </Border>
-            </StackPanel>
-          </Border>
+          <StackPanel Margin="5">
+            <Grid ColumnDefinitions="*,30"
+                  RowDefinitions="*,*">
+              <TextBlock Text="Серверная стойка"
+                         Margin="0 10 0 0"/>
+              <TextBlock Text="{Binding InventarNumber}"
+                         Margin="0 0 0 10"
+                         Grid.Row="2"/>
+              <Image Source="/Assets/Images/remove.png"
+                     Cursor="Hand"
+                     Grid.Column="2"
+                     Grid.RowSpan="2">
+                <i:Interaction.Behaviors>
+                  <EventTriggerBehavior EventName="Tapped">
+                    <InvokeCommandAction Command="{Binding DataContext.RemoveServerRack, ElementName=Root}"
+                                         CommandParameter="{Binding Id}"/>
+                  </EventTriggerBehavior>
+                </i:Interaction.Behaviors>
+              </Image>
+            </Grid>
+
+            <Border CornerRadius="10"
+                    BorderBrush="Orange"
+                    BorderThickness="2"
+                    Width="300">
+              <StackPanel>
+                <ItemsControl Items="{Binding Servers}">
+                  <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="models:Server">
+                      <Border Margin="5"
+                              CornerRadius="10"
+                              BorderThickness="2"
+                              BorderBrush="Orange"
+                              Padding="5">
+                        <StackPanel>
+                          <TextBlock Text="{Binding Name}"/>
+                          <TextBlock Text="{Binding IpAddress}"/>
+                          <TextBlock Text="{Binding OperatingSystem}"/>
+                          <StackPanel Orientation="Horizontal"
+                                      Height="30">
+                            <Image Source="/Assets/Images/eye.png"
+                                   Cursor="Hand">
+                              <i:Interaction.Behaviors>
+                                <EventTriggerBehavior EventName="Tapped">
+                                  <InvokeCommandAction Command="{Binding DataContext.ViewServer, ElementName=Root}"
+                                                       CommandParameter="{Binding Id}"/>
+                                </EventTriggerBehavior>
+                              </i:Interaction.Behaviors>
+                            </Image>
+                            <Image Source="/Assets/Images/edit.png"
+                                   Cursor="Hand">
+                              <i:Interaction.Behaviors>
+                                <EventTriggerBehavior EventName="Tapped">
+                                  <InvokeCommandAction Command="{Binding DataContext.EditServer, ElementName=Root}"
+                                                       CommandParameter="{Binding Id}"/>
+                                </EventTriggerBehavior>
+                              </i:Interaction.Behaviors>
+                            </Image>
+                            <Image Source="/Assets/Images/remove.png">
+                              <i:Interaction.Behaviors>
+                                <EventTriggerBehavior EventName="Tapped">
+                                  <InvokeCommandAction Command="{Binding DataContext.RemoveServer, ElementName=Root}"
+                                                       CommandParameter="{Binding Id}"/>
+                                </EventTriggerBehavior>
+                              </i:Interaction.Behaviors>
+                            </Image>
+                          </StackPanel>
+                        </StackPanel>
+                      </Border>
+                    </DataTemplate>
+                  </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <Border Margin="5"
+                        CornerRadius="10"
+                        BorderThickness="2"
+                        BorderBrush="Orange"
+                        Padding="20">
+                  <Image Source="/Assets/Images/add.png"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center"
+                         Height="50"
+                         Cursor="Hand">
+                    <i:Interaction.Behaviors>
+                      <ia:EventTriggerBehavior EventName="Tapped">
+                        <ia:InvokeCommandAction Command="{Binding DataContext.OpenAddServerWindow, ElementName=Root}"
+                                                CommandParameter="{Binding}"/>
+                      </ia:EventTriggerBehavior>
+                    </i:Interaction.Behaviors>
+                  </Image>
+                </Border>
+              </StackPanel>
+            </Border>
+          </StackPanel>
         </DataTemplate>
       </ItemsControl.ItemTemplate>
     </ItemsControl>

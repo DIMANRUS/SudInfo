@@ -5,6 +5,7 @@
         mc:Ignorable="d"
         Width="250"
         Height="300"
+        CanResize="False"
         x:Class="SudInfo.Avalonia.Views.Windows.ServerWindow"
         Title="Сервер"
         xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.WindowViewModels;assembly=SudInfo.Avalonia"
@@ -26,6 +27,7 @@
              Text="{Binding Server.IpAddress}"/>
     <Button Content="{Binding SaveButtonText}"
             Command="{Binding SaveServer}"
+            IsVisible="{Binding ButtonIsVisible}"
             Margin="0 5 0 0"
             Cursor="Hand"
             FontWeight="Bold"

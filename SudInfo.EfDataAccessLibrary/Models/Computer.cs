@@ -1,25 +1,26 @@
 ﻿namespace SudInfo.EfDataAccessLibrary.Models;
 public class Computer : BaseModel
 {
-    [Required]
+    [Required(ErrorMessage = Const.FieldRequired)]
     [StringLength(15)]
+    [RegularExpression(Const.Ip4RegularExpression, ErrorMessage = Const.NotValidIp4Message)]
     public string? Ip { get; set; }
-    [Required]
-    [StringLength(50)]
+    [Required(ErrorMessage = Const.FieldRequired)]
+    [StringLength(50,MinimumLength = 2, ErrorMessage = Const.LengthMore2)]
     public string? Name { get; set; }
     public OS OS { get; set; } = OS.Windows7;
-    [Required]
-    [StringLength(40)]
+    [Required(ErrorMessage = Const.FieldRequired)]
+    [StringLength(40, MinimumLength = 2, ErrorMessage = Const.LengthMore2)]
     public string? CPU { get; set; }
-    [StringLength(40)]
+    [StringLength(40, MinimumLength = 2, ErrorMessage = Const.LengthMore2)]
     public string? GPU { get; set; }
     public int ROM { get; set; }
     public int RAM { get; set; }
     public int NumberCabinet { get; set; }
-    [Required]
+    [Required(ErrorMessage = Const.FieldRequired)]
     [StringLength(20)]
     public string? SerialNumber { get; set; }
-    [Required]
+    [Required(ErrorMessage = Const.FieldRequired)]
     [StringLength(20)]
     public string? InventarNumber { get; set; }
     public int YearRelease { get; set; }

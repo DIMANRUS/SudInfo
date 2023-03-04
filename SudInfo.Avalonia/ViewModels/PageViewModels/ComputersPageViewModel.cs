@@ -11,7 +11,7 @@ public class ComputersPageViewModel : BaseRoutableViewModel
     #region Collections
     [Reactive]
     public ObservableCollection<Computer> Computers { get; set; }
-    private IEnumerable<Computer> ComputersFromDataBase { get; set; }
+    private IReadOnlyList<Computer> ComputersFromDataBase { get; set; }
     #endregion
 
     #region Private Variables

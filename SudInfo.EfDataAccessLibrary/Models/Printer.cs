@@ -1,18 +1,19 @@
 ﻿namespace SudInfo.EfDataAccessLibrary.Models;
 public class Printer : BaseModel
 {
-    [Required]
+    [Required(ErrorMessage = Const.FieldRequired)]
     [StringLength(40)]
     public string? Name { get; set; }
     public PrinterType Type { get; set; } = PrinterType.Принтер;
-    [StringLength(maximumLength: 12)]
+    [StringLength(12)]
+    [RegularExpression(Const.Ip4RegularExpression, ErrorMessage = Const.NotValidIp4Message)]
     public string? Ip { get; set; }
     public int NumberCabinet { get; set; }
     public int YearRelease { get; set; }
-    [Required]
+    [Required(ErrorMessage = Const.FieldRequired)]
     [StringLength(20)]
     public string? SerialNumber { get; set; }
-    [Required]
+    [Required(ErrorMessage = Const.FieldRequired)]
     [StringLength(20)]
     public string? InventarNumber { get; set; }
     public Computer? Computer { get; set; }
@@ -22,5 +23,5 @@ public class Printer : BaseModel
 
 public enum PrinterType
 {
-    Принтер, МФУ
+    Принтер, МФУ, КМА
 }

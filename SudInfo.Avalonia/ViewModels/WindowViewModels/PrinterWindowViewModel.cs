@@ -4,7 +4,6 @@ public class PrinterWindowViewModel : BaseViewModel
     #region Services
     private readonly PrinterService _printersService;
     private readonly DialogService _dialogService;
-    private readonly ValidationService _validationService;
     #endregion
 
     #region Properties
@@ -40,11 +39,8 @@ public class PrinterWindowViewModel : BaseViewModel
     }
     public async Task SavePrinter()
     {
-        if (Printer.Name.Length < 5 || !ValidationService.ValidationIp4(Printer.Ip))
-        {
-            await _dialogService.ShowMessageBox(title: "Ошибка", "Проверьте правильность заполнения полей!", icon: Icon.Error);
+        if (!ValidationModel(Printer))
             return;
-        }
         if (!IsComputer)
             Printer.Computer = null;
         Result printerResult = _windowType switch
@@ -72,12 +68,11 @@ public class PrinterWindowViewModel : BaseViewModel
     #endregion
 
     #region Constructors
-    public PrinterWindowViewModel(PrinterService printersService, DialogService dialogService, ComputerService computerService, ValidationService validationService)
+    public PrinterWindowViewModel(PrinterService printersService, DialogService dialogService, ComputerService computerService)
     {
         #region Service Set
         _printersService = printersService;
         _dialogService = dialogService;
-        _validationService = validationService;
         #endregion
 
         #region Commands Realizations
