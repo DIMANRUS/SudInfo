@@ -52,7 +52,7 @@ public class ServerService
         try
         {
             using SudInfoDbContext applicationDBContext = new();
-            var server = await applicationDBContext.Users.SingleOrDefaultAsync(x => x.Id == id);
+            Server server = await applicationDBContext.Servers.SingleOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Server not found");
             if (server == null)
                 throw new Exception("Server not found");
             applicationDBContext.Remove(server);

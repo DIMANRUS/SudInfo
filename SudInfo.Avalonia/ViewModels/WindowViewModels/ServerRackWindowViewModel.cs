@@ -18,7 +18,7 @@ public class ServerRackWindowViewModel : BaseViewModel
     #endregion
 
     #region Constructors
-    public ServerRackWindowViewModel(ServerRackService serverRackService, DialogService dialogService, ValidationService validationService)
+    public ServerRackWindowViewModel(ServerRackService serverRackService, DialogService dialogService)
     {
         #region Service Set
         _serverRackService = serverRackService;

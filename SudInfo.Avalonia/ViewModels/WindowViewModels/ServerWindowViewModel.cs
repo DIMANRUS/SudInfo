@@ -4,7 +4,7 @@ public class ServerWindowViewModel : BaseViewModel
     #region Services
     private readonly ServerService _serverService;
     private readonly DialogService _dialogService;
-    private readonly ValidationService _validationService;
+
     #endregion
 
     #region Private Fields
@@ -16,13 +16,15 @@ public class ServerWindowViewModel : BaseViewModel
     public Server Server { get; set; } = new();
     [Reactive]
     public string SaveButtonText { get; private set; } = "Добавить сервер";
+    [Reactive]
+    public bool ButtonIsVisible { get; private set; } = false;
     #endregion
 
     #region Constructors
-    public ServerWindowViewModel(ServerService serverService, DialogService dialogService, ValidationService validationService)
+    public ServerWindowViewModel(ServerService serverService, DialogService dialogService)
     {
         #region Service Set
-        _validationService = validationService;
+
         _serverService = serverService;
         _dialogService = dialogService;
         #endregion
@@ -34,6 +36,10 @@ public class ServerWindowViewModel : BaseViewModel
     public async void InitializationData(WindowType windowType, int? id = null, ServerRack serverRack = null)
     {
         _windowType = windowType;
+        if (windowType != WindowType.View)
+        {
+            ButtonIsVisible = true;
+        }
         if (serverRack != null)
         {
             Server.ServerRackId = serverRack.Id;
@@ -41,7 +47,11 @@ public class ServerWindowViewModel : BaseViewModel
         }
         if (id != null)
         {
-            SaveButtonText = "Сохранить сервер";
+            if (windowType != WindowType.View)
+            {
+                ButtonIsVisible = true;
+                SaveButtonText = "Сохранить сервер";
+            }
             var server = await _serverService.GetServer(id.GetValueOrDefault());
             if (!server.Success)
             {
@@ -53,11 +63,8 @@ public class ServerWindowViewModel : BaseViewModel
     }
     public async Task SaveServer()
     {
-        if (Server.Name.Length < 5 || !ValidationService.ValidationIp4(Server.IpAddress))
-        {
-            await _dialogService.ShowMessageBox(title: "Ошибка", "Проверьте правильность заполнения полей!", icon: Icon.Error);
+        if (!ValidationModel(Server))
             return;
-        }
         Result serverResult = _windowType switch
         {
             WindowType.Add => await _serverService.AddServer(Server),

@@ -78,9 +78,7 @@ public class PeripheryService
         try
         {
             using SudInfoDbContext applicationDBContext = new();
-            var periphery = await applicationDBContext.Peripheries.FirstOrDefaultAsync(x => x.Id == id);
-            if (periphery == null)
-                throw new Exception("Переферия не найдена");
+            var periphery = await applicationDBContext.Peripheries.FirstOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Переферия не найдена");
             applicationDBContext.Peripheries.Remove(periphery);
             await applicationDBContext.SaveChangesAsync();
             return new()

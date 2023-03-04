@@ -71,6 +71,8 @@ public class MonitorWindowViewModel : BaseViewModel
     }
     public async Task SaveMonitor()
     {
+        if (!ValidationModel(Monitor))
+            return;
         if (!IsComputer)
             Monitor.Computer = null;
         Result monitorResult = _windowType switch

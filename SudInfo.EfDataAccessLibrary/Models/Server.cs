@@ -1,14 +1,15 @@
 ﻿namespace SudInfo.EfDataAccessLibrary.Models;
 public class Server : BaseModel
 {
-    [Required]
-    [StringLength(20)]
+    [Required(ErrorMessage = Const.FieldRequired)]
+    [StringLength(20, MinimumLength = 2, ErrorMessage = Const.LengthMore2)]
     public string? Name { get; set; }
-    [StringLength(20)]
+    [StringLength(20, MinimumLength = 2, ErrorMessage = Const.LengthMore2)]
     public string? SerialNumber { get; set; }
-    [StringLength(20)]
+    [StringLength(20, MinimumLength = 2, ErrorMessage = Const.LengthMore2)]
     public string? InventarNumber { get; set; }
     public int? PosiitionInServerRack { get; set; }
+    [RegularExpression(Const.Ip4RegularExpression, ErrorMessage = Const.NotValidIp4Message)]
     [StringLength(20)]
     public string? IpAddress { get; set; }
     public int? ServerRackId { get; set; }
