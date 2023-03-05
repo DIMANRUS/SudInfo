@@ -1,0 +1,25 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        CanResize="False"
+        Width="320"
+        Height="150"
+        x:Class="SudInfo.Avalonia.Views.Windows.TaskWindow"
+        Title="Создание задачи"
+        xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.WindowViewModels;assembly=SudInfo.Avalonia"
+        xmlns:i="using:Avalonia.Xaml.Interactivity"
+        xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+        WindowStartupLocation="CenterOwner"
+        x:DataType="viewModels:TaskWindowViewModel">
+  <StackPanel Margin="5"
+              Spacing="5">
+    <TextBox TextWrapping="Wrap"
+             MaxLength="500"
+             Text="{Binding Task.Description}"/>
+    <DatePicker/>
+    <TimePicker/>
+  </StackPanel>
+
+</Window>

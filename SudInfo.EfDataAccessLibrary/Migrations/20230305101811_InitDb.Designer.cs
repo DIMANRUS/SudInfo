@@ -12,7 +12,7 @@ using SudInfo.EfDataAccessLibrary.Contexts;
 namespace SudInfo.EfDataAccessLibrary.Migrations
 {
     [DbContext(typeof(SudInfoDbContext))]
-    [Migration("20230225154021_InitDb")]
+    [Migration("20230305101811_InitDb")]
     partial class InitDb
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.2")
+                .HasAnnotation("ProductVersion", "7.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -289,7 +289,6 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("InventarNumber")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
@@ -302,6 +301,27 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                         .IsUnique();
 
                     b.ToTable("ServerRacks");
+                });
+
+            modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.TaskEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<DateTime>("ReminderTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tasks");
                 });
 
             modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.User", b =>
@@ -323,6 +343,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("MiddleName")
+                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 

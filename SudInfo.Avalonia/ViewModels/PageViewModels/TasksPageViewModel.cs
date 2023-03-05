@@ -1,7 +1,4 @@
-﻿using SudInfo.Avalonia.Services;
-using SudInfo.EfDataAccessLibrary.Models;
-
-namespace SudInfo.Avalonia.ViewModels.PageViewModels;
+﻿namespace SudInfo.Avalonia.ViewModels.PageViewModels;
 public class TasksPageViewModel : BaseRoutableViewModel
 {
     #region Services
@@ -39,6 +36,7 @@ public class TasksPageViewModel : BaseRoutableViewModel
     }
     #endregion
 
+    #region Public Methods
     public async Task LoadTasks()
     {
         var tasksResult = await _taskService.GetTasks();
@@ -59,4 +57,19 @@ public class TasksPageViewModel : BaseRoutableViewModel
         }
         Tasks = new(TasksFromDatabase.Where(x => x.Description.ToLower().Contains(SearchText.ToLower())));
     }
+    public async Task CompleteTask(int id)
+    {
+        var completeTaskResult = await _taskService.CompleteTask(id);
+        if (!completeTaskResult.Success)
+        {
+            await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения данных! Ошибка: {completeTaskResult.Message}", icon: Icon.Error);
+            return;
+        }
+        await LoadTasks();
+    }
+    public async Task OpenAddTaskWindow()
+    {
+        await _navigationService.ShowTaskWindowDialog(_eventHandlerClosedWindowDialog);
+    }
+    #endregion
 }

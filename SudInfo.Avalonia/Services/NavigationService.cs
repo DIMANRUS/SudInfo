@@ -1,4 +1,6 @@
-﻿namespace SudInfo.Avalonia.Services;
+﻿using SudInfo.Avalonia.Views.Windows;
+
+namespace SudInfo.Avalonia.Services;
 public class NavigationService
 {
     #region Private Variables
@@ -73,7 +75,7 @@ public class NavigationService
             serverWindow.Closed += closedEvent;
         _dialogService.SetCurrentWindow(serverWindow);
         await serverWindow.ShowDialog(_mainWindow);
-    }  
+    }
     public async Task ShowServerRackWindowDialog(WindowType windowType, EventHandler closedEvent = null, int? id = null)
     {
         ServerRackWindow serverRackWindow = new(windowType, id);
@@ -81,6 +83,14 @@ public class NavigationService
             serverRackWindow.Closed += closedEvent;
         _dialogService.SetCurrentWindow(serverRackWindow);
         await serverRackWindow.ShowDialog(_mainWindow);
+    }
+    public async Task ShowTaskWindowDialog(EventHandler closedEvent = null)
+    {
+        TaskWindow taskWindow = new();
+        if (closedEvent != null)
+            taskWindow.Closed += closedEvent;
+        _dialogService.SetCurrentWindow(taskWindow);
+        await taskWindow.ShowDialog(_mainWindow);
     }
     public void SetWindow(Window window)
     {

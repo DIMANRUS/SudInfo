@@ -18,11 +18,25 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Position = table.Column<int>(type: "int", nullable: false),
-                    InventarNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
+                    InventarNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ServerRacks", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tasks",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    ReminderTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tasks", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -33,7 +47,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    MiddleName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    MiddleName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     NumberCabinet = table.Column<int>(type: "int", nullable: false),
                     PersonalPhone = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: true),
                     WorkPhone = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: true),
@@ -243,6 +257,9 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
 
             migrationBuilder.DropTable(
                 name: "Servers");
+
+            migrationBuilder.DropTable(
+                name: "Tasks");
 
             migrationBuilder.DropTable(
                 name: "Computers");

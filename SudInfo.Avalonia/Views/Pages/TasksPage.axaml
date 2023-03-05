@@ -59,7 +59,7 @@
         </ia:EventTriggerBehavior>
       </i:Interaction.Behaviors>
     </Image>
-    <DataGrid Items="{Binding Computers}"
+    <DataGrid Items="{Binding Tasks}"
               Grid.Row="1"
               Grid.ColumnSpan="4">
       <DataGrid.Columns>

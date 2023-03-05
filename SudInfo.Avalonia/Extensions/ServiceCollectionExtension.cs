@@ -33,6 +33,7 @@ internal static class ServiceCollectionExtension
             .AddTransient<ServerService>()
             .AddTransient<ServerRackService>()
             .AddTransient<TaskService>()
+            .AddTransient<TaskWindowViewModel>()
             .BuildServiceProvider();
     }
 }
