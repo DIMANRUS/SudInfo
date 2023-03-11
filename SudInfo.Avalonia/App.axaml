@@ -22,7 +22,7 @@
               Value="True"/>
     </Style>
   </Application.Styles>
-  <Application.Resources>
+  <!--<Application.Resources>
     <converters:UriAssetToBitmapConverter x:Key="UriAssetToBitmapConverter"/>
-  </Application.Resources>
+  </Application.Resources>-->
 </Application>

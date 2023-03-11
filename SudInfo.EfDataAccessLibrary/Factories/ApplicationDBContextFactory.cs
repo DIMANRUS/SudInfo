@@ -10,7 +10,7 @@ internal class ApplicationDBContextFactory : IDesignTimeDbContextFactory<SudInfo
     public SudInfoDbContext CreateDbContext(string[] args)
     {
         var optionsBuilder = new DbContextOptionsBuilder<SudInfoDbContext>();
-        optionsBuilder.UseSqlServer(configuration.GetConnectionString("SqlExpressDevelop"));
+        optionsBuilder.UseSqlServer(configuration.GetConnectionString("LocalDatabase"));
         return new SudInfoDbContext();
     }
 }

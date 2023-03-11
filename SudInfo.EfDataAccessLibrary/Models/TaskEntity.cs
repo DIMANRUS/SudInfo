@@ -2,7 +2,7 @@
 public class TaskEntity : BaseModel
 {
     [Required(ErrorMessage = Const.FieldRequired)]
-    [StringLength(200, MinimumLength = 2, ErrorMessage = Const.LengthMore2)]
+    [StringLength(200, MinimumLength = 2, ErrorMessage = Const.FieldRequired)]
     public string? Description { get; set; }
-    public DateTime ReminderTime { get; set; } = DateTime.Now;
+    public DateTime ReminderTime { get; set; }
 }

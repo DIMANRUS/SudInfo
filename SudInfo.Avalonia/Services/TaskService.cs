@@ -42,4 +42,25 @@ public class TaskService
             };
         }
     }
+
+    public async Task<Result> AddTask(TaskEntity task)
+    {
+        try
+        {
+            using SudInfoDbContext context = new();
+            await context.Tasks.AddAsync(task);
+            await context.SaveChangesAsync();
+            return new()
+            {
+                Success = true
+            };
+        }
+        catch (Exception ex)
+        {
+            return new()
+            {
+                Message = ex.Message
+            };
+        }
+    }
 }

@@ -15,7 +15,7 @@ public class SudInfoDbContext : DbContext
     #region Configuration
     protected override void OnConfiguring(DbContextOptionsBuilder options)
     {
-        options.UseSqlServer(configuration.GetConnectionString("SqlExpressDevelop"));
+        options.UseSqlServer(configuration.GetConnectionString("LocalDatabase"));
     }
     #endregion
 

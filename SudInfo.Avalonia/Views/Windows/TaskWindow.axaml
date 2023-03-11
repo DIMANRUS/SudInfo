@@ -5,7 +5,7 @@
         mc:Ignorable="d"
         CanResize="False"
         Width="320"
-        Height="150"
+        Height="250"
         x:Class="SudInfo.Avalonia.Views.Windows.TaskWindow"
         Title="Создание задачи"
         xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.WindowViewModels;assembly=SudInfo.Avalonia"
@@ -13,13 +13,19 @@
         xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
         WindowStartupLocation="CenterOwner"
         x:DataType="viewModels:TaskWindowViewModel">
-  <StackPanel Margin="5"
+  <StackPanel HorizontalAlignment="Center"
+              Margin="5"
               Spacing="5">
     <TextBox TextWrapping="Wrap"
              MaxLength="500"
-             Text="{Binding Task.Description}"/>
-    <DatePicker/>
-    <TimePicker/>
+             Text="{Binding Task.Description}"
+             Width="300"/>
+    <DatePicker SelectedDate="{Binding ReminderDate}"
+                Width="300"/>
+    <TimePicker SelectedTime="{Binding ReminderTime}"
+                Width="300"/>
+    <Button Content="Добавить задачу"
+            Command="{Binding AddTask}"/>
   </StackPanel>
 
 </Window>

@@ -10,7 +10,10 @@ public partial class App : Application
     public override void OnFrameworkInitializationCompleted()
     {
         // DI Initialization
-        ServiceCollectionExtension.Init();
+        //ServiceCollectionExtension.Init();
+
+        //var fluentTheme = (FluentTheme)Current.Styles.First(x => x.GetType() == typeof(FluentTheme));
+        //fluentTheme.Mode = FluentThemeMode.Dark;
 
         #region Locator Pages Initialization
         Locator.CurrentMutable.RegisterConstant<IScreen>(new MainWindowViewModel());
