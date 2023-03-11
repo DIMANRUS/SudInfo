@@ -12,7 +12,7 @@ using SudInfo.EfDataAccessLibrary.Contexts;
 namespace SudInfo.EfDataAccessLibrary.Migrations
 {
     [DbContext(typeof(SudInfoDbContext))]
-    [Migration("20230305101811_InitDb")]
+    [Migration("20230311191022_InitDb")]
     partial class InitDb
     {
         /// <inheritdoc />

@@ -17,15 +17,19 @@
               Margin="5"
               Spacing="5">
     <TextBox TextWrapping="Wrap"
-             MaxLength="500"
+             MaxLength="200"
              Text="{Binding Task.Description}"
-             Width="300"/>
+             Width="300"
+             Watermark="Задача"
+             Height="120"/>
     <DatePicker SelectedDate="{Binding ReminderDate}"
                 Width="300"/>
     <TimePicker SelectedTime="{Binding ReminderTime}"
                 Width="300"/>
     <Button Content="Добавить задачу"
-            Command="{Binding AddTask}"/>
+            Command="{Binding AddTask}"
+            HorizontalAlignment="Stretch"
+            HorizontalContentAlignment="Center"/>
   </StackPanel>
 
 </Window>

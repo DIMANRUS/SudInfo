@@ -63,10 +63,16 @@
               Grid.Row="1"
               Grid.ColumnSpan="4">
       <DataGrid.Columns>
-        <DataGridTextColumn Header="Задача"
-                            Binding="{Binding Description}"
-                            IsReadOnly="True"
-                            Width="*"/>
+        <DataGridTemplateColumn Width="*"
+                                IsReadOnly="True"
+                                Header="Задача">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <TextBlock Text="{Binding Description}"
+                         TextWrapping="Wrap"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
         <DataGridTextColumn Header="Дата и время"
                             Binding="{Binding ReminderTime}"
                             IsReadOnly="True"/>

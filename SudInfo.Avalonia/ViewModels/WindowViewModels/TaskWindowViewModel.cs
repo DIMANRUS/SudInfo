@@ -1,9 +1,9 @@
 ﻿namespace SudInfo.Avalonia.ViewModels.WindowViewModels;
 public class TaskWindowViewModel : BaseViewModel
 {
-    public readonly NavigationService _navigationService;
-    public readonly TaskService _taskService;
-    public readonly DialogService _dialogService;
+    private readonly NavigationService _navigationService;
+    private readonly TaskService _taskService;
+    private readonly DialogService _dialogService;
     public TaskEntity Task { get; set; } = new();
     public DateTimeOffset ReminderDate { get; set; } = DateTimeOffset.Now;
     public TimeSpan ReminderTime { get; set; } = DateTime.Now.TimeOfDay;
