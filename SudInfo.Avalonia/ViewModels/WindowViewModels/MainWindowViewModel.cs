@@ -54,5 +54,9 @@ public class MainWindowViewModel : ReactiveObject, IScreen
     {
         Router.Navigate.Execute(ServiceCollectionExtension.ServiceProvider.GetService<TasksPageViewModel>());
     }
+    public void OpenPasswordsPage()
+    {
+        Router.Navigate.Execute(ServiceCollectionExtension.ServiceProvider.GetService<PasswordsPageViewModel>());
+    }
     #endregion
 }

@@ -3,7 +3,6 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
-    <AnalysisMode>all</AnalysisMode>
     <!--Avalonia doesen't support TrimMode=link currently,but we are working on that https://github.com/AvaloniaUI/Avalonia/issues/6892 -->
     <TrimMode>copyused</TrimMode>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
@@ -31,7 +30,6 @@
     <None Remove="Assets\Images\MenuBar\processor.png" />
     <None Remove="Assets\Images\MenuBar\rutoken.png" />
     <None Remove="Assets\Images\MenuBar\server.png" />
-    <None Remove="Assets\Images\MenuBar\settings.png" />
     <None Remove="Assets\Images\MenuBar\todo.png" />
     <None Remove="Assets\Images\microphone.png" />
     <None Remove="Assets\Images\mouse.png" />

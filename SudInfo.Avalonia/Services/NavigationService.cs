@@ -1,4 +1,4 @@
-﻿using SudInfo.Avalonia.Views.Windows;
+﻿using SudInfo.EfDataAccessLibrary.Models;
 
 namespace SudInfo.Avalonia.Services;
 public class NavigationService
@@ -91,6 +91,14 @@ public class NavigationService
             taskWindow.Closed += closedEvent;
         _dialogService.SetCurrentWindow(taskWindow);
         await taskWindow.ShowDialog(_mainWindow);
+    }
+    public async Task ShowPasswordWindowDialog(WindowType windowType, EventHandler closedEvent = null, int? id = null)
+    {
+        PasswordWindow window = new(windowType, id);
+        if (window != null)
+            window.Closed += closedEvent;
+        _dialogService.SetCurrentWindow(window);
+        await window.ShowDialog(_mainWindow);
     }
     public void SetWindow(Window window)
     {

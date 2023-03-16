@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SudInfo.EfDataAccessLibrary
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SudInfo.Avalonia", "SudInfo.Avalonia\SudInfo.Avalonia.csproj", "{021BD98D-E1E8-49C4-9DDA-05CDE5C49EDA}"
 EndProject
+Project("{840C416C-B8F3-42BC-B0DD-F6BB14C9F8CB}") = "SudInfo.WinInstaller", "SudInfo.WinInstaller\SudInfo.WinInstaller.aiproj", "{862CC412-F8BE-493C-8DBC-E506293ED139}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		All|Any CPU = All|Any CPU
@@ -26,6 +28,12 @@ Global
 		{021BD98D-E1E8-49C4-9DDA-05CDE5C49EDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{021BD98D-E1E8-49C4-9DDA-05CDE5C49EDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{021BD98D-E1E8-49C4-9DDA-05CDE5C49EDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{862CC412-F8BE-493C-8DBC-E506293ED139}.All|Any CPU.ActiveCfg = DefaultBuild
+		{862CC412-F8BE-493C-8DBC-E506293ED139}.All|Any CPU.Build.0 = DefaultBuild
+		{862CC412-F8BE-493C-8DBC-E506293ED139}.Debug|Any CPU.ActiveCfg = DefaultBuild
+		{862CC412-F8BE-493C-8DBC-E506293ED139}.Debug|Any CPU.Build.0 = DefaultBuild
+		{862CC412-F8BE-493C-8DBC-E506293ED139}.Release|Any CPU.ActiveCfg = DefaultBuild
+		{862CC412-F8BE-493C-8DBC-E506293ED139}.Release|Any CPU.Build.0 = DefaultBuild
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,18 +4,15 @@ using TaskEntity = SudInfo.EfDataAccessLibrary.Models.TaskEntity;
 namespace SudInfo.EfDataAccessLibrary.Contexts;
 public class SudInfoDbContext : DbContext
 {
-    #region Private variables
-    private readonly IConfiguration configuration = new ConfigurationBuilder()
-        .SetBasePath(Environment.CurrentDirectory)
-        .AddJsonFile("appsettings.json")
-        .AddUserSecrets<SudInfoDbContext>()
-        .Build();
-    #endregion
+    public SudInfoDbContext()
+    {
+        Database.EnsureCreated();
+    }
 
     #region Configuration
     protected override void OnConfiguring(DbContextOptionsBuilder options)
     {
-        options.UseSqlServer(configuration.GetConnectionString("LocalDatabase"));
+        options.UseSqlite("Data Source = SudInfoDatabase.db");
     }
     #endregion
 
@@ -29,5 +26,6 @@ public class SudInfoDbContext : DbContext
     public DbSet<Server> Servers => Set<Server>();
     public DbSet<ServerRack> ServerRacks => Set<ServerRack>();
     public DbSet<TaskEntity> Tasks => Set<TaskEntity>();
+    public DbSet<PasswordEntity> Passwords => Set<PasswordEntity>();
     #endregion
 }

@@ -31,6 +31,8 @@ internal static class ServiceCollectionExtension
             .AddTransient<ServerRackService>()
             .AddTransient<TaskService>()
             .AddTransient<TaskWindowViewModel>()
+            .AddSingleton<PasswordsPageViewModel>()
+            .AddTransient<PasswordWindowViewModel>()
             .BuildServiceProvider();
     //public static void Init()
     //{
