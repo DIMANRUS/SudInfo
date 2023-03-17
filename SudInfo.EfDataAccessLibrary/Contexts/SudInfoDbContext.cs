@@ -6,7 +6,7 @@ public class SudInfoDbContext : DbContext
 {
     public SudInfoDbContext()
     {
-        Database.EnsureCreated();
+        Database.Migrate();
     }
 
     #region Configuration

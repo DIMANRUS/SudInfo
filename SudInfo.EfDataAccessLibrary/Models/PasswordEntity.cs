@@ -5,8 +5,10 @@ public class PasswordEntity : BaseModel
     [StringLength(200, MinimumLength = 2, ErrorMessage = Const.LengthMore2)]
     public string? Description { get; set; }
     [StringLength(50, MinimumLength = 2, ErrorMessage = Const.LengthMore2)]
+    public string? Link { get; set; }
+    [StringLength(50, MinimumLength = 2, ErrorMessage = Const.LengthMore2)]
     public string? Login { get; set; }
     [Required(ErrorMessage = Const.FieldRequired)]
-    [StringLength(50)]
+    [StringLength(50, MinimumLength = 2, ErrorMessage = Const.LengthMore2)]
     public string? Password { get; set; }
 }
