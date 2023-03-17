@@ -61,7 +61,6 @@ public class PasswordService
         {
             return new()
             {
-                Success = false,
                 Message = ex.Message
             };
         }
@@ -82,7 +81,6 @@ public class PasswordService
         {
             return new()
             {
-                Success = false,
                 Message = ex.Message
             };
         }
@@ -103,7 +101,6 @@ public class PasswordService
         {
             return new()
             {
-                Success = false,
                 Message = ex.Message
             };
         }

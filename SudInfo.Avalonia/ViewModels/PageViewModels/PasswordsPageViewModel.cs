@@ -42,7 +42,7 @@ public class PasswordsPageViewModel : BaseRoutableViewModel
         var result = await _passwordService.GetPasswords();
         if (!result.Success)
         {
-            await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения данных! Ошибка: {result.Message}", icon: Icon.Error);
+            await _dialogService.ShowMessageBox("Ошибка", $"Ошибка загрузки! Ошибка: {result.Message}", icon: Icon.Error);
             return;
         }
         Passwords = new(result.Object);

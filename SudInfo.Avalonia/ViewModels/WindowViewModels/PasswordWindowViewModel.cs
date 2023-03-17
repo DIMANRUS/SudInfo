@@ -10,7 +10,7 @@ public class PasswordWindowViewModel : BaseViewModel
     [Reactive]
     public PasswordEntity Password { get; set; } = new();
     [Reactive]
-    public string SaveButtonText { get; private set; } = "Добавить компьютер";
+    public string SaveButtonText { get; private set; } = "Добавить пароль";
     [Reactive]
     public bool ButtonIsVisible { get; private set; } = false;
     #endregion
@@ -62,7 +62,7 @@ public class PasswordWindowViewModel : BaseViewModel
             if (windowType != WindowType.View)
             {
                 ButtonIsVisible = true;
-                SaveButtonText = "Сохранить компьютер";
+                SaveButtonText = "Сохранить пароль";
             }
             var result = await _passwordService.GetPasswordEntity(id.GetValueOrDefault());
             if (!result.Success)
