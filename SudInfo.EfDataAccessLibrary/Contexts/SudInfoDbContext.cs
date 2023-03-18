@@ -27,5 +27,6 @@ public class SudInfoDbContext : DbContext
     public DbSet<ServerRack> ServerRacks => Set<ServerRack>();
     public DbSet<TaskEntity> Tasks => Set<TaskEntity>();
     public DbSet<PasswordEntity> Passwords => Set<PasswordEntity>();
+    public DbSet<AppEntity> Apps => Set<AppEntity>();
     #endregion
 }
