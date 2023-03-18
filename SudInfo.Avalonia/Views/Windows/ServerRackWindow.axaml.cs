@@ -7,7 +7,7 @@ public partial class ServerRackWindow : ReactiveWindow<ServerRackWindowViewModel
     }
     public ServerRackWindow(WindowType windowType, int? id = null)
     {
-        var viewModel = ServiceCollectionExtension.ServiceProvider.GetService<ServerRackWindowViewModel>();
+        var viewModel = ServiceCollectionExtension.ServiceProvider.GetService<ServerRackWindowViewModel>()!;
         DataContext = viewModel;
         InitializeComponent();
         viewModel.InitializationData(windowType, id);

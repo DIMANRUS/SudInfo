@@ -5,10 +5,10 @@ public partial class RutokenWindow : ReactiveWindow<RutokenWindowViewModel>
     public RutokenWindow() { }
     public RutokenWindow(WindowType windowType, int? rutokenId = null)
     {
-        var rutokenWindowViewModel = ServiceCollectionExtension.ServiceProvider.GetService<RutokenWindowViewModel>();
-        DataContext = rutokenWindowViewModel;
+        var viewModel = ServiceCollectionExtension.ServiceProvider.GetService<RutokenWindowViewModel>()!;
+        DataContext = viewModel;
         InitializeComponent();
-        rutokenWindowViewModel.InitializationData(windowType, rutokenId);
+        viewModel.InitializationData(windowType, rutokenId);
     }
     #endregion
 }
