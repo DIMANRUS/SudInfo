@@ -34,5 +34,8 @@ internal static class ServiceCollectionExtension
             .AddSingleton<PasswordsPageViewModel>()
             .AddTransient<PasswordWindowViewModel>()
             .AddTransient<PasswordService>()
+            .AddTransient<AppService>()
+            .AddSingleton<AppsPageViewModel>()
+            .AddTransient<ContactService>()
             .BuildServiceProvider();
 }

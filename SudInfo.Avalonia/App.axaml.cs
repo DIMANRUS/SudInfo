@@ -27,6 +27,7 @@ public partial class App : Application
         Locator.CurrentMutable.Register<IViewFor<ServersPageViewModel>>(() => new ServersPage());
         Locator.CurrentMutable.Register<IViewFor<TasksPageViewModel>>(() => new TasksPage());
         Locator.CurrentMutable.Register<IViewFor<PasswordsPageViewModel>>(() => new PasswordsPage());
+        Locator.CurrentMutable.Register<IViewFor<AppsPageViewModel>>(() => new AppsPage());
         #endregion
 
         MainWindow mainWindow = new() { DataContext = Locator.Current.GetService<IScreen>() };

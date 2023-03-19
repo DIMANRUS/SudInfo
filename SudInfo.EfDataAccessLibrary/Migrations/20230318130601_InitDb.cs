@@ -12,6 +12,20 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Apps",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
+                    Version = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Apps", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Passwords",
                 columns: table => new
                 {
@@ -115,11 +129,17 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     SerialNumber = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
                     InventarNumber = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
                     YearRelease = table.Column<int>(type: "INTEGER", nullable: false),
-                    UserId = table.Column<int>(type: "INTEGER", nullable: true)
+                    UserId = table.Column<int>(type: "INTEGER", nullable: true),
+                    AppEntityId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Computers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Computers_Apps_AppEntityId",
+                        column: x => x.AppEntityId,
+                        principalTable: "Apps",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Computers_Users_UserId",
                         column: x => x.UserId,
@@ -220,6 +240,11 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Computers_AppEntityId",
+                table: "Computers",
+                column: "AppEntityId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Computers_UserId",
                 table: "Computers",
                 column: "UserId");
@@ -285,6 +310,9 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
 
             migrationBuilder.DropTable(
                 name: "ServerRacks");
+
+            migrationBuilder.DropTable(
+                name: "Apps");
 
             migrationBuilder.DropTable(
                 name: "Users");

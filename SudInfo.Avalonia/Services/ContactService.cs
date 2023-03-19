@@ -1,12 +1,12 @@
 ﻿namespace SudInfo.Avalonia.Services;
-public class AppService
+public class ContactService
 {
-    public async Task<Result<IReadOnlyList<AppEntity>>> GetApps()
+    public async Task<Result<IReadOnlyList<Contact>>> GetContacts()
     {
         try
         {
             using SudInfoDbContext context = new();
-            var result = await context.Apps.AsNoTracking().Include(x => x.Computers).ToListAsync();
+            var result = await context.Contacts.AsNoTracking().ToListAsync();
             return new()
             {
                 Object = result,
@@ -21,13 +21,13 @@ public class AppService
             };
         }
     }
-    public async Task<Result> RemoveApp(int id)
+    public async Task<Result> RemoveContact(int id)
     {
         try
         {
             using SudInfoDbContext context = new();
-            var entity = await context.Apps.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Password not found");
-            context.Apps.Remove(entity);
+            var entity = await context.Contacts.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Contact not found");
+            context.Contacts.Remove(entity);
             await context.SaveChangesAsync();
             return new()
             {
@@ -42,14 +42,14 @@ public class AppService
             };
         }
     }
-    public async Task<Result<AppEntity>> GetApp(int id)
+    public async Task<Result<Contact>> GetContact(int id)
     {
         try
         {
             using SudInfoDbContext applicationDBContext = new();
-            var server = await applicationDBContext.Apps
+            var server = await applicationDBContext.Contacts
                 .AsNoTracking()
-                .SingleOrDefaultAsync(x => x.Id == id) ?? throw new Exception("App not Found");
+                .SingleOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Contact not Found");
             return new()
             {
                 Success = true,
@@ -64,7 +64,7 @@ public class AppService
             };
         }
     }
-    public async Task<Result> UpdateApp(AppEntity entity)
+    public async Task<Result> UpdateContact(Contact entity)
     {
         try
         {
@@ -84,7 +84,7 @@ public class AppService
             };
         }
     }
-    public async Task<Result> AddApp(AppEntity entity)
+    public async Task<Result> AddContact(Contact entity)
     {
         try
         {

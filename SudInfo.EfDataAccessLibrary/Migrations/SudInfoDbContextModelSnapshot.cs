@@ -17,10 +17,34 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.4");
 
+            modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.AppEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Version")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Apps");
+                });
+
             modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.Computer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("AppEntityId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("CPU")
@@ -71,6 +95,8 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppEntityId");
 
                     b.HasIndex("UserId");
 
@@ -372,6 +398,10 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
 
             modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.Computer", b =>
                 {
+                    b.HasOne("SudInfo.EfDataAccessLibrary.Models.AppEntity", null)
+                        .WithMany("Computers")
+                        .HasForeignKey("AppEntityId");
+
                     b.HasOne("SudInfo.EfDataAccessLibrary.Models.User", "User")
                         .WithMany("Computers")
                         .HasForeignKey("UserId");
@@ -422,6 +452,11 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                         .HasForeignKey("ServerRackId");
 
                     b.Navigation("ServerRack");
+                });
+
+            modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.AppEntity", b =>
+                {
+                    b.Navigation("Computers");
                 });
 
             modelBuilder.Entity("SudInfo.EfDataAccessLibrary.Models.Computer", b =>
