@@ -1,7 +1,6 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             x:Class="SudInfo.Avalonia.App"
-             xmlns:converters="using:SudInfo.Avalonia.Converters">
+             x:Class="SudInfo.Avalonia.App">
   <Application.Styles>
     <FluentTheme Mode="Light"/>
     <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml"/>
@@ -23,7 +22,4 @@
               Value="True"/>
     </Style>
   </Application.Styles>
-  <!--<Application.Resources>
-    <converters:UriAssetToBitmapConverter x:Key="UriAssetToBitmapConverter"/>
-  </Application.Resources>-->
 </Application>

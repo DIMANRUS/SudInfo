@@ -5,9 +5,13 @@ public class AppService
     {
         try
         {
-            using SudInfoDbContext context = new();
-            var result = await context.Apps.AsNoTracking().Include(x => x.Computers).ToListAsync();
-            return new()
+            await using SudInfoDbContext context = new();
+            var result = await context.Apps
+                .AsNoTracking()
+                .Include(x => x.Computers)
+                .ThenInclude(x=>x.User)
+                .ToListAsync();
+            return new Result<IReadOnlyList<AppEntity>>
             {
                 Object = result,
                 Success = true
@@ -15,7 +19,7 @@ public class AppService
         }
         catch (Exception ex)
         {
-            return new()
+            return new Result<IReadOnlyList<AppEntity>>
             {
                 Message = ex.Message
             };
@@ -25,18 +29,18 @@ public class AppService
     {
         try
         {
-            using SudInfoDbContext context = new();
+            await using SudInfoDbContext context = new();
             var entity = await context.Apps.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Password not found");
             context.Apps.Remove(entity);
             await context.SaveChangesAsync();
-            return new()
+            return new Result
             {
                 Success = true
             };
         }
         catch (Exception ex)
         {
-            return new()
+            return new Result
             {
                 Message = ex.Message
             };
@@ -46,11 +50,11 @@ public class AppService
     {
         try
         {
-            using SudInfoDbContext applicationDBContext = new();
-            var server = await applicationDBContext.Apps
+            await using SudInfoDbContext applicationDbContext = new();
+            var server = await applicationDbContext.Apps
                 .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.Id == id) ?? throw new Exception("App not Found");
-            return new()
+            return new Result<AppEntity>
             {
                 Success = true,
                 Object = server
@@ -58,7 +62,7 @@ public class AppService
         }
         catch (Exception ex)
         {
-            return new()
+            return new Result<AppEntity>
             {
                 Message = ex.Message
             };
@@ -68,17 +72,17 @@ public class AppService
     {
         try
         {
-            using SudInfoDbContext applicationDBContext = new();
-            applicationDBContext.Update(entity);
-            await applicationDBContext.SaveChangesAsync();
-            return new()
+            await using SudInfoDbContext applicationDbContext = new();
+            applicationDbContext.Update(entity);
+            await applicationDbContext.SaveChangesAsync();
+            return new Result
             {
                 Success = true
             };
         }
         catch (Exception ex)
         {
-            return new()
+            return new Result
             {
                 Message = ex.Message
             };
@@ -88,17 +92,17 @@ public class AppService
     {
         try
         {
-            using SudInfoDbContext applicationDBContext = new();
-            await applicationDBContext.AddAsync(entity);
-            await applicationDBContext.SaveChangesAsync();
-            return new()
+            await using SudInfoDbContext applicationDbContext = new();
+            await applicationDbContext.AddAsync(entity);
+            await applicationDbContext.SaveChangesAsync();
+            return new Result
             {
                 Success = true
             };
         }
         catch (Exception ex)
         {
-            return new()
+            return new Result
             {
                 Message = ex.Message
             };

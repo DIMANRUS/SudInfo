@@ -47,12 +47,45 @@
         </ia:EventTriggerBehavior>
       </i:Interaction.Behaviors>
     </Image>
-    <DataGrid>
+    <DataGrid Grid.Row="1" 
+              Grid.ColumnSpan="4" 
+              Items="{Binding Apps}" 
+              x:DataType="models:AppEntity" 
+              SelectedIndex="{Binding SelectedIndex}">
       <DataGrid.RowDetailsTemplate>
-        <DataTemplate>
-          <TextBlock Text="{Binding Login}"/>
+        <DataTemplate DataType="models:AppEntity">
+          <Border BorderBrush="DarkOrange" BorderThickness="2" Padding="5" Margin="5" CornerRadius="10">
+            <StackPanel>
+            <Button Content="Закрыть" Command="{Binding DataContext.CloseRowDetail, ElementName=Root}"/>
+            <DataGrid Items="{Binding Computers}" x:DataType="models:Computer">
+                        <DataGrid.Columns>
+                          <DataGridTextColumn Header="IP Адрес"
+                                              Binding="{Binding Ip}"
+                                              IsReadOnly="True"/>
+                          <DataGridTextColumn Header="Название"
+                                              Binding="{Binding Name}"
+                                              IsReadOnly="True"/>
+                          <DataGridTextColumn Header="ФИО сотрудника"
+                                              Binding="{Binding User.FIO}"
+                                              IsReadOnly="True"
+                                              Width="*"/>
+                          <DataGridTextColumn Header="Кабинет"
+                                              Binding="{Binding Cabinet}"
+                                              IsReadOnly="True"/>
+                          </DataGrid.Columns>
+                          </DataGrid>
+          </StackPanel>          </Border>
         </DataTemplate>
       </DataGrid.RowDetailsTemplate>
+      <DataGrid.Columns>
+          <DataGridTextColumn Binding="{Binding Name}" Header="Название"/>
+          <DataGridTextColumn Binding="{Binding Version}" Header="Версия"/>
+          <!-- <DataGridTemplateColumn> -->
+          <!--   <DataTemplate> -->
+          <!--     <Button Content="Закрыть" Command="{Binding DataContext.ChnageVisibleComputersForApp, ElementName=Root}"/> -->
+          <!--   </DataTemplate> -->
+          <!-- </DataGridTemplateColumn> -->
+      </DataGrid.Columns>
     </DataGrid>
   </Grid>
 </UserControl>
