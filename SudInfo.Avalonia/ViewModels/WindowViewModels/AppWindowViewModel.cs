@@ -1,0 +1,87 @@
+using SudInfo.Avalonia.Services;
+
+namespace SudInfo.Avalonia.ViewModels.WindowViewModels;
+
+public class AppWindowViewModel : BaseViewModel
+{
+    #region Services
+    private readonly AppService _appService;
+    private readonly DialogService _dialogService;
+    private readonly ComputerService _computerService;
+    #endregion
+
+    #region Properties
+    [Reactive]
+    public AppEntity AppEntity { get; set; } = new();
+    [Reactive]
+    public string SaveButtonText { get; private set; } = "Добавить приложение";
+    [Reactive]
+    public bool ButtonIsVisible { get; private set; }
+    #endregion
+
+    [Reactive] public ObservableCollection<Computer> Computers { get; set; }
+
+    #region Private Fields
+    private WindowType _windowType;
+    #endregion
+
+    #region Constructors
+
+    public AppWindowViewModel()
+    {
+
+    }
+    public AppWindowViewModel(AppService appService, DialogService dialogService, ComputerService computerService)
+    {
+        _appService = appService;
+        _dialogService = dialogService;
+        _computerService = computerService;
+    }
+    #endregion
+
+    public async Task SaveApp()
+    {
+        if (!ValidationModel(AppEntity))
+            return;
+        Result result = _windowType switch
+        {
+            WindowType.Add => await _appService.AddApp(AppEntity),
+            _ => await _appService.UpdateApp(AppEntity)
+        };
+        if (!result.Success)
+        {
+            await _dialogService.ShowMessageBox("Ошибка", result.Message, icon: Icon.Error);
+            return;
+        }
+        await _dialogService.ShowMessageBox("Сообщение", "Успешно!", true, icon: Icon.Success);
+    }
+
+    public async void InitializationData(WindowType windowType, int? id = null)
+    {
+        _windowType = windowType;
+        if (windowType != WindowType.View)
+        {
+            ButtonIsVisible = true;
+        }
+
+        if (id != null)
+        {
+            if (windowType != WindowType.View)
+            {
+                ButtonIsVisible = true;
+                SaveButtonText = "Сохранить приложение";
+            }
+
+            var result = await _appService.GetApp(id.GetValueOrDefault());
+            if (!result.Success)
+            {
+                await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения компьютера! Ошибка: {result.Message}",
+                    true, icon: Icon.Error);
+                return;
+            }
+            AppEntity = result.Object;
+        }
+        var computersResult = await _computerService.GetComputers();
+        Computers = new(computersResult.Object);
+    }
+}

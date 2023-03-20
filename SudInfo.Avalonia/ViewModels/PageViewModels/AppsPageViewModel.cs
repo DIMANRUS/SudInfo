@@ -1,17 +1,26 @@
-﻿namespace SudInfo.Avalonia.ViewModels.PageViewModels;
+﻿using SQLitePCL;
+
+namespace SudInfo.Avalonia.ViewModels.PageViewModels;
 public class AppsPageViewModel : BaseRoutableViewModel
 {
+    #region Services
     private readonly AppService _appService;
     private readonly DialogService _dialogService;
+    private readonly NavigationService _navigationService;
+    #endregion
 
-    [Reactive] public int SelectedIndex { get; set; } = -1;
+    [Reactive]
+    public int SelectedIndex { get; set; } = -1;
 
-    [Reactive] public ObservableCollection<AppEntity> Apps { get; set; }
-    public AppsPageViewModel(AppService appService, DialogService dialogService)
+    [Reactive]
+    public ObservableCollection<AppEntity>? Apps { get; set; }
+    public AppsPageViewModel(AppService appService, DialogService dialogService, NavigationService navigationService)
     {
         _appService = appService;
         _dialogService = dialogService;
-        
+        _navigationService = navigationService;
+
+        eventHandlerClosedWindowDialog = async (s,e) => await LoadApps();
     }
 
     public void CloseRowDetail()
@@ -26,6 +35,11 @@ public class AppsPageViewModel : BaseRoutableViewModel
             await _dialogService.ShowMessageBox("Ошибка", $"Ошибка загрузки! Ошибка: {result.Message}", icon: Icon.Error);
             return;
         }
-        Apps = new(result.Object);
+        Apps = new ObservableCollection<AppEntity>(result.Object);
+    }
+
+    public async Task OpenAddAppWindow()
+    {
+        await _navigationService.ShowAppWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog);
     }
 }

@@ -13,10 +13,6 @@ public class PasswordsPageViewModel : BaseRoutableViewModel
     private IReadOnlyList<PasswordEntity> PasswordsFromDatabase { get; set; }
     #endregion
 
-    #region Private Variables
-    private readonly EventHandler _eventHandlerClosedWindowDialog;
-    #endregion
-
     #region Public properties
     [Reactive]
     public string SearchText { get; set; } = string.Empty;
@@ -31,7 +27,7 @@ public class PasswordsPageViewModel : BaseRoutableViewModel
         _navigationService = navigationService;
         #endregion
 
-        _eventHandlerClosedWindowDialog = async (s, e) =>
+        eventHandlerClosedWindowDialog = async (s, e) =>
             await LoadPasswords();
     }
     #endregion
@@ -59,11 +55,11 @@ public class PasswordsPageViewModel : BaseRoutableViewModel
     }
     public async Task OpenAddPasswordWindow()
     {
-        await _navigationService.ShowPasswordWindowDialog(WindowType.Add,_eventHandlerClosedWindowDialog);
+        await _navigationService.ShowPasswordWindowDialog(WindowType.Add,eventHandlerClosedWindowDialog);
     }
     public async Task OpenEditPasswordWindow(int id)
     {
-        await _navigationService.ShowPasswordWindowDialog(WindowType.Edit, _eventHandlerClosedWindowDialog, id);
+        await _navigationService.ShowPasswordWindowDialog(WindowType.Edit, eventHandlerClosedWindowDialog, id);
     }
     public async Task RemovePassword(int id)
     {

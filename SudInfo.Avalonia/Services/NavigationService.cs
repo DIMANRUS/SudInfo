@@ -100,6 +100,14 @@ public class NavigationService
         _dialogService.SetCurrentWindow(window);
         await window.ShowDialog(_mainWindow);
     }
+    public async Task ShowAppWindowDialog(WindowType windowType, EventHandler closedEvent = null, int? id = null)
+    {
+        AppWindow window = new(windowType, id);
+        if (window != null)
+            window.Closed += closedEvent;
+        _dialogService.SetCurrentWindow(window);
+        await window.ShowDialog(_mainWindow);
+    }
     public void SetWindow(Window window)
     {
         if (_mainWindow != null)

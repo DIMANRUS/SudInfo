@@ -1,0 +1,34 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="SudInfo.Avalonia.Views.Windows.AppWindow"
+        Title="Приложение"
+        xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.WindowViewModels;assembly=SudInfo.Avalonia"
+        xmlns:models="clr-namespace:SudInfo.EfDataAccessLibrary.Models;assembly=SudInfo.EfDataAccessLibrary"
+        xmlns:i="using:Avalonia.Xaml.Interactivity"
+        xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+        WindowStartupLocation="CenterOwner"
+        x:DataType="viewModels:AppWindowViewModel"
+        CanResize="False"
+        Width="320"
+        Height="360">
+        <StackPanel Margin="10"
+                    Spacing="5">
+                <TextBox Text="{Binding AppEntity.Name}"
+                         Watermark="Название"/>
+                <TextBox Text="{Binding AppEntity.Version}"
+                         Watermark="Версия"/>
+                <TextBlock Text="Компьютеры"/>
+                <ListBox Items="{Binding Computers}" 
+                         SelectedItems="{Binding AppEntity.Computers}" 
+                         SelectionMode="Toggle">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate DataType="models:Computer">
+                            <TextBlock Text="{Binding Name}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                </StackPanel>
+</Window>
