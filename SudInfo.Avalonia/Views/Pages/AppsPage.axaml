@@ -72,6 +72,7 @@
                           <DataGridTextColumn Header="Кабинет"
                                               Binding="{Binding Cabinet}"
                                               IsReadOnly="True"/>
+                          
                           </DataGrid.Columns>
                           </DataGrid>
           </StackPanel>          </Border>
@@ -79,12 +80,31 @@
       </DataGrid.RowDetailsTemplate>
       <DataGrid.Columns>
           <DataGridTextColumn Binding="{Binding Name}" Header="Название"/>
-          <DataGridTextColumn Binding="{Binding Version}" Header="Версия"/>
-          <!-- <DataGridTemplateColumn> -->
-          <!--   <DataTemplate> -->
-          <!--     <Button Content="Закрыть" Command="{Binding DataContext.ChnageVisibleComputersForApp, ElementName=Root}"/> -->
-          <!--   </DataTemplate> -->
-          <!-- </DataGridTemplateColumn> -->
+          <DataGridTextColumn Binding="{Binding Version}" Header="Версия" Width="*"/>
+          <DataGridTemplateColumn Width="40">
+            <DataTemplate>
+              <Image Source="/Assets/Images/edit.png">
+                <i:Interaction.Behaviors>
+                  <ia:EventTriggerBehavior EventName="Tapped">
+                    <ia:InvokeCommandAction Command="{Binding DataContext.OpenEditAppWindow, ElementName=Root}"
+                                            CommandParameter="{Binding Id}"/>
+                  </ia:EventTriggerBehavior>
+                </i:Interaction.Behaviors>
+              </Image>
+            </DataTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTemplateColumn>
+            <DataTemplate>
+              <Image Source="/Assets/Images/remove.png">
+                <i:Interaction.Behaviors>
+                  <ia:EventTriggerBehavior EventName="Tapped">
+                    <ia:InvokeCommandAction Command="{Binding DataContext.RemoveApp, ElementName=Root}"
+                                            CommandParameter="{Binding Id}"/>
+                  </ia:EventTriggerBehavior>
+                </i:Interaction.Behaviors>
+              </Image>
+            </DataTemplate>
+          </DataGridTemplateColumn>
       </DataGrid.Columns>
     </DataGrid>
   </Grid>

@@ -59,8 +59,18 @@ public class MainWindowViewModel : ReactiveObject, IScreen
         Router.Navigate.Execute(ServiceCollectionExtension.ServiceProvider.GetService<PasswordsPageViewModel>());
     }
     public void OpenAppsPage()
+                       {
+                           Router.Navigate.Execute(ServiceCollectionExtension.ServiceProvider.GetService<AppsPageViewModel>());
+                       }
+
+    public void OpenContactsPage()
     {
-        Router.Navigate.Execute(ServiceCollectionExtension.ServiceProvider.GetService<AppsPageViewModel>());
+        Router.Navigate.Execute(ServiceCollectionExtension.ServiceProvider.GetService<ContactsPageViewModel>());
+    }
+
+    public void OpenCartidgesPage()
+    {
+        Router.Navigate.Execute(ServiceCollectionExtension.ServiceProvider.GetService<CartridgesPageViewModel>());
     }
     #endregion
 }

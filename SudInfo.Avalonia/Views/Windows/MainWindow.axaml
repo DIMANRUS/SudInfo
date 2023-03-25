@@ -9,7 +9,7 @@
         xmlns:i="using:Avalonia.Xaml.Interactivity"
         xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
         xmlns:reactiveUi="http://reactiveui.net"
-        MinHeight="710"
+        MinHeight="650"
         MinWidth="1000"
         x:Class="SudInfo.Avalonia.Views.Windows.MainWindow"
         xmlns:vm="using:SudInfo.Avalonia.ViewModels"
@@ -156,16 +156,7 @@
           <Image Source="/Assets/Images/MenuBar/contacts.png">
             <i:Interaction.Behaviors>
               <ia:EventTriggerBehavior EventName="Tapped">
-                <ia:InvokeCommandAction/>
-              </ia:EventTriggerBehavior>
-            </i:Interaction.Behaviors>
-          </Image>
-        </Border>
-        <Border Classes="MenuBarBorder">
-          <Image Source="/Assets/Images/MenuBar/camera.png">
-            <i:Interaction.Behaviors>
-              <ia:EventTriggerBehavior EventName="Tapped">
-                <ia:InvokeCommandAction/>
+                <ia:InvokeCommandAction Command="{Binding OpenContactsPage}"/>
               </ia:EventTriggerBehavior>
             </i:Interaction.Behaviors>
           </Image>
@@ -174,7 +165,7 @@
           <Image Source="/Assets/Images/MenuBar/paint.png">
             <i:Interaction.Behaviors>
               <ia:EventTriggerBehavior EventName="Tapped">
-                <ia:InvokeCommandAction/>
+                <ia:InvokeCommandAction Command="{Binding OpenCartidgesPage}"/>
               </ia:EventTriggerBehavior>
             </i:Interaction.Behaviors>
           </Image>

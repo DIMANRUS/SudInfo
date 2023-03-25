@@ -31,6 +31,7 @@ public class AppService
         {
             await using SudInfoDbContext context = new();
             var entity = await context.Apps.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Password not found");
+            entity.Computers = null;
             context.Apps.Remove(entity);
             await context.SaveChangesAsync();
             return new Result
@@ -73,6 +74,12 @@ public class AppService
         try
         {
             await using SudInfoDbContext applicationDbContext = new();
+            var computers = entity.Computers;
+            entity.Computers = new List<Computer>();
+            foreach (var computer in computers)
+            {
+                entity.Computers.Add(await applicationDbContext.Computers.FirstAsync(x=>x.Id == computer.Id));
+            }
             applicationDbContext.Update(entity);
             await applicationDbContext.SaveChangesAsync();
             return new Result
@@ -93,6 +100,12 @@ public class AppService
         try
         {
             await using SudInfoDbContext applicationDbContext = new();
+            var computers = entity.Computers;
+            entity.Computers = new List<Computer>();
+            foreach (var computer in computers)
+            {
+                entity.Computers.Add(await applicationDbContext.Computers.FirstAsync(x=>x.Id == computer.Id));
+            }
             await applicationDbContext.AddAsync(entity);
             await applicationDbContext.SaveChangesAsync();
             return new Result

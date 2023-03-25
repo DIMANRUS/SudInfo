@@ -28,6 +28,8 @@ public partial class App : Application
         Locator.CurrentMutable.Register<IViewFor<TasksPageViewModel>>(() => new TasksPage());
         Locator.CurrentMutable.Register<IViewFor<PasswordsPageViewModel>>(() => new PasswordsPage());
         Locator.CurrentMutable.Register<IViewFor<AppsPageViewModel>>(() => new AppsPage());
+        Locator.CurrentMutable.Register<IViewFor<ContactsPageViewModel>>(() => new ContactsPage());
+        Locator.CurrentMutable.Register<IViewFor<CartridgesPageViewModel>>(() => new CartridgesPage());
         #endregion
 
         MainWindow mainWindow = new() { DataContext = Locator.Current.GetService<IScreen>() };

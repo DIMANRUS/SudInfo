@@ -42,4 +42,23 @@ public class AppsPageViewModel : BaseRoutableViewModel
     {
         await _navigationService.ShowAppWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog);
     }
+
+    public async Task OpenEditAppWindow(int id)
+    {
+        await _navigationService.ShowAppWindowDialog(WindowType.Edit, eventHandlerClosedWindowDialog, id);
+    }
+
+    public async Task RemoveApp(int id)
+    {
+        var dialogResult = await _dialogService.ShowMessageBox("Сообщение", "Вы действительно хотите удалить приложение?", buttonEnum: ButtonEnum.YesNo, icon: Icon.Question);
+        if (dialogResult == ButtonResult.No)
+            return;
+        var removeComputerResult = await _appService.RemoveApp(id);
+        if (!removeComputerResult.Success)
+        {
+            await _dialogService.ShowMessageBox("Ошибка", $"Ошибка удаления приложения! Ошибка: {removeComputerResult.Message}", icon: Icon.Error);
+            return;
+        }
+        await LoadApps();
+    }
 }

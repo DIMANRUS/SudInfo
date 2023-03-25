@@ -37,6 +37,9 @@ internal static class ServiceCollectionExtension
             .AddTransient<AppService>()
             .AddSingleton<AppsPageViewModel>()
             .AddTransient<ContactService>()
+            .AddSingleton<ContactsPageViewModel>()
             .AddTransient<AppWindowViewModel>()
+            .AddSingleton<CartridgesPageViewModel>()
+            .AddTransient<CartridgeService>()
             .BuildServiceProvider();
 }

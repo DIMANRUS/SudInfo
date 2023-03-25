@@ -31,6 +31,7 @@ public class Computer : BaseModel
     public ICollection<Periphery>? Peripheries { get; set; }
     public ICollection<Monitor>? Monitors { get; set; }
     public ICollection<Printer>? Printers { get; set; }
+    public ICollection<AppEntity> Apps { get; set; }
 }
 
 public enum OS

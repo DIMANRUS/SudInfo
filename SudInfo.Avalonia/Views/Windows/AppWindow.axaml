@@ -12,8 +12,8 @@
         WindowStartupLocation="CenterOwner"
         x:DataType="viewModels:AppWindowViewModel"
         CanResize="False"
-        Width="320"
-        Height="360">
+        Width="600"
+        Height="400">
         <StackPanel Margin="10"
                     Spacing="5">
                 <TextBox Text="{Binding AppEntity.Name}"
@@ -23,12 +23,24 @@
                 <TextBlock Text="Компьютеры"/>
                 <ListBox Items="{Binding Computers}" 
                          SelectedItems="{Binding AppEntity.Computers}" 
-                         SelectionMode="Toggle">
+                         SelectionMode="Toggle"
+                         Height="200">
                     <ListBox.ItemTemplate>
                         <DataTemplate DataType="models:Computer">
-                            <TextBlock Text="{Binding Name}"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Name}"/>
+                                <TextBlock Text=" | "/>
+                                <TextBlock Text="{Binding User.FIO}"/>
+                            </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
+                <Button Content="{Binding SaveButtonText}"
+                        Command="{Binding SaveApp}"
+                        Cursor="Hand"
+                        FontWeight="Bold"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"
+                        IsVisible="{Binding ButtonIsVisible}"/>
                 </StackPanel>
 </Window>

@@ -29,5 +29,7 @@ public class SudInfoDbContext : DbContext
     public DbSet<PasswordEntity> Passwords => Set<PasswordEntity>();
     public DbSet<AppEntity> Apps => Set<AppEntity>();
     public DbSet<Contact> Contacts => Set<Contact>();
+    public DbSet<Cartridge> Cartridges => Set<Cartridge>();
+
     #endregion
 }
