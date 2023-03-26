@@ -26,6 +26,35 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Cartridges",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    Remains = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cartridges", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Contacts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    Phone = table.Column<string>(type: "TEXT", maxLength: 11, nullable: false),
+                    Description = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Contacts", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Passwords",
                 columns: table => new
                 {
@@ -129,17 +158,11 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     SerialNumber = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
                     InventarNumber = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
                     YearRelease = table.Column<int>(type: "INTEGER", nullable: false),
-                    UserId = table.Column<int>(type: "INTEGER", nullable: true),
-                    AppEntityId = table.Column<int>(type: "INTEGER", nullable: true)
+                    UserId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Computers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Computers_Apps_AppEntityId",
-                        column: x => x.AppEntityId,
-                        principalTable: "Apps",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Computers_Users_UserId",
                         column: x => x.UserId,
@@ -165,6 +188,30 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AppEntityComputer",
+                columns: table => new
+                {
+                    AppsId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ComputersId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppEntityComputer", x => new { x.AppsId, x.ComputersId });
+                    table.ForeignKey(
+                        name: "FK_AppEntityComputer_Apps_AppsId",
+                        column: x => x.AppsId,
+                        principalTable: "Apps",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AppEntityComputer_Computers_ComputersId",
+                        column: x => x.ComputersId,
+                        principalTable: "Computers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -240,9 +287,15 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Computers_AppEntityId",
-                table: "Computers",
-                column: "AppEntityId");
+                name: "IX_AppEntityComputer_ComputersId",
+                table: "AppEntityComputer",
+                column: "ComputersId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cartridges_Name",
+                table: "Cartridges",
+                column: "Name",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Computers_UserId",
@@ -285,6 +338,15 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "AppEntityComputer");
+
+            migrationBuilder.DropTable(
+                name: "Cartridges");
+
+            migrationBuilder.DropTable(
+                name: "Contacts");
+
+            migrationBuilder.DropTable(
                 name: "Monitors");
 
             migrationBuilder.DropTable(
@@ -306,13 +368,13 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                 name: "Tasks");
 
             migrationBuilder.DropTable(
+                name: "Apps");
+
+            migrationBuilder.DropTable(
                 name: "Computers");
 
             migrationBuilder.DropTable(
                 name: "ServerRacks");
-
-            migrationBuilder.DropTable(
-                name: "Apps");
 
             migrationBuilder.DropTable(
                 name: "Users");

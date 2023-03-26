@@ -1,5 +1,6 @@
 namespace SudInfo.EfDataAccessLibrary.Models;
 
+[Index(nameof(Name), IsUnique = true)]
 public class Cartridge : BaseModel
 {
     [Required(ErrorMessage = Const.FieldRequired)]
