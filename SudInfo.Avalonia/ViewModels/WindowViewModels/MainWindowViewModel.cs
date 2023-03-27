@@ -26,10 +26,6 @@ public class MainWindowViewModel : ReactiveObject, IScreen
     {
         Router.Navigate.Execute(ServiceCollectionExtension.ServiceProvider.GetService<PrintersPageViewModel>());
     }
-    public async void OpenSettingsWindow()
-    {
-        await ServiceCollectionExtension.ServiceProvider.GetService<NavigationService>().ShowSettingsWindowDialog();
-    }
     public void OpenMonitorsPage()
     {
         Router.Navigate.Execute(ServiceCollectionExtension.ServiceProvider.GetService<MonitorsPageViewModel>());

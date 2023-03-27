@@ -64,10 +64,6 @@ public class NavigationService
         _dialogService.SetCurrentWindow(peripheryWindow);
         await peripheryWindow.ShowDialog(_mainWindow);
     }
-    public async Task ShowSettingsWindowDialog()
-    {
-        await new SettingsWindow().ShowDialog(_mainWindow);
-    }
     public async Task ShowServerWindowDialog(WindowType windowType, EventHandler closedEvent = null, int? id = null, ServerRack serverRack = null)
     {
         ServerWindow serverWindow = new(windowType, id, serverRack);
@@ -103,6 +99,14 @@ public class NavigationService
     public async Task ShowAppWindowDialog(WindowType windowType, EventHandler closedEvent = null, int? id = null)
     {
         AppWindow window = new(windowType, id);
+        if (window != null)
+            window.Closed += closedEvent;
+        _dialogService.SetCurrentWindow(window);
+        await window.ShowDialog(_mainWindow);
+    }
+    public async Task ShowContactWindowDialog(WindowType windowType, EventHandler closedEvent = null, int? id = null)
+    {
+        ContactWindow window = new(windowType, id);
         if (window != null)
             window.Closed += closedEvent;
         _dialogService.SetCurrentWindow(window);

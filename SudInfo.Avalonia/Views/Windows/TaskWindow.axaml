@@ -31,5 +31,4 @@
             HorizontalAlignment="Stretch"
             HorizontalContentAlignment="Center"/>
   </StackPanel>
-
 </Window>

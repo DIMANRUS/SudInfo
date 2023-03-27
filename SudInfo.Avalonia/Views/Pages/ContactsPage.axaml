@@ -2,7 +2,86 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="SudInfo.Avalonia.Views.Pages.ContactsPage">
-    Welcome to Avalonia!
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="450"
+             x:Class="SudInfo.Avalonia.Views.Pages.ContactsPage"
+             xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.PageViewModels"
+             xmlns:i="using:Avalonia.Xaml.Interactivity"
+             xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+             xmlns:models="using:SudInfo.EfDataAccessLibrary.Models"
+             x:DataType="viewModels:ContactsPageViewModel"
+             Name="Root">
+  <i:Interaction.Behaviors>
+    <ia:EventTriggerBehavior EventName="Initialized">
+      <ia:InvokeCommandAction Command="{Binding LoadContacts}"/>
+    </ia:EventTriggerBehavior>
+  </i:Interaction.Behaviors>
+  <UserControl.Styles>
+    <Style Selector="Image">
+      <Setter Property="Cursor"
+              Value="Hand"/>
+      <Setter Property="Height"
+              Value="30"/>
+    </Style>
+  </UserControl.Styles>
+  <Grid RowDefinitions="40,*"
+        ColumnDefinitions="*, 40">
+    <TextBlock Text="Контакты"
+               Margin="10"
+               FontWeight="Bold"
+               FontSize="20"/>
+    <Image Source="/Assets/Images/add.png"
+           Grid.Column="1">
+      <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="Tapped">
+          <ia:InvokeCommandAction Command="{Binding OpenAddContactWindow}"/>
+        </ia:EventTriggerBehavior>
+      </i:Interaction.Behaviors>
+    </Image>
+    <DataGrid Items="{Binding Contacts}"
+              Grid.Row="1"
+              Grid.ColumnSpan="3"
+              x:DataType="models:Contact">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="Наименование"
+                            Binding="{Binding Name}"
+                            IsReadOnly="True"/>
+        <DataGridTextColumn Header="Номер телефона"
+                            Binding="{Binding Phone}"
+                            IsReadOnly="True"/>
+        <DataGridTextColumn Header="Почта"
+                            Binding="{Binding Email}"
+                            IsReadOnly="True"/>
+        <DataGridTextColumn Header="Описание"
+                            Binding="{Binding Description}"
+                            IsReadOnly="True"
+                            Width="*"/>
+        <DataGridTemplateColumn>
+          <DataTemplate>
+            <Image Source="/Assets/Images/edit.png">
+              <i:Interaction.Behaviors>
+                <ia:EventTriggerBehavior EventName="Tapped">
+                  <ia:InvokeCommandAction Command="{Binding DataContext.OpenEditContactWindow, ElementName=Root}"
+                                          CommandParameter="{Binding Id}"/>
+                </ia:EventTriggerBehavior>
+              </i:Interaction.Behaviors>
+            </Image>
+          </DataTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn>
+          <DataTemplate>
+            <Image Source="/Assets/Images/remove.png">
+              <i:Interaction.Behaviors>
+                <ia:EventTriggerBehavior EventName="Tapped">
+                  <ia:InvokeCommandAction Command="{Binding DataContext.RemoveContac, ElementName=Root}"
+                                          CommandParameter="{Binding Id}"/>
+                </ia:EventTriggerBehavior>
+              </i:Interaction.Behaviors>
+            </Image>
+          </DataTemplate>
+        </DataGridTemplateColumn>
+      </DataGrid.Columns>
+    </DataGrid>
+  </Grid>
 </UserControl>

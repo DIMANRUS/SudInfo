@@ -46,7 +46,8 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
-                    Phone = table.Column<string>(type: "TEXT", maxLength: 11, nullable: false),
+                    Phone = table.Column<string>(type: "TEXT", maxLength: 11, nullable: true),
+                    Email = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
                     Description = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false)
                 },
                 constraints: table =>
