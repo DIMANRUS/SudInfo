@@ -400,3 +400,5 @@ FodyWeavers.xsd
 *.sln.iml
 SudInfoDatabase.db
 .DS_Store
+*.db-shm
+*.db-wal
