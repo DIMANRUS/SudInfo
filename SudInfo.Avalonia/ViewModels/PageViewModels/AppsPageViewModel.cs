@@ -1,6 +1,4 @@
-﻿using SQLitePCL;
-
-namespace SudInfo.Avalonia.ViewModels.PageViewModels;
+﻿namespace SudInfo.Avalonia.ViewModels.PageViewModels;
 public class AppsPageViewModel : BaseRoutableViewModel
 {
     #region Services

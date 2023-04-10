@@ -1,11 +1,13 @@
 namespace SudInfo.Avalonia;
 
-public partial class App : Application
+public class App : Application
 {
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
     }
+
+    public static Window MainWindow { get; private set; }
 
     public override void OnFrameworkInitializationCompleted()
     {
@@ -33,6 +35,7 @@ public partial class App : Application
         ServiceCollectionExtension.ServiceProvider.GetService<DialogService>()?.SetCurrentWindow(mainWindow);
 
         mainWindow.Show();
+        MainWindow = mainWindow;
         base.OnFrameworkInitializationCompleted();
     }
 }

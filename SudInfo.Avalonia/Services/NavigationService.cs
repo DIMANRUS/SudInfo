@@ -1,6 +1,4 @@
-﻿using SudInfo.EfDataAccessLibrary.Models;
-
-namespace SudInfo.Avalonia.Services;
+﻿namespace SudInfo.Avalonia.Services;
 public class NavigationService
 {
     #region Private Variables

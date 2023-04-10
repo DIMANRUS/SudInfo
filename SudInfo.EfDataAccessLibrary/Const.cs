@@ -1,5 +1,5 @@
 ﻿namespace SudInfo.EfDataAccessLibrary;
-public class Const
+public static class Const
 {
     public const string EmptyWithSpaceString = " ";
     public const string LengthMore2 = "Длина должна быть больше 2";

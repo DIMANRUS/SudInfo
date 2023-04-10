@@ -1,5 +1,3 @@
-using SudInfo.Avalonia.Services;
-
 namespace SudInfo.Avalonia.ViewModels.WindowViewModels;
 
 public class AppWindowViewModel : BaseViewModel

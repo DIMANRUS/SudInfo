@@ -1,17 +1,27 @@
 ﻿namespace SudInfo.EfDataAccessLibrary.Models;
 public class Periphery : BaseModel
 {
+    [XLColumn(Header = "Наименование")]
     [Required(ErrorMessage = Const.FieldRequired)]
     [StringLength(50, MinimumLength = 2, ErrorMessage = Const.LengthMore2)]
     public string? Name { get; set; }
+    
+    [XLColumn(Header = "Тип")]
     public PeripheryType Type { get; set; }
+    
+    [XLColumn(Header = "Серийный номер")]
     [Required(ErrorMessage = Const.FieldRequired)]
     [StringLength(30)]
     public string? SerialNumber { get; set; }
+    
+    [XLColumn(Header = "Инвентарный номер")]
     [Required(ErrorMessage = Const.FieldRequired)]
     [StringLength(30)]
     public string? InventarNumber { get; set; }
+    
     public Computer? Computer { get; set; }
+    
+    [XLColumn(Ignore = true)]
     [NotMapped]
     public string Icon => Type switch
     {

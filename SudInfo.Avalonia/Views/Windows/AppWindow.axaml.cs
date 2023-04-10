@@ -1,7 +1,3 @@
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
-
 namespace SudInfo.Avalonia.Views.Windows;
 
 public partial class AppWindow : ReactiveWindow<AppWindowViewModel>

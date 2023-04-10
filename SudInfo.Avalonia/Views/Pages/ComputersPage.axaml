@@ -26,7 +26,7 @@
     </Style>
   </UserControl.Styles>
   <Grid RowDefinitions="40,*"
-        ColumnDefinitions="140, *, 40, 40">
+        ColumnDefinitions="140, *, 40, 40,40">
     <TextBlock Text="Компьютеры"
                Margin="10"
                FontWeight="Bold"
@@ -43,8 +43,16 @@
         </ia:EventTriggerBehavior>
       </i:Interaction.Behaviors>
     </TextBox>
-    <Image Source="/Assets/Images/refresh.png"
+    <Image Source="/Assets/Images/excel.png"
            Grid.Column="2">
+      <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="Tapped">
+          <ia:InvokeCommandAction Command="{Binding CreateExcelTable}"/>
+        </ia:EventTriggerBehavior>
+      </i:Interaction.Behaviors>
+    </Image>
+    <Image Source="/Assets/Images/refresh.png"
+           Grid.Column="3">
       <i:Interaction.Behaviors>
         <ia:EventTriggerBehavior EventName="Tapped">
           <ia:InvokeCommandAction Command="{Binding RefreshComputers}"/>
@@ -52,7 +60,7 @@
       </i:Interaction.Behaviors>
     </Image>
     <Image Source="/Assets/Images/add.png"
-           Grid.Column="3">
+           Grid.Column="4">
       <i:Interaction.Behaviors>
         <ia:EventTriggerBehavior EventName="Tapped">
           <ia:InvokeCommandAction Command="{Binding OpenAddComputerWindow}"/>
@@ -61,7 +69,7 @@
     </Image>
     <DataGrid Items="{Binding Computers}"
               Grid.Row="1"
-              Grid.ColumnSpan="4">
+              Grid.ColumnSpan="5">
       <DataGrid.Columns>
         <DataGridTextColumn Header="IP Адрес"
                             Binding="{Binding Ip}"
