@@ -40,8 +40,8 @@ public class PasswordWindowViewModel : BaseViewModel
             return;
         Result result = _windowType switch
         {
-            WindowType.Add => await _passwordService.AddPassword(Password),
-            _ => await _passwordService.UpdatePassword(Password)
+            WindowType.Add => await _passwordService.Add(Password),
+            _ => await _passwordService.Update(Password)
         };
         if (!result.Success)
         {

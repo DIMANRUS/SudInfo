@@ -1,5 +1,5 @@
 ﻿namespace SudInfo.Avalonia.Services;
-public class PrinterService
+public class PrinterService : BaseService
 {
     #region Get Methods
     public async Task<Result<Printer>> GetPrinterById(int id)
@@ -53,27 +53,6 @@ public class PrinterService
     }
     #endregion
 
-    public async Task<Result> UpdatePrinter(Printer printer)
-    {
-        try
-        {
-            using SudInfoDbContext applicationDBContext = new();
-            applicationDBContext.Printers.Update(printer);
-            await applicationDBContext.SaveChangesAsync();
-            return new()
-            {
-                Success = true
-            };
-        }
-        catch (Exception ex)
-        {
-            return new()
-            {
-                Success = false,
-                Message = ex.Message
-            };
-        }
-    }
     public async Task<Result> AddPrinter(Printer printer)
     {
         try

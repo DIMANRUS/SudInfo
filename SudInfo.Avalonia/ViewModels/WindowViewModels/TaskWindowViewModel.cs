@@ -18,7 +18,7 @@ public class TaskWindowViewModel : BaseViewModel
         if (!ValidationModel(Task))
             return;
         Task.ReminderTime = new DateTime(ReminderDate.Year, ReminderDate.Month, ReminderDate.Day, ReminderTime.Hours, ReminderTime.Minutes, 0);
-        var addTaskResult = await _taskService.AddTask(Task);
+        var addTaskResult = await _taskService.Add(Task);
         if (!addTaskResult.Success)
         {
             await _dialogService.ShowMessageBox("Ошибка", addTaskResult.Message, icon: Icon.Error);

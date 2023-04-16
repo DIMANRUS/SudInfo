@@ -1,5 +1,5 @@
 ﻿namespace SudInfo.Avalonia.Services;
-public class ComputerService
+public class ComputerService : BaseService
 {
     #region Get Methods Realization
     public async Task<Result<Computer>> GetComputerById(int id)
@@ -78,7 +78,7 @@ public class ComputerService
             {
                 computer.User = await applicationDBContext.Users.SingleOrDefaultAsync(x => x.Id == computer.User.Id);
             }
-            await applicationDBContext.Computers.AddAsync(computer);
+            await applicationDBContext.AddAsync(computer);
             await applicationDBContext.SaveChangesAsync();
             return new()
             {
@@ -99,31 +99,8 @@ public class ComputerService
         try
         {
             using SudInfoDbContext applicationDBContext = new();
-            var computer = await applicationDBContext.Computers.FirstOrDefaultAsync(x => x.Id == id);
-            if (computer == null)
-                throw new Exception("Computer not found");
-            applicationDBContext.Computers.Remove(computer);
-            await applicationDBContext.SaveChangesAsync();
-            return new()
-            {
-                Success = true
-            };
-        }
-        catch (Exception ex)
-        {
-            return new()
-            {
-                Success = false,
-                Message = ex.Message
-            };
-        }
-    }
-    public async Task<Result> UpdateComputer(Computer computer)
-    {
-        try
-        {
-            using SudInfoDbContext applicationDBContext = new();
-            applicationDBContext.Computers.Update(computer);
+            var computer = await applicationDBContext.Computers.FirstOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Computer not found");
+            applicationDBContext.Remove(computer);
             await applicationDBContext.SaveChangesAsync();
             return new()
             {

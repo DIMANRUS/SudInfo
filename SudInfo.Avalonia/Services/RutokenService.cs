@@ -1,5 +1,5 @@
 ﻿namespace SudInfo.Avalonia.Services;
-public class RutokenService
+public class RutokenService : BaseService
 {
     #region Get Methods
     public async Task<Result<Rutoken>> GetRutokenById(int id)
@@ -57,27 +57,6 @@ public class RutokenService
             if (rutoken == null)
                 throw new Exception("ЭЦП не найден");
             applicationDBContext.Rutokens.Remove(rutoken);
-            await applicationDBContext.SaveChangesAsync();
-            return new()
-            {
-                Success = true
-            };
-        }
-        catch (Exception ex)
-        {
-            return new()
-            {
-                Success = false,
-                Message = ex.Message
-            };
-        }
-    }
-    public async Task<Result> UpdateRutoken(Rutoken rutoken)
-    {
-        try
-        {
-            using SudInfoDbContext applicationDBContext = new();
-            applicationDBContext.Rutokens.Update(rutoken);
             await applicationDBContext.SaveChangesAsync();
             return new()
             {

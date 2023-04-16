@@ -1,6 +1,6 @@
 namespace SudInfo.Avalonia.Services;
 
-public class CartridgeService
+public class CartridgeService : BaseService
 {
     #region Get Methods
     public async Task<Result<Cartridge>> GetCartridge(int id)

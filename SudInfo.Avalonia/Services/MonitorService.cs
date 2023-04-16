@@ -1,5 +1,5 @@
 ﻿namespace SudInfo.Avalonia.Services;
-public class MonitorService
+public class MonitorService : BaseService
 {
     #region Get Methods Realizations
     public async Task<Result<List<Monitor>>> GetMonitors()
@@ -57,27 +57,6 @@ public class MonitorService
             if (monitor == null)
                 throw new Exception("Monitor not found");
             applicationDBContext.Monitors.Remove(monitor);
-            await applicationDBContext.SaveChangesAsync();
-            return new()
-            {
-                Success = true
-            };
-        }
-        catch (Exception ex)
-        {
-            return new()
-            {
-                Success = false,
-                Message = ex.Message
-            };
-        }
-    }
-    public async Task<Result> UpdateMonitor(Monitor monitor)
-    {
-        try
-        {
-            using SudInfoDbContext applicationDBContext = new();
-            applicationDBContext.Monitors.Update(monitor);
             await applicationDBContext.SaveChangesAsync();
             return new()
             {

@@ -1,27 +1,6 @@
 ﻿namespace SudInfo.Avalonia.Services;
-public class ServerService
+public class ServerService : BaseService
 {
-    public async Task<Result> AddServer(Server entity)
-    {
-        try
-        {
-            using SudInfoDbContext applicationDBContext = new();
-            await applicationDBContext.AddAsync(entity);
-            await applicationDBContext.SaveChangesAsync();
-            return new()
-            {
-                Success = true
-            };
-        }
-        catch (Exception ex)
-        {
-            return new()
-            {
-                Success = false,
-                Message = ex.Message
-            };
-        }
-    }
     public async Task<Result<Server>> GetServer(int id)
     {
         try
@@ -56,27 +35,6 @@ public class ServerService
             if (server == null)
                 throw new Exception("Server not found");
             applicationDBContext.Remove(server);
-            await applicationDBContext.SaveChangesAsync();
-            return new()
-            {
-                Success = true
-            };
-        }
-        catch (Exception ex)
-        {
-            return new()
-            {
-                Success = false,
-                Message = ex.Message
-            };
-        }
-    }
-    public async Task<Result> UpdateServer(Server entity)
-    {
-        try
-        {
-            using SudInfoDbContext applicationDBContext = new();
-            applicationDBContext.Update(entity);
             await applicationDBContext.SaveChangesAsync();
             return new()
             {

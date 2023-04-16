@@ -36,8 +36,8 @@ public class ContactWindowViewModel : BaseViewModel
             return;
         Result result = _windowType switch
         {
-            WindowType.Add => await _contactService.AddContact(Contact),
-            _ => await _contactService.UpdateContact(Contact)
+            WindowType.Add => await _contactService.Add(Contact),
+            _ => await _contactService.Update(Contact)
         };
         if (!result.Success)
         {

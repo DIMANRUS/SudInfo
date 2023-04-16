@@ -78,7 +78,7 @@ public class MonitorWindowViewModel : BaseViewModel
         Result monitorResult = _windowType switch
         {
             WindowType.Add => await _monitorService.AddMonitor(Monitor),
-            _ => await _monitorService.UpdateMonitor(Monitor)
+            _ => await _monitorService.Update(Monitor)
         };
         if (!monitorResult.Success)
         {

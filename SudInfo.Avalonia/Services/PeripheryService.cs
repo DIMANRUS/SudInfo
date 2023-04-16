@@ -1,5 +1,5 @@
 ﻿namespace SudInfo.Avalonia.Services;
-public class PeripheryService
+public class PeripheryService : BaseService
 {
     #region Get Methods Realization
     public async Task<Result<Periphery>> GetPeripheryById(int id)
@@ -80,27 +80,6 @@ public class PeripheryService
             using SudInfoDbContext applicationDBContext = new();
             var periphery = await applicationDBContext.Peripheries.FirstOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Переферия не найдена");
             applicationDBContext.Peripheries.Remove(periphery);
-            await applicationDBContext.SaveChangesAsync();
-            return new()
-            {
-                Success = true
-            };
-        }
-        catch (Exception ex)
-        {
-            return new()
-            {
-                Success = false,
-                Message = ex.Message
-            };
-        }
-    }
-    public async Task<Result> UpdatePeriphery(Periphery periphery)
-    {
-        try
-        {
-            using SudInfoDbContext applicationDBContext = new();
-            applicationDBContext.Peripheries.Update(periphery);
             await applicationDBContext.SaveChangesAsync();
             return new()
             {

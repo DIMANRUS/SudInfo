@@ -1,5 +1,5 @@
 ﻿namespace SudInfo.Avalonia.Services;
-public class UserService
+public class UserService : BaseService
 {
     #region Get Methods Realization
     public async Task<Result<User>> GetUserById(int userId)
@@ -90,48 +90,6 @@ public class UserService
             if (user == null)
                 throw new Exception("User not found");
             applicationDBContext.Remove(user);
-            await applicationDBContext.SaveChangesAsync();
-            return new()
-            {
-                Success = true
-            };
-        }
-        catch (Exception ex)
-        {
-            return new()
-            {
-                Success = false,
-                Message = ex.Message
-            };
-        }
-    }
-    public async Task<Result> UpdateUser(User user)
-    {
-        try
-        {
-            using SudInfoDbContext applicationDBContext = new();
-            applicationDBContext.Update(user);
-            await applicationDBContext.SaveChangesAsync();
-            return new()
-            {
-                Success = true
-            };
-        }
-        catch (Exception ex)
-        {
-            return new()
-            {
-                Success = false,
-                Message = ex.Message
-            };
-        }
-    }
-    public async Task<Result> AddUser(User user)
-    {
-        try
-        {
-            using SudInfoDbContext applicationDBContext = new();
-            await applicationDBContext.AddAsync(user);
             await applicationDBContext.SaveChangesAsync();
             return new()
             {

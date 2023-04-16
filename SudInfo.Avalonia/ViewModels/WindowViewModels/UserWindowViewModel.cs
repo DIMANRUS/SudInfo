@@ -53,8 +53,8 @@ public class UserWindowViewModel : BaseViewModel
             return;
         Result userResult = _windowType switch
         {
-            WindowType.Add => await _usersService.AddUser(User),
-            _ => await _usersService.UpdateUser(User)
+            WindowType.Add => await _usersService.Add(User),
+            _ => await _usersService.Update(User)
         };
         if (!userResult.Success)
         {

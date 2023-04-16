@@ -46,7 +46,7 @@ public class PrinterWindowViewModel : BaseViewModel
         Result printerResult = _windowType switch
         {
             WindowType.Add => await _printersService.AddPrinter(Printer),
-            _ => await _printersService.UpdatePrinter(Printer)
+            _ => await _printersService.Update(Printer)
         };
         if (!printerResult.Success)
         {

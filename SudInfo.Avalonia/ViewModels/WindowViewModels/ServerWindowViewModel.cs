@@ -67,8 +67,8 @@ public class ServerWindowViewModel : BaseViewModel
             return;
         Result serverResult = _windowType switch
         {
-            WindowType.Add => await _serverService.AddServer(Server),
-            _ => await _serverService.UpdateServer(Server)
+            WindowType.Add => await _serverService.Add(Server),
+            _ => await _serverService.Update(Server)
         };
         if (!serverResult.Success)
         {

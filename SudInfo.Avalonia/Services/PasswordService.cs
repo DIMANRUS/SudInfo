@@ -1,5 +1,5 @@
 ﻿namespace SudInfo.Avalonia.Services;
-public class PasswordService
+public class PasswordService : BaseService
 {
     public async Task<Result<IReadOnlyList<PasswordEntity>>> GetPasswords()
     {
@@ -55,46 +55,6 @@ public class PasswordService
             {
                 Success = true,
                 Object = server
-            };
-        }
-        catch (Exception ex)
-        {
-            return new()
-            {
-                Message = ex.Message
-            };
-        }
-    }
-    public async Task<Result> UpdatePassword(PasswordEntity entity)
-    {
-        try
-        {
-            using SudInfoDbContext applicationDBContext = new();
-            applicationDBContext.Update(entity);
-            await applicationDBContext.SaveChangesAsync();
-            return new()
-            {
-                Success = true
-            };
-        }
-        catch (Exception ex)
-        {
-            return new()
-            {
-                Message = ex.Message
-            };
-        }
-    }
-    public async Task<Result> AddPassword(PasswordEntity entity)
-    {
-        try
-        {
-            using SudInfoDbContext applicationDBContext = new();
-            await applicationDBContext.AddAsync(entity);
-            await applicationDBContext.SaveChangesAsync();
-            return new()
-            {
-                Success = true
             };
         }
         catch (Exception ex)

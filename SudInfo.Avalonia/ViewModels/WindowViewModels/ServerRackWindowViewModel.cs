@@ -58,8 +58,8 @@ public class ServerRackWindowViewModel : BaseViewModel
         }
         Result serverRackResult = _windowType switch
         {
-            WindowType.Add => await _serverRackService.AddServerRack(ServerRack),
-            _ => await _serverRackService.UpdateServerRack(ServerRack)
+            WindowType.Add => await _serverRackService.Add(ServerRack),
+            _ => await _serverRackService.Update(ServerRack)
         };
         if (!serverRackResult.Success)
         {

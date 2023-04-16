@@ -56,7 +56,7 @@ public class RutokenWindowViewModel : BaseViewModel
         Result rutokenResult = _windowType switch
         {
             WindowType.Add => await _rutokenService.AddRutoken(Rutoken),
-            _ => await _rutokenService.UpdateRutoken(Rutoken)
+            _ => await _rutokenService.Update(Rutoken)
         };
         if (!rutokenResult.Success)
         {

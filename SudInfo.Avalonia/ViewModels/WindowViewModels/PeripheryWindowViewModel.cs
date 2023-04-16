@@ -62,7 +62,7 @@ public class PeripheryWindowViewModel : BaseViewModel
         Result computerResult = _windowType switch
         {
             WindowType.Add => await _peripheryService.AddPeriphery(Periphery),
-            _ => await _peripheryService.UpdatePeriphery(Periphery)
+            _ => await _peripheryService.Update(Periphery)
         };
         if (!computerResult.Success)
         {

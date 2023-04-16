@@ -1,27 +1,6 @@
 ﻿namespace SudInfo.Avalonia.Services;
-public class ServerRackService
+public class ServerRackService : BaseService
 {
-    public async Task<Result> AddServerRack(ServerRack entity)
-    {
-        try
-        {
-            using SudInfoDbContext applicationDBContext = new();
-            await applicationDBContext.AddAsync(entity);
-            await applicationDBContext.SaveChangesAsync();
-            return new()
-            {
-                Success = true
-            };
-        }
-        catch (Exception ex)
-        {
-            return new()
-            {
-                Success = false,
-                Message = ex.Message
-            };
-        }
-    }
     public async Task<Result<IReadOnlyList<ServerRack>>> GetServerRacksWithServers()
     {
         try
@@ -97,27 +76,6 @@ public class ServerRackService
             using SudInfoDbContext applicationDBContext = new();
             var serverRack = await applicationDBContext.ServerRacks.SingleOrDefaultAsync(x => x.Id == id) ?? throw new Exception("ServerRack not found");
             applicationDBContext.Remove(serverRack);
-            await applicationDBContext.SaveChangesAsync();
-            return new()
-            {
-                Success = true
-            };
-        }
-        catch (Exception ex)
-        {
-            return new()
-            {
-                Success = false,
-                Message = ex.Message
-            };
-        }
-    }
-    public async Task<Result> UpdateServerRack(ServerRack entity)
-    {
-        try
-        {
-            using SudInfoDbContext applicationDBContext = new();
-            applicationDBContext.Update(entity);
             await applicationDBContext.SaveChangesAsync();
             return new()
             {

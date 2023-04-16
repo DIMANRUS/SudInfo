@@ -1,5 +1,5 @@
 ﻿namespace SudInfo.Avalonia.Services;
-public class ContactService
+public class ContactService : BaseService
 {
     public async Task<Result<IReadOnlyList<Contact>>> GetContacts()
     {
@@ -54,46 +54,6 @@ public class ContactService
             {
                 Success = true,
                 Object = server
-            };
-        }
-        catch (Exception ex)
-        {
-            return new()
-            {
-                Message = ex.Message
-            };
-        }
-    }
-    public async Task<Result> UpdateContact(Contact entity)
-    {
-        try
-        {
-            using SudInfoDbContext applicationDBContext = new();
-            applicationDBContext.Update(entity);
-            await applicationDBContext.SaveChangesAsync();
-            return new()
-            {
-                Success = true
-            };
-        }
-        catch (Exception ex)
-        {
-            return new()
-            {
-                Message = ex.Message
-            };
-        }
-    }
-    public async Task<Result> AddContact(Contact entity)
-    {
-        try
-        {
-            using SudInfoDbContext applicationDBContext = new();
-            await applicationDBContext.AddAsync(entity);
-            await applicationDBContext.SaveChangesAsync();
-            return new()
-            {
-                Success = true
             };
         }
         catch (Exception ex)

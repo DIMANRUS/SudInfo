@@ -61,7 +61,7 @@ public class ComputerWindowViewModel : BaseViewModel
         Result computerResult = _windowType switch
         {
             WindowType.Add => await _computerService.AddComputer(Computer),
-            _ => await _computerService.UpdateComputer(Computer)
+            _ => await _computerService.Update(Computer)
         };
         if (!computerResult.Success)
         {
