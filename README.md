@@ -8,6 +8,6 @@
 * SqlLite
 ***
 ## Поддерживаемые платформы
-* Windows 7/8/10
+* Windows 7/8/10/11
 * Linux
 * Mac OS
