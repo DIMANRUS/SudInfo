@@ -6,3 +6,8 @@
 * .NET 7, C#
 * EF Core
 * SqlLite
+***
+## Поддерживаемые платформы
+* Windows 7/8/10/11
+* Linux
+* Mac OS
