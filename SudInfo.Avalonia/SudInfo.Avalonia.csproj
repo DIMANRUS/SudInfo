@@ -8,6 +8,14 @@
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <ApplicationIcon>logo.ico</ApplicationIcon>
     <UserSecretsId>763ce0ec-33ba-4d5c-8763-c5bdb43d3112</UserSecretsId>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Company>DIMANRUS</Company>
+    <Product>SudInfo</Product>
+    <Copyright>DIMANRUS</Copyright>
+    <PackageProjectUrl>https://github.com/DIMANRUS/SudInfo</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/DIMANRUS/SudInfo</RepositoryUrl>
+    <PackageTags>sudinfo,dimanrus</PackageTags>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <WarningLevel>4</WarningLevel>
@@ -88,6 +96,12 @@
   </ItemGroup>
   <ItemGroup>
     <UpToDateCheckInput Remove="Views\Windows\PrinterWindow.axaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SudInfo.EfDataAccessLibrary\SudInfo.EfDataAccessLibrary.csproj" />
