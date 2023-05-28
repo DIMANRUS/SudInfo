@@ -86,9 +86,7 @@ public class UserService : BaseService
         try
         {
             using SudInfoDbContext applicationDBContext = new();
-            var user = await applicationDBContext.Users.SingleOrDefaultAsync(x => x.Id == userId);
-            if (user == null)
-                throw new Exception("User not found");
+            var user = await applicationDBContext.Users.SingleOrDefaultAsync(x => x.Id == userId) ?? throw new Exception("User not found");
             applicationDBContext.Remove(user);
             await applicationDBContext.SaveChangesAsync();
             return new()

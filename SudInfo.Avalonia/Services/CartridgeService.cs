@@ -46,7 +46,6 @@ public class CartridgeService : BaseService
         }
     }
     #endregion
-
     public async Task<Result> Add(string cartridgeName)
     {
         try
@@ -72,7 +71,6 @@ public class CartridgeService : BaseService
             };
         }
     }
-
     public async Task<Result> Remove(int id)
     {
         try

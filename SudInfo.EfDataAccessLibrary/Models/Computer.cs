@@ -1,5 +1,4 @@
-﻿
-namespace SudInfo.EfDataAccessLibrary.Models;
+﻿namespace SudInfo.EfDataAccessLibrary.Models;
 public class Computer : BaseModel
 {
     [XLColumn(Header = "IP адрес")]
