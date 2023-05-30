@@ -21,7 +21,7 @@
     <TextBox Watermark="Поиск по ФИО, названию и инвентарному номеру"
              Margin="5"
              UseFloatingWatermark="False"
-             Text="{Binding SearchText}"
+             SelectedText="{Binding SearchText}"
              MaxLength="50">
       <i:Interaction.Behaviors>
         <ia:EventTriggerBehavior EventName="KeyUp">

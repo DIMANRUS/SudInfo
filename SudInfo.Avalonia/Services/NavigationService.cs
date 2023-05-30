@@ -89,24 +89,21 @@ public class NavigationService
     public async Task ShowPasswordWindowDialog(WindowType windowType, EventHandler closedEvent = null, int? id = null)
     {
         PasswordWindow window = new(windowType, id);
-        if (window != null)
-            window.Closed += closedEvent;
+        window.Closed += closedEvent;
         _dialogService.SetCurrentWindow(window);
         await window.ShowDialog(_mainWindow);
     }
     public async Task ShowAppWindowDialog(WindowType windowType, EventHandler closedEvent = null, int? id = null)
     {
         AppWindow window = new(windowType, id);
-        if (window != null)
-            window.Closed += closedEvent;
+        window.Closed += closedEvent;
         _dialogService.SetCurrentWindow(window);
         await window.ShowDialog(_mainWindow);
     }
     public async Task ShowContactWindowDialog(WindowType windowType, EventHandler closedEvent = null, int? id = null)
     {
         ContactWindow window = new(windowType, id);
-        if (window != null)
-            window.Closed += closedEvent;
+        window.Closed += closedEvent;
         _dialogService.SetCurrentWindow(window);
         await window.ShowDialog(_mainWindow);
     }

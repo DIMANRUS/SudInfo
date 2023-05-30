@@ -36,7 +36,7 @@ public class WorkplacesPageViewModel : BaseRoutableViewModel
     public void SearchBoxKeyUp()
     {
         string searchTextLower = SearchText.ToLower();
-        if (string.IsNullOrEmpty(SearchText))
+        if (string.IsNullOrWhiteSpace(SearchText))
         {
             Users = new(UsersFromDatabase);
             return;
