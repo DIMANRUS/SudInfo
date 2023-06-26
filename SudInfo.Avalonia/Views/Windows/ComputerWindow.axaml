@@ -21,7 +21,7 @@
   <StackPanel Margin="10"
               Spacing="5">
     <TextBox Text="{Binding Computer.Name}"
-             MaxLength="50"
+             MaxLength="100"
              Watermark="Название"/>
     <TextBox Text="{Binding Computer.Ip}"
              MaxLength="15"
@@ -31,10 +31,10 @@
       Items="{Binding OsesList}"
       SelectedItem="{Binding Computer.OS}"/>
     <TextBox Text="{Binding Computer.CPU}"
-             MaxLength="15"
+             MaxLength="100"
              Watermark="CPU"/>
     <TextBox Text="{Binding Computer.GPU}"
-             MaxLength="15"
+             MaxLength="100"
              Watermark="GPU (Необязательно)"/>
     <TextBox Text="{Binding Computer.ROM}"
              MaxLength="5"
@@ -46,10 +46,10 @@
              MaxLength="4"
              Text="{Binding Computer.YearRelease}"/>
     <TextBox Text="{Binding Computer.SerialNumber}"
-             MaxLength="20"
+             MaxLength="50"
              Watermark="Серийный номер"/>
     <TextBox Text="{Binding Computer.InventarNumber}"
-             MaxLength="20"
+             MaxLength="50"
              Watermark="Инвентарный номер"/>
     <TextBox Text="{Binding Computer.NumberCabinet}"
              MaxLength="4"

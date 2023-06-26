@@ -17,20 +17,17 @@
               Spacing="5"
               Width="280">
     <TextBox
-      MaxLength="50"
+      MaxLength="100"
       Text="{Binding Contact.Name}"
       Watermark="Имя"/>
     <TextBox Watermark="Номер телефона"
              MaxLength="11"
              Text="{Binding Contact.Phone}"/>
-    <TextBox Watermark="Номер телефона"
-             MaxLength="11"
-             Text="{Binding Contact.Phone}"/>
     <TextBox Watermark="Email"
-             MaxLength="50"
+             MaxLength="100"
              Text="{Binding Contact.Email}"/>
     <TextBox Watermark="Описание"
-             MaxLength="200"
+             MaxLength="500"
              TextWrapping="Wrap"
              Height="130"
              Text="{Binding Contact.Description}"/>

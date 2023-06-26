@@ -17,7 +17,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
                     Version = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
@@ -45,10 +45,10 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
                     Phone = table.Column<string>(type: "TEXT", maxLength: 11, nullable: true),
-                    Email = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
-                    Description = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false)
+                    Email = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true),
+                    Description = table.Column<string>(type: "TEXT", maxLength: 500, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -62,7 +62,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Description = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
-                    Link = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
+                    Link = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true),
                     Login = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
                     Password = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false)
                 },
@@ -78,7 +78,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Position = table.Column<int>(type: "INTEGER", nullable: false),
-                    InventarNumber = table.Column<string>(type: "TEXT", maxLength: 20, nullable: true)
+                    InventarNumber = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -124,9 +124,9 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
-                    SerialNumber = table.Column<string>(type: "TEXT", maxLength: 20, nullable: true),
-                    InventarNumber = table.Column<string>(type: "TEXT", maxLength: 20, nullable: true),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
+                    SerialNumber = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
+                    InventarNumber = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
                     PosiitionInServerRack = table.Column<int>(type: "INTEGER", nullable: true),
                     IpAddress = table.Column<string>(type: "TEXT", maxLength: 20, nullable: true),
                     ServerRackId = table.Column<int>(type: "INTEGER", nullable: true),
@@ -149,15 +149,15 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Ip = table.Column<string>(type: "TEXT", maxLength: 15, nullable: false),
-                    Name = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
                     OS = table.Column<int>(type: "INTEGER", nullable: false),
-                    CPU = table.Column<string>(type: "TEXT", maxLength: 40, nullable: false),
-                    GPU = table.Column<string>(type: "TEXT", maxLength: 40, nullable: true),
+                    CPU = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
+                    GPU = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true),
                     ROM = table.Column<int>(type: "INTEGER", nullable: false),
                     RAM = table.Column<int>(type: "INTEGER", nullable: false),
                     NumberCabinet = table.Column<int>(type: "INTEGER", nullable: false),
-                    SerialNumber = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
-                    InventarNumber = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
+                    SerialNumber = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    InventarNumber = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
                     YearRelease = table.Column<int>(type: "INTEGER", nullable: false),
                     UserId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
@@ -221,12 +221,12 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
                     ScreenSize = table.Column<int>(type: "INTEGER", nullable: false),
                     ScreenResolutionWidth = table.Column<int>(type: "INTEGER", nullable: false),
                     ScreenResolutionHeight = table.Column<int>(type: "INTEGER", nullable: false),
-                    SerialNumber = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
-                    InventarNumber = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
+                    SerialNumber = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    InventarNumber = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
                     YearRelease = table.Column<int>(type: "INTEGER", nullable: false),
                     ComputerId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
@@ -246,10 +246,10 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
                     Type = table.Column<int>(type: "INTEGER", nullable: false),
-                    SerialNumber = table.Column<string>(type: "TEXT", maxLength: 30, nullable: false),
-                    InventarNumber = table.Column<string>(type: "TEXT", maxLength: 30, nullable: false),
+                    SerialNumber = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    InventarNumber = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
                     ComputerId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
@@ -268,13 +268,13 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", maxLength: 40, nullable: false),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
                     Type = table.Column<int>(type: "INTEGER", nullable: false),
                     Ip = table.Column<string>(type: "TEXT", maxLength: 12, nullable: true),
                     NumberCabinet = table.Column<int>(type: "INTEGER", nullable: false),
                     YearRelease = table.Column<int>(type: "INTEGER", nullable: false),
-                    SerialNumber = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
-                    InventarNumber = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
+                    SerialNumber = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    InventarNumber = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
                     ComputerId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>

@@ -3,7 +3,7 @@ public class Periphery : BaseModel
 {
     [XLColumn(Header = "Наименование")]
     [Required(ErrorMessage = Const.FieldRequired)]
-    [StringLength(50, MinimumLength = 2, ErrorMessage = Const.LengthMore2)]
+    [StringLength(100, MinimumLength = 2, ErrorMessage = Const.LengthMore2)]
     public string? Name { get; set; }
     
     [XLColumn(Header = "Тип")]
@@ -11,12 +11,12 @@ public class Periphery : BaseModel
     
     [XLColumn(Header = "Серийный номер")]
     [Required(ErrorMessage = Const.FieldRequired)]
-    [StringLength(30)]
+    [StringLength(50)]
     public string? SerialNumber { get; set; }
     
     [XLColumn(Header = "Инвентарный номер")]
     [Required(ErrorMessage = Const.FieldRequired)]
-    [StringLength(30)]
+    [StringLength(50)]
     public string? InventarNumber { get; set; }
     
     public Computer? Computer { get; set; }

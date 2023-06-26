@@ -15,7 +15,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "7.0.4");
+            modelBuilder.HasAnnotation("ProductVersion", "7.0.5");
 
             modelBuilder.Entity("AppEntityComputer", b =>
                 {
@@ -40,7 +40,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(20)
+                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Version")
@@ -83,16 +83,16 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
 
                     b.Property<string>("CPU")
                         .IsRequired()
-                        .HasMaxLength(40)
+                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("GPU")
-                        .HasMaxLength(40)
+                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("InventarNumber")
                         .IsRequired()
-                        .HasMaxLength(20)
+                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Ip")
@@ -102,7 +102,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
+                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<int>("NumberCabinet")
@@ -119,7 +119,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
 
                     b.Property<string>("SerialNumber")
                         .IsRequired()
-                        .HasMaxLength(20)
+                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("UserId")
@@ -143,16 +143,16 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(200)
+                        .HasMaxLength(500)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
-                        .HasMaxLength(50)
+                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
+                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Phone")
@@ -175,12 +175,12 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
 
                     b.Property<string>("InventarNumber")
                         .IsRequired()
-                        .HasMaxLength(20)
+                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
+                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<int>("ScreenResolutionHeight")
@@ -194,7 +194,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
 
                     b.Property<string>("SerialNumber")
                         .IsRequired()
-                        .HasMaxLength(20)
+                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.Property<int>("YearRelease")
@@ -219,7 +219,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Link")
-                        .HasMaxLength(50)
+                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Login")
@@ -247,17 +247,17 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
 
                     b.Property<string>("InventarNumber")
                         .IsRequired()
-                        .HasMaxLength(30)
+                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
+                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("SerialNumber")
                         .IsRequired()
-                        .HasMaxLength(30)
+                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Type")
@@ -281,7 +281,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
 
                     b.Property<string>("InventarNumber")
                         .IsRequired()
-                        .HasMaxLength(20)
+                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Ip")
@@ -290,7 +290,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(40)
+                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<int>("NumberCabinet")
@@ -298,7 +298,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
 
                     b.Property<string>("SerialNumber")
                         .IsRequired()
-                        .HasMaxLength(20)
+                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Type")
@@ -344,7 +344,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("InventarNumber")
-                        .HasMaxLength(20)
+                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("IpAddress")
@@ -353,7 +353,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(20)
+                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<int>("OperatingSystem")
@@ -363,7 +363,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("SerialNumber")
-                        .HasMaxLength(20)
+                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("ServerRackId")
@@ -383,7 +383,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("InventarNumber")
-                        .HasMaxLength(20)
+                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Position")

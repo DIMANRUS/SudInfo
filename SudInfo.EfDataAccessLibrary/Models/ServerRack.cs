@@ -7,7 +7,7 @@ public class ServerRack : BaseModel
     public int Position { get; set; } = 1;
     
     [XLColumn(Header = "Инвентарный номер")]
-    [StringLength(20)]
+    [StringLength(50)]
     public string? InventarNumber { get; set; }
     public List<Server> Servers { get; set; } = new();
 }

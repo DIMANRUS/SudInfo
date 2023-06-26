@@ -3,7 +3,7 @@ public class Contact : BaseModel
 {
     [XLColumn(Header = "Наименование контакта")]
     [Required(ErrorMessage = Const.FieldRequired)]
-    [StringLength(50, ErrorMessage = Const.LengthMore2, MinimumLength = 2)]
+    [StringLength(100, ErrorMessage = Const.LengthMore2, MinimumLength = 2)]
     public string? Name { get; set; }
 
     [XLColumn(Header = "Номер телефона")]
@@ -12,11 +12,11 @@ public class Contact : BaseModel
     public string? Phone { get; set; }
 
     [XLColumn(Header = "Электронная почта")]
-    [StringLength(50, MinimumLength = 2, ErrorMessage = Const.LengthMore2)]
+    [StringLength(100, MinimumLength = 2, ErrorMessage = Const.LengthMore2)]
     public string? Email { get; set; }
 
     [XLColumn(Header = "Описание")]
     [Required(ErrorMessage = Const.FieldRequired)]
-    [StringLength(200, ErrorMessage = Const.LengthMore2, MinimumLength = 2)]
+    [StringLength(500, ErrorMessage = Const.LengthMore2, MinimumLength = 2)]
     public string? Description { get; set; }
 }

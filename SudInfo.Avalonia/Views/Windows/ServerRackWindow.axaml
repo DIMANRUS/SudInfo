@@ -14,7 +14,7 @@
   <StackPanel Margin="10"
               Spacing="5">
     <TextBox Watermark="Серийный номер"
-             MaxLength="20"
+             MaxLength="50"
              Text="{Binding ServerRack.InventarNumber}"/>
     <Button Content="{Binding SaveButtonText}"
             Command="{Binding SaveServerRack}"

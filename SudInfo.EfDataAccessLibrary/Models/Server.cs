@@ -3,15 +3,15 @@ public class Server : BaseModel
 {
     [XLColumn(Header = "Название")]
     [Required(ErrorMessage = Const.FieldRequired)]
-    [StringLength(20, MinimumLength = 2, ErrorMessage = Const.LengthMore2)]
+    [StringLength(100, MinimumLength = 2, ErrorMessage = Const.LengthMore2)]
     public string? Name { get; set; }
     
     [XLColumn(Header = "Серийный номер")]
-    [StringLength(20, MinimumLength = 2, ErrorMessage = Const.LengthMore2)]
+    [StringLength(50, MinimumLength = 2, ErrorMessage = Const.LengthMore2)]
     public string? SerialNumber { get; set; }
     
     [XLColumn(Header = "Инвентарный номер")]
-    [StringLength(20, MinimumLength = 2, ErrorMessage = Const.LengthMore2)]
+    [StringLength(50, MinimumLength = 2, ErrorMessage = Const.LengthMore2)]
     public string? InventarNumber { get; set; }
     
     [XLColumn(Ignore = true)]

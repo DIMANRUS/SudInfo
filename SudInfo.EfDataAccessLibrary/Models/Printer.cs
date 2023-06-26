@@ -3,7 +3,7 @@ public class Printer : BaseModel
 {
     [XLColumn(Header = "Наименование")]
     [Required(ErrorMessage = Const.FieldRequired)]
-    [StringLength(40)]
+    [StringLength(100)]
     public string? Name { get; set; }
     
     [XLColumn(Header = "Тип")]
@@ -18,16 +18,17 @@ public class Printer : BaseModel
     public int NumberCabinet { get; set; }
     
     [XLColumn(Header = "Год производства")]
+    [RegularExpression(Const.NumberGreaterThen0, ErrorMessage = Const.NumberCannotBeGreaterThen0Message)]
     public int YearRelease { get; set; }
     
     [XLColumn(Header = "Серийный номер")]
     [Required(ErrorMessage = Const.FieldRequired)]
-    [StringLength(20)]
+    [StringLength(50)]
     public string? SerialNumber { get; set; }
     
     [XLColumn(Header = "Инвентарный номер")]
     [Required(ErrorMessage = Const.FieldRequired)]
-    [StringLength(20)]
+    [StringLength(50)]
     public string? InventarNumber { get; set; }
     
     public Computer? Computer { get; set; }

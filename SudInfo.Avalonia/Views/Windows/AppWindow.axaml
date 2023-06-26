@@ -2,7 +2,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d"
+        d:DesignWidth="800"
+        d:DesignHeight="450"
         x:Class="SudInfo.Avalonia.Views.Windows.AppWindow"
         Title="Приложение"
         xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.WindowViewModels;assembly=SudInfo.Avalonia"
@@ -14,33 +16,35 @@
         CanResize="False"
         Width="600"
         Height="400">
-        <StackPanel Margin="10"
-                    Spacing="5">
-                <TextBox Text="{Binding AppEntity.Name}"
-                         Watermark="Название"/>
-                <TextBox Text="{Binding AppEntity.Version}"
-                         Watermark="Версия"/>
-                <TextBlock Text="Компьютеры"/>
-                <ListBox Items="{Binding Computers}" 
-                         SelectedItems="{Binding AppEntity.Computers}" 
-                         SelectionMode="Toggle"
-                         Height="200">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate DataType="models:Computer">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Name}"/>
-                                <TextBlock Text=" | "/>
-                                <TextBlock Text="{Binding User.FIO}"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-                <Button Content="{Binding SaveButtonText}"
-                        Command="{Binding SaveApp}"
-                        Cursor="Hand"
-                        FontWeight="Bold"
-                        HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Center"
-                        IsVisible="{Binding ButtonIsVisible}"/>
-                </StackPanel>
+  <StackPanel Margin="10"
+              Spacing="5">
+    <TextBox Text="{Binding AppEntity.Name}"
+             Watermark="Название"
+             MaxLength="100"/>
+    <TextBox Text="{Binding AppEntity.Version}"
+             Watermark="Версия"
+             MaxLength="20"/>
+    <TextBlock Text="Компьютеры"/>
+    <ListBox Items="{Binding Computers}"
+             SelectedItems="{Binding AppEntity.Computers}"
+             SelectionMode="Toggle"
+             Height="200">
+      <ListBox.ItemTemplate>
+        <DataTemplate DataType="models:Computer">
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding Name}"/>
+            <TextBlock Text=" | "/>
+            <TextBlock Text="{Binding User.FIO}"/>
+          </StackPanel>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+    <Button Content="{Binding SaveButtonText}"
+            Command="{Binding SaveApp}"
+            Cursor="Hand"
+            FontWeight="Bold"
+            HorizontalAlignment="Stretch"
+            HorizontalContentAlignment="Center"
+            IsVisible="{Binding ButtonIsVisible}"/>
+  </StackPanel>
 </Window>

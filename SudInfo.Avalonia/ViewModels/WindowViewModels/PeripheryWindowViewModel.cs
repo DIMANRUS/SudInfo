@@ -1,4 +1,5 @@
 ﻿namespace SudInfo.Avalonia.ViewModels.WindowViewModels;
+
 public class PeripheryWindowViewModel : BaseViewModel
 {
     #region Services
@@ -55,7 +56,7 @@ public class PeripheryWindowViewModel : BaseViewModel
     #region Public Methods
     public async Task SavePeriphery()
     {
-        if (ValidationModel(Periphery))
+        if (!ValidationModel(Periphery))
             return;
         if (!IsComputer)
             Periphery.Computer = null;

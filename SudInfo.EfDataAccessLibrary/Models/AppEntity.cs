@@ -3,7 +3,7 @@ public class AppEntity : BaseModel
 {
     [XLColumn(Header = "Название")]
     [Required(ErrorMessage = Const.FieldRequired)]
-    [StringLength(20, ErrorMessage = Const.LengthMore2, MinimumLength = 2)]
+    [StringLength(50, ErrorMessage = Const.LengthMore2, MinimumLength = 2)]
     public string? Name { get; set; }
 
     [XLColumn(Header = "Версия")]

@@ -7,7 +7,7 @@ public class PasswordEntity : BaseModel
     public string? Description { get; set; }
     
     [XLColumn(Header = "Ссылка на сайт")]
-    [StringLength(50, MinimumLength = 2, ErrorMessage = Const.LengthMore2)]
+    [StringLength(100, MinimumLength = 2, ErrorMessage = Const.LengthMore2)]
     public string? Link { get; set; }
     
     [XLColumn(Header = "Логин")]

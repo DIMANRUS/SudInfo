@@ -9,7 +9,7 @@ public class Computer : BaseModel
     
     [XLColumn(Header = "Наименование")]
     [Required(ErrorMessage = Const.FieldRequired)]
-    [StringLength(50,MinimumLength = 2, ErrorMessage = Const.LengthMore2)]
+    [StringLength(100,MinimumLength = 2, ErrorMessage = Const.LengthMore2)]
     public string? Name { get; set; }
     
     [XLColumn(Header = "Операционная система")]
@@ -17,30 +17,33 @@ public class Computer : BaseModel
     
     [XLColumn(Header = "Процессор")]
     [Required(ErrorMessage = Const.FieldRequired)]
-    [StringLength(40, MinimumLength = 2, ErrorMessage = Const.LengthMore2)]
+    [StringLength(100, MinimumLength = 2, ErrorMessage = Const.LengthMore2)]
     public string? CPU { get; set; }
     
     [XLColumn(Header = "Видеокарта")]
-    [StringLength(40, MinimumLength = 2, ErrorMessage = Const.LengthMore2)]
+    [StringLength(100, MinimumLength = 2, ErrorMessage = Const.LengthMore2)]
     public string? GPU { get; set; }
-    
+
     [XLColumn(Header = "Диск")]
-    public int ROM { get; set; }
-    
+    [RegularExpression(Const.NumberGreaterThen0, ErrorMessage = Const.NumberCannotBeGreaterThen0Message)]
+    public int ROM { get; set; } = 120;
+
     [XLColumn(Header = "Оперативная память")]
-    public int RAM { get; set; }
-    
+    [RegularExpression(Const.NumberGreaterThen0, ErrorMessage = Const.NumberCannotBeGreaterThen0Message)]
+    public int RAM { get; set; } = 1;
+
     [XLColumn(Ignore = true)]
-    public int NumberCabinet { get; set; }
+    [RegularExpression(Const.NumberGreaterThen0, ErrorMessage = Const.NumberCannotBeGreaterThen0Message)]
+    public int NumberCabinet { get; set; } = 1;
     
     [XLColumn(Header = "Серийный номер")]
     [Required(ErrorMessage = Const.FieldRequired)]
-    [StringLength(20)]
+    [StringLength(50)]
     public string? SerialNumber { get; set; }
     
     [XLColumn(Header = "Инвентарный номер")]
     [Required(ErrorMessage = Const.FieldRequired)]
-    [StringLength(20)]
+    [StringLength(50)]
     public string? InventarNumber { get; set; }
     
     [XLColumn(Header = "Год производства")]
