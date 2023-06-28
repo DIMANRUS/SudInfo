@@ -2,39 +2,34 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="450"
              x:Class="SudInfo.Avalonia.Views.Pages.CartridgesPage"
              xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.PageViewModels"
              xmlns:i="using:Avalonia.Xaml.Interactivity"
              xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
              xmlns:models="using:SudInfo.EfDataAccessLibrary.Models"
-             x:DataType="viewModels:CartridgesPageViewModel"
-             Name="Root">
+             x:DataType="viewModels:CartridgesPageViewModel">
   <i:Interaction.Behaviors>
     <ia:EventTriggerBehavior EventName="Initialized">
       <ia:InvokeCommandAction Command="{Binding LoadCartridges}"/>
     </ia:EventTriggerBehavior>
   </i:Interaction.Behaviors>
-  <UserControl.Styles>
-    <Style Selector="Image">
-      <Setter Property="Cursor"
-              Value="Hand"/>
-      <Setter Property="Height"
-              Value="30"/>
-    </Style>
-  </UserControl.Styles>
-  <Grid RowDefinitions="40,*"
-        ColumnDefinitions="140, *, 40, 40">
+  <Grid RowDefinitions="80,*"
+        ColumnDefinitions="140, *, 40, 40,40">
     <TextBlock Text="Картриджи"
                Margin="10"
                FontWeight="Bold"
                FontSize="20"/>
     <TextBox Watermark="Название"
              Grid.Column="1"
-             Margin="10 5 10 5"
+             Margin="10 0 10 0"
              UseFloatingWatermark="False"
-             Text="{Binding CartridgeName}"
-             MaxLength="50"/>
+             Text="{Binding NewCartridge.Name}"
+             Height="60"
+             MaxLength="50"
+             VerticalAlignment="Center"/>
     <Image Source="/Assets/Images/add.png"
            Grid.Column="2">
       <i:Interaction.Behaviors>
@@ -44,16 +39,25 @@
       </i:Interaction.Behaviors>
     </Image>
     <Image Source="/Assets/Images/save.png"
-       Grid.Column="3">
+           Grid.Column="3">
       <i:Interaction.Behaviors>
         <ia:EventTriggerBehavior EventName="Tapped">
           <ia:InvokeCommandAction Command="{Binding SaveCartridges}"/>
         </ia:EventTriggerBehavior>
       </i:Interaction.Behaviors>
     </Image>
-    <DataGrid Items="{Binding Cartridges, Mode=TwoWay}"
+    <Image Source="/Assets/Images/remove.png"
+           Grid.Column="4">
+      <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="Tapped">
+          <ia:InvokeCommandAction Command="{Binding RemoveCartridge}"/>
+        </ia:EventTriggerBehavior>
+      </i:Interaction.Behaviors>
+    </Image>
+    <DataGrid ItemsSource="{Binding Cartridges, Mode=TwoWay}"
+              SelectedItem="{Binding SelectedCartridge}"
               Grid.Row="1"
-              Grid.ColumnSpan="4">
+              Grid.ColumnSpan="5">
       <DataGrid.Columns>
         <DataGridTextColumn Header="Название"
                             Binding="{Binding Name}"
@@ -61,18 +65,6 @@
         <DataGridTextColumn Header="Кол-во"
                             Binding="{Binding Remains}"
                             Width="*"/>
-        <DataGridTemplateColumn>
-          <DataTemplate>
-            <Image Source="/Assets/Images/remove.png">
-              <i:Interaction.Behaviors>
-                <ia:EventTriggerBehavior EventName="Tapped">
-                  <ia:InvokeCommandAction Command="{Binding DataContext.RemoveCartridge, ElementName=Root}"
-                                          CommandParameter="{Binding Id}"/>
-                </ia:EventTriggerBehavior>
-              </i:Interaction.Behaviors>
-            </Image>
-          </DataTemplate>
-        </DataGridTemplateColumn>
       </DataGrid.Columns>
     </DataGrid>
   </Grid>

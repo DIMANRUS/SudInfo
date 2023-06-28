@@ -1,29 +1,45 @@
 ﻿namespace SudInfo.Avalonia.ViewModels.PageViewModels;
+
 public class TasksPageViewModel : BaseRoutableViewModel
 {
     #region Services
+
     private readonly TaskService _taskService;
     private readonly DialogService _dialogService;
     private readonly NavigationService _navigationService;
+
     #endregion
 
     #region Collections
+
     [Reactive]
-    public ObservableCollection<TaskEntity> Tasks { get; set; }
-    private IReadOnlyList<TaskEntity> TasksFromDatabase { get; set; }
+    public ObservableCollection<TaskEntity>? Tasks { get; set; }
+    private IReadOnlyList<TaskEntity>? TasksFromDatabase { get; set; }
+
     #endregion
 
     #region Private Variables
-    private EventHandler _eventHandlerClosedWindowDialog;
+
+    private readonly EventHandler _eventHandlerClosedWindowDialog;
+
     #endregion
 
-    #region Public properties
+    #region Properties
+
     [Reactive]
     public string SearchText { get; set; } = string.Empty;
+
+    [Reactive]
+    public TaskEntity? SelectedTask { get; set; }
+
     #endregion
 
-    #region Constructors
-    public TasksPageViewModel(NavigationService navigationService, TaskService taskService, DialogService dialogService)
+    #region Initialization
+
+    public TasksPageViewModel(
+        NavigationService navigationService,
+        TaskService taskService,
+        DialogService dialogService)
     {
         #region Serives Initialization
         _dialogService = dialogService;
@@ -31,21 +47,17 @@ public class TasksPageViewModel : BaseRoutableViewModel
         _navigationService = navigationService;
         #endregion
 
-        _eventHandlerClosedWindowDialog = async (s, e) =>
-            await LoadTasks();
+        _eventHandlerClosedWindowDialog = async (s, e) => await LoadTasks();
     }
+
     #endregion
 
     #region Public Methods
+
     public async Task LoadTasks()
     {
-        var tasksResult = await _taskService.GetTasks();
-        if (!tasksResult.Success)
-        {
-            await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения данных! Ошибка: {tasksResult.Message}", icon: Icon.Error);
-            return;
-        }
-        Tasks = new(tasksResult.Object);
+        var tasksResult = await TaskService.GetTasks();
+        Tasks = new(tasksResult);
         TasksFromDatabase = Tasks;
     }
     public void SearchBoxKeyUp()
@@ -57,9 +69,11 @@ public class TasksPageViewModel : BaseRoutableViewModel
         }
         Tasks = new(TasksFromDatabase.Where(x => x.Description.ToLower().Contains(SearchText.ToLower())));
     }
-    public async Task CompleteTask(int id)
+    public async Task CompleteTask()
     {
-        var completeTaskResult = await _taskService.CompleteTask(id);
+        if (SelectedTask == null)
+            return;
+        var completeTaskResult = await TaskService.CompleteTask(SelectedTask.Id);
         if (!completeTaskResult.Success)
         {
             await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения данных! Ошибка: {completeTaskResult.Message}", icon: Icon.Error);

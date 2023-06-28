@@ -8,23 +8,14 @@
              x:Class="SudInfo.Avalonia.Views.Pages.UsersPage"
              xmlns:i="using:Avalonia.Xaml.Interactivity"
              xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
-             xmlns:models="using:SudInfo.EfDataAccessLibrary.Models"
-             Name="Root">
+             xmlns:models="using:SudInfo.EfDataAccessLibrary.Models">
   <i:Interaction.Behaviors>
     <ia:EventTriggerBehavior EventName="Initialized">
-      <ia:InvokeCommandAction Command="{Binding Initialized}"/>
+      <ia:InvokeCommandAction Command="{Binding LoadUsers}"/>
     </ia:EventTriggerBehavior>
   </i:Interaction.Behaviors>
-  <UserControl.Styles>
-    <Style Selector="Image">
-      <Setter Property="Cursor"
-              Value="Hand"/>
-      <Setter Property="Height"
-              Value="30"/>
-    </Style>
-  </UserControl.Styles>
   <Grid RowDefinitions="40,*"
-        ColumnDefinitions="150, *, 40, 40">
+        ColumnDefinitions="150, *, 40,40,40, 40">
     <TextBlock Text="Пользователи"
                Margin="10"
                FontWeight="Bold"
@@ -57,9 +48,26 @@
         </ia:EventTriggerBehavior>
       </i:Interaction.Behaviors>
     </Image>
-    <DataGrid Items="{Binding Users}"
+    <Image Source="/Assets/Images/edit.png"
+           Grid.Column="4">
+      <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="Tapped">
+          <ia:InvokeCommandAction Command="{Binding OpenEditUserWindow}"/>
+        </ia:EventTriggerBehavior>
+      </i:Interaction.Behaviors>
+    </Image>
+    <Image Source="/Assets/Images/remove.png"
+           Grid.Column="5">
+      <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="Tapped">
+          <ia:InvokeCommandAction Command="{Binding RemoveUser}"/>
+        </ia:EventTriggerBehavior>
+      </i:Interaction.Behaviors>
+    </Image>
+    <DataGrid ItemsSource="{Binding Users}"
+              SelectedItem="{Binding SelectedUser}"
               Grid.Row="1"
-              Grid.ColumnSpan="4">
+              Grid.ColumnSpan="6">
       <DataGrid.Columns>
         <DataGridTextColumn Header="Фамилия"
                             Binding="{Binding LastName}"
@@ -85,30 +93,6 @@
         <DataGridTextColumn Header="Локальный телефон"
                             Binding="{Binding PhoneLocal}"
                             IsReadOnly="True"/>
-        <DataGridTemplateColumn Width="40">
-          <DataTemplate>
-            <Image Source="/Assets/Images/edit.png">
-              <i:Interaction.Behaviors>
-                <ia:EventTriggerBehavior EventName="Tapped">
-                  <ia:InvokeCommandAction Command="{Binding DataContext.OpenEditUserWindow, ElementName=Root}"
-                                          CommandParameter="{Binding Id}"/>
-                </ia:EventTriggerBehavior>
-              </i:Interaction.Behaviors>
-            </Image>
-          </DataTemplate>
-        </DataGridTemplateColumn>
-        <DataGridTemplateColumn>
-          <DataTemplate>
-            <Image Source="/Assets/Images/remove.png">
-              <i:Interaction.Behaviors>
-                <ia:EventTriggerBehavior EventName="Tapped">
-                  <ia:InvokeCommandAction Command="{Binding DataContext.RemoveUser, ElementName=Root}"
-                                          CommandParameter="{Binding Id}"/>
-                </ia:EventTriggerBehavior>
-              </i:Interaction.Behaviors>
-            </Image>
-          </DataTemplate>
-        </DataGridTemplateColumn>
       </DataGrid.Columns>
     </DataGrid>
   </Grid>

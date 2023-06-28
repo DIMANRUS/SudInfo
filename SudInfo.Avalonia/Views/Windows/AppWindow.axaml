@@ -25,7 +25,7 @@
              Watermark="Версия"
              MaxLength="20"/>
     <TextBlock Text="Компьютеры"/>
-    <ListBox Items="{Binding Computers}"
+    <ListBox ItemsSource="{Binding Computers}"
              SelectedItems="{Binding AppEntity.Computers}"
              SelectionMode="Toggle"
              Height="200">

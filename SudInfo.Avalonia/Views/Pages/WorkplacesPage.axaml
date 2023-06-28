@@ -14,7 +14,7 @@
              x:DataType="viewModels:WorkplacesPageViewModel">
   <i:Interaction.Behaviors>
     <ia:EventTriggerBehavior EventName="Initialized">
-      <ia:InvokeCommandAction Command="{Binding Initialized}"/>
+      <ia:InvokeCommandAction Command="{Binding LoadWorkplaces}"/>
     </ia:EventTriggerBehavior>
   </i:Interaction.Behaviors>
   <Grid RowDefinitions="30,*">
@@ -29,7 +29,7 @@
         </ia:EventTriggerBehavior>
       </i:Interaction.Behaviors>
     </TextBox>
-    <ItemsControl Items="{Binding Users}"
+    <ItemsControl ItemsSource="{Binding Users}"
                   Grid.Row="1">
       <ItemsControl.ItemsPanel>
         <ItemsPanelTemplate>
@@ -45,7 +45,7 @@
                     Margin="8">
               <StackPanel>
                 <TextBlock Text="{Binding FIO}"/>
-                <ItemsControl Items="{Binding Computers}">
+                <ItemsControl ItemsSource="{Binding Computers}">
                   <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                       <StackPanel Orientation="Horizontal"/>
@@ -64,7 +64,7 @@
                             </ia:EventTriggerBehavior>
                           </i:Interaction.Behaviors>
                         </TextBlock>
-                        <ItemsControl Items="{Binding Monitors}">
+                        <ItemsControl ItemsSource="{Binding Monitors}">
                           <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="models:Monitor">
                               <StackPanel Orientation="Horizontal"
@@ -82,7 +82,7 @@
                             </DataTemplate>
                           </ItemsControl.ItemTemplate>
                         </ItemsControl>
-                        <ItemsControl Items="{Binding Printers}">
+                        <ItemsControl ItemsSource="{Binding Printers}">
                           <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="models:Printer">
                               <StackPanel Orientation="Horizontal"
@@ -101,7 +101,7 @@
                             </DataTemplate>
                           </ItemsControl.ItemTemplate>
                         </ItemsControl>
-                        <ItemsControl Items="{Binding Peripheries}">
+                        <ItemsControl ItemsSource="{Binding Peripheries}">
                           <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="models:Periphery">
                               <StackPanel Orientation="Horizontal"

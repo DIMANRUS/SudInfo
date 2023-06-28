@@ -1,14 +1,20 @@
 ﻿namespace SudInfo.Avalonia.ViewModels.WindowViewModels;
+
 public class RutokenWindowViewModel : BaseViewModel
 {
     #region Services
+
     private readonly RutokenService _rutokenService;
     private readonly DialogService _dialogService;
+    private readonly UserService _usersService;
+
     #endregion
 
     #region Collections
+
     [Reactive]
-    public IEnumerable<User> Users { get; set; }
+    public IReadOnlyList<User>? Users { get; set; }
+
     #endregion
 
     #region Properties
@@ -20,28 +26,21 @@ public class RutokenWindowViewModel : BaseViewModel
     #endregion
 
     #region Constructors
-    public RutokenWindowViewModel(RutokenService rutokenSerrvice, UserService usersService, DialogService dialogService)
+
+    public RutokenWindowViewModel(
+        RutokenService rutokenSerrvice,
+        UserService usersService,
+        DialogService dialogService)
     {
-        #region Service Set
+        #region Service Initialization
         _rutokenService = rutokenSerrvice;
         _dialogService = dialogService;
+        _usersService = usersService;
         #endregion
-
-        Initialized = ReactiveCommand.CreateFromTask(async () =>
-        {
-            var usersResult = await usersService.GetUsers();
-            if (!usersResult.Success)
-            {
-                await dialogService.ShowMessageBox("Ошибка", "Ошибка загрузки Сотрудников! Рутокен можно добавить, но без сотрудника.", icon: Icon.Error);
-                return;
-            }
-            Users = usersResult.Object;
-        });
     }
 
-    public RutokenWindowViewModel()
-    {
-    }
+    public RutokenWindowViewModel() { }
+
     #endregion
 
     #region Private Fields
@@ -49,13 +48,14 @@ public class RutokenWindowViewModel : BaseViewModel
     #endregion
 
     #region Public Methods
+
     public async Task SaveRutoken()
     {
         if (!IsUser)
             Rutoken.User = null;
         Result rutokenResult = _windowType switch
         {
-            WindowType.Add => await _rutokenService.AddRutoken(Rutoken),
+            WindowType.Add => await RutokenService.AddRutoken(Rutoken),
             _ => await _rutokenService.Update(Rutoken)
         };
         if (!rutokenResult.Success)
@@ -71,7 +71,7 @@ public class RutokenWindowViewModel : BaseViewModel
         if (id != null)
         {
             SaveButtonText = "Сохранить рутокен";
-            var rutokenResult = await _rutokenService.GetRutokenById(id.GetValueOrDefault());
+            var rutokenResult = await RutokenService.GetRutokenById(id.GetValueOrDefault());
             if (!rutokenResult.Success)
             {
                 await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения рутокена! Ошибка: {rutokenResult.Message}", true, icon: Icon.Error);
@@ -80,5 +80,11 @@ public class RutokenWindowViewModel : BaseViewModel
             Rutoken = rutokenResult.Object;
         }
     }
+    public async Task LoadUsers()
+    {
+        var usersResult = await UserService.GetUsers();
+        Users = usersResult;
+    }
+
     #endregion
 }

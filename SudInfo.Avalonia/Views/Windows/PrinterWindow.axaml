@@ -4,18 +4,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Width="300"
-        Height="430"
+        Height="480"
         CanResize="False"
         xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.WindowViewModels;assembly=SudInfo.Avalonia"
         xmlns:i="using:Avalonia.Xaml.Interactivity"
         xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+        xmlns:models="using:SudInfo.EfDataAccessLibrary.Models"
         x:Class="SudInfo.Avalonia.Views.Windows.PrinterWindow"
         WindowStartupLocation="CenterOwner"
         x:DataType="viewModels:PrinterWindowViewModel"
         Title="Принтер">
   <i:Interaction.Behaviors>
     <ia:EventTriggerBehavior EventName="Initialized">
-      <ia:InvokeCommandAction Command="{Binding Initialized}"/>
+      <ia:InvokeCommandAction Command="{Binding LoadComputers}"/>
     </ia:EventTriggerBehavior>
   </i:Interaction.Behaviors>
   <StackPanel Margin="10"
@@ -30,7 +31,7 @@
              MaxLength="3"
              Text="{Binding Printer.NumberCabinet}"
              IsEnabled="{Binding !IsChecked, ElementName=IsUserBox}"/>
-    <ComboBox Items="{Binding PrinterTypes}"
+    <ComboBox ItemsSource="{Binding PrinterTypes}"
               SelectedItem="{Binding Printer.Type}"
               HorizontalAlignment="Stretch"/>
     <TextBox Text="{Binding Printer.SerialNumber}"
@@ -45,15 +46,14 @@
     <StackPanel Orientation="Horizontal">
       <CheckBox Name="IsUserBox"
                 IsChecked="{Binding IsComputer}"/>
-      <ComboBox
-        Items="{Binding Computers}"
-        SelectedItem="{Binding Printer.Computer}"
-        Width="252"
-        IsEnabled="{Binding #IsUserBox.IsChecked}"
-        AutoScrollToSelectedItem="True"
-        PlaceholderText="Компьютер">
+      <ComboBox ItemsSource="{Binding Computers}"
+                SelectedItem="{Binding Printer.Computer}"
+                Width="252"
+                IsEnabled="{Binding #IsUserBox.IsChecked}"
+                AutoScrollToSelectedItem="True"
+                PlaceholderText="Компьютер">
         <ComboBox.DataTemplates>
-          <DataTemplate>
+          <DataTemplate x:DataType="{x:Type models:Computer}">
             <TextBlock Text="{Binding Name}"/>
           </DataTemplate>
         </ComboBox.DataTemplates>

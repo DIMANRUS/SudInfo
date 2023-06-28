@@ -1,20 +1,22 @@
 ﻿namespace SudInfo.Avalonia.Services;
+
 public class RutokenService : BaseService
 {
     #region Get Methods
-    public async Task<Result<Rutoken>> GetRutokenById(int id)
+
+    public static async Task<Result<Rutoken>> GetRutokenById(int id)
     {
         try
         {
             using SudInfoDbContext applicationDBContext = new();
             var rutoken = await applicationDBContext.Rutokens.Include(x => x.User).FirstOrDefaultAsync(x => x.Id == id);
-            if (rutoken == null)
-                throw new Exception("ЭЦП не найден");
-            return new()
-            {
-                Success = true,
-                Object = rutoken
-            };
+            return rutoken == null
+                ? throw new Exception("ЭЦП не найден")
+                : new()
+                {
+                    Success = true,
+                    Object = rutoken
+                };
         }
         catch (Exception ex)
         {
@@ -25,37 +27,23 @@ public class RutokenService : BaseService
             };
         }
     }
-    public async Task<Result<List<Rutoken>>> GetRutokens()
+    public static async Task<IReadOnlyList<Rutoken>> GetRutokens()
     {
-        try
-        {
-            using SudInfoDbContext applicationDBContext = new();
-            var rutokens = await applicationDBContext.Rutokens.Include(x => x.User).ToListAsync();
-            return new()
-            {
-                Success = true,
-                Object = rutokens
-            };
-        }
-        catch (Exception ex)
-        {
-            return new()
-            {
-                Success = false,
-                Message = ex.Message
-            };
-        }
+        using SudInfoDbContext applicationDBContext = new();
+        var rutokens = await applicationDBContext.Rutokens
+            .Include(x => x.User)
+            .ToListAsync();
+        return rutokens;
     }
+
     #endregion
 
-    public async Task<Result> RemoveRutokenById(int id)
+    public static async Task<Result> RemoveRutokenById(int id)
     {
         try
         {
             using SudInfoDbContext applicationDBContext = new();
-            var rutoken = await applicationDBContext.Rutokens.FirstOrDefaultAsync(x => x.Id == id);
-            if (rutoken == null)
-                throw new Exception("ЭЦП не найден");
+            var rutoken = await applicationDBContext.Rutokens.FirstOrDefaultAsync(x => x.Id == id) ?? throw new Exception("ЭЦП не найден");
             applicationDBContext.Rutokens.Remove(rutoken);
             await applicationDBContext.SaveChangesAsync();
             return new()
@@ -72,7 +60,7 @@ public class RutokenService : BaseService
             };
         }
     }
-    public async Task<Result> AddRutoken(Rutoken rutoken)
+    public static async Task<Result> AddRutoken(Rutoken rutoken)
     {
         try
         {

@@ -8,14 +8,15 @@
         xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.WindowViewModels;assembly=SudInfo.Avalonia"
         xmlns:i="using:Avalonia.Xaml.Interactivity"
         xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+        xmlns:models="using:SudInfo.EfDataAccessLibrary.Models"
         CanResize="False"
         WindowStartupLocation="CenterOwner"
-        Height="470"
+        Height="500"
         Width="300"
         x:DataType="viewModels:MonitorWindowViewModel">
   <i:Interaction.Behaviors>
     <ia:EventTriggerBehavior EventName="Initialized">
-      <ia:InvokeCommandAction Command="{Binding Initialized}"/>
+      <ia:InvokeCommandAction Command="{Binding LoadComputer}"/>
     </ia:EventTriggerBehavior>
   </i:Interaction.Behaviors>
   <StackPanel Margin="10"
@@ -44,15 +45,14 @@
     <StackPanel Orientation="Horizontal">
       <CheckBox Name="IsUserBox"
                 IsChecked="{Binding IsComputer}"/>
-      <ComboBox
-        Items="{Binding Computers}"
-        SelectedItem="{Binding Monitor.Computer}"
-        Width="252"
-        IsEnabled="{Binding #IsUserBox.IsChecked}"
-        AutoScrollToSelectedItem="True"
-        PlaceholderText="Компьютер">
+      <ComboBox ItemsSource="{Binding Computers}"
+                SelectedItem="{Binding Monitor.Computer}"
+                Width="252"
+                IsEnabled="{Binding #IsUserBox.IsChecked}"
+                AutoScrollToSelectedItem="True"
+                PlaceholderText="Компьютер">
         <ComboBox.DataTemplates>
-          <DataTemplate>
+          <DataTemplate x:DataType="{x:Type models:Computer}">
             <TextBlock Text="{Binding Name}"/>
           </DataTemplate>
         </ComboBox.DataTemplates>

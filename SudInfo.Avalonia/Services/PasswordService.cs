@@ -1,28 +1,14 @@
 ﻿namespace SudInfo.Avalonia.Services;
+
 public class PasswordService : BaseService
 {
-    public async Task<Result<IReadOnlyList<PasswordEntity>>> GetPasswords()
+    public static async Task<IReadOnlyList<PasswordEntity>> GetPasswords()
     {
-        try
-        {
-            using SudInfoDbContext context = new();
-            var result = await context.Passwords.AsNoTracking().ToListAsync();
-            return new()
-            {
-                Object = result,
-                Success = true
-            };
-        }
-        catch (Exception ex)
-        {
-            return new()
-            {
-                Message = ex.Message
-            };
-        }
+        using SudInfoDbContext context = new();
+        var passwords = await context.Passwords.AsNoTracking().ToListAsync();
+        return passwords;
     }
-
-    public async Task<Result> RemovePassword(int id)
+    public static async Task<Result> RemovePassword(int id)
     {
         try
         {
@@ -43,7 +29,7 @@ public class PasswordService : BaseService
             };
         }
     }
-    public async Task<Result<PasswordEntity>> GetPasswordEntity(int id)
+    public static async Task<Result<PasswordEntity>> GetPasswordEntity(int id)
     {
         try
         {

@@ -1,8 +1,10 @@
 ﻿namespace SudInfo.Avalonia.Services;
+
 public class UserService : BaseService
 {
     #region Get Methods Realization
-    public async Task<Result<User>> GetUserById(int userId)
+
+    public static async Task<Result<User>> GetUserById(int userId)
     {
         try
         {
@@ -27,61 +29,32 @@ public class UserService : BaseService
             };
         }
     }
-    public async Task<Result<List<User>>> GetUsers()
+    public static async Task<IReadOnlyList<User>> GetUsers()
     {
-        try
-        {
-            using SudInfoDbContext applicationDBContext = new();
-            var users = await applicationDBContext.Users
-                .AsNoTracking()
-                .ToListAsync();
-            return new()
-            {
-                Success = true,
-                Object = users
-            };
-        }
-        catch (Exception ex)
-        {
-            return new()
-            {
-                Success = false,
-                Message = ex.Message
-            };
-        }
+        using SudInfoDbContext applicationDBContext = new();
+        var users = await applicationDBContext.Users
+            .AsNoTracking()
+            .ToListAsync();
+        return users;
     }
-    public async Task<Result<List<User>>> GetUsersWithComputers()
+    public static async Task<IReadOnlyList<User>> GetUsersWithComputers()
     {
-        try
-        {
-            using SudInfoDbContext applicationDBContext = new();
-            var users = await applicationDBContext.Users
-                .AsNoTracking()
-                .Include(x => x.Computers)
-                .ThenInclude(x => x.Monitors)
-                .Include(x => x.Computers)
-                .ThenInclude(x => x.Printers)
-                .Include(x => x.Computers)
-                .ThenInclude(x => x.Peripheries)
-                .ToListAsync();
-            return new()
-            {
-                Success = true,
-                Object = users
-            };
-        }
-        catch (Exception ex)
-        {
-            return new()
-            {
-                Success = false,
-                Message = ex.Message
-            };
-        }
+        using SudInfoDbContext applicationDBContext = new();
+        var users = await applicationDBContext.Users
+            .AsNoTracking()
+            .Include(x => x.Computers)
+            .ThenInclude(x => x.Monitors)
+            .Include(x => x.Computers)
+            .ThenInclude(x => x.Printers)
+            .Include(x => x.Computers)
+            .ThenInclude(x => x.Peripheries)
+            .ToListAsync();
+        return users;
     }
+
     #endregion
 
-    public async Task<Result> RemoveUserById(int userId)
+    public static async Task<Result> RemoveUserById(int userId)
     {
         try
         {

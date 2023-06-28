@@ -11,14 +11,14 @@ using SudInfo.EfDataAccessLibrary.Contexts;
 namespace SudInfo.EfDataAccessLibrary.Migrations
 {
     [DbContext(typeof(SudInfoDbContext))]
-    [Migration("20230626195415_InitDb")]
+    [Migration("20230628165350_InitDb")]
     partial class InitDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "7.0.5");
+            modelBuilder.HasAnnotation("ProductVersion", "7.0.8");
 
             modelBuilder.Entity("AppEntityComputer", b =>
                 {

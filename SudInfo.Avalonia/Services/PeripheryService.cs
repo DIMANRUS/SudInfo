@@ -1,8 +1,10 @@
 ﻿namespace SudInfo.Avalonia.Services;
+
 public class PeripheryService : BaseService
 {
-    #region Get Methods Realization
-    public async Task<Result<Periphery>> GetPeripheryById(int id)
+    #region Get Methods
+
+    public static async Task<Result<Periphery>> GetPeripheryById(int id)
     {
         try
         {
@@ -25,30 +27,19 @@ public class PeripheryService : BaseService
             };
         }
     }
-    public async Task<Result<List<Periphery>>> GetPeripheryList()
+    public static async Task<IReadOnlyList<Periphery>> GetPeripheryList()
     {
-        try
-        {
-            using SudInfoDbContext applicationDBContext = new();
-            var peripheries = await applicationDBContext.Peripheries.Include(x => x.Computer).ThenInclude(x => x.User).ToListAsync();
-            return new()
-            {
-                Success = true,
-                Object = peripheries
-            };
-        }
-        catch (Exception ex)
-        {
-            return new()
-            {
-                Success = false,
-                Message = ex.Message
-            };
-        }
+        using SudInfoDbContext applicationDBContext = new();
+        var peripheries = await applicationDBContext.Peripheries
+            .Include(x => x.Computer)
+            .ThenInclude(x => x.User)
+            .ToListAsync();
+        return peripheries;
     }
+
     #endregion
 
-    public async Task<Result> AddPeriphery(Periphery periphery)
+    public static async Task<Result> AddPeriphery(Periphery periphery)
     {
         try
         {
@@ -73,7 +64,7 @@ public class PeripheryService : BaseService
             };
         }
     }
-    public async Task<Result> RemovePeripheryById(int id)
+    public static async Task<Result> RemovePeripheryById(int id)
     {
         try
         {

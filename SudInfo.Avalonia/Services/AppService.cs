@@ -1,37 +1,24 @@
 ﻿namespace SudInfo.Avalonia.Services;
+
 public class AppService
 {
-    public async Task<Result<IReadOnlyList<AppEntity>>> GetApps()
+    public static async Task<IReadOnlyList<AppEntity>> GetApps()
     {
-        try
-        {
-            await using SudInfoDbContext context = new();
-            var result = await context.Apps
-                .AsNoTracking()
-                .Include(x => x.Computers)
-                .ThenInclude(x=>x.User)
-                .ToListAsync();
-            return new Result<IReadOnlyList<AppEntity>>
-            {
-                Object = result,
-                Success = true
-            };
-        }
-        catch (Exception ex)
-        {
-            return new Result<IReadOnlyList<AppEntity>>
-            {
-                Message = ex.Message
-            };
-        }
+        await using SudInfoDbContext context = new();
+        var apps = await context.Apps
+            .AsNoTracking()
+            .Include(x => x.Computers)
+            .ThenInclude(x => x.User)
+            .ToListAsync();
+        return apps;
     }
-    public async Task<Result> RemoveApp(int id)
+    public static async Task<Result> RemoveApp(int id)
     {
         try
         {
             await using SudInfoDbContext context = new();
             var entity = await context.Apps.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Password not found");
-            entity.Computers = null;
+            entity.Computers.Clear();
             context.Apps.Remove(entity);
             await context.SaveChangesAsync();
             return new Result
@@ -47,7 +34,7 @@ public class AppService
             };
         }
     }
-    public async Task<Result<AppEntity>> GetApp(int id)
+    public static async Task<Result<AppEntity>> GetApp(int id)
     {
         try
         {
@@ -69,7 +56,7 @@ public class AppService
             };
         }
     }
-    public async Task<Result> UpdateApp(AppEntity entity)
+    public static async Task<Result> UpdateApp(AppEntity entity)
     {
         try
         {
@@ -78,7 +65,7 @@ public class AppService
             entity.Computers = new List<Computer>();
             foreach (var computer in computers)
             {
-                entity.Computers.Add(await applicationDbContext.Computers.FirstAsync(x=>x.Id == computer.Id));
+                entity.Computers.Add(await applicationDbContext.Computers.FirstAsync(x => x.Id == computer.Id));
             }
             applicationDbContext.Update(entity);
             await applicationDbContext.SaveChangesAsync();
@@ -95,7 +82,7 @@ public class AppService
             };
         }
     }
-    public async Task<Result> AddApp(AppEntity entity)
+    public static async Task<Result> AddApp(AppEntity entity)
     {
         try
         {
@@ -104,7 +91,7 @@ public class AppService
             entity.Computers = new List<Computer>();
             foreach (var computer in computers)
             {
-                entity.Computers.Add(await applicationDbContext.Computers.FirstAsync(x=>x.Id == computer.Id));
+                entity.Computers.Add(await applicationDbContext.Computers.FirstAsync(x => x.Id == computer.Id));
             }
             await applicationDbContext.AddAsync(entity);
             await applicationDbContext.SaveChangesAsync();

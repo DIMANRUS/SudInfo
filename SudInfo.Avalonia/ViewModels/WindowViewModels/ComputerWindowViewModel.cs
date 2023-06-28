@@ -1,50 +1,55 @@
 ﻿namespace SudInfo.Avalonia.ViewModels.WindowViewModels;
+
 public class ComputerWindowViewModel : BaseViewModel
 {
     #region Services
+
     private readonly ComputerService _computerService;
     private readonly DialogService _dialogService;
+    private readonly UserService _usersService;
+
     #endregion
 
     #region Collections
     public static IEnumerable<OS> OsesList => Enum.GetValues(typeof(OS)).Cast<OS>();
+
     [Reactive]
-    public IEnumerable<User> Users { get; set; }
+    public IEnumerable<User>? Users { get; set; }
+
     #endregion
 
     #region Properties
+
     [Reactive]
     public Computer Computer { get; set; } = new();
+
     public bool IsUser { get; set; }
+
     [Reactive]
     public string SaveButtonText { get; private set; } = "Добавить компьютер";
+
     [Reactive]
-    public bool ButtonIsVisible { get; private set; } = false;
+    public bool ButtonIsVisible { get; private set; }
     #endregion
 
     #region Constructors
-    public ComputerWindowViewModel(ComputerService computerService, UserService usersService, DialogService dialogService)
+
+    public ComputerWindowViewModel(
+        ComputerService computerService,
+        UserService usersService,
+        DialogService dialogService)
     {
-        #region Service Set
+        #region Service Initialization
         _computerService = computerService;
         _dialogService = dialogService;
+        _usersService = usersService;
         #endregion
-
-        Initialized = ReactiveCommand.CreateFromTask(async () =>
-        {
-            var usersResult = await usersService.GetUsers();
-            if (!usersResult.Success)
-            {
-                await dialogService.ShowMessageBox("Ошибка", "Ошибка загрузки!", icon: Icon.Error);
-                return;
-            }
-            Users = usersResult.Object;
-        });
     }
 
     public ComputerWindowViewModel()
     {
     }
+
     #endregion
 
     #region Private Fields
@@ -52,6 +57,7 @@ public class ComputerWindowViewModel : BaseViewModel
     #endregion
 
     #region Public Methods
+
     public async Task SaveComputer()
     {
         if (!ValidationModel(Computer))
@@ -60,7 +66,7 @@ public class ComputerWindowViewModel : BaseViewModel
             Computer.User = null;
         Result computerResult = _windowType switch
         {
-            WindowType.Add => await _computerService.AddComputer(Computer),
+            WindowType.Add => await ComputerService.AddComputer(Computer),
             _ => await _computerService.Update(Computer)
         };
         if (!computerResult.Success)
@@ -84,7 +90,7 @@ public class ComputerWindowViewModel : BaseViewModel
                 ButtonIsVisible = true;
                 SaveButtonText = "Сохранить компьютер";
             }
-            var computerResult = await _computerService.GetComputerById(id.GetValueOrDefault());
+            var computerResult = await ComputerService.GetComputerById(id.GetValueOrDefault());
             if (!computerResult.Success)
             {
                 await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения компьютера! Ошибка: {computerResult.Message}", true, icon: Icon.Error);
@@ -93,5 +99,11 @@ public class ComputerWindowViewModel : BaseViewModel
             Computer = computerResult.Object;
         }
     }
+    public async Task LoadComputer()
+    {
+        var usersResult = await UserService.GetUsers();
+        Users = usersResult;
+    }
+
     #endregion
 }

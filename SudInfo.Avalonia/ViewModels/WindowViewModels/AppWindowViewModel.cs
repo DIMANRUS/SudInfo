@@ -43,8 +43,8 @@ public class AppWindowViewModel : BaseViewModel
             return;
         Result result = _windowType switch
         {
-            WindowType.Add => await _appService.AddApp(AppEntity),
-            _ => await _appService.UpdateApp(AppEntity)
+            WindowType.Add => await AppService.AddApp(AppEntity),
+            _ => await AppService.UpdateApp(AppEntity)
         };
         if (!result.Success)
         {
@@ -70,7 +70,7 @@ public class AppWindowViewModel : BaseViewModel
                 SaveButtonText = "Сохранить приложение";
             }
 
-            var result = await _appService.GetApp(id.GetValueOrDefault());
+            var result = await AppService.GetApp(id.GetValueOrDefault());
             if (!result.Success)
             {
                 await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения компьютера! Ошибка: {result.Message}",
@@ -79,7 +79,7 @@ public class AppWindowViewModel : BaseViewModel
             }
             AppEntity = result.Object;
         }
-        var computersResult = await _computerService.GetComputers();
-        Computers = new(computersResult.Object);
+        var computersResult = await ComputerService.GetComputers();
+        Computers = new(computersResult);
     }
 }

@@ -1,54 +1,60 @@
 ﻿namespace SudInfo.Avalonia.ViewModels.WindowViewModels;
+
 public class MonitorWindowViewModel : BaseViewModel
 {
     #region Services
+
     private readonly MonitorService _monitorService;
     private readonly DialogService _dialogService;
+    private readonly ComputerService _computerService;
+
     #endregion
 
     #region Collections
+
     [Reactive]
-    public IEnumerable<Computer> Computers { get; set; }
+    public IEnumerable<Computer>? Computers { get; set; }
+
     #endregion
 
     #region Properties
+
     [Reactive]
     public Monitor Monitor { get; set; } = new();
+
     public bool IsComputer { get; set; }
+
     [Reactive]
     public bool IsButtonVisible { get; set; } = false;
+
     [Reactive]
     public string SaveButtonText { get; private set; } = "Добавить монитор";
     #endregion
 
-    #region Constructors
-    public MonitorWindowViewModel(MonitorService monitorService, ComputerService computerService, DialogService dialogService)
+    #region Initialization
+
+    public MonitorWindowViewModel(
+        MonitorService monitorService,
+        ComputerService computerService,
+        DialogService dialogService)
     {
-        #region Service Set
+        #region Service Initialization
         _monitorService = monitorService;
         _dialogService = dialogService;
-        #endregion
-
-        #region Commands Initialization
-        Initialized = ReactiveCommand.CreateFromTask(async () =>
-        {
-            var computersResult = await computerService.GetComputerNames();
-            if (!computersResult.Success)
-            {
-                await dialogService.ShowMessageBox("Ошибка", "Ошибка загрузки компьютеров!", icon: Icon.Error);
-                return;
-            }
-            Computers = computersResult.Object;
-        });
+        _computerService = computerService;
         #endregion
     }
+
     #endregion
 
     #region Private Fields
+
     private WindowType _windowType;
+
     #endregion
 
     #region Public Methods
+
     public async void InitializationData(WindowType windowType, int? id = null)
     {
         _windowType = windowType;
@@ -60,7 +66,7 @@ public class MonitorWindowViewModel : BaseViewModel
             {
                 SaveButtonText = "Сохранить монитор";
             }
-            var monitorResult = await _monitorService.GetMonitorById(id.GetValueOrDefault());
+            var monitorResult = await MonitorService.GetMonitorById(id.GetValueOrDefault());
             if (!monitorResult.Success)
             {
                 await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения монитора! Ошибка: {monitorResult.Message}", true, icon: Icon.Error);
@@ -77,7 +83,7 @@ public class MonitorWindowViewModel : BaseViewModel
             Monitor.Computer = null;
         Result monitorResult = _windowType switch
         {
-            WindowType.Add => await _monitorService.AddMonitor(Monitor),
+            WindowType.Add => await MonitorService.AddMonitor(Monitor),
             _ => await _monitorService.Update(Monitor)
         };
         if (!monitorResult.Success)
@@ -87,5 +93,11 @@ public class MonitorWindowViewModel : BaseViewModel
         }
         await _dialogService.ShowMessageBox("Сообщение", "Успешно!", true, icon: Icon.Success);
     }
+    public async Task LoadComputer()
+    {
+        var computersResult = await ComputerService.GetComputerNames();
+        Computers = computersResult;
+    }
+
     #endregion
 }

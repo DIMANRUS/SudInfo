@@ -1,8 +1,10 @@
 ﻿namespace SudInfo.Avalonia.Services;
+
 public class PrinterService : BaseService
 {
     #region Get Methods
-    public async Task<Result<Printer>> GetPrinterById(int id)
+
+    public static async Task<Result<Printer>> GetPrinterById(int id)
     {
         try
         {
@@ -11,11 +13,13 @@ public class PrinterService : BaseService
                 .AsNoTracking()
                 .Include(x => x.Computer)
                 .FirstOrDefaultAsync(x => x.Id == id);
-            return new()
-            {
-                Success = true,
-                Object = printer
-            };
+            return printer == null
+                ? throw new Exception("Принтер не найден.")
+                : new()
+                {
+                    Success = true,
+                    Object = printer
+                };
         }
         catch (Exception ex)
         {
@@ -26,34 +30,20 @@ public class PrinterService : BaseService
             };
         }
     }
-    public async Task<Result<List<Printer>>> GetPrinters()
+    public static async Task<IReadOnlyList<Printer>> GetPrinters()
     {
-        try
-        {
-            using SudInfoDbContext applicationDBContext = new();
-            var printers = await applicationDBContext.Printers
-                .AsNoTracking()
-                .Include(x => x.Computer)
-                .ThenInclude(x => x.User)
-                .ToListAsync();
-            return new()
-            {
-                Success = true,
-                Object = printers
-            };
-        }
-        catch (Exception ex)
-        {
-            return new()
-            {
-                Success = false,
-                Message = ex.Message
-            };
-        }
+        using SudInfoDbContext applicationDBContext = new();
+        var printers = await applicationDBContext.Printers
+            .AsNoTracking()
+            .Include(x => x.Computer)
+            .ThenInclude(x => x.User)
+            .ToListAsync();
+        return printers;
     }
+
     #endregion
 
-    public async Task<Result> AddPrinter(Printer printer)
+    public static async Task<Result> AddPrinter(Printer printer)
     {
         try
         {
@@ -78,7 +68,7 @@ public class PrinterService : BaseService
             };
         }
     }
-    public async Task<Result> RemovePrinterById(int id)
+    public static async Task<Result> RemovePrinterById(int id)
     {
         try
         {

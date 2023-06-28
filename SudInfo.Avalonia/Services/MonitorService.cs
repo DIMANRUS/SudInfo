@@ -1,29 +1,15 @@
 ﻿namespace SudInfo.Avalonia.Services;
+
 public class MonitorService : BaseService
 {
     #region Get Methods Realizations
-    public async Task<Result<List<Monitor>>> GetMonitors()
+    public static async Task<IReadOnlyList<Monitor>> GetMonitors()
     {
-        try
-        {
-            using SudInfoDbContext applicationDBContext = new();
-            var monitors = await applicationDBContext.Monitors.Include(x => x.Computer).ThenInclude(x => x.User).ToListAsync();
-            return new()
-            {
-                Success = true,
-                Object = monitors
-            };
-        }
-        catch (Exception ex)
-        {
-            return new()
-            {
-                Success = false,
-                Message = ex.Message
-            };
-        }
+        using SudInfoDbContext applicationDBContext = new();
+        var monitors = await applicationDBContext.Monitors.Include(x => x.Computer).ThenInclude(x => x.User).ToListAsync();
+        return monitors;
     }
-    public async Task<Result<Monitor>> GetMonitorById(int id)
+    public static async Task<Result<Monitor>> GetMonitorById(int id)
     {
         try
         {
@@ -48,7 +34,7 @@ public class MonitorService : BaseService
     }
     #endregion
 
-    public async Task<Result> RemoveMonitorById(int id)
+    public static async Task<Result> RemoveMonitorById(int id)
     {
         try
         {
@@ -72,7 +58,7 @@ public class MonitorService : BaseService
             };
         }
     }
-    public async Task<Result> AddMonitor(Monitor monitor)
+    public static async Task<Result> AddMonitor(Monitor monitor)
     {
         try
         {

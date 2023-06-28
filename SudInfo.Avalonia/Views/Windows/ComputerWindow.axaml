@@ -7,7 +7,8 @@
         xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.WindowViewModels;assembly=SudInfo.Avalonia"
         xmlns:i="using:Avalonia.Xaml.Interactivity"
         xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
-        Height="625"
+        xmlns:models="using:SudInfo.EfDataAccessLibrary.Models"
+        Height="670"
         Width="300"
         CanResize="False"
         WindowStartupLocation="CenterOwner"
@@ -15,7 +16,7 @@
         Title="Компьютер">
   <i:Interaction.Behaviors>
     <ia:EventTriggerBehavior EventName="Initialized">
-      <ia:InvokeCommandAction Command="{Binding Initialized}"/>
+      <ia:InvokeCommandAction Command="{Binding LoadComputer}"/>
     </ia:EventTriggerBehavior>
   </i:Interaction.Behaviors>
   <StackPanel Margin="10"
@@ -28,7 +29,7 @@
              Watermark="IP адрес"/>
     <ComboBox
       HorizontalAlignment="Stretch"
-      Items="{Binding OsesList}"
+      ItemsSource="{Binding OsesList}"
       SelectedItem="{Binding Computer.OS}"/>
     <TextBox Text="{Binding Computer.CPU}"
              MaxLength="100"
@@ -58,15 +59,14 @@
     <StackPanel Orientation="Horizontal">
       <CheckBox Name="IsUserBox"
                 IsChecked="{Binding IsUser}"/>
-      <ComboBox
-        Items="{Binding Users}"
-        SelectedItem="{Binding Computer.User}"
-        Width="252"
-        IsEnabled="{Binding #IsUserBox.IsChecked}"
-        AutoScrollToSelectedItem="True"
-        PlaceholderText="Сотрудник">
+      <ComboBox ItemsSource="{Binding Users}"
+                SelectedItem="{Binding Computer.User}"
+                Width="252"
+                IsEnabled="{Binding #IsUserBox.IsChecked}"
+                AutoScrollToSelectedItem="True"
+                PlaceholderText="Сотрудник">
         <ComboBox.DataTemplates>
-          <DataTemplate>
+          <DataTemplate x:DataType="{x:Type models:User}">
             <TextBlock Text="{Binding FIO}"/>
           </DataTemplate>
         </ComboBox.DataTemplates>

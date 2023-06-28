@@ -20,7 +20,7 @@ public class UserWindowViewModel : BaseViewModel
         if (id != null)
         {
             SaveButtonText = "Сохранить пользователя";
-            var userResult = await _usersService.GetUserById(id.GetValueOrDefault());
+            var userResult = await UserService.GetUserById(id.GetValueOrDefault());
             if (!userResult.Success)
             {
                 await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения пользователя! Ошибка: {userResult.Message}", true, icon: Icon.Error);

@@ -13,8 +13,10 @@ public class ComputersPageViewModel : BaseRoutableViewModel
 
     #region Collections
 
-    [Reactive] public ObservableCollection<Computer> Computers { get; set; }
-    private IReadOnlyList<Computer> ComputersFromDataBase { get; set; }
+    [Reactive]
+    public ObservableCollection<Computer>? Computers { get; set; }
+
+    private IReadOnlyList<Computer>? ComputersFromDataBase { get; set; }
 
     #endregion
 
@@ -24,31 +26,34 @@ public class ComputersPageViewModel : BaseRoutableViewModel
 
     #endregion
 
-    #region Public properties
+    #region Properties
 
-    [Reactive] public string SearchText { get; set; } = string.Empty;
+    [Reactive]
+    public string SearchText { get; set; } = string.Empty;
+
+    [Reactive]
+    public Computer? SelectedComputer { get; set; }
 
     #endregion
 
-    #region Constructors
+    #region Initialization
 
     public ComputersPageViewModel(
-        NavigationService navigationService, 
+        NavigationService navigationService,
         ComputerService computersService,
         DialogService dialogService,
         ExcelService excelService)
     {
-        #region Serives Initialization
+        #region Services Initialization
 
         _dialogService = dialogService;
         _computersService = computersService;
         _navigationService = navigationService;
         _excelService = excelService;
+
         #endregion
 
-        _eventHandlerClosedWindowDialog = async (s, e) => { await LoadComputers(); };
-
-        Initialized = ReactiveCommand.CreateFromTask(LoadComputers);
+        _eventHandlerClosedWindowDialog = async (s, e) => await LoadComputers();
     }
 
     #endregion
@@ -59,24 +64,25 @@ public class ComputersPageViewModel : BaseRoutableViewModel
     {
         await _navigationService.ShowComputerWindowDialog(WindowType.Add, _eventHandlerClosedWindowDialog);
     }
-
-    public async Task OpenEditComputerWindow(int id)
+    public async Task OpenEditComputerWindow()
     {
-        await _navigationService.ShowComputerWindowDialog(WindowType.Edit, _eventHandlerClosedWindowDialog, id);
+        if (SelectedComputer == null)
+            return;
+        await _navigationService.ShowComputerWindowDialog(WindowType.Edit, _eventHandlerClosedWindowDialog, SelectedComputer.Id);
     }
-
     public async Task RefreshComputers()
     {
         await LoadComputers();
     }
-
-    public async Task RemoveComputer(int id)
+    public async Task RemoveComputer()
     {
+        if (SelectedComputer == null)
+            return;
         var dialogResult = await _dialogService.ShowMessageBox("Сообщение",
             "Вы действительно хотите удалить компьютер?", buttonEnum: ButtonEnum.YesNo, icon: Icon.Question);
         if (dialogResult == ButtonResult.No)
             return;
-        var removeComputerResult = await _computersService.RemoveComputerById(id);
+        var removeComputerResult = await ComputerService.RemoveComputerById(SelectedComputer.Id);
         if (!removeComputerResult.Success)
         {
             await _dialogService.ShowMessageBox("Ошибка",
@@ -86,12 +92,10 @@ public class ComputersPageViewModel : BaseRoutableViewModel
 
         await LoadComputers();
     }
-
     public async Task CreateExcelTable()
     {
-        await _excelService.CreateExcelTableFromEntity(Computers);
+        await ExcelService.CreateExcelTableFromEntity(Computers);
     }
-
     public void SearchBoxKeyUp()
     {
         if (string.IsNullOrEmpty(SearchText))
@@ -102,22 +106,10 @@ public class ComputersPageViewModel : BaseRoutableViewModel
 
         Computers = new(ComputersFromDataBase.Where(x => x.Name.ToLower().Contains(SearchText.ToLower())));
     }
-
-    #endregion
-
-    #region Private Methods
-
-    private async Task LoadComputers()
+    public async Task LoadComputers()
     {
-        var computersResult = await _computersService.GetComputers();
-        if (!computersResult.Success)
-        {
-            await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения данных! Ошибка: {computersResult.Message}",
-                icon: Icon.Error);
-            return;
-        }
-
-        Computers = new(computersResult.Object);
+        var computersResult = await ComputerService.GetComputers();
+        Computers = new(computersResult);
         ComputersFromDataBase = Computers;
     }
 

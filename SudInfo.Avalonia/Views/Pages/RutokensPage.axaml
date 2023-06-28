@@ -8,23 +8,14 @@
              x:Class="SudInfo.Avalonia.Views.Pages.RutokensPage"
              xmlns:i="using:Avalonia.Xaml.Interactivity"
              xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
-             xmlns:models="using:SudInfo.EfDataAccessLibrary.Models"
-             Name="Root">
+             xmlns:models="using:SudInfo.EfDataAccessLibrary.Models">
   <i:Interaction.Behaviors>
     <ia:EventTriggerBehavior EventName="Initialized">
-      <ia:InvokeCommandAction Command="{Binding Initialized}"/>
+      <ia:InvokeCommandAction Command="{Binding LoadRutokens}"/>
     </ia:EventTriggerBehavior>
   </i:Interaction.Behaviors>
-  <UserControl.Styles>
-    <Style Selector="Image">
-      <Setter Property="Cursor"
-              Value="Hand"/>
-      <Setter Property="Height"
-              Value="30"/>
-    </Style>
-  </UserControl.Styles>
   <Grid RowDefinitions="40,*"
-        ColumnDefinitions="140, *, 40, 40">
+        ColumnDefinitions="140, *, 40,40,40, 40">
     <TextBlock Text="ЭЦП Рутокен"
                Margin="10"
                FontWeight="Bold"
@@ -45,9 +36,26 @@
         </ia:EventTriggerBehavior>
       </i:Interaction.Behaviors>
     </Image>
-    <DataGrid Items="{Binding Rutokens}"
+    <Image Source="/Assets/Images/edit.png"
+           Grid.Column="4">
+      <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="Tapped">
+          <ia:InvokeCommandAction Command="{Binding OpenEditRutokenWindow}"/>
+        </ia:EventTriggerBehavior>
+      </i:Interaction.Behaviors>
+    </Image>
+    <Image Source="/Assets/Images/remove.png"
+           Grid.Column="5">
+      <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="Tapped">
+          <ia:InvokeCommandAction Command="{Binding RemoveRutoken}"/>
+        </ia:EventTriggerBehavior>
+      </i:Interaction.Behaviors>
+    </Image>
+    <DataGrid ItemsSource="{Binding Rutokens}"
+              SelectedItem="{Binding SelectedRutoken}"
               Grid.Row="1"
-              Grid.ColumnSpan="4">
+              Grid.ColumnSpan="6">
       <DataGrid.Columns>
         <DataGridTextColumn Header="Серийный номер"
                             Binding="{Binding SerialNumber}"
@@ -62,30 +70,6 @@
                             Binding="{Binding User.NumberCabinet}"
                             IsReadOnly="True"
                             Width="*"/>
-        <DataGridTemplateColumn Width="40">
-          <DataTemplate>
-            <Image Source="/Assets/Images/edit.png">
-              <i:Interaction.Behaviors>
-                <ia:EventTriggerBehavior EventName="Tapped">
-                  <ia:InvokeCommandAction Command="{Binding DataContext.OpenEditRutokenWindow, ElementName=Root}"
-                                          CommandParameter="{Binding Id}"/>
-                </ia:EventTriggerBehavior>
-              </i:Interaction.Behaviors>
-            </Image>
-          </DataTemplate>
-        </DataGridTemplateColumn>
-        <DataGridTemplateColumn>
-          <DataTemplate>
-            <Image Source="/Assets/Images/remove.png">
-              <i:Interaction.Behaviors>
-                <ia:EventTriggerBehavior EventName="Tapped">
-                  <ia:InvokeCommandAction Command="{Binding DataContext.RemoveRutoken, ElementName=Root}"
-                                          CommandParameter="{Binding Id}"/>
-                </ia:EventTriggerBehavior>
-              </i:Interaction.Behaviors>
-            </Image>
-          </DataTemplate>
-        </DataGridTemplateColumn>
       </DataGrid.Columns>
     </DataGrid>
   </Grid>

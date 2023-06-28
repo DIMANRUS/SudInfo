@@ -5,15 +5,16 @@
         xmlns:app="clr-namespace:SudInfo.Avalonia"
         xmlns:rxui="clr-namespace:Avalonia.ReactiveUI;assembly=Avalonia.ReactiveUI"
         mc:Ignorable="d"
-        xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels"
+        xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.WindowViewModels;assembly=SudInfo.Avalonia"
         xmlns:i="using:Avalonia.Xaml.Interactivity"
         xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
         xmlns:reactiveUi="http://reactiveui.net"
-        MinHeight="650"
+        MinHeight="700"
         MinWidth="1000"
         x:Class="SudInfo.Avalonia.Views.Windows.MainWindow"
         xmlns:vm="using:SudInfo.Avalonia.ViewModels"
-        Title="СудИнфо - Инженер">
+        x:DataType="viewModels:MainWindowViewModel"
+        Title="СудИнфо - Инженер v2.0.0">
   <Window.Styles>
     <Style Selector="Button">
       <Setter Property="FontWeight"
@@ -25,17 +26,15 @@
       <Setter Property="Margin"
               Value="10 5 10 5"/>
     </Style>
-    <Style Selector="Border.MenuBarBorder:pointerover">
-      <Setter Property="Background"
-              Value="LightGoldenrodYellow"/>
-    </Style>
     <Style Selector="Border.MenuBarBorder">
       <Setter Property="Cursor"
               Value="Hand"/>
-      <Setter Property="BoxShadow"
-              Value="0 0 10 Black"/>
       <Setter Property="Margin"
-              Value="5"/>
+              Value="3"/>
+      <Setter Property="BorderBrush"
+              Value="DarkOrange"/>
+      <Setter Property="BorderThickness"
+              Value="1"/>
       <Setter Property="HorizontalAlignment"
               Value="Center"/>
       <Setter Property="Padding"
@@ -48,130 +47,139 @@
               Value="30"/>
     </Style>
   </Window.Styles>
-  <SplitView IsPaneOpen="True"
-             DisplayMode="Inline"
-             OpenPaneLength="60">
-    <SplitView.Pane>
-      <StackPanel Background="White">
-        <Border Classes="MenuBarBorder">
-          <Image Source="/Assets/Images/MenuBar/processor.png">
-            <i:Interaction.Behaviors>
-              <ia:EventTriggerBehavior EventName="Tapped">
-                <ia:InvokeCommandAction Command="{Binding OpenComputersPage}"/>
-              </ia:EventTriggerBehavior>
-            </i:Interaction.Behaviors>
-          </Image>
-        </Border>
-        <Border Classes="MenuBarBorder">
-          <Image Source="/Assets/Images/MenuBar/printer.png">
-            <i:Interaction.Behaviors>
-              <ia:EventTriggerBehavior EventName="Tapped">
-                <ia:InvokeCommandAction Command="{Binding OpenPrintersPage}"/>
-              </ia:EventTriggerBehavior>
-            </i:Interaction.Behaviors>
-          </Image>
-        </Border>
-        <Border Classes="MenuBarBorder">
-          <Image Source="/Assets/Images/MenuBar/monitor.png">
-            <i:Interaction.Behaviors>
-              <ia:EventTriggerBehavior EventName="Tapped">
-                <ia:InvokeCommandAction Command="{Binding OpenMonitorsPage}"/>
-              </ia:EventTriggerBehavior>
-            </i:Interaction.Behaviors>
-          </Image>
-        </Border>
-        <Border Classes="MenuBarBorder">
-          <Image Source="/Assets/Images/MenuBar/usb.png">
-            <i:Interaction.Behaviors>
-              <ia:EventTriggerBehavior EventName="Tapped">
-                <ia:InvokeCommandAction Command="{Binding OpenPeripheryPage}"/>
-              </ia:EventTriggerBehavior>
-            </i:Interaction.Behaviors>
-          </Image>
-        </Border>
-        <Border Classes="MenuBarBorder">
-          <Image Source="/Assets/Images/MenuBar/users.png">
-            <i:Interaction.Behaviors>
-              <ia:EventTriggerBehavior EventName="Tapped">
-                <ia:InvokeCommandAction Command="{Binding OpenUsersPage}"/>
-              </ia:EventTriggerBehavior>
-            </i:Interaction.Behaviors>
-          </Image>
-        </Border>
-        <Border Classes="MenuBarBorder">
-          <Image Source="/Assets/Images/MenuBar/rutoken.png">
-            <i:Interaction.Behaviors>
-              <ia:EventTriggerBehavior EventName="Tapped">
-                <ia:InvokeCommandAction Command="{Binding OpenRutokensPage}"/>
-              </ia:EventTriggerBehavior>
-            </i:Interaction.Behaviors>
-          </Image>
-        </Border>
-        <Border Classes="MenuBarBorder">
-          <Image Source="/Assets/Images/MenuBar/pc.png">
-            <i:Interaction.Behaviors>
-              <ia:EventTriggerBehavior EventName="Tapped">
-                <ia:InvokeCommandAction Command="{Binding OpenWorkplacesPage}"/>
-              </ia:EventTriggerBehavior>
-            </i:Interaction.Behaviors>
-          </Image>
-        </Border>
-        <Border Classes="MenuBarBorder">
-          <Image Source="/Assets/Images/MenuBar/todo.png">
-            <i:Interaction.Behaviors>
-              <ia:EventTriggerBehavior EventName="Tapped">
-                <ia:InvokeCommandAction Command="{Binding OpenTasksPage}"/>
-              </ia:EventTriggerBehavior>
-            </i:Interaction.Behaviors>
-          </Image>
-        </Border>
-        <Border Classes="MenuBarBorder">
-          <Image Source="/Assets/Images/MenuBar/key.png">
-            <i:Interaction.Behaviors>
-              <ia:EventTriggerBehavior EventName="Tapped">
-                <ia:InvokeCommandAction Command="{Binding OpenPasswordsPage}"/>
-              </ia:EventTriggerBehavior>
-            </i:Interaction.Behaviors>
-          </Image>
-        </Border>
-        <Border Classes="MenuBarBorder">
-          <Image Source="/Assets/Images/MenuBar/server.png">
-            <i:Interaction.Behaviors>
-              <ia:EventTriggerBehavior EventName="Tapped">
-                <ia:InvokeCommandAction Command="{Binding OpenServersPage}"/>
-              </ia:EventTriggerBehavior>
-            </i:Interaction.Behaviors>
-          </Image>
-        </Border>
-        <Border Classes="MenuBarBorder">
-          <Image Source="/Assets/Images/MenuBar/apps.png">
-            <i:Interaction.Behaviors>
-              <ia:EventTriggerBehavior EventName="Tapped">
-                <ia:InvokeCommandAction Command="{Binding OpenAppsPage}"/>
-              </ia:EventTriggerBehavior>
-            </i:Interaction.Behaviors>
-          </Image>
-        </Border>
-        <Border Classes="MenuBarBorder">
-          <Image Source="/Assets/Images/MenuBar/contacts.png">
-            <i:Interaction.Behaviors>
-              <ia:EventTriggerBehavior EventName="Tapped">
-                <ia:InvokeCommandAction Command="{Binding OpenContactsPage}"/>
-              </ia:EventTriggerBehavior>
-            </i:Interaction.Behaviors>
-          </Image>
-        </Border>
-        <Border Classes="MenuBarBorder">
-          <Image Source="/Assets/Images/MenuBar/paint.png">
-            <i:Interaction.Behaviors>
-              <ia:EventTriggerBehavior EventName="Tapped">
-                <ia:InvokeCommandAction Command="{Binding OpenCartidgesPage}"/>
-              </ia:EventTriggerBehavior>
-            </i:Interaction.Behaviors>
-          </Image>
-        </Border>
-      </StackPanel>
-    </SplitView.Pane>
-    <reactiveUi:RoutedViewHost Router="{Binding Router}"/>
-  </SplitView>
+  <Grid ColumnDefinitions="60,*"
+        RowDefinitions="*,50">
+    <StackPanel>
+      <Border Classes="MenuBarBorder">
+        <Image Source="/Assets/Images/MenuBar/processor.png">
+          <i:Interaction.Behaviors>
+            <ia:EventTriggerBehavior EventName="Tapped">
+              <ia:InvokeCommandAction Command="{Binding OpenComputersPage}"/>
+            </ia:EventTriggerBehavior>
+          </i:Interaction.Behaviors>
+        </Image>
+      </Border>
+      <Border Classes="MenuBarBorder">
+        <Image Source="/Assets/Images/MenuBar/printer.png">
+          <i:Interaction.Behaviors>
+            <ia:EventTriggerBehavior EventName="Tapped">
+              <ia:InvokeCommandAction Command="{Binding OpenPrintersPage}"/>
+            </ia:EventTriggerBehavior>
+          </i:Interaction.Behaviors>
+        </Image>
+      </Border>
+      <Border Classes="MenuBarBorder">
+        <Image Source="/Assets/Images/MenuBar/monitor.png">
+          <i:Interaction.Behaviors>
+            <ia:EventTriggerBehavior EventName="Tapped">
+              <ia:InvokeCommandAction Command="{Binding OpenMonitorsPage}"/>
+            </ia:EventTriggerBehavior>
+          </i:Interaction.Behaviors>
+        </Image>
+      </Border>
+      <Border Classes="MenuBarBorder">
+        <Image Source="/Assets/Images/MenuBar/usb.png">
+          <i:Interaction.Behaviors>
+            <ia:EventTriggerBehavior EventName="Tapped">
+              <ia:InvokeCommandAction Command="{Binding OpenPeripheryPage}"/>
+            </ia:EventTriggerBehavior>
+          </i:Interaction.Behaviors>
+        </Image>
+      </Border>
+      <Border Classes="MenuBarBorder">
+        <Image Source="/Assets/Images/MenuBar/users.png">
+          <i:Interaction.Behaviors>
+            <ia:EventTriggerBehavior EventName="Tapped">
+              <ia:InvokeCommandAction Command="{Binding OpenUsersPage}"/>
+            </ia:EventTriggerBehavior>
+          </i:Interaction.Behaviors>
+        </Image>
+      </Border>
+      <Border Classes="MenuBarBorder">
+        <Image Source="/Assets/Images/MenuBar/rutoken.png">
+          <i:Interaction.Behaviors>
+            <ia:EventTriggerBehavior EventName="Tapped">
+              <ia:InvokeCommandAction Command="{Binding OpenRutokensPage}"/>
+            </ia:EventTriggerBehavior>
+          </i:Interaction.Behaviors>
+        </Image>
+      </Border>
+      <Border Classes="MenuBarBorder">
+        <Image Source="/Assets/Images/MenuBar/pc.png">
+          <i:Interaction.Behaviors>
+            <ia:EventTriggerBehavior EventName="Tapped">
+              <ia:InvokeCommandAction Command="{Binding OpenWorkplacesPage}"/>
+            </ia:EventTriggerBehavior>
+          </i:Interaction.Behaviors>
+        </Image>
+      </Border>
+      <Border Classes="MenuBarBorder">
+        <Image Source="/Assets/Images/MenuBar/todo.png">
+          <i:Interaction.Behaviors>
+            <ia:EventTriggerBehavior EventName="Tapped">
+              <ia:InvokeCommandAction Command="{Binding OpenTasksPage}"/>
+            </ia:EventTriggerBehavior>
+          </i:Interaction.Behaviors>
+        </Image>
+      </Border>
+      <Border Classes="MenuBarBorder">
+        <Image Source="/Assets/Images/MenuBar/key.png">
+          <i:Interaction.Behaviors>
+            <ia:EventTriggerBehavior EventName="Tapped">
+              <ia:InvokeCommandAction Command="{Binding OpenPasswordsPage}"/>
+            </ia:EventTriggerBehavior>
+          </i:Interaction.Behaviors>
+        </Image>
+      </Border>
+      <Border Classes="MenuBarBorder">
+        <Image Source="/Assets/Images/MenuBar/server.png">
+          <i:Interaction.Behaviors>
+            <ia:EventTriggerBehavior EventName="Tapped">
+              <ia:InvokeCommandAction Command="{Binding OpenServersPage}"/>
+            </ia:EventTriggerBehavior>
+          </i:Interaction.Behaviors>
+        </Image>
+      </Border>
+      <Border Classes="MenuBarBorder">
+        <Image Source="/Assets/Images/MenuBar/apps.png">
+          <i:Interaction.Behaviors>
+            <ia:EventTriggerBehavior EventName="Tapped">
+              <ia:InvokeCommandAction Command="{Binding OpenAppsPage}"/>
+            </ia:EventTriggerBehavior>
+          </i:Interaction.Behaviors>
+        </Image>
+      </Border>
+      <Border Classes="MenuBarBorder">
+        <Image Source="/Assets/Images/MenuBar/contacts.png">
+          <i:Interaction.Behaviors>
+            <ia:EventTriggerBehavior EventName="Tapped">
+              <ia:InvokeCommandAction Command="{Binding OpenContactsPage}"/>
+            </ia:EventTriggerBehavior>
+          </i:Interaction.Behaviors>
+        </Image>
+      </Border>
+      <Border Classes="MenuBarBorder">
+        <Image Source="/Assets/Images/MenuBar/paint.png">
+          <i:Interaction.Behaviors>
+            <ia:EventTriggerBehavior EventName="Tapped">
+              <ia:InvokeCommandAction Command="{Binding OpenCartidgesPage}"/>
+            </ia:EventTriggerBehavior>
+          </i:Interaction.Behaviors>
+        </Image>
+      </Border>
+    </StackPanel>
+    <Border Classes="MenuBarBorder"
+            Grid.Row="1">
+      <Image Source="/Assets/Images/MenuBar/brush.png">
+        <i:Interaction.Behaviors>
+          <ia:EventTriggerBehavior EventName="Tapped">
+            <ia:InvokeCommandAction Command="{Binding ChangeTheme}"/>
+          </ia:EventTriggerBehavior>
+        </i:Interaction.Behaviors>
+      </Image>
+    </Border>
+    <reactiveUi:RoutedViewHost Router="{Binding Router}"
+                               Grid.RowSpan="2"
+                               Grid.Column="1"/>
+  </Grid>
 </Window>

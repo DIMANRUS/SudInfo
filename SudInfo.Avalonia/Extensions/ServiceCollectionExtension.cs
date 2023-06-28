@@ -1,4 +1,5 @@
 ﻿namespace SudInfo.Avalonia.Extensions;
+
 internal static class ServiceCollectionExtension
 {
     public static readonly IServiceProvider ServiceProvider = ServiceProvider = new ServiceCollection()

@@ -8,23 +8,14 @@
              d:DesignHeight="450"
              xmlns:i="using:Avalonia.Xaml.Interactivity"
              xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
-             Name="Root"
              x:Class="SudInfo.Avalonia.Views.Pages.MonitorsPage">
   <i:Interaction.Behaviors>
     <ia:EventTriggerBehavior EventName="Initialized">
-      <ia:InvokeCommandAction Command="{Binding Initialized}"/>
+      <ia:InvokeCommandAction Command="{Binding LoadMonitors}"/>
     </ia:EventTriggerBehavior>
   </i:Interaction.Behaviors>
-  <UserControl.Styles>
-    <Style Selector="Image">
-      <Setter Property="Cursor"
-              Value="Hand"/>
-      <Setter Property="Height"
-              Value="30"/>
-    </Style>
-  </UserControl.Styles>
   <Grid RowDefinitions="40,*"
-        ColumnDefinitions="105,*, 40, 40">
+        ColumnDefinitions="105,*, 40,40,40, 40">
     <TextBlock Text="Мониторы"
                Margin="10"
                FontWeight="Bold"
@@ -57,9 +48,26 @@
         </ia:EventTriggerBehavior>
       </i:Interaction.Behaviors>
     </Image>
-    <DataGrid Items="{Binding Monitors}"
+    <Image Source="/Assets/Images/edit.png"
+           Grid.Column="4">
+      <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="Tapped">
+          <ia:InvokeCommandAction Command="{Binding OpenEditMonitorWindow}"/>
+        </ia:EventTriggerBehavior>
+      </i:Interaction.Behaviors>
+    </Image>
+    <Image Source="/Assets/Images/remove.png"
+           Grid.Column="5">
+      <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="Tapped">
+          <ia:InvokeCommandAction Command="{Binding RemoveMonitor}"/>
+        </ia:EventTriggerBehavior>
+      </i:Interaction.Behaviors>
+    </Image>
+    <DataGrid ItemsSource="{Binding Monitors}"
+              SelectedItem="{Binding SelectedMonitor}"
               Grid.Row="1"
-              Grid.ColumnSpan="4">
+              Grid.ColumnSpan="6">
       <DataGrid.Columns>
         <DataGridTextColumn Binding="{Binding Name}"
                             Header="Наименование монитора"
@@ -86,30 +94,6 @@
         <DataGridTextColumn Header="Кабинет"
                             Binding="{Binding Computer.Cabinet}"
                             IsReadOnly="True"/>
-        <DataGridTemplateColumn Width="40">
-          <DataTemplate>
-            <Image Source="/Assets/Images/edit.png">
-              <i:Interaction.Behaviors>
-                <ia:EventTriggerBehavior EventName="Tapped">
-                  <ia:InvokeCommandAction Command="{Binding DataContext.OpenEditMonitorWindow, ElementName=Root}"
-                                          CommandParameter="{Binding Id}"/>
-                </ia:EventTriggerBehavior>
-              </i:Interaction.Behaviors>
-            </Image>
-          </DataTemplate>
-        </DataGridTemplateColumn>
-        <DataGridTemplateColumn>
-          <DataTemplate>
-            <Image Source="/Assets/Images/remove.png">
-              <i:Interaction.Behaviors>
-                <ia:EventTriggerBehavior EventName="Tapped">
-                  <ia:InvokeCommandAction Command="{Binding DataContext.RemoveMonitor, ElementName=Root}"
-                                          CommandParameter="{Binding Id}"/>
-                </ia:EventTriggerBehavior>
-              </i:Interaction.Behaviors>
-            </Image>
-          </DataTemplate>
-        </DataGridTemplateColumn>
       </DataGrid.Columns>
     </DataGrid>
   </Grid>

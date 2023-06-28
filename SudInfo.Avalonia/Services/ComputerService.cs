@@ -1,20 +1,22 @@
 ﻿namespace SudInfo.Avalonia.Services;
+
 public class ComputerService : BaseService
 {
-    #region Get Methods Realization
-    public async Task<Result<Computer>> GetComputerById(int id)
+    #region Get Methods
+
+    public static async Task<Result<Computer>> GetComputerById(int id)
     {
         try
         {
             using SudInfoDbContext applicationDBContext = new();
             var computer = await applicationDBContext.Computers.AsNoTracking().Include(x => x.User).FirstOrDefaultAsync(x => x.Id == id);
-            if (computer == null)
-                throw new Exception("Computer not Found");
-            return new()
-            {
-                Success = true,
-                Object = computer
-            };
+            return computer == null
+                ? throw new Exception("Computer not Found")
+                : new()
+                {
+                    Success = true,
+                    Object = computer
+                };
         }
         catch (Exception ex)
         {
@@ -25,51 +27,22 @@ public class ComputerService : BaseService
             };
         }
     }
-    public async Task<Result<List<Computer>>> GetComputers()
+    public static async Task<IReadOnlyList<Computer>> GetComputers()
     {
-        try
-        {
-            using SudInfoDbContext applicationDBContext = new();
-            var computers = await applicationDBContext.Computers.AsNoTracking().Include(x => x.User).ToListAsync();
-            return new()
-            {
-                Success = true,
-                Object = computers
-            };
-        }
-        catch (Exception ex)
-        {
-            return new()
-            {
-                Success = false,
-                Message = ex.Message
-            };
-        }
+        using SudInfoDbContext applicationDBContext = new();
+        var computers = await applicationDBContext.Computers.AsNoTracking().Include(x => x.User).ToListAsync();
+        return computers;
     }
-    public async Task<Result<List<Computer>>> GetComputerNames()
+    public static async Task<IReadOnlyList<Computer>> GetComputerNames()
     {
-        try
-        {
-            using SudInfoDbContext applicationDBContext = new();
-            var computerNames = await applicationDBContext.Computers.AsNoTracking().Select(x => new Computer() { Name = x.Name, Id = x.Id }).ToListAsync();
-            return new()
-            {
-                Object = computerNames,
-                Success = true
-            };
-        }
-        catch (Exception ex)
-        {
-            return new()
-            {
-                Message = ex.Message,
-                Success = false
-            };
-        }
+        using SudInfoDbContext applicationDBContext = new();
+        var computerNames = await applicationDBContext.Computers.AsNoTracking().Select(x => new Computer() { Name = x.Name, Id = x.Id }).ToListAsync();
+        return computerNames;
     }
+
     #endregion
 
-    public async Task<Result> AddComputer(Computer computer)
+    public static async Task<Result> AddComputer(Computer computer)
     {
         try
         {
@@ -94,7 +67,7 @@ public class ComputerService : BaseService
             };
         }
     }
-    public async Task<Result> RemoveComputerById(int id)
+    public static async Task<Result> RemoveComputerById(int id)
     {
         try
         {

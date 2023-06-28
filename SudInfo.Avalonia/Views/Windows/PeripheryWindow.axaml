@@ -16,7 +16,7 @@
         x:Class="SudInfo.Avalonia.Views.Windows.PeripheryWindow">
   <i:Interaction.Behaviors>
     <ia:EventTriggerBehavior EventName="Initialized">
-      <ia:InvokeCommandAction Command="{Binding Initialized}"/>
+      <ia:InvokeCommandAction Command="{Binding LoadComputers}"/>
     </ia:EventTriggerBehavior>
   </i:Interaction.Behaviors>
   <StackPanel Margin="10"
@@ -30,22 +30,20 @@
     <TextBox Text="{Binding Periphery.InventarNumber}"
              MaxLength="50"
              Watermark="Инвентарный номер"/>
-    <ComboBox
-      HorizontalAlignment="Stretch"
-      Items="{Binding PeripheryTypes}"
-      SelectedItem="{Binding Periphery.Type}"/>
+    <ComboBox HorizontalAlignment="Stretch"
+              ItemsSource="{Binding PeripheryTypes}"
+              SelectedItem="{Binding Periphery.Type}"/>
     <StackPanel Orientation="Horizontal">
       <CheckBox Name="IsComputerBox"
                 IsChecked="{Binding IsComputer}"/>
-      <ComboBox
-        Items="{Binding Computers}"
-        SelectedItem="{Binding Periphery.Computer}"
-        Width="252"
-        IsEnabled="{Binding #IsComputerBox.IsChecked}"
-        AutoScrollToSelectedItem="True"
-        PlaceholderText="Компьютер">
+      <ComboBox ItemsSource="{Binding Computers}"
+                SelectedItem="{Binding Periphery.Computer}"
+                Width="252"
+                IsEnabled="{Binding #IsComputerBox.IsChecked}"
+                AutoScrollToSelectedItem="True"
+                PlaceholderText="Компьютер">
         <ComboBox.DataTemplates>
-          <DataTemplate DataType="models:Computer">
+          <DataTemplate DataType="{x:Type models:Computer}">
             <TextBlock Text="{Binding Name}"/>
           </DataTemplate>
         </ComboBox.DataTemplates>

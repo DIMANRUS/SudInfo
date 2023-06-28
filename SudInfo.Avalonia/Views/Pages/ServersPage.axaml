@@ -14,12 +14,12 @@
              x:DataType="viewModels:ServersPageViewModel">
   <i:Interaction.Behaviors>
     <ia:EventTriggerBehavior EventName="Initialized">
-      <ia:InvokeCommandAction Command="{Binding Initialized}"/>
+      <ia:InvokeCommandAction Command="{Binding LoadServerRacks}"/>
     </ia:EventTriggerBehavior>
   </i:Interaction.Behaviors>
   <StackPanel HorizontalAlignment="Center"
               Orientation="Horizontal">
-    <ItemsControl Items="{Binding ServerRacks}">
+    <ItemsControl ItemsSource="{Binding ServerRacks}">
       <ItemsControl.ItemsPanel>
         <ItemsPanelTemplate>
           <StackPanel Orientation="Horizontal"/>
@@ -53,7 +53,7 @@
                     BorderThickness="2"
                     Width="300">
               <StackPanel>
-                <ItemsControl Items="{Binding Servers}">
+                <ItemsControl ItemsSource="{Binding Servers}">
                   <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="models:Server">
                       <Border Margin="5"

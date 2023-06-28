@@ -1,25 +1,39 @@
 ﻿namespace SudInfo.Avalonia.ViewModels.PageViewModels;
+
 public class PeripheryPageViewModel : BaseRoutableViewModel
 {
     #region Services
+
     private readonly PeripheryService _peripheryService;
     private readonly DialogService _dialogService;
     private readonly NavigationService _navigationService;
+
     #endregion
 
     #region Collections
+
     [Reactive]
-    public ObservableCollection<Periphery> Peripheries { get; set; }
-    private IEnumerable<Periphery> PeripheriesFromDatabase { get; set; }
+    public ObservableCollection<Periphery>? Peripheries { get; set; }
+    private IEnumerable<Periphery>? PeripheriesFromDatabase { get; set; }
+
     #endregion
 
-    #region Public properties
+    #region Properties
+
     [Reactive]
     public string SearchText { get; set; } = string.Empty;
+
+    [Reactive]
+    public Periphery? SelectedPeriphery { get; set; }
+
     #endregion
 
-    #region Constructors
-    public PeripheryPageViewModel(PeripheryService peripheryService, DialogService dialogService, NavigationService navigationService)
+    #region Initialization
+
+    public PeripheryPageViewModel(
+        PeripheryService peripheryService,
+        DialogService dialogService,
+        NavigationService navigationService)
     {
         #region Services Initialization
         _peripheryService = peripheryService;
@@ -27,16 +41,13 @@ public class PeripheryPageViewModel : BaseRoutableViewModel
         _navigationService = navigationService;
         #endregion
 
-        eventHandlerClosedWindowDialog = async (s, e) =>
-        {
-            await LoadPeripheries();
-        };
-
-        Initialized = ReactiveCommand.CreateFromTask(LoadPeripheries);
+        eventHandlerClosedWindowDialog = async (s, e) => await LoadPeripheries();
     }
+
     #endregion
 
     #region Public Methods
+
     public async Task RefreshPeriphery()
     {
         await LoadPeripheries();
@@ -45,16 +56,20 @@ public class PeripheryPageViewModel : BaseRoutableViewModel
     {
         await _navigationService.ShowPeripheryWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog);
     }
-    public async Task OpenEditPeripheryWindow(int id)
+    public async Task OpenEditPeripheryWindow()
     {
-        await _navigationService.ShowPeripheryWindowDialog(WindowType.Edit, eventHandlerClosedWindowDialog, id);
+        if (SelectedPeriphery == null)
+            return;
+        await _navigationService.ShowPeripheryWindowDialog(WindowType.Edit, eventHandlerClosedWindowDialog, SelectedPeriphery.Id);
     }
-    public async Task RemovePeriphery(int id)
+    public async Task RemovePeriphery()
     {
+        if (SelectedPeriphery == null)
+            return;
         var dialogResult = await _dialogService.ShowMessageBox("Сообщение", "Вы действительно хотите удалить периферию?", buttonEnum: ButtonEnum.YesNo, icon: Icon.Question);
         if (dialogResult == ButtonResult.No)
             return;
-        var removePeripheryResult = await _peripheryService.RemovePeripheryById(id);
+        var removePeripheryResult = await PeripheryService.RemovePeripheryById(SelectedPeriphery.Id);
         if (!removePeripheryResult.Success)
         {
             await _dialogService.ShowMessageBox("Ошибка", $"Ошибка удаления периферии! Ошибка: {removePeripheryResult.Message}", icon: Icon.Error);
@@ -71,19 +86,12 @@ public class PeripheryPageViewModel : BaseRoutableViewModel
         }
         Peripheries = new(PeripheriesFromDatabase.Where(x => x.Name.ToLower().Contains(SearchText.ToLower())));
     }
-    #endregion
-
-    #region Private Methods
-    private async Task LoadPeripheries()
+    public async Task LoadPeripheries()
     {
-        var peripheriesResult = await _peripheryService.GetPeripheryList();
-        if (!peripheriesResult.Success)
-        {
-            await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения данных! Ошибка: {peripheriesResult.Message}", icon: Icon.Error);
-            return;
-        }
-        Peripheries = new(peripheriesResult.Object);
+        var peripheriesResult = await PeripheryService.GetPeripheryList();
+        Peripheries = new(peripheriesResult);
         PeripheriesFromDatabase = Peripheries;
     }
+
     #endregion
 }

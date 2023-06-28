@@ -1,45 +1,45 @@
 ﻿namespace SudInfo.Avalonia.ViewModels.PageViewModels;
+
 public class ServersPageViewModel : BaseRoutableViewModel
 {
     #region Services
+
     private readonly ServerRackService _serverRackService;
     private readonly ServerService _serverService;
     private readonly DialogService _dialogService;
     private readonly NavigationService _navigationService;
+
     #endregion
 
-    [Reactive]
-    public IReadOnlyList<ServerRack> ServerRacks { get; set; }
+    #region Collections
 
-    public ServersPageViewModel(ServerRackService serverRackService, DialogService dialogService, NavigationService navigationService, ServerService serverService)
+    [Reactive]
+    public IReadOnlyList<ServerRack>? ServerRacks { get; set; }
+
+    #endregion
+
+    #region Initialization
+
+    public ServersPageViewModel(
+        ServerRackService serverRackService,
+        DialogService dialogService,
+        NavigationService navigationService,
+        ServerService serverService)
     {
+        #region Services Initialization
         _navigationService = navigationService;
         _serverRackService = serverRackService;
         _dialogService = dialogService;
         _serverService = serverService;
+        #endregion
 
-        Initialized = ReactiveCommand.CreateFromTask(LoadServerRacks);
-
-        eventHandlerClosedWindowDialog = async (s, e) =>
-        {
-            await LoadServerRacks();
-        };
+        eventHandlerClosedWindowDialog = async (s, e) => await LoadServerRacks();
     }
 
-    #region Private Methods
-    private async Task LoadServerRacks()
-    {
-        var serverRacksResult = await _serverRackService.GetServerRacksWithServers();
-        if (!serverRacksResult.Success)
-        {
-            await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения данных! Ошибка: {serverRacksResult.Message}", icon: Icon.Error);
-            return;
-        }
-        ServerRacks = serverRacksResult.Object;
-    }
     #endregion
 
     #region Public Methods
+
     public async Task OpenAddServerWindow(ServerRack serverRack)
     {
         await _navigationService.ShowServerWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog, serverRack: serverRack);
@@ -50,7 +50,7 @@ public class ServersPageViewModel : BaseRoutableViewModel
     }
     public async Task RemoveServer(int id)
     {
-        var result = await _serverService.RemoveServer(id);
+        var result = await ServerService.RemoveServer(id);
         if (!result.Success)
         {
             await _dialogService.ShowMessageBox("Ошибка", $"Ошибка удаления сервера. Ошибка: {result.Message}", icon: Icon.Error);
@@ -69,7 +69,7 @@ public class ServersPageViewModel : BaseRoutableViewModel
     }
     public async Task RemoveServerRack(int id)
     {
-        var result = await _serverRackService.RemoveServerRack(id);
+        var result = await ServerRackService.RemoveServerRack(id);
         if (!result.Success)
         {
             await _dialogService.ShowMessageBox("Ошибка", $"Ошибка удаления серверной стойки. Ошибка: {result.Message}", icon: Icon.Error);
@@ -78,5 +78,16 @@ public class ServersPageViewModel : BaseRoutableViewModel
         await _dialogService.ShowMessageBox("Сообщение", $"Серверная стойка удалена", icon: Icon.Success);
         await LoadServerRacks();
     }
+    public async Task LoadServerRacks()
+    {
+        var serverRacksResult = await ServerRackService.GetServerRacksWithServers();
+        if (!serverRacksResult.Success)
+        {
+            await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения данных! Ошибка: {serverRacksResult.Message}", icon: Icon.Error);
+            return;
+        }
+        ServerRacks = serverRacksResult.Object;
+    }
+
     #endregion
 }

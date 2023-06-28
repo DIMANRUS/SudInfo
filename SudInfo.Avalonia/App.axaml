@@ -1,9 +1,10 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:converters="using:SudInfo.Avalonia.Converters"
-             x:Class="SudInfo.Avalonia.App">
+             x:Class="SudInfo.Avalonia.App"
+             RequestedThemeVariant="Light">
   <Application.Styles>
-    <FluentTheme Mode="Light"/>
+    <FluentTheme />
     <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml"/>
     <StyleInclude Source="avares://Avalonia.Controls.TreeDataGrid/Themes/Fluent.axaml"/>
     <Style Selector="Button">
@@ -21,6 +22,12 @@
     <Style Selector="TextBox">
       <Setter Property="UseFloatingWatermark"
               Value="True"/>
+    </Style>
+    <Style Selector="Image">
+      <Setter Property="Cursor"
+              Value="Hand"/>
+      <Setter Property="Height"
+              Value="30"/>
     </Style>
   </Application.Styles>
   <Application.Resources>

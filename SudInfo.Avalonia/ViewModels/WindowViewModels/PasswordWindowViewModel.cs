@@ -64,7 +64,7 @@ public class PasswordWindowViewModel : BaseViewModel
                 ButtonIsVisible = true;
                 SaveButtonText = "Сохранить пароль";
             }
-            var result = await _passwordService.GetPasswordEntity(id.GetValueOrDefault());
+            var result = await PasswordService.GetPasswordEntity(id.GetValueOrDefault());
             if (!result.Success)
             {
                 await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения компьютера! Ошибка: {result.Message}", true, icon: Icon.Error);

@@ -2,46 +2,55 @@
 
 public class WorkplacesPageViewModel : BaseRoutableViewModel
 {
-    #region Private fields
+    #region Services
+
     private readonly NavigationService _navigationService;
+    private readonly DialogService _dialogService;
+    private readonly UserService _userService;
+
     #endregion
 
-    #region Public Properties
+    #region Properties
+
     [Reactive]
-    public List<User> Users { get; set; }
-    public IReadOnlyList<User> UsersFromDatabase { get; set; }
+    public IReadOnlyList<User>? Users { get; set; }
+
+    public IReadOnlyList<User>? UsersFromDatabase { get; set; }
+
     [Reactive]
     public string SearchText { get; set; } = string.Empty;
+
     #endregion
 
-    #region Constructors
-    public WorkplacesPageViewModel(UserService userService, DialogService dialogService, NavigationService navigationService)
+    #region Initialization
+
+    public WorkplacesPageViewModel(
+        UserService userService,
+        DialogService dialogService,
+        NavigationService navigationService)
     {
-        Initialized = ReactiveCommand.CreateFromTask(async () =>
-        {
-            var usersLoadResult = await userService.GetUsersWithComputers();
-            if (!usersLoadResult.Success)
-            {
-                await dialogService.ShowMessageBox("Ошибка", "Ошибка загрузки!", icon: Icon.Error);
-                return;
-            }
-            Users = usersLoadResult.Object;
-            UsersFromDatabase = usersLoadResult.Object;
-        });
+        #region Services Initialization
         _navigationService = navigationService;
+        _userService = userService;
+        _dialogService = dialogService;
+        #endregion
     }
+
     #endregion
 
     #region Public methods
+
     public void SearchBoxKeyUp()
     {
+        if (UsersFromDatabase == null)
+            return;
         string searchTextLower = SearchText.ToLower();
         if (string.IsNullOrWhiteSpace(SearchText))
         {
-            Users = new(UsersFromDatabase);
+            Users = new List<User>(UsersFromDatabase);
             return;
         }
-        Users = new(UsersFromDatabase.Where(x => x.FIO.ToLower().Contains(searchTextLower) ||
+        Users = new List<User>(UsersFromDatabase.Where(x => x.FIO.ToLower().Contains(searchTextLower) ||
                                                               x.Computers.Where(c => c.Name.ToLower().Contains(searchTextLower) || c.InventarNumber.Contains(searchTextLower)
                                                                 || c.Monitors.Where(m => m.Name.ToLower().Contains(searchTextLower) || m.InventarNumber.Contains(searchTextLower)).Any() ||
                                                                  c.Printers.Where(p => p.Name.ToLower().Contains(searchTextLower) || p.InventarNumber.Contains(searchTextLower)).Any()).Any()
@@ -63,5 +72,12 @@ public class WorkplacesPageViewModel : BaseRoutableViewModel
     {
         await _navigationService.ShowPeripheryWindowDialog(WindowType.View, peripheryId: id);
     }
+    public async Task LoadWorkplaces()
+    {
+        var usersLoadResult = await UserService.GetUsersWithComputers();
+        Users = usersLoadResult;
+        UsersFromDatabase = Users;
+    }
+
     #endregion
 }

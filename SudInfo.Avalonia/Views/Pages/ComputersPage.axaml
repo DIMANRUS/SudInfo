@@ -9,24 +9,15 @@
              xmlns:models="using:SudInfo.EfDataAccessLibrary.Models"
              d:DesignWidth="800"
              d:DesignHeight="450"
-             Name="Root"
              x:Class="SudInfo.Avalonia.Views.Pages.ComputersPage"
              x:DataType="viewModels:ComputersPageViewModel">
   <i:Interaction.Behaviors>
     <ia:EventTriggerBehavior EventName="Initialized">
-      <ia:InvokeCommandAction Command="{Binding Initialized}"/>
+      <ia:InvokeCommandAction Command="{Binding LoadComputers}"/>
     </ia:EventTriggerBehavior>
   </i:Interaction.Behaviors>
-  <UserControl.Styles>
-    <Style Selector="Image">
-      <Setter Property="Cursor"
-              Value="Hand"/>
-      <Setter Property="Height"
-              Value="30"/>
-    </Style>
-  </UserControl.Styles>
   <Grid RowDefinitions="40,*"
-        ColumnDefinitions="140, *, 40, 40,40">
+        ColumnDefinitions="140, *, 40,40,40, 40,40">
     <TextBlock Text="Компьютеры"
                Margin="10"
                FontWeight="Bold"
@@ -67,9 +58,26 @@
         </ia:EventTriggerBehavior>
       </i:Interaction.Behaviors>
     </Image>
-    <DataGrid Items="{Binding Computers}"
+    <Image Source="/Assets/Images/remove.png"
+           Grid.Column="5">
+      <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="Tapped">
+          <ia:InvokeCommandAction Command="{Binding RemoveComputer}"/>
+        </ia:EventTriggerBehavior>
+      </i:Interaction.Behaviors>
+    </Image>
+    <Image Source="/Assets/Images/edit.png"
+           Grid.Column="6">
+      <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="Tapped">
+          <ia:InvokeCommandAction Command="{Binding OpenEditComputerWindow}"/>
+        </ia:EventTriggerBehavior>
+      </i:Interaction.Behaviors>
+    </Image>
+    <DataGrid ItemsSource="{Binding Computers}"
+              SelectedItem="{Binding SelectedComputer}"
               Grid.Row="1"
-              Grid.ColumnSpan="5">
+              Grid.ColumnSpan="7">
       <DataGrid.Columns>
         <DataGridTextColumn Header="IP Адрес"
                             Binding="{Binding Ip}"
@@ -108,30 +116,6 @@
         <DataGridTextColumn Header="Кабинет"
                             Binding="{Binding Cabinet}"
                             IsReadOnly="True"/>
-        <DataGridTemplateColumn Width="40">
-          <DataTemplate>
-            <Image Source="/Assets/Images/edit.png">
-              <i:Interaction.Behaviors>
-                <ia:EventTriggerBehavior EventName="Tapped">
-                  <ia:InvokeCommandAction Command="{Binding DataContext.OpenEditComputerWindow, ElementName=Root}"
-                                          CommandParameter="{Binding Id}"/>
-                </ia:EventTriggerBehavior>
-              </i:Interaction.Behaviors>
-            </Image>
-          </DataTemplate>
-        </DataGridTemplateColumn>
-        <DataGridTemplateColumn>
-          <DataTemplate>
-            <Image Source="/Assets/Images/remove.png">
-              <i:Interaction.Behaviors>
-                <ia:EventTriggerBehavior EventName="Tapped">
-                  <ia:InvokeCommandAction Command="{Binding DataContext.RemoveComputer, ElementName=Root}"
-                                          CommandParameter="{Binding Id}"/>
-                </ia:EventTriggerBehavior>
-              </i:Interaction.Behaviors>
-            </Image>
-          </DataTemplate>
-        </DataGridTemplateColumn>
       </DataGrid.Columns>
     </DataGrid>
   </Grid>

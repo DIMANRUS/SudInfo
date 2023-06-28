@@ -1,59 +1,69 @@
-﻿namespace SudInfo.Avalonia.ViewModels.WindowViewModels;
+﻿using SudInfo.Avalonia.Services;
+
+namespace SudInfo.Avalonia.ViewModels.WindowViewModels;
 
 public class PeripheryWindowViewModel : BaseViewModel
 {
     #region Services
+
     private readonly PeripheryService _peripheryService;
     private readonly DialogService _dialogService;
+    private readonly ComputerService _computerService;
+
     #endregion
 
     #region Collections
+
     public static IEnumerable<PeripheryType> PeripheryTypes => Enum.GetValues(typeof(PeripheryType)).Cast<PeripheryType>();
+
     [Reactive]
-    public IEnumerable<Computer> Computers { get; set; }
+    public IEnumerable<Computer>? Computers { get; set; }
+
     #endregion
 
     #region Properties
+
     [Reactive]
     public Periphery Periphery { get; set; } = new();
+
     public bool IsComputer { get; set; }
+
     [Reactive]
     public string SaveButtonText { get; private set; } = "Добавить периферию";
+
     [Reactive]
     public bool IsButtonVisible { get; set; } = false;
 
     #endregion
 
-    #region Constructors
-    public PeripheryWindowViewModel(PeripheryService peripheryService, DialogService dialogService, ComputerService computerService)
+    #region Initialization
+
+    public PeripheryWindowViewModel(
+        PeripheryService peripheryService,
+        DialogService dialogService,
+        ComputerService computerService)
     {
-        #region Service Set
+        #region Service Initialization
         _peripheryService = peripheryService;
         _dialogService = dialogService;
+        _computerService = computerService;
         #endregion
-
-        Initialized = ReactiveCommand.CreateFromTask(async () =>
-        {
-            var computersResult = await computerService.GetComputerNames();
-            if (!computersResult.Success)
-            {
-                await dialogService.ShowMessageBox("Ошибка", "Ошибка загрузки компьютеров!", icon: Icon.Error);
-                return;
-            }
-            Computers = computersResult.Object;
-        });
     }
 
     public PeripheryWindowViewModel()
     {
     }
+
     #endregion
 
     #region Private Fields
+
     private WindowType _windowType;
+
     #endregion
 
     #region Public Methods
+
     public async Task SavePeriphery()
     {
         if (!ValidationModel(Periphery))
@@ -62,7 +72,7 @@ public class PeripheryWindowViewModel : BaseViewModel
             Periphery.Computer = null;
         Result computerResult = _windowType switch
         {
-            WindowType.Add => await _peripheryService.AddPeriphery(Periphery),
+            WindowType.Add => await PeripheryService.AddPeriphery(Periphery),
             _ => await _peripheryService.Update(Periphery)
         };
         if (!computerResult.Success)
@@ -83,7 +93,7 @@ public class PeripheryWindowViewModel : BaseViewModel
             {
                 SaveButtonText = "Сохранить периферию";
             }
-            var peripheryResult = await _peripheryService.GetPeripheryById(id.GetValueOrDefault());
+            var peripheryResult = await PeripheryService.GetPeripheryById(id.GetValueOrDefault());
             if (!peripheryResult.Success)
             {
                 await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения периферии! Ошибка: {peripheryResult.Message}", true, icon: Icon.Error);
@@ -92,5 +102,11 @@ public class PeripheryWindowViewModel : BaseViewModel
             Periphery = peripheryResult.Object;
         }
     }
+    public async Task LoadComputers()
+    {
+        var computersResult = await ComputerService.GetComputerNames();
+        Computers = computersResult;
+    }
+
     #endregion
 }

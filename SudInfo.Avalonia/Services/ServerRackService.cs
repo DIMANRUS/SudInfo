@@ -1,14 +1,15 @@
 ﻿namespace SudInfo.Avalonia.Services;
+
 public class ServerRackService : BaseService
 {
-    public async Task<Result<IReadOnlyList<ServerRack>>> GetServerRacksWithServers()
+    public static async Task<Result<IReadOnlyList<ServerRack>>> GetServerRacksWithServers()
     {
         try
         {
             using SudInfoDbContext applicationDBContext = new();
             var serverRacks = await applicationDBContext.ServerRacks
                 .AsNoTracking()
-                .Include(x=>x.Servers)
+                .Include(x => x.Servers)
                 .ToListAsync();
             return new()
             {
@@ -25,14 +26,15 @@ public class ServerRackService : BaseService
             };
         }
     }
-    public async Task<Result<ServerRack>> GetServerRack(int id)
+    public static async Task<Result<ServerRack>> GetServerRack(int id)
     {
         try
         {
             using SudInfoDbContext applicationDBContext = new();
             var serverRack = await applicationDBContext.ServerRacks
                 .AsNoTracking()
-                .SingleOrDefaultAsync(x => x.Id == id);
+                .SingleOrDefaultAsync(x => x.Id == id)
+                ?? throw new Exception("Серверна стойка не найдена");
             return new()
             {
                 Success = true,
@@ -48,28 +50,13 @@ public class ServerRackService : BaseService
             };
         }
     }
-    public async Task<Result<int>> GetNumberServerRacks()
+    public static async Task<int> GetNumberServerRacks()
     {
-        try
-        {
-            using SudInfoDbContext sudInfoDbContext = new();
-            int numberServerRacks = await sudInfoDbContext.ServerRacks.CountAsync();
-            return new()
-            {
-                Object = numberServerRacks,
-                Success = true
-            };
-        }
-        catch (Exception ex)
-        {
-            return new()
-            {
-                Message = ex.Message,
-                Success = false
-            };
-        }
+        using SudInfoDbContext sudInfoDbContext = new();
+        int numberServerRacks = await sudInfoDbContext.ServerRacks.CountAsync();
+        return numberServerRacks;
     }
-    public async Task<Result> RemoveServerRack(int id)
+    public static async Task<Result> RemoveServerRack(int id)
     {
         try
         {

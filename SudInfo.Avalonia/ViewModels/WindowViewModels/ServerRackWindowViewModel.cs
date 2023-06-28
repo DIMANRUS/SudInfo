@@ -35,7 +35,7 @@ public class ServerRackWindowViewModel : BaseViewModel
         if (id != null)
         {
             SaveButtonText = "Сохранить серверную стойку";
-            var server = await _serverRackService.GetServerRack(id.GetValueOrDefault());
+            var server = await ServerRackService.GetServerRack(id.GetValueOrDefault());
             if (!server.Success)
             {
                 await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения серверной стойки! Ошибка: {server.Message}", true, icon: Icon.Error);
@@ -48,13 +48,8 @@ public class ServerRackWindowViewModel : BaseViewModel
     {
         if (_windowType == WindowType.Add)
         {
-            var result = await _serverRackService.GetNumberServerRacks();
-            if (!result.Success)
-            {
-                await _dialogService.ShowMessageBox("Ошибка","Ошибка загрузки!", true);
-                return;
-            }
-            ServerRack.Position = result.Object + 1;
+            var result = await ServerRackService.GetNumberServerRacks();
+            ServerRack.Position = ++result;
         }
         Result serverRackResult = _windowType switch
         {

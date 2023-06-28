@@ -10,23 +10,14 @@
              xmlns:i="using:Avalonia.Xaml.Interactivity"
              xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
              xmlns:models="using:SudInfo.EfDataAccessLibrary.Models"
-             x:DataType="viewModels:PeripheryPageViewModel"
-             Name="Root">
+             x:DataType="viewModels:PeripheryPageViewModel">
   <i:Interaction.Behaviors>
     <ia:EventTriggerBehavior EventName="Initialized">
-      <ia:InvokeCommandAction Command="{Binding Initialized}"/>
+      <ia:InvokeCommandAction Command="{Binding LoadPeripheries}"/>
     </ia:EventTriggerBehavior>
   </i:Interaction.Behaviors>
-  <UserControl.Styles>
-    <Style Selector="Image">
-      <Setter Property="Cursor"
-              Value="Hand"/>
-      <Setter Property="Height"
-              Value="30"/>
-    </Style>
-  </UserControl.Styles>
   <Grid RowDefinitions="40,*"
-        ColumnDefinitions="140, *, 40, 40">
+        ColumnDefinitions="140, *, 40,40,40, 40">
     <TextBlock Text="Периферия"
                Margin="10"
                FontWeight="Bold"
@@ -59,9 +50,26 @@
         </ia:EventTriggerBehavior>
       </i:Interaction.Behaviors>
     </Image>
-    <DataGrid Items="{Binding Peripheries}"
+    <Image Source="/Assets/Images/edit.png"
+           Grid.Column="4">
+      <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="Tapped">
+          <ia:InvokeCommandAction Command="{Binding OpenEditPeripheryWindow}"/>
+        </ia:EventTriggerBehavior>
+      </i:Interaction.Behaviors>
+    </Image>
+    <Image Source="/Assets/Images/remove.png"
+           Grid.Column="5">
+      <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="Tapped">
+          <ia:InvokeCommandAction Command="{Binding RemovePeriphery}"/>
+        </ia:EventTriggerBehavior>
+      </i:Interaction.Behaviors>
+    </Image>
+    <DataGrid ItemsSource="{Binding Peripheries}"
+              SelectedItem="{Binding SelectedPeriphery}"
               Grid.Row="1"
-              Grid.ColumnSpan="4"
+              Grid.ColumnSpan="6"
               x:DataType="models:Periphery">
       <DataGrid.Columns>
         <DataGridTextColumn Header="Наименование"
@@ -86,30 +94,6 @@
         <DataGridTextColumn Header="Кабинет"
                             Binding="{Binding Computer.Cabinet}"
                             IsReadOnly="True"/>
-        <DataGridTemplateColumn Width="40">
-          <DataTemplate>
-            <Image Source="/Assets/Images/edit.png">
-              <i:Interaction.Behaviors>
-                <ia:EventTriggerBehavior EventName="Tapped">
-                  <ia:InvokeCommandAction Command="{Binding DataContext.OpenEditPeripheryWindow, ElementName=Root}"
-                                          CommandParameter="{Binding Id}"/>
-                </ia:EventTriggerBehavior>
-              </i:Interaction.Behaviors>
-            </Image>
-          </DataTemplate>
-        </DataGridTemplateColumn>
-        <DataGridTemplateColumn>
-          <DataTemplate>
-            <Image Source="/Assets/Images/remove.png">
-              <i:Interaction.Behaviors>
-                <ia:EventTriggerBehavior EventName="Tapped">
-                  <ia:InvokeCommandAction Command="{Binding DataContext.RemovePeriphery, ElementName=Root}"
-                                          CommandParameter="{Binding Id}"/>
-                </ia:EventTriggerBehavior>
-              </i:Interaction.Behaviors>
-            </Image>
-          </DataTemplate>
-        </DataGridTemplateColumn>
       </DataGrid.Columns>
     </DataGrid>
   </Grid>

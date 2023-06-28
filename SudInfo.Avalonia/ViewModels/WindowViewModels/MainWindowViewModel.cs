@@ -1,4 +1,6 @@
-﻿namespace SudInfo.Avalonia.ViewModels.WindowViewModels;
+﻿using Avalonia.Media;
+
+namespace SudInfo.Avalonia.ViewModels.WindowViewModels;
 
 public class MainWindowViewModel : ReactiveObject, IScreen
 {
@@ -55,18 +57,26 @@ public class MainWindowViewModel : ReactiveObject, IScreen
         Router.Navigate.Execute(ServiceCollectionExtension.ServiceProvider.GetService<PasswordsPageViewModel>());
     }
     public void OpenAppsPage()
-                       {
-                           Router.Navigate.Execute(ServiceCollectionExtension.ServiceProvider.GetService<AppsPageViewModel>());
-                       }
-
+    {
+        Router.Navigate.Execute(ServiceCollectionExtension.ServiceProvider.GetService<AppsPageViewModel>());
+    }
     public void OpenContactsPage()
     {
         Router.Navigate.Execute(ServiceCollectionExtension.ServiceProvider.GetService<ContactsPageViewModel>());
     }
-
     public void OpenCartidgesPage()
     {
         Router.Navigate.Execute(ServiceCollectionExtension.ServiceProvider.GetService<CartridgesPageViewModel>());
+    }
+    public async Task ChangeTheme()
+    {
+        AppSettings appSettings = new()
+        {
+            Theme = Application.Current.ActualThemeVariant == ThemeVariant.Dark ? ThemeVariant.Light : ThemeVariant.Dark
+        };
+        var json = JsonSerializer.Serialize(appSettings);
+        await File.WriteAllTextAsync("appsettings.json", json);
+        Application.Current.RequestedThemeVariant = appSettings.Theme;
     }
     #endregion
 }

@@ -52,7 +52,7 @@ public class ServerWindowViewModel : BaseViewModel
                 ButtonIsVisible = true;
                 SaveButtonText = "Сохранить сервер";
             }
-            var server = await _serverService.GetServer(id.GetValueOrDefault());
+            var server = await ServerService.GetServer(id.GetValueOrDefault());
             if (!server.Success)
             {
                 await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения сервера! Ошибка: {server.Message}", true, icon: Icon.Error);

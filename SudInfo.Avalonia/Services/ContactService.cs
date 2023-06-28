@@ -1,48 +1,16 @@
 ﻿namespace SudInfo.Avalonia.Services;
+
 public class ContactService : BaseService
 {
-    public async Task<Result<IReadOnlyList<Contact>>> GetContacts()
+    #region Get Methods
+
+    public static async Task<IReadOnlyList<Contact>> GetContacts()
     {
-        try
-        {
-            using SudInfoDbContext context = new();
-            var result = await context.Contacts.AsNoTracking().ToListAsync();
-            return new()
-            {
-                Object = result,
-                Success = true
-            };
-        }
-        catch (Exception ex)
-        {
-            return new()
-            {
-                Message = ex.Message
-            };
-        }
+        using SudInfoDbContext context = new();
+        var contacts = await context.Contacts.AsNoTracking().ToListAsync();
+        return contacts;
     }
-    public async Task<Result> RemoveContact(int id)
-    {
-        try
-        {
-            using SudInfoDbContext context = new();
-            var entity = await context.Contacts.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Contact not found");
-            context.Contacts.Remove(entity);
-            await context.SaveChangesAsync();
-            return new()
-            {
-                Success = true
-            };
-        }
-        catch (Exception ex)
-        {
-            return new()
-            {
-                Message = ex.Message
-            };
-        }
-    }
-    public async Task<Result<Contact>> GetContact(int id)
+    public static async Task<Result<Contact>> GetContact(int id)
     {
         try
         {
@@ -54,6 +22,30 @@ public class ContactService : BaseService
             {
                 Success = true,
                 Object = server
+            };
+        }
+        catch (Exception ex)
+        {
+            return new()
+            {
+                Message = ex.Message
+            };
+        }
+    }
+
+    #endregion
+
+    public static async Task<Result> RemoveContact(int id)
+    {
+        try
+        {
+            using SudInfoDbContext context = new();
+            var entity = await context.Contacts.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Contact not found");
+            context.Contacts.Remove(entity);
+            await context.SaveChangesAsync();
+            return new()
+            {
+                Success = true
             };
         }
         catch (Exception ex)

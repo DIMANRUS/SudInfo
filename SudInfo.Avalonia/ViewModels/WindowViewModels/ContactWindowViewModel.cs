@@ -1,10 +1,12 @@
 ﻿namespace SudInfo.Avalonia.ViewModels.WindowViewModels;
+
 public class ContactWindowViewModel : BaseViewModel
 {
     #region Services
     private readonly ContactService _contactService;
     private readonly DialogService _dialogService;
     #endregion
+
     #region Properties
     [Reactive]
     public Contact Contact { get; set; } = new();
@@ -13,6 +15,7 @@ public class ContactWindowViewModel : BaseViewModel
     [Reactive]
     public bool ButtonIsVisible { get; private set; } = false;
     #endregion
+
     #region Constructors
     public ContactWindowViewModel(ContactService contactService, DialogService dialogService)
     {
@@ -26,9 +29,11 @@ public class ContactWindowViewModel : BaseViewModel
     {
     }
     #endregion
+
     #region Private Fields
     private WindowType _windowType;
     #endregion
+
     #region Public Methods
     public async Task SaveContact()
     {
@@ -60,7 +65,7 @@ public class ContactWindowViewModel : BaseViewModel
                 ButtonIsVisible = true;
                 SaveButtonText = "Сохранить компьютер";
             }
-            var result = await _contactService.GetContact(id.GetValueOrDefault());
+            var result = await ContactService.GetContact(id.GetValueOrDefault());
             if (!result.Success)
             {
                 await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения контакта! Ошибка: {result.Message}", true, icon: Icon.Error);
