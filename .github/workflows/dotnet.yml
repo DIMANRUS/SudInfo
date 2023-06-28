@@ -21,6 +21,6 @@ jobs:
       with:
         dotnet-version: 7.0.x
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore src/SudInfo.sln
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build src/SudInfo.sln --no-restore
