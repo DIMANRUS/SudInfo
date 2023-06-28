@@ -59,38 +59,22 @@
     <TrimmableAssembly Include="Avalonia.Themes.Default" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia"
-                      Version="11.0.0-rc1.1" />
-    <PackageReference Include="Avalonia.Controls.DataGrid"
-                      Version="11.0.0-rc1.1" />
-    <PackageReference Include="Avalonia.Controls.TreeDataGrid"
-                      Version="11.0.0-rc1.1" />
-    <PackageReference Include="Avalonia.Desktop"
-                      Version="11.0.0-rc1.1" />
+    <PackageReference Include="Avalonia" Version="11.0.0-rc1.1" />
+    <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.0.0-rc1.1" />
+    <PackageReference Include="Avalonia.Controls.TreeDataGrid" Version="11.0.0-rc1.1" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.0.0-rc1.1" />
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-    <PackageReference Condition="'$(Configuration)' == 'Debug'"
-                      Include="Avalonia.Diagnostics"
-                      Version="11.0.0-rc1.1" />
-    <PackageReference Include="Avalonia.ReactiveUI"
-                      Version="11.0.0-rc1.1" />
-    <PackageReference Include="Avalonia.Themes.Fluent"
-                      Version="11.0.0-rc1.1" />
-    <PackageReference Include="Avalonia.Xaml.Behaviors"
-                      Version="11.0.0-rc1.1" />
-    <PackageReference Include="Avalonia.Xaml.Interactions"
-                      Version="11.0.0-rc1.1" />
-    <PackageReference Include="ClosedXML"
-                      Version="0.102.0" />
-    <PackageReference Include="MessageBox.Avalonia"
-                      Version="2.3.1-rc1" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection"
-                      Version="7.0.0" />
-    <PackageReference Include="ReactiveUI.Fody"
-                      Version="19.2.1" />
-    <PackageReference Include="ReactiveUI.Validation"
-                      Version="3.1.7" />
-    <PackageReference Include="System.Reactive"
-                      Version="6.0.0" />
+    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.0-rc1.1" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.0-rc1.1" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.0-rc1.1" />
+    <PackageReference Include="Avalonia.Xaml.Behaviors" Version="11.0.0-rc1.1" />
+    <PackageReference Include="Avalonia.Xaml.Interactions" Version="11.0.0-rc1.1" />
+    <PackageReference Include="ClosedXML" Version="0.102.0" />
+    <PackageReference Include="MessageBox.Avalonia" Version="2.3.1-rc1-1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="ReactiveUI.Fody" Version="19.2.1" />
+    <PackageReference Include="ReactiveUI.Validation" Version="3.1.7" />
+    <PackageReference Include="System.Reactive" Version="6.0.0" />
   </ItemGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\Images\**" />
