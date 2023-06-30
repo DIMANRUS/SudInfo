@@ -17,7 +17,7 @@
       <ia:InvokeCommandAction Command="{Binding LoadWorkplaces}"/>
     </ia:EventTriggerBehavior>
   </i:Interaction.Behaviors>
-  <Grid RowDefinitions="30,*">
+  <Grid RowDefinitions="50,*">
     <TextBox Watermark="Поиск по ФИО, названию и инвентарному номеру"
              Margin="5"
              UseFloatingWatermark="False"
@@ -41,7 +41,8 @@
           <StackPanel>
             <Border CornerRadius="10"
                     Padding="5"
-                    BoxShadow="0 0 15 Black"
+                    BorderBrush="DarkOrange"
+                    BorderThickness="1"
                     Margin="8">
               <StackPanel>
                 <TextBlock Text="{Binding FIO}"/>

@@ -20,7 +20,7 @@
                Margin="10"
                FontWeight="Bold"
                FontSize="20"/>
-    <TextBox Watermark="Поиск по названию"
+    <TextBox Watermark="Поиск по названию, номерам и сотруднику"
              Grid.Column="1"
              Margin="10 5 10 5"
              UseFloatingWatermark="False"

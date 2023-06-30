@@ -66,7 +66,7 @@ public class Computer : BaseModel
     public ICollection<Printer>? Printers { get; set; }
     
     [XLColumn(Ignore = true)]
-    public ICollection<AppEntity> Apps { get; set; }
+    public ICollection<AppEntity>? Apps { get; set; }
 }
 
 public enum OS

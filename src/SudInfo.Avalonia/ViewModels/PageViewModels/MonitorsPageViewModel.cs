@@ -79,12 +79,19 @@ public class MonitorsPageViewModel : BaseRoutableViewModel
     }
     public void SearchBoxKeyUp()
     {
+        if (MonitorsFromDataBase == null)
+            return;
         if (string.IsNullOrEmpty(SearchText))
         {
             Monitors = new(MonitorsFromDataBase);
             return;
         }
-        Monitors = new(MonitorsFromDataBase.Where(x => x.Name.ToLower().Contains(SearchText.ToLower())));
+        Monitors = new(MonitorsFromDataBase.Where(x => x.Name!.ToLower().Contains(SearchText.ToLower()) ||
+                                                    x.InventarNumber!.Contains(SearchText) ||
+                                                    x.SerialNumber!.Contains(SearchText) ||
+                                                    x.Computer != null && 
+                                                    x.Computer.User != null &&
+                                                    x.Computer.User.FIO.ToLower().Contains(SearchText.ToLower())));
     }
     public async Task LoadMonitors()
     {

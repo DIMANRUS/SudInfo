@@ -70,6 +70,7 @@
     <PackageReference Include="Avalonia.Xaml.Behaviors" Version="11.0.0-rc1.1" />
     <PackageReference Include="Avalonia.Xaml.Interactions" Version="11.0.0-rc1.1" />
     <PackageReference Include="ClosedXML" Version="0.102.0" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
     <PackageReference Include="MessageBox.Avalonia" Version="2.3.1-rc1-1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="ReactiveUI.Fody" Version="19.2.1" />
@@ -100,12 +101,6 @@
   </ItemGroup>
   <ItemGroup>
     <UpToDateCheckInput Remove="Views\Windows\PrinterWindow.axaml" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SudInfo.EfDataAccessLibrary\SudInfo.EfDataAccessLibrary.csproj" />

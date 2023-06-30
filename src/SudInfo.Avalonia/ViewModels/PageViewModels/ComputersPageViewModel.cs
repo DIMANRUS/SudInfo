@@ -94,17 +94,24 @@ public class ComputersPageViewModel : BaseRoutableViewModel
     }
     public async Task CreateExcelTable()
     {
+        if (Computers == null || Computers.Count == 0)
+            return;
         await ExcelService.CreateExcelTableFromEntity(Computers);
     }
     public void SearchBoxKeyUp()
     {
+        if (ComputersFromDataBase == null)
+            return;
         if (string.IsNullOrEmpty(SearchText))
         {
             Computers = new(ComputersFromDataBase);
             return;
         }
-
-        Computers = new(ComputersFromDataBase.Where(x => x.Name.ToLower().Contains(SearchText.ToLower())));
+        Computers = new(ComputersFromDataBase.Where(x => x.Name!.ToLower().Contains(SearchText.ToLower()) ||
+                                                    x.InventarNumber!.Contains(SearchText) ||
+                                                    x.SerialNumber!.Contains(SearchText) ||
+                                                    x.User != null &&
+                                                    x.User.FIO.ToLower().Contains(SearchText.ToLower())));
     }
     public async Task LoadComputers()
     {

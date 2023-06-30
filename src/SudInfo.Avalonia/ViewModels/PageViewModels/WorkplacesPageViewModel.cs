@@ -56,9 +56,9 @@ public class WorkplacesPageViewModel : BaseRoutableViewModel
                                                                  c.Printers.Where(p => p.Name.ToLower().Contains(searchTextLower) || p.InventarNumber.Contains(searchTextLower)).Any()).Any()
                                                               ));
     }
-    public async Task OpenViewComputerWindow(int id)
+    public void OpenViewComputerWindow(int id)
     {
-        await _navigationService.ShowComputerWindowDialog(WindowType.View, computerId: id);
+         _navigationService.ShowComputerWindowDialog(WindowType.View, computerId: id);
     }
     public async Task OpenViewPrinterWindow(int id)
     {
