@@ -402,3 +402,4 @@ SudInfoDatabase.db
 .DS_Store
 *.db-shm
 *.db-wal
+src/SudInfo.Avalonia/appsettings.json
