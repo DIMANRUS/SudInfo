@@ -77,12 +77,19 @@ public class PrintersPageViewModel : BaseRoutableViewModel
     }
     public void SearchBoxKeyUp()
     {
+        if (PrintersFromDataBase == null)
+            return;
         if (string.IsNullOrEmpty(SearchText))
         {
             Printers = new(PrintersFromDataBase);
             return;
         }
-        Printers = new(PrintersFromDataBase.Where(x => x.Name.ToLower().Contains(SearchText.ToLower())));
+        Printers = new(PrintersFromDataBase.Where(x => x.Name!.ToLower().Contains(SearchText.ToLower()) ||
+                                                       x.InventarNumber!.Contains(SearchText) ||
+                                                       x.SerialNumber!.Contains(SearchText) ||
+                                                       x.Computer != null &&
+                                                       x.Computer.User != null &&
+                                                       x.Computer.User.FIO.ToLower().Contains(SearchText.ToLower())));
     }
     public async Task LoadPrinters()
     {

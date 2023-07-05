@@ -28,7 +28,7 @@ public class DialogService
 
     public async Task<ButtonResult> ShowMessageBox(string title, string text, bool isCLosedWindow = false, ButtonEnum buttonEnum = ButtonEnum.Ok, Icon icon = Icon.Info)
     {
-        var result = await MessageBox.Avalonia.MessageBoxManager.GetMessageBoxStandardWindow(new MessageBoxStandardParams
+        var result = await MessageBoxManager.GetMessageBoxStandard(new MessageBoxStandardParams
         {
             ContentTitle = title,
             ContentMessage = text,
@@ -41,7 +41,7 @@ public class DialogService
             ButtonDefinitions = buttonEnum,
             Icon = icon,
             Topmost = true
-        }).ShowDialog(_currentWindow?.IsActive == true ? _currentWindow : _mainWindow);
+        }).ShowWindowDialogAsync(_currentWindow?.IsActive == true ? _currentWindow : _mainWindow);
         if (isCLosedWindow)
             _currentWindow?.Close();
         return result;

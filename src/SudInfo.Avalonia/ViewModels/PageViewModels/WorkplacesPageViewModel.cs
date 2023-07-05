@@ -51,27 +51,44 @@ public class WorkplacesPageViewModel : BaseRoutableViewModel
             return;
         }
         Users = new List<User>(UsersFromDatabase.Where(x => x.FIO.ToLower().Contains(searchTextLower) ||
-                                                              x.Computers.Where(c => c.Name.ToLower().Contains(searchTextLower) || c.InventarNumber.Contains(searchTextLower)
-                                                                || c.Monitors.Where(m => m.Name.ToLower().Contains(searchTextLower) || m.InventarNumber.Contains(searchTextLower)).Any() ||
-                                                                 c.Printers.Where(p => p.Name.ToLower().Contains(searchTextLower) || p.InventarNumber.Contains(searchTextLower)).Any()).Any()
-                                                              ));
+                                                            x.Computers.Any(c =>
+                                                                c.Name!.ToLower().Contains(searchTextLower) ||
+                                                                c.InventarNumber!.Contains(searchTextLower) ||
+                                                                c.SerialNumber!.Contains(searchTextLower) ||
+                                                                c.Monitors != null &&
+                                                                c.Monitors.Any(m =>
+                                                                    m.Name!.ToLower().Contains(searchTextLower) ||
+                                                                    m.InventarNumber!.Contains(searchTextLower) ||
+                                                                    m.SerialNumber!.Contains(searchTextLower)
+                                                                ) ||
+                                                                c.Printers != null &&
+                                                                c.Printers.Any(p =>
+                                                                    p.Name!.ToLower().Contains(searchTextLower) ||
+                                                                    p.InventarNumber!.Contains(searchTextLower) ||
+                                                                    p.SerialNumber!.Contains(searchTextLower)
+                                                                ))));
     }
-    public void OpenViewComputerWindow(int id)
+
+    public async Task OpenViewComputerWindow(object id)
     {
-         _navigationService.ShowComputerWindowDialog(WindowType.View, computerId: id);
+        await _navigationService.ShowComputerWindowDialog(WindowType.View, computerId: (int)id);
     }
-    public async Task OpenViewPrinterWindow(int id)
+
+    public async Task OpenViewPrinterWindow(object id)
     {
-        await _navigationService.ShowPrinterWindowDialog(WindowType.View, printerId: id);
+        await _navigationService.ShowPrinterWindowDialog(WindowType.View, printerId: (int)id);
     }
-    public async Task OpenViewMonitorWindow(int id)
+
+    public async Task OpenViewMonitorWindow(object id)
     {
-        await _navigationService.ShowMonitorWindowDialog(WindowType.View, monitorId: id);
+        await _navigationService.ShowMonitorWindowDialog(WindowType.View, monitorId: (int)id);
     }
-    public async Task OpenViewPeripheryWindow(int id)
+
+    public async Task OpenViewPeripheryWindow(object id)
     {
-        await _navigationService.ShowPeripheryWindowDialog(WindowType.View, peripheryId: id);
+        await _navigationService.ShowPeripheryWindowDialog(WindowType.View, peripheryId: (int)id);
     }
+
     public async Task LoadWorkplaces()
     {
         var usersLoadResult = await UserService.GetUsersWithComputers();

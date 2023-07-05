@@ -2,7 +2,7 @@
 
 public class Result<T> : Result
 {
-    public T Object { get; set; }
+    public T? Object { get; set; }
 }
 public class Result
 {

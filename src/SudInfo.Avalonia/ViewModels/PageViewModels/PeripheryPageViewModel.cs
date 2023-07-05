@@ -14,7 +14,10 @@ public class PeripheryPageViewModel : BaseRoutableViewModel
 
     [Reactive]
     public ObservableCollection<Periphery>? Peripheries { get; set; }
+
     private IEnumerable<Periphery>? PeripheriesFromDatabase { get; set; }
+
+    public static IEnumerable<PeripheryType> PeripheryTypes => Enum.GetValues(typeof(PeripheryType)).Cast<PeripheryType>();
 
     #endregion
 
@@ -25,6 +28,12 @@ public class PeripheryPageViewModel : BaseRoutableViewModel
 
     [Reactive]
     public Periphery? SelectedPeriphery { get; set; }
+
+    [Reactive]
+    public PeripheryType SelectedPeripheryType { get; set; } = Enum.GetValues(typeof(PeripheryType)).Cast<PeripheryType>().First();
+
+    [Reactive]
+    public bool IsPeripheryTypeFilter { get; set; }
 
     #endregion
 
@@ -41,7 +50,7 @@ public class PeripheryPageViewModel : BaseRoutableViewModel
         _navigationService = navigationService;
         #endregion
 
-        eventHandlerClosedWindowDialog = async (s, e) => await LoadPeripheries();
+        eventHandlerClosedWindowDialog = async (s, e) => await RefreshPeriphery();
     }
 
     #endregion
@@ -51,17 +60,21 @@ public class PeripheryPageViewModel : BaseRoutableViewModel
     public async Task RefreshPeriphery()
     {
         await LoadPeripheries();
+        SearchBoxKeyUp();
     }
+
     public async Task OpenAddPeripheryWindow()
     {
         await _navigationService.ShowPeripheryWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog);
     }
+
     public async Task OpenEditPeripheryWindow()
     {
         if (SelectedPeriphery == null)
             return;
         await _navigationService.ShowPeripheryWindowDialog(WindowType.Edit, eventHandlerClosedWindowDialog, SelectedPeriphery.Id);
     }
+
     public async Task RemovePeriphery()
     {
         if (SelectedPeriphery == null)
@@ -77,15 +90,37 @@ public class PeripheryPageViewModel : BaseRoutableViewModel
         }
         await LoadPeripheries();
     }
-    public void SearchBoxKeyUp()
+
+    public void SearchBoxKeyUp(object? checkedChangedEventArgs = null)
     {
-        if (string.IsNullOrEmpty(SearchText))
+        if (checkedChangedEventArgs != null)
         {
-            Peripheries = new(PeripheriesFromDatabase);
+            IsPeripheryTypeFilter = (bool)((CheckBox)((RoutedEventArgs)checkedChangedEventArgs).Source).IsChecked;
+        }
+        if (PeripheriesFromDatabase == null || Peripheries == null)
+        {
             return;
         }
-        Peripheries = new(PeripheriesFromDatabase.Where(x => x.Name.ToLower().Contains(SearchText.ToLower())));
+        Peripheries = new(PeripheriesFromDatabase.Where(x => x.Name!.ToLower().Contains(SearchText.ToLower()) ||
+                                                             x.InventarNumber!.Contains(SearchText) ||
+                                                             x.SerialNumber!.Contains(SearchText) ||
+                                                             x.Computer != null &&
+                                                             x.Computer.User != null &&
+                                                             x.Computer.User.FIO.ToLower().Contains(SearchText.ToLower())));
+        if (IsPeripheryTypeFilter)
+            Peripheries = new(Peripheries.Where(x => IsPeripheryTypeFilter &&
+                                                 x.Type == SelectedPeripheryType));
     }
+
+    public void SelectionPeripheryTypeChanged(object selectionChangedEventArgs)
+    {
+        if (Peripheries == null)
+            return;
+        PeripheryType selectedType = (PeripheryType)((ComboBox)((SelectionChangedEventArgs)selectionChangedEventArgs).Source).SelectedItem;
+        SelectedPeripheryType = selectedType;
+        SearchBoxKeyUp();
+    }
+
     public async Task LoadPeripheries()
     {
         var peripheriesResult = await PeripheryService.GetPeripheryList();

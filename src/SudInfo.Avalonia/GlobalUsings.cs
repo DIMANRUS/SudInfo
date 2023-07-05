@@ -1,6 +1,7 @@
 ﻿global using Avalonia;
 global using Avalonia.Controls;
 global using Avalonia.Data.Converters;
+global using Avalonia.Interactivity;
 global using Avalonia.Markup.Xaml;
 global using Avalonia.Media.Imaging;
 global using Avalonia.Platform;
@@ -14,6 +15,9 @@ global using MessageBox.Avalonia.Enums;
 
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.DependencyInjection;
+
+global using MsBox.Avalonia;
+global using MsBox.Avalonia.Enums;
 
 global using ReactiveUI;
 global using ReactiveUI.Fody.Helpers;

@@ -5,7 +5,7 @@ public abstract class BaseRoutableViewModel : BaseViewModel, IRoutableViewModel
     #region IRoutableViewModel Realization
 
     public string? UrlPathSegment { get; }
-    public IScreen HostScreen { get; }
+    public IScreen HostScreen => Locator.Current.GetService<IScreen>()!;
 
     #endregion
 

@@ -1,98 +1,112 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
-             xmlns:i="using:Avalonia.Xaml.Interactivity"
-             xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
-             xmlns:models="using:SudInfo.EfDataAccessLibrary.Models"
-             d:DesignWidth="800"
-             d:DesignHeight="450"
-             x:Class="SudInfo.Avalonia.Views.Pages.PrintersPage">
-  <i:Interaction.Behaviors>
-    <ia:EventTriggerBehavior EventName="Initialized">
-      <ia:InvokeCommandAction Command="{Binding LoadPrinters}"/>
-    </ia:EventTriggerBehavior>
-  </i:Interaction.Behaviors>
-  <Grid RowDefinitions="40,*"
-        ColumnDefinitions="180,*, 40,40,40, 40">
-    <TextBlock Text="Принтеры и МФУ"
-               Margin="10"
-               FontWeight="Bold"
-               FontSize="20"/>
-    <TextBox Watermark="Поиск по названию"
-             Grid.Column="1"
-             Margin="10 5 10 5"
-             UseFloatingWatermark="False"
-             Text="{Binding SearchText}"
-             MaxLength="50">
-      <i:Interaction.Behaviors>
-        <ia:EventTriggerBehavior EventName="KeyUp">
-          <ia:InvokeCommandAction Command="{Binding SearchBoxKeyUp}"/>
+<UserControl
+    x:Class="SudInfo.Avalonia.Views.Pages.PrintersPage"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="using:Avalonia.Xaml.Interactivity"
+    xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:SudInfo.EfDataAccessLibrary.Models"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="Initialized">
+            <ia:InvokeCommandAction Command="{Binding LoadPrinters}" />
         </ia:EventTriggerBehavior>
-      </i:Interaction.Behaviors>
-    </TextBox>
-    <Image Source="/Assets/Images/refresh.png"
-           Grid.Column="2">
-      <i:Interaction.Behaviors>
-        <ia:EventTriggerBehavior EventName="Tapped">
-          <ia:InvokeCommandAction Command="{Binding RefreshPrinters}"/>
-        </ia:EventTriggerBehavior>
-      </i:Interaction.Behaviors>
-    </Image>
-    <Image Source="/Assets/Images/add.png"
-           Grid.Column="3">
-      <i:Interaction.Behaviors>
-        <ia:EventTriggerBehavior EventName="Tapped">
-          <ia:InvokeCommandAction Command="{Binding OpenAddPrinterWindow}"/>
-        </ia:EventTriggerBehavior>
-      </i:Interaction.Behaviors>
-    </Image>
-    <Image Source="/Assets/Images/edit.png"
-           Grid.Column="4">
-      <i:Interaction.Behaviors>
-        <ia:EventTriggerBehavior EventName="Tapped">
-          <ia:InvokeCommandAction Command="{Binding OpenEditPrinterWindow}"/>
-        </ia:EventTriggerBehavior>
-      </i:Interaction.Behaviors>
-    </Image>
-    <Image Source="/Assets/Images/remove.png"
-           Grid.Column="5">
-      <i:Interaction.Behaviors>
-        <ia:EventTriggerBehavior EventName="Tapped">
-          <ia:InvokeCommandAction Command="{Binding RemovePrinter}"/>
-        </ia:EventTriggerBehavior>
-      </i:Interaction.Behaviors>
-    </Image>
-    <DataGrid ItemsSource="{Binding Printers}"
-              SelectedItem="{Binding SelectedMonitor}"
-              Grid.Row="1"
-              Grid.ColumnSpan="6"
-              x:DataType="models:Printer">
-      <DataGrid.Columns>
-        <DataGridTextColumn Header="Название"
-                            Binding="{Binding Name}"
-                            IsReadOnly="True"/>
-        <DataGridTextColumn Header="Тип"
-                            Binding="{Binding Type}"
-                            IsReadOnly="True"/>
-        <DataGridTextColumn Header="IP Адрес"
-                            Binding="{Binding Ip}"
-                            IsReadOnly="True"/>
-        <DataGridTextColumn Header="Кабинет"
-                            Binding="{Binding Cabinet}"
-                            IsReadOnly="True"/>
-        <DataGridTextColumn Header="Год выпуска"
-                            Binding="{Binding YearRelease}"
-                            IsReadOnly="True"/>
-        <DataGridTextColumn Header="Сотрудник"
-                            Binding="{Binding Computer.User.FIO}"
-                            Width="*"
-                            IsReadOnly="True"/>
-        <DataGridTextColumn Header="Кабинет"
-                            Binding="{Binding Cabinet}"
-                            IsReadOnly="True"/>
-      </DataGrid.Columns>
-    </DataGrid>
-  </Grid>
+    </i:Interaction.Behaviors>
+    <Grid ColumnDefinitions="180,*, 40,40,40, 40" RowDefinitions="40,*">
+        <TextBlock
+            Margin="10"
+            FontSize="20"
+            FontWeight="Bold"
+            Text="Принтеры и МФУ" />
+        <TextBox
+            Grid.Column="1"
+            Margin="10,5,10,5"
+            MaxLength="50"
+            Text="{Binding SearchText}"
+            UseFloatingWatermark="False"
+            Watermark="Поиск по названию, номерам и сотруднику">
+            <i:Interaction.Behaviors>
+                <ia:EventTriggerBehavior EventName="KeyUp">
+                    <ia:InvokeCommandAction Command="{Binding SearchBoxKeyUp}" />
+                </ia:EventTriggerBehavior>
+            </i:Interaction.Behaviors>
+        </TextBox>
+        <Image Grid.Column="2" Source="/Assets/Images/refresh.png">
+            <i:Interaction.Behaviors>
+                <ia:EventTriggerBehavior EventName="Tapped">
+                    <ia:InvokeCommandAction Command="{Binding RefreshPrinters}" />
+                </ia:EventTriggerBehavior>
+            </i:Interaction.Behaviors>
+        </Image>
+        <Image Grid.Column="3" Source="/Assets/Images/add.png">
+            <i:Interaction.Behaviors>
+                <ia:EventTriggerBehavior EventName="Tapped">
+                    <ia:InvokeCommandAction Command="{Binding OpenAddPrinterWindow}" />
+                </ia:EventTriggerBehavior>
+            </i:Interaction.Behaviors>
+        </Image>
+        <Image Grid.Column="4" Source="/Assets/Images/edit.png">
+            <i:Interaction.Behaviors>
+                <ia:EventTriggerBehavior EventName="Tapped">
+                    <ia:InvokeCommandAction Command="{Binding OpenEditPrinterWindow}" />
+                </ia:EventTriggerBehavior>
+            </i:Interaction.Behaviors>
+        </Image>
+        <Image Grid.Column="5" Source="/Assets/Images/remove.png">
+            <i:Interaction.Behaviors>
+                <ia:EventTriggerBehavior EventName="Tapped">
+                    <ia:InvokeCommandAction Command="{Binding RemovePrinter}" />
+                </ia:EventTriggerBehavior>
+            </i:Interaction.Behaviors>
+        </Image>
+        <DataGrid
+            Grid.Row="1"
+            Grid.ColumnSpan="6"
+            x:DataType="models:Printer"
+            ItemsSource="{Binding Printers}"
+            SelectedItem="{Binding SelectedMonitor}">
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    Binding="{Binding Name}"
+                    Header="Название"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    Binding="{Binding Type}"
+                    Header="Тип"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    Binding="{Binding Ip}"
+                    Header="IP Адрес"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    Binding="{Binding Cabinet}"
+                    Header="Кабинет"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    Binding="{Binding YearRelease}"
+                    Header="Год выпуска"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    Binding="{Binding InventarNumber}"
+                    Header="Инвентарный"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    Binding="{Binding SerialNumber}"
+                    Header="Серийный"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Computer.User.FIO}"
+                    Header="Сотрудник"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    Binding="{Binding Cabinet}"
+                    Header="Кабинет"
+                    IsReadOnly="True" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
 </UserControl>

@@ -76,12 +76,14 @@ public class UsersPageViewModel : BaseRoutableViewModel
     }
     public void SearchBoxKeyUp()
     {
+        if (UsersFromDataBase == null)
+            return;
         if (string.IsNullOrEmpty(SearchText))
         {
             Users = new(UsersFromDataBase);
             return;
         }
-        Users = new(UsersFromDataBase.Where(x => x.LastName.ToLower().Contains(SearchText.ToLower())));
+        Users = new(UsersFromDataBase.Where(x => x.FIO!.ToLower().Contains(SearchText.ToLower())));
     }
     public async Task LoadUsers()
     {

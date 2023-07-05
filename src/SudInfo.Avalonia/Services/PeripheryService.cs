@@ -9,14 +9,17 @@ public class PeripheryService : BaseService
         try
         {
             using SudInfoDbContext applicationDBContext = new();
-            var periphery = await applicationDBContext.Peripheries.Include(x => x.Computer).ThenInclude(x => x.User).FirstOrDefaultAsync(x => x.Id == id);
-            if (periphery == null)
-                throw new Exception("Пепреферия не найдена");
-            return new()
-            {
-                Success = true,
-                Object = periphery
-            };
+            var periphery = await applicationDBContext.Peripheries
+                                                      .Include(x => x.Computer)
+                                                      .ThenInclude(x => x.User)
+                                                      .FirstOrDefaultAsync(x => x.Id == id);
+            return periphery == null
+                ? throw new Exception("Пепреферия не найдена")
+                : new()
+                {
+                    Success = true,
+                    Object = periphery
+                };
         }
         catch (Exception ex)
         {
