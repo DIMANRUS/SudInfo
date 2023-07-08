@@ -63,7 +63,7 @@ public class ContactWindowViewModel : BaseViewModel
             if (windowType != WindowType.View)
             {
                 ButtonIsVisible = true;
-                SaveButtonText = "Сохранить компьютер";
+                SaveButtonText = "Сохранить контакт";
             }
             var result = await ContactService.GetContact(id.GetValueOrDefault());
             if (!result.Success)

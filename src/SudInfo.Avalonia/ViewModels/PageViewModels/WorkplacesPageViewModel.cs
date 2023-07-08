@@ -5,8 +5,6 @@ public class WorkplacesPageViewModel : BaseRoutableViewModel
     #region Services
 
     private readonly NavigationService _navigationService;
-    private readonly DialogService _dialogService;
-    private readonly UserService _userService;
 
     #endregion
 
@@ -25,15 +23,9 @@ public class WorkplacesPageViewModel : BaseRoutableViewModel
     #region Initialization
 
     public WorkplacesPageViewModel(
-        UserService userService,
-        DialogService dialogService,
         NavigationService navigationService)
     {
-        #region Services Initialization
         _navigationService = navigationService;
-        _userService = userService;
-        _dialogService = dialogService;
-        #endregion
     }
 
     #endregion

@@ -1,69 +1,77 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
-        x:Class="SudInfo.Avalonia.Views.Windows.MonitorWindow"
-        Title="Монитор"
-        xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.WindowViewModels;assembly=SudInfo.Avalonia"
-        xmlns:i="using:Avalonia.Xaml.Interactivity"
-        xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
-        xmlns:models="using:SudInfo.EfDataAccessLibrary.Models"
-        CanResize="False"
-        WindowStartupLocation="CenterOwner"
-        Height="500"
-        Width="300"
-        x:DataType="viewModels:MonitorWindowViewModel">
-  <i:Interaction.Behaviors>
-    <ia:EventTriggerBehavior EventName="Initialized">
-      <ia:InvokeCommandAction Command="{Binding LoadComputer}"/>
-    </ia:EventTriggerBehavior>
-  </i:Interaction.Behaviors>
-  <StackPanel Margin="10"
-              Spacing="5">
-    <TextBox Text="{Binding Monitor.Name}"
-             MaxLength="100"
-             Watermark="Название монитора"/>
-    <TextBox Text="{Binding Monitor.ScreenSize}"
-             MaxLength="2"
-             Watermark="Размер экрана"/>
-    <TextBox Text="{Binding Monitor.ScreenResolutionWidth}"
-             MaxLength="4"
-             Watermark="Разрешение экрана (ширина)"/>
-    <TextBox Text="{Binding Monitor.ScreenResolutionHeight}"
-             MaxLength="4"
-             Watermark="Разрешение экрана (высота)"/>
-    <TextBox Watermark="Год выпуска"
-             MaxLength="4"
-             Text="{Binding Monitor.YearRelease}"/>
-    <TextBox Text="{Binding Monitor.SerialNumber}"
-             MaxLength="50"
-             Watermark="Серийный номер"/>
-    <TextBox Text="{Binding Monitor.InventarNumber}"
-             MaxLength="50"
-             Watermark="Инвентарный номер"/>
-    <StackPanel Orientation="Horizontal">
-      <CheckBox Name="IsUserBox"
-                IsChecked="{Binding IsComputer}"/>
-      <ComboBox ItemsSource="{Binding Computers}"
-                SelectedItem="{Binding Monitor.Computer}"
+<Window
+    x:Class="SudInfo.Avalonia.Views.Windows.MonitorWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="using:Avalonia.Xaml.Interactivity"
+    xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:SudInfo.EfDataAccessLibrary.Models"
+    xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.WindowViewModels;assembly=SudInfo.Avalonia"
+    Title="Монитор"
+    Width="300"
+    Height="500"
+    x:DataType="viewModels:MonitorWindowViewModel"
+    CanResize="False"
+    WindowStartupLocation="CenterOwner"
+    mc:Ignorable="d">
+    <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="Initialized">
+            <ia:InvokeCommandAction Command="{Binding LoadComputer}" />
+        </ia:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
+    <StackPanel Margin="10" Spacing="5">
+        <TextBox
+            MaxLength="100"
+            Text="{Binding Monitor.Name}"
+            Watermark="Название монитора" />
+        <TextBox
+            MaxLength="2"
+            Text="{Binding Monitor.ScreenSize}"
+            Watermark="Размер экрана" />
+        <TextBox
+            MaxLength="4"
+            Text="{Binding Monitor.ScreenResolutionWidth}"
+            Watermark="Разрешение экрана (ширина)" />
+        <TextBox
+            MaxLength="4"
+            Text="{Binding Monitor.ScreenResolutionHeight}"
+            Watermark="Разрешение экрана (высота)" />
+        <TextBox
+            MaxLength="4"
+            Text="{Binding Monitor.YearRelease}"
+            Watermark="Год выпуска" />
+        <TextBox
+            MaxLength="50"
+            Text="{Binding Monitor.SerialNumber}"
+            Watermark="Серийный номер" />
+        <TextBox
+            MaxLength="50"
+            Text="{Binding Monitor.InventarNumber}"
+            Watermark="Инвентарный номер" />
+        <StackPanel Orientation="Horizontal">
+            <CheckBox Name="IsUserBox" IsChecked="{Binding IsComputer}" />
+            <ComboBox
                 Width="252"
-                IsEnabled="{Binding #IsUserBox.IsChecked}"
                 AutoScrollToSelectedItem="True"
-                PlaceholderText="Компьютер">
-        <ComboBox.DataTemplates>
-          <DataTemplate x:DataType="{x:Type models:Computer}">
-            <TextBlock Text="{Binding Name}"/>
-          </DataTemplate>
-        </ComboBox.DataTemplates>
-      </ComboBox>
-    </StackPanel>
-    <Button Content="{Binding SaveButtonText}"
-            Command="{Binding SaveMonitor}"
-            Cursor="Hand"
-            FontWeight="Bold"
+                IsEnabled="{Binding #IsUserBox.IsChecked}"
+                ItemsSource="{Binding Computers}"
+                PlaceholderText="Компьютер"
+                SelectedItem="{Binding Monitor.Computer}">
+                <ComboBox.DataTemplates>
+                    <DataTemplate x:DataType="{x:Type models:Computer}">
+                        <TextBlock Text="{Binding ComputerNameWithUserSurFirstName}" />
+                    </DataTemplate>
+                </ComboBox.DataTemplates>
+            </ComboBox>
+        </StackPanel>
+        <Button
             HorizontalAlignment="Stretch"
             HorizontalContentAlignment="Center"
-            IsVisible="{Binding IsButtonVisible}"/>
-  </StackPanel>
+            Command="{Binding SaveMonitor}"
+            Content="{Binding SaveButtonText}"
+            Cursor="Hand"
+            FontWeight="Bold"
+            IsVisible="{Binding IsButtonVisible}" />
+    </StackPanel>
 </Window>

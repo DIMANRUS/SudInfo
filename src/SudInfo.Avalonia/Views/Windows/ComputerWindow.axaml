@@ -1,83 +1,107 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
-        x:Class="SudInfo.Avalonia.Views.Windows.ComputerWindow"
-        xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.WindowViewModels;assembly=SudInfo.Avalonia"
-        xmlns:i="using:Avalonia.Xaml.Interactivity"
-        xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
-        xmlns:models="using:SudInfo.EfDataAccessLibrary.Models"
-        Height="670"
-        Width="300"
-        CanResize="False"
-        WindowStartupLocation="CenterOwner"
-        x:DataType="viewModels:ComputerWindowViewModel"
-        Title="Компьютер">
-  <i:Interaction.Behaviors>
-    <ia:EventTriggerBehavior EventName="Initialized">
-      <ia:InvokeCommandAction Command="{Binding LoadComputer}"/>
-    </ia:EventTriggerBehavior>
-  </i:Interaction.Behaviors>
-  <StackPanel Margin="10"
-              Spacing="5">
-    <TextBox Text="{Binding Computer.Name}"
-             MaxLength="100"
-             Watermark="Название"/>
-    <TextBox Text="{Binding Computer.Ip}"
-             MaxLength="15"
-             Watermark="IP адрес"/>
-    <ComboBox
-      HorizontalAlignment="Stretch"
-      ItemsSource="{Binding OsesList}"
-      SelectedItem="{Binding Computer.OS}"/>
-    <TextBox Text="{Binding Computer.CPU}"
-             MaxLength="100"
-             Watermark="CPU"/>
-    <TextBox Text="{Binding Computer.GPU}"
-             MaxLength="100"
-             Watermark="GPU (Необязательно)"/>
-    <TextBox Text="{Binding Computer.ROM}"
-             MaxLength="5"
-             Watermark="Размер диска (ГБ)"/>
-    <TextBox Text="{Binding Computer.RAM}"
-             MaxLength="2"
-             Watermark="Оперативная память (ГБ)"/>
-    <TextBox Watermark="Год выпуска"
-             MaxLength="4"
-             Text="{Binding Computer.YearRelease}"/>
-    <TextBox Text="{Binding Computer.SerialNumber}"
-             MaxLength="50"
-             Watermark="Серийный номер"/>
-    <TextBox Text="{Binding Computer.InventarNumber}"
-             MaxLength="50"
-             Watermark="Инвентарный номер"/>
-    <TextBox Text="{Binding Computer.NumberCabinet}"
-             MaxLength="4"
-             Watermark="Кабинет"
-             IsEnabled="{Binding !#IsUserBox.IsChecked}"/>
-    <StackPanel Orientation="Horizontal">
-      <CheckBox Name="IsUserBox"
-                IsChecked="{Binding IsUser}"/>
-      <ComboBox ItemsSource="{Binding Users}"
-                SelectedItem="{Binding Computer.User}"
+<Window
+    x:Class="SudInfo.Avalonia.Views.Windows.ComputerWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="using:Avalonia.Xaml.Interactivity"
+    xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:SudInfo.EfDataAccessLibrary.Models"
+    xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.WindowViewModels;assembly=SudInfo.Avalonia"
+    Title="Компьютер"
+    Width="300"
+    Height="900"
+    x:DataType="viewModels:ComputerWindowViewModel"
+    CanResize="False"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="Initialized">
+            <ia:InvokeCommandAction Command="{Binding LoadUsers}" />
+        </ia:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
+    <StackPanel Margin="10" Spacing="5">
+        <TextBox
+            MaxLength="100"
+            Text="{Binding Computer.Name}"
+            Watermark="Название" />
+        <TextBox
+            MaxLength="15"
+            Text="{Binding Computer.Ip}"
+            Watermark="IP адрес" />
+        <ComboBox
+            HorizontalAlignment="Stretch"
+            ItemsSource="{Binding OsesList}"
+            SelectedItem="{Binding Computer.OS}" />
+        <TextBox
+            MaxLength="100"
+            Text="{Binding Computer.CPU}"
+            Watermark="CPU" />
+        <TextBox
+            MaxLength="100"
+            Text="{Binding Computer.GPU}"
+            Watermark="GPU (Необязательно)" />
+        <TextBox
+            MaxLength="5"
+            Text="{Binding Computer.ROM}"
+            Watermark="Размер диска (ГБ)" />
+        <TextBox
+            MaxLength="2"
+            Text="{Binding Computer.RAM}"
+            Watermark="Оперативная память (ГБ)" />
+        <TextBox
+            MaxLength="4"
+            Text="{Binding Computer.YearRelease}"
+            Watermark="Год выпуска" />
+        <TextBox
+            MaxLength="50"
+            Text="{Binding Computer.SerialNumber}"
+            Watermark="Серийный номер" />
+        <TextBox
+            MaxLength="50"
+            Text="{Binding Computer.InventarNumber}"
+            Watermark="Инвентарный номер" />
+        <CheckBox
+            Name="IsBrokenCheckBox"
+            Content="Сломан"
+            IsChecked="{Binding Computer.IsBroken}" />
+        <TextBox
+            Height="100"
+            IsEnabled="{Binding #IsBrokenCheckBox.IsChecked}"
+            MaxLength="200"
+            Text="{Binding Computer.BreakdownDescription}"
+            TextWrapping="Wrap"
+            Watermark="Описание поломки" />
+        <CheckBox Content="ВКС" IsChecked="{Binding Computer.IsVks}" />
+        <CheckBox Content="Списан" IsChecked="{Binding Computer.IsDecommissioned}" />
+        <TextBox
+            IsEnabled="{Binding !#IsUserBox.IsChecked}"
+            MaxLength="4"
+            Text="{Binding Computer.NumberCabinet}"
+            Watermark="Кабинет" />
+        <StackPanel Orientation="Horizontal">
+            <CheckBox Name="IsUserBox" IsChecked="{Binding IsUser}" />
+            <ComboBox
                 Width="252"
-                IsEnabled="{Binding #IsUserBox.IsChecked}"
                 AutoScrollToSelectedItem="True"
-                PlaceholderText="Сотрудник">
-        <ComboBox.DataTemplates>
-          <DataTemplate x:DataType="{x:Type models:User}">
-            <TextBlock Text="{Binding FIO}"/>
-          </DataTemplate>
-        </ComboBox.DataTemplates>
-      </ComboBox>
-    </StackPanel>
-    <Button Content="{Binding SaveButtonText}"
-            Command="{Binding SaveComputer}"
-            Cursor="Hand"
-            FontWeight="Bold"
+                IsEnabled="{Binding #IsUserBox.IsChecked}"
+                ItemsSource="{Binding Users}"
+                PlaceholderText="Сотрудник"
+                SelectedItem="{Binding Computer.User}">
+                <ComboBox.DataTemplates>
+                    <DataTemplate x:DataType="{x:Type models:User}">
+                        <TextBlock Text="{Binding FIO}" />
+                    </DataTemplate>
+                </ComboBox.DataTemplates>
+            </ComboBox>
+        </StackPanel>
+        <Button
             HorizontalAlignment="Stretch"
             HorizontalContentAlignment="Center"
-            IsVisible="{Binding ButtonIsVisible}"/>
-  </StackPanel>
+            Command="{Binding SaveComputer}"
+            Content="{Binding SaveButtonText}"
+            Cursor="Hand"
+            FontWeight="Bold"
+            IsVisible="{Binding ButtonIsVisible}" />
+    </StackPanel>
 </Window>

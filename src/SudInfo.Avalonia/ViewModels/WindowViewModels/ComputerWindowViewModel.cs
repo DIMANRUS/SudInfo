@@ -23,6 +23,7 @@ public class ComputerWindowViewModel : BaseViewModel
     [Reactive]
     public Computer Computer { get; set; } = new();
 
+    [Reactive]
     public bool IsUser { get; set; }
 
     [Reactive]
@@ -76,6 +77,7 @@ public class ComputerWindowViewModel : BaseViewModel
         }
         await _dialogService.ShowMessageBox("Сообщение", "Успешно!", true, icon: Icon.Success);
     }
+
     public async void InitializationData(WindowType windowType, int? id = null)
     {
         _windowType = windowType;
@@ -96,10 +98,12 @@ public class ComputerWindowViewModel : BaseViewModel
                 await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения компьютера! Ошибка: {computerResult.Message}", true, icon: Icon.Error);
                 return;
             }
+            IsUser = computerResult.Object.User != null;
             Computer = computerResult.Object;
         }
     }
-    public async Task LoadComputer()
+
+    public async Task LoadUsers()
     {
         var usersResult = await UserService.GetUsers();
         Users = usersResult;

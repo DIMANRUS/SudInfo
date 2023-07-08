@@ -1,76 +1,78 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
-             d:DesignWidth="800"
-             d:DesignHeight="450"
-             x:Class="SudInfo.Avalonia.Views.Pages.RutokensPage"
-             xmlns:i="using:Avalonia.Xaml.Interactivity"
-             xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
-             xmlns:models="using:SudInfo.EfDataAccessLibrary.Models">
-  <i:Interaction.Behaviors>
-    <ia:EventTriggerBehavior EventName="Initialized">
-      <ia:InvokeCommandAction Command="{Binding LoadRutokens}"/>
-    </ia:EventTriggerBehavior>
-  </i:Interaction.Behaviors>
-  <Grid RowDefinitions="40,*"
-        ColumnDefinitions="140, *, 40,40,40, 40">
-    <TextBlock Text="ЭЦП Рутокен"
-               Margin="10"
-               FontWeight="Bold"
-               FontSize="20"/>
-    <Image Source="/Assets/Images/refresh.png"
-           Grid.Column="2">
-      <i:Interaction.Behaviors>
-        <ia:EventTriggerBehavior EventName="Tapped">
-          <ia:InvokeCommandAction Command="{Binding RefreshRutokens}"/>
+<UserControl
+    x:Class="SudInfo.Avalonia.Views.Pages.RutokensPage"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="using:Avalonia.Xaml.Interactivity"
+    xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:SudInfo.EfDataAccessLibrary.Models"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="Initialized">
+            <ia:InvokeCommandAction Command="{Binding LoadRutokens}" />
         </ia:EventTriggerBehavior>
-      </i:Interaction.Behaviors>
-    </Image>
-    <Image Source="/Assets/Images/add.png"
-           Grid.Column="3">
-      <i:Interaction.Behaviors>
-        <ia:EventTriggerBehavior EventName="Tapped">
-          <ia:InvokeCommandAction Command="{Binding OpenAddRutokenWindow}"/>
-        </ia:EventTriggerBehavior>
-      </i:Interaction.Behaviors>
-    </Image>
-    <Image Source="/Assets/Images/edit.png"
-           Grid.Column="4">
-      <i:Interaction.Behaviors>
-        <ia:EventTriggerBehavior EventName="Tapped">
-          <ia:InvokeCommandAction Command="{Binding OpenEditRutokenWindow}"/>
-        </ia:EventTriggerBehavior>
-      </i:Interaction.Behaviors>
-    </Image>
-    <Image Source="/Assets/Images/remove.png"
-           Grid.Column="5">
-      <i:Interaction.Behaviors>
-        <ia:EventTriggerBehavior EventName="Tapped">
-          <ia:InvokeCommandAction Command="{Binding RemoveRutoken}"/>
-        </ia:EventTriggerBehavior>
-      </i:Interaction.Behaviors>
-    </Image>
-    <DataGrid ItemsSource="{Binding Rutokens}"
-              SelectedItem="{Binding SelectedRutoken}"
-              Grid.Row="1"
-              Grid.ColumnSpan="6">
-      <DataGrid.Columns>
-        <DataGridTextColumn Header="Серийный номер"
-                            Binding="{Binding SerialNumber}"
-                            IsReadOnly="True"/>
-        <DataGridTextColumn Header="Дата окончания сертификата"
-                            Binding="{Binding EndDateCertificate}"
-                            IsReadOnly="True"/>
-        <DataGridTextColumn Header="ФИО сотрудника"
-                            Binding="{Binding User.FIO}"
-                            IsReadOnly="True"/>
-        <DataGridTextColumn Header="Кабинет"
-                            Binding="{Binding User.NumberCabinet}"
-                            IsReadOnly="True"
-                            Width="*"/>
-      </DataGrid.Columns>
-    </DataGrid>
-  </Grid>
+    </i:Interaction.Behaviors>
+    <Grid ColumnDefinitions="140, *, 40,40,40, 40" RowDefinitions="40,*">
+        <TextBlock
+            Margin="10"
+            FontSize="20"
+            FontWeight="Bold"
+            Text="ЭЦП Рутокен" />
+        <Image Grid.Column="2" Source="/Assets/Images/refresh.png">
+            <i:Interaction.Behaviors>
+                <ia:EventTriggerBehavior EventName="Tapped">
+                    <ia:InvokeCommandAction Command="{Binding RefreshRutokens}" />
+                </ia:EventTriggerBehavior>
+            </i:Interaction.Behaviors>
+        </Image>
+        <Image Grid.Column="3" Source="/Assets/Images/add.png">
+            <i:Interaction.Behaviors>
+                <ia:EventTriggerBehavior EventName="Tapped">
+                    <ia:InvokeCommandAction Command="{Binding OpenAddRutokenWindow}" />
+                </ia:EventTriggerBehavior>
+            </i:Interaction.Behaviors>
+        </Image>
+        <Image Grid.Column="4" Source="/Assets/Images/edit.png">
+            <i:Interaction.Behaviors>
+                <ia:EventTriggerBehavior EventName="Tapped">
+                    <ia:InvokeCommandAction Command="{Binding OpenEditRutokenWindow}" />
+                </ia:EventTriggerBehavior>
+            </i:Interaction.Behaviors>
+        </Image>
+        <Image Grid.Column="5" Source="/Assets/Images/remove.png">
+            <i:Interaction.Behaviors>
+                <ia:EventTriggerBehavior EventName="Tapped">
+                    <ia:InvokeCommandAction Command="{Binding RemoveRutoken}" />
+                </ia:EventTriggerBehavior>
+            </i:Interaction.Behaviors>
+        </Image>
+        <DataGrid
+            Grid.Row="1"
+            Grid.ColumnSpan="6"
+            ItemsSource="{Binding Rutokens}"
+            SelectedItem="{Binding SelectedRutoken}">
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    Binding="{Binding SerialNumber}"
+                    Header="Серийный номер"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    Binding="{Binding EndDateCertificate, StringFormat='dd.MM.yyyy'}"
+                    Header="Дата окончания сертификата"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    Binding="{Binding User.FIO}"
+                    Header="ФИО сотрудника"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding User.NumberCabinet}"
+                    Header="Кабинет"
+                    IsReadOnly="True" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
 </UserControl>

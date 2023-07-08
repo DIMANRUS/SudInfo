@@ -1,26 +1,27 @@
 ﻿namespace SudInfo.EfDataAccessLibrary.Models;
+
 public class Periphery : BaseModel
 {
     [XLColumn(Header = "Наименование")]
     [Required(ErrorMessage = Const.FieldRequired)]
     [StringLength(100, MinimumLength = 2, ErrorMessage = Const.LengthMore2)]
     public string? Name { get; set; }
-    
+
     [XLColumn(Header = "Тип")]
     public PeripheryType Type { get; set; }
-    
+
     [XLColumn(Header = "Серийный номер")]
     [Required(ErrorMessage = Const.FieldRequired)]
     [StringLength(50)]
     public string? SerialNumber { get; set; }
-    
+
     [XLColumn(Header = "Инвентарный номер")]
     [Required(ErrorMessage = Const.FieldRequired)]
     [StringLength(50)]
     public string? InventarNumber { get; set; }
-    
+
     public Computer? Computer { get; set; }
-    
+
     [XLColumn(Ignore = true)]
     [NotMapped]
     public string Icon => Type switch
@@ -29,9 +30,12 @@ public class Periphery : BaseModel
         PeripheryType.Наушкники => "avares://SudInfo.Avalonia/Assets/Images/headphones.png",
         PeripheryType.Микрофон => "avares://SudInfo.Avalonia/Assets/Images/microphone.png",
         PeripheryType.Колонки => "avares://SudInfo.Avalonia/Assets/Images/sound.png",
-        _ => "avares://SudInfo.Avalonia/Assets/Images/keyboard.png"
+        PeripheryType.Клавиатура => "avares://SudInfo.Avalonia/Assets/Images/keyboard.png",
+        PeripheryType.Сканер => "avares://SudInfo.Avalonia/Assets/Images/scanner.png",
+        _ => "avares://SudInfo.Avalonia/Assets/Images/battery.png"
     };
 }
+
 public enum PeripheryType
 {
     Мышь, Клавиатура, Микрофон, Сканер, Колонки, Наушкники, ИБП

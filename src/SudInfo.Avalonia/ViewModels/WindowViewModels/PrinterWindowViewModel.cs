@@ -1,6 +1,4 @@
-﻿using SudInfo.Avalonia.Services;
-
-namespace SudInfo.Avalonia.ViewModels.WindowViewModels;
+﻿namespace SudInfo.Avalonia.ViewModels.WindowViewModels;
 
 public class PrinterWindowViewModel : BaseViewModel
 {
@@ -69,7 +67,7 @@ public class PrinterWindowViewModel : BaseViewModel
     }
     public async Task LoadComputers()
     {
-        var computersResult = await ComputerService.GetComputerNames();
+        var computersResult = await ComputerService.GetComputerNamesWithUser();
         Computers = computersResult;
     }
 

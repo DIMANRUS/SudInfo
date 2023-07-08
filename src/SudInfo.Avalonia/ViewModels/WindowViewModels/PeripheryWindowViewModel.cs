@@ -102,7 +102,7 @@ public class PeripheryWindowViewModel : BaseViewModel
     }
     public async Task LoadComputers()
     {
-        var computersResult = await ComputerService.GetComputerNames();
+        var computersResult = await ComputerService.GetComputerNamesWithUser();
         Computers = computersResult;
     }
 

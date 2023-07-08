@@ -1,4 +1,6 @@
-﻿namespace SudInfo.Avalonia.ViewModels.PageViewModels;
+﻿using Avalonia.Collections;
+
+namespace SudInfo.Avalonia.ViewModels.PageViewModels;
 
 public class ComputersPageViewModel : BaseRoutableViewModel
 {
@@ -17,6 +19,8 @@ public class ComputersPageViewModel : BaseRoutableViewModel
     public ObservableCollection<Computer>? Computers { get; set; }
 
     private IReadOnlyList<Computer>? ComputersFromDataBase { get; set; }
+
+    public DataGridCollectionView dataGridCollectionView { get; set; }
 
     #endregion
 
@@ -115,6 +119,7 @@ public class ComputersPageViewModel : BaseRoutableViewModel
     }
     public async Task LoadComputers()
     {
+        SearchText = string.Empty;
         var computersResult = await ComputerService.GetComputers();
         Computers = new(computersResult);
         ComputersFromDataBase = Computers;

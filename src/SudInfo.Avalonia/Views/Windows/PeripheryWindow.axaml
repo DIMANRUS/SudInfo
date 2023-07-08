@@ -1,60 +1,65 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
-        xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.WindowViewModels;assembly=SudInfo.Avalonia"
-        xmlns:i="using:Avalonia.Xaml.Interactivity"
-        xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
-        Height="350"
-        Width="300"
-        CanResize="False"
-        WindowStartupLocation="CenterOwner"
-        x:DataType="viewModels:PeripheryWindowViewModel"
-        xmlns:models="using:SudInfo.EfDataAccessLibrary.Models"
-        Title="Периферия"
-        x:Class="SudInfo.Avalonia.Views.Windows.PeripheryWindow">
-  <i:Interaction.Behaviors>
-    <ia:EventTriggerBehavior EventName="Initialized">
-      <ia:InvokeCommandAction Command="{Binding LoadComputers}"/>
-    </ia:EventTriggerBehavior>
-  </i:Interaction.Behaviors>
-  <StackPanel Margin="10"
-              Spacing="5">
-    <TextBox Text="{Binding Periphery.Name}"
-             MaxLength="50"
-             Watermark="Название"/>
-    <TextBox Text="{Binding Periphery.SerialNumber}"
-             MaxLength="50"
-             Watermark="Серийный номер"/>
-    <TextBox Text="{Binding Periphery.InventarNumber}"
-             MaxLength="50"
-             Watermark="Инвентарный номер"/>
-    <ComboBox HorizontalAlignment="Stretch"
-              ItemsSource="{Binding PeripheryTypes}"
-              SelectedItem="{Binding Periphery.Type}"/>
-    <StackPanel Orientation="Horizontal">
-      <CheckBox Name="IsComputerBox"
-                IsChecked="{Binding IsComputer}"/>
-      <ComboBox ItemsSource="{Binding Computers}"
-                SelectedItem="{Binding Periphery.Computer}"
+<Window
+    x:Class="SudInfo.Avalonia.Views.Windows.PeripheryWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="using:Avalonia.Xaml.Interactivity"
+    xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:SudInfo.EfDataAccessLibrary.Models"
+    xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.WindowViewModels;assembly=SudInfo.Avalonia"
+    Title="Периферия"
+    Width="300"
+    Height="350"
+    x:DataType="viewModels:PeripheryWindowViewModel"
+    CanResize="False"
+    WindowStartupLocation="CenterOwner"
+    mc:Ignorable="d">
+    <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="Initialized">
+            <ia:InvokeCommandAction Command="{Binding LoadComputers}" />
+        </ia:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
+    <StackPanel Margin="10" Spacing="5">
+        <TextBox
+            MaxLength="50"
+            Text="{Binding Periphery.Name}"
+            Watermark="Название" />
+        <TextBox
+            MaxLength="50"
+            Text="{Binding Periphery.SerialNumber}"
+            Watermark="Серийный номер" />
+        <TextBox
+            MaxLength="50"
+            Text="{Binding Periphery.InventarNumber}"
+            Watermark="Инвентарный номер" />
+        <ComboBox
+            HorizontalAlignment="Stretch"
+            ItemsSource="{Binding PeripheryTypes}"
+            SelectedItem="{Binding Periphery.Type}" />
+        <StackPanel Orientation="Horizontal">
+            <CheckBox Name="IsComputerBox" IsChecked="{Binding IsComputer}" />
+            <ComboBox
                 Width="252"
-                IsEnabled="{Binding #IsComputerBox.IsChecked}"
                 AutoScrollToSelectedItem="True"
-                PlaceholderText="Компьютер">
-        <ComboBox.DataTemplates>
-          <DataTemplate DataType="{x:Type models:Computer}">
-            <TextBlock Text="{Binding Name}"/>
-          </DataTemplate>
-        </ComboBox.DataTemplates>
-      </ComboBox>
-    </StackPanel>
-    <Button Content="{Binding SaveButtonText}"
-            Command="{Binding SavePeriphery}"
-            Cursor="Hand"
-            FontWeight="Bold"
+                IsEnabled="{Binding #IsComputerBox.IsChecked}"
+                ItemsSource="{Binding Computers}"
+                PlaceholderText="Компьютер"
+                SelectedItem="{Binding Periphery.Computer}">
+                <ComboBox.DataTemplates>
+                    <DataTemplate DataType="{x:Type models:Computer}">
+                        <TextBlock Text="{Binding ComputerNameWithUserSurFirstName}" />
+                    </DataTemplate>
+                </ComboBox.DataTemplates>
+            </ComboBox>
+        </StackPanel>
+        <Button
             HorizontalAlignment="Stretch"
             HorizontalContentAlignment="Center"
-            IsVisible="{Binding IsButtonVisible}"/>
-  </StackPanel>
+            Command="{Binding SavePeriphery}"
+            Content="{Binding SaveButtonText}"
+            Cursor="Hand"
+            FontWeight="Bold"
+            IsVisible="{Binding IsButtonVisible}" />
+    </StackPanel>
 </Window>

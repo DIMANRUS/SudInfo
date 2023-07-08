@@ -48,9 +48,10 @@ public class ServersPageViewModel : BaseRoutableViewModel
     {
         await _navigationService.ShowServerRackWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog);
     }
-    public async Task RemoveServer(int id)
+    public async Task RemoveServer(object id)
     {
-        var result = await ServerService.RemoveServer(id);
+        int serverId = (int)id;
+        var result = await ServerService.RemoveServer(serverId);
         if (!result.Success)
         {
             await _dialogService.ShowMessageBox("Ошибка", $"Ошибка удаления сервера. Ошибка: {result.Message}", icon: Icon.Error);

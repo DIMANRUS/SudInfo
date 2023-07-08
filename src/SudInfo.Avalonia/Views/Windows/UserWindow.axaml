@@ -1,46 +1,55 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
-        Width="310"
-        Height="420"
-        x:Class="SudInfo.Avalonia.Views.Windows.UserWindow"
-        Title="Пользователь"
-        xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.WindowViewModels;assembly=SudInfo.Avalonia"
-        xmlns:i="using:Avalonia.Xaml.Interactivity"
-        xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
-        WindowStartupLocation="CenterOwner"
-        x:DataType="viewModels:UserWindowViewModel">
-  <StackPanel Margin="10"
-              Spacing="5">
-    <TextBox Watermark="Имя"
-             MaxLength="20"
-             Text="{Binding User.FirstName}"/>
-    <TextBox Watermark="Фамилия"
-             MaxLength="20"
-             Text="{Binding User.LastName}"/>
-    <TextBox Watermark="Отчество"
-             MaxLength="20"
-             Text="{Binding User.MiddleName}"/>
-    <TextBox Watermark="Кабинет"
-             MaxLength="3"
-             Text="{Binding User.NumberCabinet}"/>
-    <TextBox Watermark="Личный телефон (Необязательно)"
-             MaxLength="11"
-             Text="{Binding User.PersonalPhone}"/>
-    <TextBox Watermark="Рабочий телефон (Необязательно)"
-             MaxLength="11"
-             Text="{Binding User.WorkPhone}"/>
-    <TextBox Watermark="Внутренний телефон (Необязательно)"
-             MaxLength="3"
-             Text="{Binding User.PhoneLocal}"/>
-    <Button Content="{Binding SaveButtonText}"
-            Command="{Binding SaveUser}"
-            Margin="0 5 0 0"
-            Cursor="Hand"
-            FontWeight="Bold"
+<Window
+    x:Class="SudInfo.Avalonia.Views.Windows.UserWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="using:Avalonia.Xaml.Interactivity"
+    xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.WindowViewModels;assembly=SudInfo.Avalonia"
+    Title="Пользователь"
+    Width="310"
+    Height="440"
+    x:DataType="viewModels:UserWindowViewModel"
+    CanResize="False"
+    WindowStartupLocation="CenterOwner"
+    mc:Ignorable="d">
+    <StackPanel Margin="10" Spacing="5">
+        <TextBox
+            MaxLength="20"
+            Text="{Binding User.FirstName}"
+            Watermark="Имя" />
+        <TextBox
+            MaxLength="20"
+            Text="{Binding User.LastName}"
+            Watermark="Фамилия" />
+        <TextBox
+            MaxLength="20"
+            Text="{Binding User.MiddleName}"
+            Watermark="Отчество" />
+        <TextBox
+            MaxLength="3"
+            Text="{Binding User.NumberCabinet}"
+            Watermark="Кабинет" />
+        <TextBox
+            MaxLength="11"
+            Text="{Binding User.PersonalPhone}"
+            Watermark="Личный телефон (Необязательно)" />
+        <TextBox
+            MaxLength="11"
+            Text="{Binding User.WorkPhone}"
+            Watermark="Рабочий телефон (Необязательно)" />
+        <TextBox
+            MaxLength="3"
+            Text="{Binding User.PhoneLocal}"
+            Watermark="Внутренний телефон (Необязательно)" />
+        <Button
+            Margin="0,5,0,0"
             HorizontalAlignment="Stretch"
-            HorizontalContentAlignment="Center"/>
-  </StackPanel>
+            HorizontalContentAlignment="Center"
+            Command="{Binding SaveUser}"
+            Content="{Binding SaveButtonText}"
+            Cursor="Hand"
+            FontWeight="Bold" />
+    </StackPanel>
 </Window>

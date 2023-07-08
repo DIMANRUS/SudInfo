@@ -67,7 +67,7 @@
             Grid.ColumnSpan="6"
             x:DataType="models:Printer"
             ItemsSource="{Binding Printers}"
-            SelectedItem="{Binding SelectedMonitor}">
+            SelectedItem="{Binding SelectedPrinter}">
             <DataGrid.Columns>
                 <DataGridTextColumn
                     Binding="{Binding Name}"

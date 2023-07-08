@@ -9,7 +9,10 @@ public class ComputerService : BaseService
         try
         {
             using SudInfoDbContext applicationDBContext = new();
-            var computer = await applicationDBContext.Computers.AsNoTracking().Include(x => x.User).FirstOrDefaultAsync(x => x.Id == id);
+            var computer = await applicationDBContext.Computers
+                                                     .AsNoTracking()
+                                                     .Include(x => x.User)
+                                                     .FirstOrDefaultAsync(x => x.Id == id);
             return computer == null
                 ? throw new Exception("Computer not Found")
                 : new()
@@ -33,10 +36,19 @@ public class ComputerService : BaseService
         var computers = await applicationDBContext.Computers.AsNoTracking().Include(x => x.User).ToListAsync();
         return computers;
     }
-    public static async Task<IReadOnlyList<Computer>> GetComputerNames()
+    public static async Task<IReadOnlyList<Computer>> GetComputerNamesWithUser()
     {
         using SudInfoDbContext applicationDBContext = new();
-        var computerNames = await applicationDBContext.Computers.AsNoTracking().Select(x => new Computer() { Name = x.Name, Id = x.Id }).ToListAsync();
+        var computerNames = await applicationDBContext.Computers
+                                                      .AsNoTracking()
+                                                      .Include(x => x.User)
+                                                      .Select(x => new Computer()
+                                                      {
+                                                          Name = x.Name,
+                                                          Id = x.Id,
+                                                          User = x.User
+                                                      })
+                                                      .ToListAsync();
         return computerNames;
     }
 

@@ -1,4 +1,5 @@
 ﻿namespace SudInfo.Avalonia.ViewModels.WindowViewModels;
+
 public class UserWindowViewModel : BaseViewModel
 {
     #region Services
