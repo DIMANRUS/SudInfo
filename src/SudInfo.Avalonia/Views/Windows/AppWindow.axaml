@@ -27,7 +27,7 @@
     <TextBlock Text="Компьютеры"/>
     <ListBox ItemsSource="{Binding Computers}"
              SelectedItems="{Binding AppEntity.Computers}"
-             SelectionMode="Toggle"
+             SelectionMode="Multiple"
              Height="200">
       <ListBox.ItemTemplate>
         <DataTemplate DataType="models:Computer">

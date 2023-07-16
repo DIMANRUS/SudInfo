@@ -10,96 +10,88 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <i:Interaction.Behaviors>
-        <ia:EventTriggerBehavior EventName="Initialized">
-            <ia:InvokeCommandAction Command="{Binding LoadUsers}" />
+  <i:Interaction.Behaviors>
+    <ia:EventTriggerBehavior EventName="Initialized">
+      <ia:InvokeCommandAction Command="{Binding LoadUsers}" />
+    </ia:EventTriggerBehavior>
+  </i:Interaction.Behaviors>
+  <Grid ColumnDefinitions="150, *, 40,40" RowDefinitions="40,*">
+    <TextBlock
+        Margin="10"
+        FontSize="20"
+        FontWeight="Bold"
+        Text="Пользователи" />
+    <TextBox
+        Grid.Column="1"
+        Margin="10,5,10,5"
+        MaxLength="50"
+        Text="{Binding SearchText}"
+        UseFloatingWatermark="False"
+        Watermark="Поиск по ФИО">
+      <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="KeyUp">
+          <ia:InvokeCommandAction Command="{Binding SearchBoxKeyUp}" />
         </ia:EventTriggerBehavior>
-    </i:Interaction.Behaviors>
-    <Grid ColumnDefinitions="150, *, 40,40,40, 40" RowDefinitions="40,*">
-        <TextBlock
-            Margin="10"
-            FontSize="20"
-            FontWeight="Bold"
-            Text="Пользователи" />
-        <TextBox
-            Grid.Column="1"
-            Margin="10,5,10,5"
-            MaxLength="50"
-            Text="{Binding SearchText}"
-            UseFloatingWatermark="False"
-            Watermark="Поиск по ФИО">
-            <i:Interaction.Behaviors>
-                <ia:EventTriggerBehavior EventName="KeyUp">
-                    <ia:InvokeCommandAction Command="{Binding SearchBoxKeyUp}" />
-                </ia:EventTriggerBehavior>
-            </i:Interaction.Behaviors>
-        </TextBox>
-        <Image Grid.Column="2" Source="/Assets/Images/refresh.png">
-            <i:Interaction.Behaviors>
-                <ia:EventTriggerBehavior EventName="Tapped">
-                    <ia:InvokeCommandAction Command="{Binding RefreshUsers}" />
-                </ia:EventTriggerBehavior>
-            </i:Interaction.Behaviors>
-        </Image>
-        <Image Grid.Column="3" Source="/Assets/Images/add.png">
-            <i:Interaction.Behaviors>
-                <ia:EventTriggerBehavior EventName="Tapped">
-                    <ia:InvokeCommandAction Command="{Binding OpenAddUserWindow}" />
-                </ia:EventTriggerBehavior>
-            </i:Interaction.Behaviors>
-        </Image>
-        <Image Grid.Column="4" Source="/Assets/Images/edit.png">
-            <i:Interaction.Behaviors>
-                <ia:EventTriggerBehavior EventName="Tapped">
-                    <ia:InvokeCommandAction Command="{Binding OpenEditUserWindow}" />
-                </ia:EventTriggerBehavior>
-            </i:Interaction.Behaviors>
-        </Image>
-        <Image Grid.Column="5" Source="/Assets/Images/remove.png">
-            <i:Interaction.Behaviors>
-                <ia:EventTriggerBehavior EventName="Tapped">
-                    <ia:InvokeCommandAction Command="{Binding RemoveUser}" />
-                </ia:EventTriggerBehavior>
-            </i:Interaction.Behaviors>
-        </Image>
-        <DataGrid
-            Grid.Row="1"
-            Grid.ColumnSpan="6"
-            ItemsSource="{Binding Users}"
-            SelectedItem="{Binding SelectedUser}">
-            <DataGrid.Columns>
-                <DataGridTextColumn
-                    Width="*"
-                    Binding="{Binding LastName}"
-                    Header="Фамилия"
-                    IsReadOnly="True" />
-                <DataGridTextColumn
-                    Width="*"
-                    Binding="{Binding FirstName}"
-                    Header="Имя"
-                    IsReadOnly="True" />
-                <DataGridTextColumn
-                    Width="*"
-                    Binding="{Binding MiddleName}"
-                    Header="Отчество"
-                    IsReadOnly="True" />
-                <DataGridTextColumn
-                    Binding="{Binding NumberCabinet}"
-                    Header="Кабинет"
-                    IsReadOnly="True" />
-                <DataGridTextColumn
-                    Binding="{Binding PersonalPhone}"
-                    Header="Личный телефон"
-                    IsReadOnly="True" />
-                <DataGridTextColumn
-                    Binding="{Binding WorkPhone}"
-                    Header="Рабочий телефон"
-                    IsReadOnly="True" />
-                <DataGridTextColumn
-                    Binding="{Binding PhoneLocal}"
-                    Header="Локальный телефон"
-                    IsReadOnly="True" />
-            </DataGrid.Columns>
-        </DataGrid>
-    </Grid>
+      </i:Interaction.Behaviors>
+    </TextBox>
+    <Image Grid.Column="2" Source="/Assets/Images/refresh.png">
+      <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="Tapped">
+          <ia:InvokeCommandAction Command="{Binding RefreshUsers}" />
+        </ia:EventTriggerBehavior>
+      </i:Interaction.Behaviors>
+    </Image>
+    <Image Grid.Column="3" Source="/Assets/Images/add.png">
+      <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="Tapped">
+          <ia:InvokeCommandAction Command="{Binding OpenAddUserWindow}" />
+        </ia:EventTriggerBehavior>
+      </i:Interaction.Behaviors>
+    </Image>
+    <DataGrid
+        Grid.Row="1"
+        Grid.ColumnSpan="6"
+        ItemsSource="{Binding Users}"
+        SelectedItem="{Binding SelectedUser}">
+      <DataGrid.ContextMenu>
+        <ContextMenu>
+          <MenuItem Header="Редактировать" Command="{Binding OpenEditUserWindow}"/>
+          <MenuItem Header="Удалить" Command="{Binding RemoveUser}"/>
+        </ContextMenu>
+      </DataGrid.ContextMenu>
+      <DataGrid.Columns>
+        <DataGridTextColumn
+            Width="*"
+            Binding="{Binding LastName}"
+            Header="Фамилия"
+            IsReadOnly="True" />
+        <DataGridTextColumn
+            Width="*"
+            Binding="{Binding FirstName}"
+            Header="Имя"
+            IsReadOnly="True" />
+        <DataGridTextColumn
+            Width="*"
+            Binding="{Binding MiddleName}"
+            Header="Отчество"
+            IsReadOnly="True" />
+        <DataGridTextColumn
+            Binding="{Binding NumberCabinet}"
+            Header="Кабинет"
+            IsReadOnly="True" />
+        <DataGridTextColumn
+            Binding="{Binding PersonalPhone}"
+            Header="Личный телефон"
+            IsReadOnly="True" />
+        <DataGridTextColumn
+            Binding="{Binding WorkPhone}"
+            Header="Рабочий телефон"
+            IsReadOnly="True" />
+        <DataGridTextColumn
+            Binding="{Binding PhoneLocal}"
+            Header="Локальный телефон"
+            IsReadOnly="True" />
+      </DataGrid.Columns>
+    </DataGrid>
+  </Grid>
 </UserControl>

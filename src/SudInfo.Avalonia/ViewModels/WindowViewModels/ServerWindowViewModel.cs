@@ -1,4 +1,5 @@
 ﻿namespace SudInfo.Avalonia.ViewModels.WindowViewModels;
+
 public class ServerWindowViewModel : BaseViewModel
 {
     #region Services
@@ -77,5 +78,11 @@ public class ServerWindowViewModel : BaseViewModel
         }
         await _dialogService.ShowMessageBox("Сообщение", "Успешно!", true, icon: Icon.Success);
     }
+    #endregion
+
+    #region Collections
+
+    public static IEnumerable<ServerOperatingSystem> OperatingSystems => Enum.GetValues(typeof(ServerOperatingSystem)).Cast<ServerOperatingSystem>();
+
     #endregion
 }

@@ -1,6 +1,4 @@
-﻿using Avalonia.Collections;
-
-namespace SudInfo.Avalonia.ViewModels.PageViewModels;
+﻿namespace SudInfo.Avalonia.ViewModels.PageViewModels;
 
 public class ComputersPageViewModel : BaseRoutableViewModel
 {
@@ -20,13 +18,11 @@ public class ComputersPageViewModel : BaseRoutableViewModel
 
     private IReadOnlyList<Computer>? ComputersFromDataBase { get; set; }
 
-    public DataGridCollectionView dataGridCollectionView { get; set; }
-
     #endregion
 
     #region Private Variables
 
-    private EventHandler _eventHandlerClosedWindowDialog;
+    private readonly EventHandler _eventHandlerClosedWindowDialog;
 
     #endregion
 
@@ -64,20 +60,30 @@ public class ComputersPageViewModel : BaseRoutableViewModel
 
     #region Public Methods
 
+    public async Task ViewComputer()
+    {
+        if (SelectedComputer == null)
+            return;
+        await _navigationService.ShowComputerWindowDialog(WindowType.View, computerId: SelectedComputer.Id);
+    }
+
     public async Task OpenAddComputerWindow()
     {
         await _navigationService.ShowComputerWindowDialog(WindowType.Add, _eventHandlerClosedWindowDialog);
     }
+
     public async Task OpenEditComputerWindow()
     {
         if (SelectedComputer == null)
             return;
         await _navigationService.ShowComputerWindowDialog(WindowType.Edit, _eventHandlerClosedWindowDialog, SelectedComputer.Id);
     }
+
     public async Task RefreshComputers()
     {
         await LoadComputers();
     }
+
     public async Task RemoveComputer()
     {
         if (SelectedComputer == null)
@@ -96,12 +102,14 @@ public class ComputersPageViewModel : BaseRoutableViewModel
 
         await LoadComputers();
     }
+
     public async Task CreateExcelTable()
     {
         if (Computers == null || Computers.Count == 0)
             return;
         await ExcelService.CreateExcelTableFromEntity(Computers);
     }
+
     public void SearchBoxKeyUp()
     {
         if (ComputersFromDataBase == null)
@@ -117,6 +125,7 @@ public class ComputersPageViewModel : BaseRoutableViewModel
                                                     x.User != null &&
                                                     x.User.FIO.ToLower().Contains(SearchText.ToLower())));
     }
+
     public async Task LoadComputers()
     {
         SearchText = string.Empty;

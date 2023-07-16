@@ -18,7 +18,7 @@
     </ia:EventTriggerBehavior>
   </i:Interaction.Behaviors>
   <Grid RowDefinitions="40,*"
-        ColumnDefinitions="180, *, 40,40,40, 40">
+        ColumnDefinitions="180, *, 40,40">
     <TextBlock Text="Приложения"
                Margin="10"
                FontWeight="Bold"
@@ -39,29 +39,19 @@
         </ia:EventTriggerBehavior>
       </i:Interaction.Behaviors>
     </Image>
-    <Image Source="/Assets/Images/edit.png"
-           Grid.Column="4">
-      <i:Interaction.Behaviors>
-        <ia:EventTriggerBehavior EventName="Tapped">
-          <ia:InvokeCommandAction Command="{Binding OpenEditAppWindow}"/>
-        </ia:EventTriggerBehavior>
-      </i:Interaction.Behaviors>
-    </Image>
-    <Image Source="/Assets/Images/remove.png"
-           Grid.Column="5">
-      <i:Interaction.Behaviors>
-        <ia:EventTriggerBehavior EventName="Tapped">
-          <ia:InvokeCommandAction Command="{Binding RemoveApp}"/>
-        </ia:EventTriggerBehavior>
-      </i:Interaction.Behaviors>
-    </Image>
     <DataGrid Grid.Row="1"
               Grid.ColumnSpan="6"
               ItemsSource="{Binding Apps}"
               x:DataType="models:AppEntity"
               SelectedIndex="{Binding SelectedIndex}"
               SelectedItem="{Binding SelectedApp}"
-              IsReadOnly="TruE">
+              IsReadOnly="True">
+      <DataGrid.ContextMenu>
+        <ContextMenu>
+          <MenuItem Header="Редактировать" Command="{Binding OpenEditAppWindow}"/>
+          <MenuItem Header="Удалить" Command="{Binding RemoveApp}"/>
+        </ContextMenu>
+      </DataGrid.ContextMenu>
       <DataGrid.RowDetailsTemplate>
         <DataTemplate DataType="{x:Type models:AppEntity}">
           <Border BorderBrush="DarkOrange"

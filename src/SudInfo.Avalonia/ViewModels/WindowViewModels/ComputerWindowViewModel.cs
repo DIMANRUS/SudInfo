@@ -11,6 +11,7 @@ public class ComputerWindowViewModel : BaseViewModel
     #endregion
 
     #region Collections
+
     public static IEnumerable<OS> OsesList => Enum.GetValues(typeof(OS)).Cast<OS>();
 
     [Reactive]

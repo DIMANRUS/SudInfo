@@ -34,51 +34,60 @@ public class ServersPageViewModel : BaseRoutableViewModel
         #endregion
 
         eventHandlerClosedWindowDialog = async (s, e) => await LoadServerRacks();
+
+        #region Commands Initialization
+
+        OpenAddServerWindowCommand = ReactiveCommand.Create<ServerRack>(async (ServerRack serverRack) =>
+{
+    await _navigationService.ShowServerWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog, serverRack: serverRack);
+});
+
+        RemoveServerCommand = ReactiveCommand.Create<int>(async (int id) =>
+        {
+            var result = await ServerService.RemoveServer(id);
+            if (!result.Success)
+            {
+                await _dialogService.ShowMessageBox("Ошибка", $"Ошибка удаления сервера. Ошибка: {result.Message}", icon: Icon.Error);
+                return;
+            }
+            await _dialogService.ShowMessageBox("Сообщение", $"Сервер удалён", icon: Icon.Success);
+            await LoadServerRacks();
+        });
+
+        RemoveServerRackCommand = ReactiveCommand.Create<int>(async (int id) =>
+        {
+            var result = await ServerRackService.RemoveServerRack(id);
+            if (!result.Success)
+            {
+                await _dialogService.ShowMessageBox("Ошибка", $"Ошибка удаления серверной стойки. Ошибка: {result.Message}", icon: Icon.Error);
+                return;
+            }
+            await _dialogService.ShowMessageBox("Сообщение", $"Серверная стойка удалена", icon: Icon.Success);
+            await LoadServerRacks();
+        });
+
+        EditServerCommand = ReactiveCommand.Create<int>(async (int id) =>
+        {
+            await _navigationService.ShowServerWindowDialog(WindowType.Edit, eventHandlerClosedWindowDialog, id);
+        });
+
+        ViewServerCommand = ReactiveCommand.Create<int>(async (int id) =>
+        {
+            await _navigationService.ShowServerWindowDialog(WindowType.View, id: id);
+        });
+
+        #endregion
     }
 
     #endregion
 
     #region Public Methods
 
-    public async Task OpenAddServerWindow(ServerRack serverRack)
-    {
-        await _navigationService.ShowServerWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog, serverRack: serverRack);
-    }
     public async Task OpenAddServerRackWindow()
     {
         await _navigationService.ShowServerRackWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog);
     }
-    public async Task RemoveServer(object id)
-    {
-        int serverId = (int)id;
-        var result = await ServerService.RemoveServer(serverId);
-        if (!result.Success)
-        {
-            await _dialogService.ShowMessageBox("Ошибка", $"Ошибка удаления сервера. Ошибка: {result.Message}", icon: Icon.Error);
-            return;
-        }
-        await _dialogService.ShowMessageBox("Сообщение", $"Сервер удалён", icon: Icon.Success);
-        await LoadServerRacks();
-    }
-    public async Task ViewServer(int id)
-    {
-        await _navigationService.ShowServerWindowDialog(WindowType.View, id: id);
-    }
-    public async Task EditServer(int id)
-    {
-        await _navigationService.ShowServerWindowDialog(WindowType.Edit, eventHandlerClosedWindowDialog, id);
-    }
-    public async Task RemoveServerRack(int id)
-    {
-        var result = await ServerRackService.RemoveServerRack(id);
-        if (!result.Success)
-        {
-            await _dialogService.ShowMessageBox("Ошибка", $"Ошибка удаления серверной стойки. Ошибка: {result.Message}", icon: Icon.Error);
-            return;
-        }
-        await _dialogService.ShowMessageBox("Сообщение", $"Серверная стойка удалена", icon: Icon.Success);
-        await LoadServerRacks();
-    }
+
     public async Task LoadServerRacks()
     {
         var serverRacksResult = await ServerRackService.GetServerRacksWithServers();
@@ -90,5 +99,18 @@ public class ServersPageViewModel : BaseRoutableViewModel
         ServerRacks = serverRacksResult.Object;
     }
 
+    #endregion
+
+    #region Commands
+
+    public ReactiveCommand<ServerRack, Unit> OpenAddServerWindowCommand { get; init; }
+
+    public ReactiveCommand<int, Unit> RemoveServerCommand { get; init; }
+
+    public ReactiveCommand<int, Unit> RemoveServerRackCommand { get; init; }
+
+    public ReactiveCommand<int, Unit> ViewServerCommand { get; init; }
+
+    public ReactiveCommand<int, Unit> EditServerCommand { get; init; }
     #endregion
 }

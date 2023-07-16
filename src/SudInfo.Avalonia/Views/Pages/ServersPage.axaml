@@ -41,7 +41,7 @@
                                 Source="/Assets/Images/remove.png">
                                 <i:Interaction.Behaviors>
                                     <EventTriggerBehavior EventName="Tapped">
-                                        <InvokeCommandAction Command="{Binding DataContext.RemoveServerRack, ElementName=Root}" CommandParameter="{Binding Id}" />
+                                        <InvokeCommandAction Command="{Binding #Root.DataContext.RemoveServerRackCommand}" CommandParameter="{Binding Id}" />
                                     </EventTriggerBehavior>
                                 </i:Interaction.Behaviors>
                             </Image>
@@ -70,21 +70,21 @@
                                                         <Image Cursor="Hand" Source="/Assets/Images/eye.png">
                                                             <i:Interaction.Behaviors>
                                                                 <EventTriggerBehavior EventName="Tapped">
-                                                                    <InvokeCommandAction Command="{Binding DataContext.ViewServer, ElementName=Root}" CommandParameter="{Binding Id}" />
+                                                                    <InvokeCommandAction Command="{Binding #Root.DataContext.ViewServerCommand}" CommandParameter="{Binding Id}" />
                                                                 </EventTriggerBehavior>
                                                             </i:Interaction.Behaviors>
                                                         </Image>
                                                         <Image Cursor="Hand" Source="/Assets/Images/edit.png">
                                                             <i:Interaction.Behaviors>
                                                                 <EventTriggerBehavior EventName="Tapped">
-                                                                    <InvokeCommandAction Command="{Binding DataContext.EditServer, ElementName=Root}" CommandParameter="{Binding Id}" />
+                                                                    <InvokeCommandAction Command="{Binding #Root.DataContext.EditServerCommand}" CommandParameter="{Binding Id}" />
                                                                 </EventTriggerBehavior>
                                                             </i:Interaction.Behaviors>
                                                         </Image>
                                                         <Image Source="/Assets/Images/remove.png">
                                                             <i:Interaction.Behaviors>
                                                                 <EventTriggerBehavior EventName="Tapped">
-                                                                    <InvokeCommandAction Command="{Binding DataContext.RemoveServer, ElementName=Root}" CommandParameter="{Binding Id}" />
+                                                                    <InvokeCommandAction Command="{Binding #Root.DataContext.RemoveServerCommand}" CommandParameter="{Binding Id}" />
                                                                 </EventTriggerBehavior>
                                                             </i:Interaction.Behaviors>
                                                         </Image>
@@ -108,7 +108,7 @@
                                         Source="/Assets/Images/add.png">
                                         <i:Interaction.Behaviors>
                                             <ia:EventTriggerBehavior EventName="Tapped">
-                                                <ia:InvokeCommandAction Command="{Binding DataContext.OpenAddServerWindow, ElementName=Root}" CommandParameter="{Binding}" />
+                                                <ia:InvokeCommandAction Command="{Binding #Root.DataContext.OpenAddServerWindowCommand}" CommandParameter="{Binding}" />
                                             </ia:EventTriggerBehavior>
                                         </i:Interaction.Behaviors>
                                     </Image>

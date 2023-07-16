@@ -25,6 +25,11 @@
     <TextBox Watermark="IP адрес"
              MaxLength="20"
              Text="{Binding Server.IpAddress}"/>
+    <ComboBox Width="230"
+              AutoScrollToSelectedItem="True"
+              ItemsSource="{Binding OperatingSystems}"
+              PlaceholderText="Система"
+              SelectedItem="{Binding Server.OperatingSystem}"/>
     <Button Content="{Binding SaveButtonText}"
             Command="{Binding SaveServer}"
             IsVisible="{Binding ButtonIsVisible}"
