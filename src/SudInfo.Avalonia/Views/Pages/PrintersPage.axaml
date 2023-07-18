@@ -46,7 +46,8 @@
         Grid.ColumnSpan="6"
         x:DataType="models:Printer"
         ItemsSource="{Binding Printers}"
-        SelectedItem="{Binding SelectedPrinter}">
+        SelectedItem="{Binding SelectedPrinter}"
+        IsReadOnly="True">
       <DataGrid.ContextMenu>
         <ContextMenu>
           <MenuItem Header="Редактировать" Command="{Binding OpenEditPrinterWindow}"/>
@@ -56,41 +57,36 @@
       <DataGrid.Columns>
         <DataGridTextColumn
             Binding="{Binding Name}"
-            Header="Название"
-            IsReadOnly="True" />
+            Header="Название"/>
         <DataGridTextColumn
             Binding="{Binding Type}"
-            Header="Тип"
-            IsReadOnly="True" />
+            Header="Тип" />
         <DataGridTextColumn
             Binding="{Binding Ip}"
-            Header="IP Адрес"
-            IsReadOnly="True" />
+            Header="IP Адрес"/>
         <DataGridTextColumn
             Binding="{Binding Cabinet}"
-            Header="Кабинет"
-            IsReadOnly="True" />
+            Header="Кабинет"/>
         <DataGridTextColumn
             Binding="{Binding YearRelease}"
-            Header="Год выпуска"
-            IsReadOnly="True" />
+            Header="Год выпуска" />
         <DataGridTextColumn
             Binding="{Binding InventarNumber}"
-            Header="Инвентарный"
-            IsReadOnly="True" />
+            Header="Инвентарный" />
         <DataGridTextColumn
             Binding="{Binding SerialNumber}"
-            Header="Серийный"
-            IsReadOnly="True" />
+            Header="Серийный"/>
+        <DataGridTextColumn Binding="{Binding IsDecommissioned}" Header="Списан" />
+        <DataGridTextColumn Binding="{Binding IsBroken}" Header="Сломан" />
+        <DataGridTextColumn Binding="{Binding IsStock}" Header="На складе" />
+        <DataGridTextColumn Binding="{Binding BreakdownDescription}" Header="Описание поломки" />
         <DataGridTextColumn
             Width="*"
             Binding="{Binding Computer.User.FIO}"
-            Header="Сотрудник"
-            IsReadOnly="True" />
+            Header="Сотрудник" />
         <DataGridTextColumn
             Binding="{Binding Cabinet}"
-            Header="Кабинет"
-            IsReadOnly="True" />
+            Header="Кабинет"/>
       </DataGrid.Columns>
     </DataGrid>
   </Grid>

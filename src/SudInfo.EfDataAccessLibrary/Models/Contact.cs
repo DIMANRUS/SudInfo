@@ -1,7 +1,7 @@
 ﻿namespace SudInfo.EfDataAccessLibrary.Models;
 public class Contact : BaseModel
 {
-    [XLColumn(Header = "Наименование контакта")]
+    [XLColumn(Header = "Имя/Наименование контакта")]
     [Required(ErrorMessage = Const.FieldRequired)]
     [StringLength(100, ErrorMessage = Const.LengthMore2, MinimumLength = 2)]
     public string? Name { get; set; }

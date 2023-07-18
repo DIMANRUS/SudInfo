@@ -53,7 +53,7 @@
         <DataGridTextColumn
             Width="*"
             Binding="{Binding Remains}"
-            Header="Кол-во" />
+            Header="Остаток (шт.)" />
       </DataGrid.Columns>
     </DataGrid>
   </Grid>

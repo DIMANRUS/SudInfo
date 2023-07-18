@@ -43,7 +43,8 @@
     <DataGrid ItemsSource="{Binding Monitors}"
               SelectedItem="{Binding SelectedMonitor}"
               Grid.Row="1"
-              Grid.ColumnSpan="6">
+              Grid.ColumnSpan="6"
+              IsReadOnly="True">
       <DataGrid.ContextMenu>
         <ContextMenu>
           <MenuItem Header="Редактировать" Command="{Binding OpenEditMonitorWindow}"/>
@@ -52,30 +53,26 @@
       </DataGrid.ContextMenu>
       <DataGrid.Columns>
         <DataGridTextColumn Binding="{Binding Name}"
-                            Header="Наименование монитора"
-                            IsReadOnly="True"/>
+                            Header="Наименование монитора"/>
         <DataGridTextColumn Binding="{Binding ScreenSize}"
-                            Header="Размер экрана"
-                            IsReadOnly="True"/>
+                            Header="Размер экрана"/>
         <DataGridTextColumn Binding="{Binding ScreenResolution}"
-                            Header="Разрешение экрана"
-                            IsReadOnly="True"/>
+                            Header="Разрешение экрана"/>
         <DataGridTextColumn Header="Инвентарный"
-                            Binding="{Binding InventarNumber}"
-                            IsReadOnly="True"/>
+                            Binding="{Binding InventarNumber}"/>
         <DataGridTextColumn Header="Серийный"
-                            Binding="{Binding SerialNumber}"
-                            IsReadOnly="True"/>
+                            Binding="{Binding SerialNumber}"/>
         <DataGridTextColumn Header="Год выпуска"
-                            Binding="{Binding YearRelease}"
-                            IsReadOnly="True"/>
+                            Binding="{Binding YearRelease}"/>
+        <DataGridTextColumn Binding="{Binding IsDecommissioned}" Header="Списан" />
+        <DataGridTextColumn Binding="{Binding IsBroken}" Header="Сломан" />
+        <DataGridTextColumn Binding="{Binding IsStock}" Header="На складе" />
+        <DataGridTextColumn Binding="{Binding BreakdownDescription}" Header="Описание поломки" />
         <DataGridTextColumn Header="ФИО сотрудника"
                             Binding="{Binding Computer.User.FIO}"
-                            IsReadOnly="True"
                             Width="*"/>
         <DataGridTextColumn Header="Кабинет"
-                            Binding="{Binding Computer.Cabinet}"
-                            IsReadOnly="True"/>
+                            Binding="{Binding Computer.Cabinet}"/>
       </DataGrid.Columns>
     </DataGrid>
   </Grid>

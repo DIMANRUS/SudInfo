@@ -74,7 +74,8 @@
         Grid.ColumnSpan="6"
         x:DataType="models:Periphery"
         ItemsSource="{Binding Peripheries}"
-        SelectedItem="{Binding SelectedPeriphery}">
+        SelectedItem="{Binding SelectedPeriphery}"
+        IsReadOnly="True">
       <DataGrid.ContextMenu>
         <ContextMenu>
           <MenuItem Header="Редактировать" Command="{Binding OpenEditPeripheryWindow}"/>
@@ -84,33 +85,26 @@
       <DataGrid.Columns>
         <DataGridTextColumn
             Binding="{Binding Name}"
-            Header="Наименование"
-            IsReadOnly="True" />
+            Header="Наименование" />
         <DataGridTextColumn
             Binding="{Binding Type}"
-            Header="Тип"
-            IsReadOnly="True" />
+            Header="Тип"/>
         <DataGridTextColumn
             Binding="{Binding InventarNumber}"
-            Header="Инвентарный"
-            IsReadOnly="True" />
+            Header="Инвентарный" />
         <DataGridTextColumn
             Binding="{Binding SerialNumber}"
-            Header="Серийный"
-            IsReadOnly="True" />
+            Header="Серийный"/>
         <DataGridTextColumn
             Binding="{Binding Computer.Name}"
-            Header="Компьютер"
-            IsReadOnly="True" />
+            Header="Компьютер"/>
         <DataGridTextColumn
             Width="*"
             Binding="{Binding Computer.User.FIO}"
-            Header="ФИО сотрудника"
-            IsReadOnly="True" />
+            Header="ФИО сотрудника"/>
         <DataGridTextColumn
             Binding="{Binding Computer.Cabinet}"
-            Header="Кабинет"
-            IsReadOnly="True" />
+            Header="Кабинет" />
       </DataGrid.Columns>
     </DataGrid>
   </Grid>

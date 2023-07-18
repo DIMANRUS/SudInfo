@@ -43,7 +43,7 @@
         </ContextMenu>
       </DataGrid.ContextMenu>
       <DataGrid.Columns>
-        <DataGridTextColumn Header="Наименование"
+        <DataGridTextColumn Header="Имя/Наименование"
                             Binding="{Binding Name}"/>
         <DataGridTextColumn Header="Номер телефона"
                             Binding="{Binding Phone}"/>

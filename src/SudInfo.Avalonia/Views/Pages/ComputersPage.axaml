@@ -78,6 +78,7 @@
         <DataGridTextColumn Binding="{Binding IsVks}" Header="ВКС" />
         <DataGridTextColumn Binding="{Binding IsDecommissioned}" Header="Списан" />
         <DataGridTextColumn Binding="{Binding IsBroken}" Header="Сломан" />
+        <DataGridTextColumn Binding="{Binding IsStock}" Header="На складе" />
         <DataGridTextColumn Binding="{Binding BreakdownDescription}" Header="Описание поломки" />
       </DataGrid.Columns>
     </DataGrid>

@@ -8,7 +8,7 @@ public class Cartridge : BaseModel
     [StringLength(50, MinimumLength = 2, ErrorMessage = Const.LengthMore2)]
     public string? Name { get; set; }
 
-    [XLColumn(Header = "Остаток")]
+    [XLColumn(Header = "Остаток (шт.)")]
     public int Remains { get; set; } = 1;
 
     [XLColumn(Header = "Тип")]

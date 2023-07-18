@@ -10,7 +10,7 @@
     xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.WindowViewModels;assembly=SudInfo.Avalonia"
     Title="Флешка ЭЦП (Рутокен)"
     Width="300"
-    Height="180"
+    Height="220"
     d:DesignHeight="460"
     d:DesignWidth="800"
     x:DataType="viewModels:RutokenWindowViewModel"
@@ -25,8 +25,12 @@
   <StackPanel Margin="10" Spacing="5">
     <TextBox
         MaxLength="30"
-        Text="{Binding Rutoken.SerialNumber}"
-        Watermark="Серийный номер" />
+        Text="{Binding Rutoken.SerialNumberRutoken}"
+        Watermark="Серийный номер рутокен" />
+    <TextBox
+        MaxLength="100"
+        Text="{Binding Rutoken.NumberCertificate}"
+        Watermark="Номер сертификата" />
     <CalendarDatePicker Width="280" SelectedDate="{Binding Rutoken.EndDateCertificate}" />
     <StackPanel Orientation="Horizontal">
       <CheckBox Name="IsUserBox" IsChecked="{Binding IsUser}" />

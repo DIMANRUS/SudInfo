@@ -32,7 +32,8 @@
         Grid.Row="1"
         Grid.ColumnSpan="6"
         ItemsSource="{Binding Rutokens}"
-        SelectedItem="{Binding SelectedRutoken}">
+        SelectedItem="{Binding SelectedRutoken}"
+        IsReadOnly="True">
       <DataGrid.ContextMenu>
         <ContextMenu>
           <MenuItem Header="Редактировать" Command="{Binding OpenEditRutokenWindow}"/>
@@ -41,22 +42,21 @@
       </DataGrid.ContextMenu>
       <DataGrid.Columns>
         <DataGridTextColumn
-            Binding="{Binding SerialNumber}"
-            Header="Серийный номер"
-            IsReadOnly="True" />
+            Binding="{Binding SerialNumberRutoken}"
+            Header="Серийный номер рутокен" />
+        <DataGridTextColumn
+            Binding="{Binding NumberCertificate}"
+            Header="Номер сертификата" />
         <DataGridTextColumn
             Binding="{Binding EndDateCertificate, StringFormat='dd.MM.yyyy'}"
-            Header="Дата окончания сертификата"
-            IsReadOnly="True" />
+            Header="Дата окончания сертификата"/>
         <DataGridTextColumn
             Binding="{Binding User.FIO}"
-            Header="ФИО сотрудника"
-            IsReadOnly="True" />
+            Header="ФИО сотрудника" />
         <DataGridTextColumn
             Width="*"
             Binding="{Binding User.NumberCabinet}"
-            Header="Кабинет"
-            IsReadOnly="True" />
+            Header="Кабинет" />
       </DataGrid.Columns>
     </DataGrid>
   </Grid>
