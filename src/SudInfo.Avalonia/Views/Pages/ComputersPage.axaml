@@ -17,7 +17,7 @@
       <ia:InvokeCommandAction Command="{Binding LoadComputers}" />
     </ia:EventTriggerBehavior>
   </i:Interaction.Behaviors>
-  <Grid ColumnDefinitions="140, *, 40,40,40" RowDefinitions="40,*">
+  <Grid ColumnDefinitions="140, *, 40,40" RowDefinitions="40,*">
     <TextBlock
         Margin="10"
         FontSize="20"
@@ -43,13 +43,6 @@
         </ia:EventTriggerBehavior>
       </i:Interaction.Behaviors>
     </Image>
-    <Image Grid.Column="3" Source="/Assets/Images/refresh.png">
-      <i:Interaction.Behaviors>
-        <ia:EventTriggerBehavior EventName="Tapped">
-          <ia:InvokeCommandAction Command="{Binding RefreshComputers}" />
-        </ia:EventTriggerBehavior>
-      </i:Interaction.Behaviors>
-    </Image>
     <Image Grid.Column="4" Source="/Assets/Images/add.png">
       <i:Interaction.Behaviors>
         <ia:EventTriggerBehavior EventName="Tapped">
@@ -65,7 +58,6 @@
         SelectedItem="{Binding SelectedComputer}">
       <DataGrid.ContextMenu>
         <ContextMenu>
-          <MenuItem Header="Посмотреть" Command="{Binding ViewComputer}"/>
           <MenuItem Header="Редактировать" Command="{Binding OpenEditComputerWindow}"/>
           <MenuItem Header="Удалить" Command="{Binding RemoveComputer}"/>
         </ContextMenu>

@@ -49,16 +49,14 @@ public class UsersPageViewModel : BaseRoutableViewModel
     {
         await _navigationService.ShowUserWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog);
     }
+
     public async Task OpenEditUserWindow()
     {
         if (SelectedUser == null)
             return;
         await _navigationService.ShowUserWindowDialog(WindowType.Edit, eventHandlerClosedWindowDialog, SelectedUser.Id);
     }
-    public async Task RefreshUsers()
-    {
-        await LoadUsers();
-    }
+
     public async Task RemoveUser()
     {
         if (SelectedUser == null)
@@ -74,6 +72,7 @@ public class UsersPageViewModel : BaseRoutableViewModel
         }
         await LoadUsers();
     }
+
     public void SearchBoxKeyUp()
     {
         if (UsersFromDataBase == null)
@@ -85,6 +84,7 @@ public class UsersPageViewModel : BaseRoutableViewModel
         }
         Users = new(UsersFromDataBase.Where(x => x.FIO!.ToLower().Contains(SearchText.ToLower())));
     }
+
     public async Task LoadUsers()
     {
         var usersResult = await UserService.GetUsers();

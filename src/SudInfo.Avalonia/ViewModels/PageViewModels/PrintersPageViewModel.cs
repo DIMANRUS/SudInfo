@@ -46,20 +46,18 @@ public class PrintersPageViewModel : BaseRoutableViewModel
 
     #region Public Methods
 
-    public async Task RefreshPrinters()
-    {
-        await LoadPrinters();
-    }
     public async Task OpenAddPrinterWindow()
     {
         await _navigationService.ShowPrinterWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog);
     }
+
     public async Task OpenEditPrinterWindow()
     {
         if (SelectedPrinter == null)
             return;
         await _navigationService.ShowPrinterWindowDialog(WindowType.Edit, eventHandlerClosedWindowDialog, SelectedPrinter.Id);
     }
+
     public async Task RemovePrinter()
     {
         if (SelectedPrinter == null)
@@ -75,6 +73,7 @@ public class PrintersPageViewModel : BaseRoutableViewModel
         }
         await LoadPrinters();
     }
+
     public void SearchBoxKeyUp()
     {
         if (PrintersFromDataBase == null)
@@ -91,6 +90,7 @@ public class PrintersPageViewModel : BaseRoutableViewModel
                                                        x.Computer.User != null &&
                                                        x.Computer.User.FIO.ToLower().Contains(SearchText.ToLower())));
     }
+
     public async Task LoadPrinters()
     {
         var printersResult = await PrinterService.GetPrinters();

@@ -17,7 +17,7 @@
       <ia:InvokeCommandAction Command="{Binding LoadPeripheries}" />
     </ia:EventTriggerBehavior>
   </i:Interaction.Behaviors>
-  <Grid ColumnDefinitions="140, *,20,150, 40,40" RowDefinitions="40,*">
+  <Grid ColumnDefinitions="140, *,20,150, 40" RowDefinitions="40,*">
     <TextBlock
         Margin="10"
         FontSize="20"
@@ -62,14 +62,7 @@
         </EventTriggerBehavior>
       </i:Interaction.Behaviors>
     </ComboBox>
-    <Image Grid.Column="4" Source="/Assets/Images/refresh.png">
-      <i:Interaction.Behaviors>
-        <ia:EventTriggerBehavior EventName="Tapped">
-          <ia:InvokeCommandAction Command="{Binding RefreshPeriphery}" />
-        </ia:EventTriggerBehavior>
-      </i:Interaction.Behaviors>
-    </Image>
-    <Image Grid.Column="5" Source="/Assets/Images/add.png">
+    <Image Grid.Column="4" Source="/Assets/Images/add.png">
       <i:Interaction.Behaviors>
         <ia:EventTriggerBehavior EventName="Tapped">
           <ia:InvokeCommandAction Command="{Binding OpenAddPeripheryWindow}" />

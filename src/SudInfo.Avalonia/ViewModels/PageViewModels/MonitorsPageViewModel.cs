@@ -52,16 +52,14 @@ public class MonitorsPageViewModel : BaseRoutableViewModel
     {
         await _navigationService.ShowMonitorWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog);
     }
+
     public async Task OpenEditMonitorWindow()
     {
         if (SelectedMonitor == null)
             return;
         await _navigationService.ShowMonitorWindowDialog(WindowType.Edit, eventHandlerClosedWindowDialog, SelectedMonitor.Id);
     }
-    public async Task RefreshMonitors()
-    {
-        await LoadMonitors();
-    }
+
     public async Task RemoveMonitor()
     {
         if (SelectedMonitor == null)
@@ -77,6 +75,7 @@ public class MonitorsPageViewModel : BaseRoutableViewModel
         }
         await LoadMonitors();
     }
+
     public void SearchBoxKeyUp()
     {
         if (MonitorsFromDataBase == null)
@@ -93,6 +92,7 @@ public class MonitorsPageViewModel : BaseRoutableViewModel
                                                     x.Computer.User != null &&
                                                     x.Computer.User.FIO.ToLower().Contains(SearchText.ToLower())));
     }
+
     public async Task LoadMonitors()
     {
         var monitorsResult = await MonitorService.GetMonitors();

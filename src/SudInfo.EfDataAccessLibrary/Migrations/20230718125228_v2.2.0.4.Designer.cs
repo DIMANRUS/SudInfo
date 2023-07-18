@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SudInfo.EfDataAccessLibrary.Contexts;
 
@@ -10,9 +11,11 @@ using SudInfo.EfDataAccessLibrary.Contexts;
 namespace SudInfo.EfDataAccessLibrary.Migrations
 {
     [DbContext(typeof(SudInfoDbContext))]
-    partial class SudInfoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230718125228_v2.2.0.4")]
+    partial class v2204
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.9");
@@ -189,10 +192,6 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("BreakdownDescription")
-                        .HasMaxLength(200)
-                        .HasColumnType("TEXT");
-
                     b.Property<int?>("ComputerId")
                         .HasColumnType("INTEGER");
 
@@ -307,10 +306,6 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("BreakdownDescription")
-                        .HasMaxLength(200)
-                        .HasColumnType("TEXT");
 
                     b.Property<int?>("ComputerId")
                         .HasColumnType("INTEGER");

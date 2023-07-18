@@ -44,7 +44,6 @@
     <None Remove="Assets\Images\microphone.png" />
     <None Remove="Assets\Images\mouse.png" />
     <None Remove="Assets\Images\ok.png" />
-    <None Remove="Assets\Images\refresh.png" />
     <None Remove="Assets\Images\remove.png" />
     <None Remove="Assets\Images\save.png" />
     <None Remove="Assets\Images\scan.png" />

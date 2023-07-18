@@ -50,18 +50,12 @@ public class PeripheryPageViewModel : BaseRoutableViewModel
         _navigationService = navigationService;
         #endregion
 
-        eventHandlerClosedWindowDialog = async (s, e) => await RefreshPeriphery();
+        eventHandlerClosedWindowDialog = async (s, e) => await LoadPeripheries();
     }
 
     #endregion
 
     #region Public Methods
-
-    public async Task RefreshPeriphery()
-    {
-        await LoadPeripheries();
-        SearchBoxKeyUp();
-    }
 
     public async Task OpenAddPeripheryWindow()
     {
@@ -126,6 +120,7 @@ public class PeripheryPageViewModel : BaseRoutableViewModel
         var peripheriesResult = await PeripheryService.GetPeripheryList();
         Peripheries = new(peripheriesResult);
         PeripheriesFromDatabase = Peripheries;
+        SearchText = string.Empty;
     }
 
     #endregion

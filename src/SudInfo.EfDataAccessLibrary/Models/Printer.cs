@@ -30,7 +30,20 @@ public class Printer : BaseModel
     [Required(ErrorMessage = Const.FieldRequired)]
     [StringLength(50)]
     public string? InventarNumber { get; set; }
-    
+
+    [XLColumn(Header = "Сломан")]
+    public bool IsBroken { get; set; }
+
+    [XLColumn(Header = "Описание поломки")]
+    [StringLength(200)]
+    public string? BreakdownDescription { get; set; }
+
+    [XLColumn(Header = "На складе")]
+    public bool IsStock { get; set; }
+
+    [XLColumn(Header = "Списан")]
+    public bool IsDecommissioned { get; set; }
+
     public Computer? Computer { get; set; }
     
     [XLColumn(Header = "Номер кабинета")]

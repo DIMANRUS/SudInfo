@@ -60,13 +60,6 @@ public class ComputersPageViewModel : BaseRoutableViewModel
 
     #region Public Methods
 
-    public async Task ViewComputer()
-    {
-        if (SelectedComputer == null)
-            return;
-        await _navigationService.ShowComputerWindowDialog(WindowType.View, computerId: SelectedComputer.Id);
-    }
-
     public async Task OpenAddComputerWindow()
     {
         await _navigationService.ShowComputerWindowDialog(WindowType.Add, _eventHandlerClosedWindowDialog);
@@ -77,11 +70,6 @@ public class ComputersPageViewModel : BaseRoutableViewModel
         if (SelectedComputer == null)
             return;
         await _navigationService.ShowComputerWindowDialog(WindowType.Edit, _eventHandlerClosedWindowDialog, SelectedComputer.Id);
-    }
-
-    public async Task RefreshComputers()
-    {
-        await LoadComputers();
     }
 
     public async Task RemoveComputer()

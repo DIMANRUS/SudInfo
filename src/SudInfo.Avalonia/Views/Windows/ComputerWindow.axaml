@@ -88,10 +88,10 @@
         MaxLength="4"
         Text="{Binding Computer.NumberCabinet}"
         Watermark="Кабинет" />
-    <StackPanel 
+    <StackPanel
         Orientation="Horizontal">
-      <CheckBox 
-        Name="IsUserBox" 
+      <CheckBox
+        Name="IsUserBox"
         IsChecked="{Binding IsUser}" />
       <ComboBox
           Width="252"

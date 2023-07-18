@@ -15,20 +15,13 @@
       <ia:InvokeCommandAction Command="{Binding LoadRutokens}" />
     </ia:EventTriggerBehavior>
   </i:Interaction.Behaviors>
-  <Grid ColumnDefinitions="140, *, 40,40" RowDefinitions="40,*">
+  <Grid ColumnDefinitions="140, *, 40" RowDefinitions="40,*">
     <TextBlock
         Margin="10"
         FontSize="20"
         FontWeight="Bold"
         Text="ЭЦП Рутокен" />
-    <Image Grid.Column="2" Source="/Assets/Images/refresh.png">
-      <i:Interaction.Behaviors>
-        <ia:EventTriggerBehavior EventName="Tapped">
-          <ia:InvokeCommandAction Command="{Binding RefreshRutokens}" />
-        </ia:EventTriggerBehavior>
-      </i:Interaction.Behaviors>
-    </Image>
-    <Image Grid.Column="3" Source="/Assets/Images/add.png">
+    <Image Grid.Column="2" Source="/Assets/Images/add.png">
       <i:Interaction.Behaviors>
         <ia:EventTriggerBehavior EventName="Tapped">
           <ia:InvokeCommandAction Command="{Binding OpenAddRutokenWindow}" />

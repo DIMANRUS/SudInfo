@@ -54,16 +54,14 @@ public class RutokensPageViewModel : BaseRoutableViewModel
     {
         await _navigationService.ShowRutokenWindowDialog(WindowType.Add, _eventHandlerClosedWindowDialog);
     }
+
     public async Task OpenEditRutokenWindow()
     {
         if (SelectedRutoken == null)
             return;
         await _navigationService.ShowRutokenWindowDialog(WindowType.Edit, _eventHandlerClosedWindowDialog, SelectedRutoken.Id);
     }
-    public async Task RefreshRutokens()
-    {
-        await LoadRutokens();
-    }
+
     public async Task RemoveRutoken()
     {
         if (SelectedRutoken == null)
@@ -79,6 +77,7 @@ public class RutokensPageViewModel : BaseRoutableViewModel
         }
         await LoadRutokens();
     }
+
     public async Task LoadRutokens()
     {
         var rutokensResult = await RutokenService.GetRutokens();
