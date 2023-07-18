@@ -2,7 +2,7 @@
 
 public class TaskService : BaseService
 {
-    public static async Task<IReadOnlyList<TaskEntity>> GetTasks()
+    public static async Task<IReadOnlyCollection<TaskEntity>> GetTasks()
     {
         using SudInfoDbContext context = new();
         var tasks = await context.Tasks

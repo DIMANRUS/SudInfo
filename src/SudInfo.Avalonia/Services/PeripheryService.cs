@@ -30,7 +30,7 @@ public class PeripheryService : BaseService
             };
         }
     }
-    public static async Task<IReadOnlyList<Periphery>> GetPeripheryList()
+    public static async Task<IReadOnlyCollection<Periphery>> GetPeripheryList()
     {
         using SudInfoDbContext applicationDBContext = new();
         var peripheries = await applicationDBContext.Peripheries

@@ -11,12 +11,16 @@ public class WorkplacesPageViewModel : BaseRoutableViewModel
     #region Properties
 
     [Reactive]
-    public IReadOnlyList<User>? Users { get; set; }
+    public string SearchText { get; set; } = string.Empty;
 
-    public IReadOnlyList<User>? UsersFromDatabase { get; set; }
+    #endregion
+
+    #region Collections
 
     [Reactive]
-    public string SearchText { get; set; } = string.Empty;
+    public IReadOnlyCollection<User>? Users { get; set; }
+
+    public IReadOnlyCollection<User>? UsersFromDatabase { get; set; }
 
     #endregion
 

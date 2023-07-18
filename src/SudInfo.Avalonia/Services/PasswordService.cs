@@ -2,7 +2,7 @@
 
 public class PasswordService : BaseService
 {
-    public static async Task<IReadOnlyList<PasswordEntity>> GetPasswords()
+    public static async Task<IReadOnlyCollection<PasswordEntity>> GetPasswords()
     {
         using SudInfoDbContext context = new();
         var passwords = await context.Passwords.AsNoTracking().ToListAsync();

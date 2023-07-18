@@ -17,22 +17,26 @@ public class AppsPageViewModel : BaseRoutableViewModel
 
     public AppEntity? SelectedApp { get; set; }
 
+    #endregion
+
+    #region Collections
+
     [Reactive]
-    public ObservableCollection<AppEntity>? Apps { get; set; }
+    public IReadOnlyCollection<AppEntity>? Apps { get; set; }
 
     #endregion
 
-    #region Initialization
+    #region Ctors
 
     public AppsPageViewModel(
-        AppService appService, 
-        DialogService dialogService, 
+        AppService appService,
+        DialogService dialogService,
         NavigationService navigationService)
     {
         #region Services initialization
         _appService = appService;
         _dialogService = dialogService;
-        _navigationService = navigationService; 
+        _navigationService = navigationService;
         #endregion
 
         eventHandlerClosedWindowDialog = async (s, e) => await LoadApps();
@@ -46,21 +50,24 @@ public class AppsPageViewModel : BaseRoutableViewModel
     {
         SelectedIndex = -1;
     }
+
     public async Task LoadApps()
     {
-        var result = await AppService.GetApps();
-        Apps = new ObservableCollection<AppEntity>(result);
+        Apps = await AppService.GetApps();
     }
+
     public async Task OpenAddAppWindow()
     {
         await _navigationService.ShowAppWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog);
     }
+
     public async Task OpenEditAppWindow()
     {
         if (SelectedApp == null)
             return;
         await _navigationService.ShowAppWindowDialog(WindowType.Edit, eventHandlerClosedWindowDialog, SelectedApp.Id);
     }
+
     public async Task RemoveApp()
     {
         if (SelectedApp == null)

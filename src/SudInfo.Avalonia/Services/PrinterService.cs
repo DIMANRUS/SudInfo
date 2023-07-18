@@ -30,7 +30,7 @@ public class PrinterService : BaseService
             };
         }
     }
-    public static async Task<IReadOnlyList<Printer>> GetPrinters()
+    public static async Task<IReadOnlyCollection<Printer>> GetPrinters()
     {
         using SudInfoDbContext applicationDBContext = new();
         var printers = await applicationDBContext.Printers

@@ -13,8 +13,9 @@ public class PasswordsPageViewModel : BaseRoutableViewModel
     #region Collections
 
     [Reactive]
-    public ObservableCollection<PasswordEntity>? Passwords { get; set; }
-    private IReadOnlyList<PasswordEntity>? PasswordsFromDatabase { get; set; }
+    public IReadOnlyCollection<PasswordEntity>? Passwords { get; set; }
+
+    private IReadOnlyCollection<PasswordEntity>? PasswordsFromDatabase { get; set; }
 
     #endregion
 
@@ -48,31 +49,35 @@ public class PasswordsPageViewModel : BaseRoutableViewModel
 
     public async Task LoadPasswords()
     {
-        var result = await PasswordService.GetPasswords();
-        Passwords = new(result);
+        Passwords = await PasswordService.GetPasswords();
         PasswordsFromDatabase = Passwords;
     }
+
     public void SearchBoxKeyUp()
     {
         if (PasswordsFromDatabase == null)
             return;
         if (string.IsNullOrEmpty(SearchText))
         {
-            Passwords = new(PasswordsFromDatabase);
+            Passwords = PasswordsFromDatabase;
             return;
         }
-        Passwords = new(PasswordsFromDatabase.Where(x => x.Description!.ToLower().Contains(SearchText.ToLower())));
+        Passwords = PasswordsFromDatabase.Where(x => x.Description!.ToLower().Contains(SearchText.ToLower()))
+                                         .ToList();
     }
+
     public async Task OpenAddPasswordWindow()
     {
         await _navigationService.ShowPasswordWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog);
     }
+
     public async Task OpenEditPasswordWindow()
     {
         if (SelectedPassword == null)
             return;
         await _navigationService.ShowPasswordWindowDialog(WindowType.Edit, eventHandlerClosedWindowDialog, SelectedPassword.Id);
     }
+
     public async Task RemovePassword()
     {
         if (SelectedPassword == null)

@@ -30,13 +30,13 @@ public class ComputerService : BaseService
             };
         }
     }
-    public static async Task<IReadOnlyList<Computer>> GetComputers()
+    public static async Task<IReadOnlyCollection<Computer>> GetComputers()
     {
         using SudInfoDbContext applicationDBContext = new();
         var computers = await applicationDBContext.Computers.AsNoTracking().Include(x => x.User).ToListAsync();
         return computers;
     }
-    public static async Task<IReadOnlyList<Computer>> GetComputerNamesWithUser()
+    public static async Task<IReadOnlyCollection<Computer>> GetComputerNamesWithUser()
     {
         using SudInfoDbContext applicationDBContext = new();
         var computerNames = await applicationDBContext.Computers

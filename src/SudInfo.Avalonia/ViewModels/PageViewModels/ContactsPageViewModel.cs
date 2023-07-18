@@ -19,10 +19,14 @@ public class ContactsPageViewModel : BaseRoutableViewModel
     #region Properties
 
     [Reactive]
-    public ObservableCollection<Contact>? Contacts { get; set; }
+    public Contact? SelectedContact { get; set; }
+
+    #endregion
+
+    #region Collections
 
     [Reactive]
-    public Contact? SelectedContact { get; set; }
+    public IReadOnlyCollection<Contact>? Contacts { get; set; }
 
     #endregion
 
@@ -48,9 +52,9 @@ public class ContactsPageViewModel : BaseRoutableViewModel
 
     public async Task LoadContacts()
     {
-        var loadContactsResult = await ContactService.GetContacts();
-        Contacts = new(loadContactsResult);
+        Contacts = await ContactService.GetContacts();
     }
+
     public async Task RemoveContact()
     {
         if (SelectedContact == null)
@@ -66,12 +70,14 @@ public class ContactsPageViewModel : BaseRoutableViewModel
         }
         await LoadContacts();
     }
+
     public async Task OpenEditContactWindow()
     {
         if (SelectedContact == null)
             return;
         await _navigationService.ShowContactWindowDialog(WindowType.Edit, _eventHandlerClosedWindowDialog, SelectedContact.Id);
     }
+
     public async Task OpenAddContactWindow()
     {
         await _navigationService.ShowContactWindowDialog(WindowType.Add, _eventHandlerClosedWindowDialog);

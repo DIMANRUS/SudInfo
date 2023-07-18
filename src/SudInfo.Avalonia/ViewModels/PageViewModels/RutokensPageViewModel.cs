@@ -13,7 +13,7 @@ public class RutokensPageViewModel : BaseRoutableViewModel
     #region Collections
 
     [Reactive]
-    public ObservableCollection<Rutoken>? Rutokens { get; set; }
+    public IReadOnlyCollection<Rutoken>? Rutokens { get; set; }
 
     #endregion
 
@@ -24,7 +24,7 @@ public class RutokensPageViewModel : BaseRoutableViewModel
 
     #endregion
 
-    #region Constructors
+    #region Ctors
 
     public RutokensPageViewModel(
         NavigationService navigationService,
@@ -80,8 +80,7 @@ public class RutokensPageViewModel : BaseRoutableViewModel
 
     public async Task LoadRutokens()
     {
-        var rutokensResult = await RutokenService.GetRutokens();
-        Rutokens = new(rutokensResult);
+        Rutokens = await RutokenService.GetRutokens();
     }
 
     #endregion

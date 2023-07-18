@@ -14,11 +14,11 @@ public class ServersPageViewModel : BaseRoutableViewModel
     #region Collections
 
     [Reactive]
-    public IReadOnlyList<ServerRack>? ServerRacks { get; set; }
+    public IReadOnlyCollection<ServerRack>? ServerRacks { get; set; }
 
     #endregion
 
-    #region Initialization
+    #region Ctors
 
     public ServersPageViewModel(
         ServerRackService serverRackService,

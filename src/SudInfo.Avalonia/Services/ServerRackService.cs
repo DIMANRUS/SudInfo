@@ -2,7 +2,7 @@
 
 public class ServerRackService : BaseService
 {
-    public static async Task<Result<IReadOnlyList<ServerRack>>> GetServerRacksWithServers()
+    public static async Task<Result<IReadOnlyCollection<ServerRack>>> GetServerRacksWithServers()
     {
         try
         {

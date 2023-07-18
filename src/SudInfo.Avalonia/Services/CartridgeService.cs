@@ -26,7 +26,7 @@ public class CartridgeService : BaseService
             };
         }
     }
-    public static async Task<IReadOnlyList<Cartridge>> GetCartridges()
+    public static async Task<IReadOnlyCollection<Cartridge>> GetCartridges()
     {
         using SudInfoDbContext applicationDBContext = new();
         var cartridges = await applicationDBContext.Cartridges.AsNoTracking().ToListAsync();

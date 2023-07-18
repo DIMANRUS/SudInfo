@@ -2,7 +2,7 @@
 
 public class AppService
 {
-    public static async Task<IReadOnlyList<AppEntity>> GetApps()
+    public static async Task<IReadOnlyCollection<AppEntity>> GetApps()
     {
         await using SudInfoDbContext context = new();
         var apps = await context.Apps

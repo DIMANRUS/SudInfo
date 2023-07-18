@@ -13,7 +13,7 @@ public class MonitorWindowViewModel : BaseViewModel
     #region Collections
 
     [Reactive]
-    public IEnumerable<Computer>? Computers { get; set; }
+    public IReadOnlyCollection<Computer>? Computers { get; set; }
 
     #endregion
 

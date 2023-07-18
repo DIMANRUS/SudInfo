@@ -80,10 +80,12 @@ public class PrinterWindowViewModel : BaseViewModel
     #endregion
 
     #region Collections
+
     public static IEnumerable<PrinterType> PrinterTypes => Enum.GetValues(typeof(PrinterType)).Cast<PrinterType>();
 
     [Reactive]
-    public IEnumerable<Computer>? Computers { get; private set; }
+    public IReadOnlyCollection<Computer>? Computers { get; private set; }
+
     #endregion
 
     #region Constructors

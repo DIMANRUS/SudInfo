@@ -13,7 +13,7 @@ public class RutokenWindowViewModel : BaseViewModel
     #region Collections
 
     [Reactive]
-    public IReadOnlyList<User>? Users { get; set; }
+    public IReadOnlyCollection<User>? Users { get; set; }
 
     #endregion
 

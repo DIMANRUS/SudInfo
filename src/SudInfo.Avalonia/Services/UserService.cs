@@ -29,7 +29,7 @@ public class UserService : BaseService
             };
         }
     }
-    public static async Task<IReadOnlyList<User>> GetUsers()
+    public static async Task<IReadOnlyCollection<User>> GetUsers()
     {
         using SudInfoDbContext applicationDBContext = new();
         var users = await applicationDBContext.Users
@@ -37,7 +37,7 @@ public class UserService : BaseService
             .ToListAsync();
         return users;
     }
-    public static async Task<IReadOnlyList<User>> GetUsersWithComputers()
+    public static async Task<IReadOnlyCollection<User>> GetUsersWithComputers()
     {
         using SudInfoDbContext applicationDBContext = new();
         var users = await applicationDBContext.Users

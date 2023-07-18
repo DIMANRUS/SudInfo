@@ -11,8 +11,9 @@ public class PrintersPageViewModel : BaseRoutableViewModel
     #region Collections
 
     [Reactive]
-    public ObservableCollection<Printer>? Printers { get; set; }
-    private IEnumerable<Printer>? PrintersFromDataBase { get; set; }
+    public IReadOnlyCollection<Printer>? Printers { get; set; }
+
+    private IReadOnlyCollection<Printer>? PrintersFromDataBase { get; set; }
 
     #endregion
 
@@ -26,7 +27,7 @@ public class PrintersPageViewModel : BaseRoutableViewModel
 
     #endregion
 
-    #region Initialization
+    #region Ctors
 
     public PrintersPageViewModel(
         PrinterService printersService,
@@ -80,21 +81,20 @@ public class PrintersPageViewModel : BaseRoutableViewModel
             return;
         if (string.IsNullOrEmpty(SearchText))
         {
-            Printers = new(PrintersFromDataBase);
+            Printers = PrintersFromDataBase;
             return;
         }
-        Printers = new(PrintersFromDataBase.Where(x => x.Name!.ToLower().Contains(SearchText.ToLower()) ||
+        Printers = PrintersFromDataBase.Where(x => x.Name!.ToLower().Contains(SearchText.ToLower()) ||
                                                        x.InventarNumber!.Contains(SearchText) ||
                                                        x.SerialNumber!.Contains(SearchText) ||
                                                        x.Computer != null &&
                                                        x.Computer.User != null &&
-                                                       x.Computer.User.FIO.ToLower().Contains(SearchText.ToLower())));
+                                                       x.Computer.User.FIO.ToLower().Contains(SearchText.ToLower())).ToList();
     }
 
     public async Task LoadPrinters()
     {
-        var printersResult = await PrinterService.GetPrinters();
-        Printers = new(printersResult);
+        Printers = await PrinterService.GetPrinters();
         PrintersFromDataBase = Printers;
     }
 

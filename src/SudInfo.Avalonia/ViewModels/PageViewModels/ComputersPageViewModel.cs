@@ -14,9 +14,9 @@ public class ComputersPageViewModel : BaseRoutableViewModel
     #region Collections
 
     [Reactive]
-    public ObservableCollection<Computer>? Computers { get; set; }
+    public IReadOnlyCollection<Computer>? Computers { get; set; }
 
-    private IReadOnlyList<Computer>? ComputersFromDataBase { get; set; }
+    private IReadOnlyCollection<Computer>? ComputersFromDataBase { get; set; }
 
     #endregion
 
@@ -104,21 +104,22 @@ public class ComputersPageViewModel : BaseRoutableViewModel
             return;
         if (string.IsNullOrEmpty(SearchText))
         {
-            Computers = new(ComputersFromDataBase);
+            Computers = ComputersFromDataBase;
             return;
         }
-        Computers = new(ComputersFromDataBase.Where(x => x.Name!.ToLower().Contains(SearchText.ToLower()) ||
-                                                    x.InventarNumber!.Contains(SearchText) ||
-                                                    x.SerialNumber!.Contains(SearchText) ||
-                                                    x.User != null &&
-                                                    x.User.FIO.ToLower().Contains(SearchText.ToLower())));
+        Computers = ComputersFromDataBase.Where(x => x.Name!.ToLower()
+                                                                   .Contains(SearchText.ToLower()) ||
+                                                            x.InventarNumber!.Contains(SearchText) ||
+                                                            x.SerialNumber!.Contains(SearchText)   ||
+                                                            x.User != null                         &&
+                                                            x.User.FIO.ToLower().Contains(SearchText.ToLower()))
+                                         .ToList();
     }
 
     public async Task LoadComputers()
     {
         SearchText = string.Empty;
-        var computersResult = await ComputerService.GetComputers();
-        Computers = new(computersResult);
+        Computers = await ComputerService.GetComputers();
         ComputersFromDataBase = Computers;
     }
 

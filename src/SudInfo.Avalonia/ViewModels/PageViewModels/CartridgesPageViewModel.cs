@@ -12,13 +12,17 @@ public class CartridgesPageViewModel : BaseRoutableViewModel
 
     #region Properties
 
-    [Reactive]
-    public ObservableCollection<Cartridge>? Cartridges { get; set; }
-
     public Cartridge? SelectedCartridge { get; set; }
 
     [Reactive]
     public Cartridge NewCartridge { get; set; } = new();
+
+    #endregion
+
+    #region Collections
+
+    [Reactive]
+    public IReadOnlyCollection<Cartridge>? Cartridges { get; set; }
 
     #endregion
 
@@ -53,15 +57,17 @@ public class CartridgesPageViewModel : BaseRoutableViewModel
             return;
         await _navigationService.ShowCartridgeWindowDialog(WindowType.Edit, eventHandlerClosedWindowDialog, SelectedCartridge.Id);
     }
+
     public async Task OpenAddCartridgeWindow()
     {
         await _navigationService.ShowCartridgeWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog);
     }
+
     public async Task LoadCartridges()
     {
-        var loadCartridgesResult = await CartridgeService.GetCartridges();
-        Cartridges = new(loadCartridgesResult);
+        Cartridges = await CartridgeService.GetCartridges();
     }
+
     public async Task SaveCartridges()
     {
         if (Cartridges == null || Cartridges.Count == 0)
@@ -74,6 +80,7 @@ public class CartridgesPageViewModel : BaseRoutableViewModel
         }
         await _dialogService.ShowMessageBox("Успешно", $"Сохранено!", icon: Icon.Success);
     }
+
     public async Task RemoveCartridge()
     {
         if (SelectedCartridge == null)

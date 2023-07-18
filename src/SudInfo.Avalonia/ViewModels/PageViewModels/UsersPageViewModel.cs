@@ -13,8 +13,9 @@ public class UsersPageViewModel : BaseRoutableViewModel
     #region Collections
 
     [Reactive]
-    public ObservableCollection<User>? Users { get; set; }
-    private IEnumerable<User>? UsersFromDataBase { get; set; }
+    public IReadOnlyCollection<User>? Users { get; set; }
+
+    private IReadOnlyCollection<User>? UsersFromDataBase { get; set; }
 
     #endregion
 
@@ -28,9 +29,12 @@ public class UsersPageViewModel : BaseRoutableViewModel
 
     #endregion
 
-    #region Initialization
+    #region Ctors
 
-    public UsersPageViewModel(NavigationService navigationService, UserService usersService, DialogService dialogService)
+    public UsersPageViewModel(
+        NavigationService navigationService,
+        UserService usersService,
+        DialogService dialogService)
     {
         #region Serives Initialization
         _dialogService = dialogService;
@@ -79,16 +83,15 @@ public class UsersPageViewModel : BaseRoutableViewModel
             return;
         if (string.IsNullOrEmpty(SearchText))
         {
-            Users = new(UsersFromDataBase);
+            Users = UsersFromDataBase;
             return;
         }
-        Users = new(UsersFromDataBase.Where(x => x.FIO!.ToLower().Contains(SearchText.ToLower())));
+        Users = UsersFromDataBase.Where(x => x.FIO!.ToLower().Contains(SearchText.ToLower())).ToList();
     }
 
     public async Task LoadUsers()
     {
-        var usersResult = await UserService.GetUsers();
-        Users = new(usersResult);
+        Users = await UserService.GetUsers();
         UsersFromDataBase = Users;
     }
 

@@ -13,8 +13,9 @@ public class MonitorsPageViewModel : BaseRoutableViewModel
     #region Collections
 
     [Reactive]
-    public ObservableCollection<Monitor>? Monitors { get; set; }
-    private IEnumerable<Monitor>? MonitorsFromDataBase { get; set; }
+    public IReadOnlyCollection<Monitor>? Monitors { get; set; }
+
+    private IReadOnlyCollection<Monitor>? MonitorsFromDataBase { get; set; }
 
     #endregion
 
@@ -82,21 +83,21 @@ public class MonitorsPageViewModel : BaseRoutableViewModel
             return;
         if (string.IsNullOrEmpty(SearchText))
         {
-            Monitors = new(MonitorsFromDataBase);
+            Monitors = MonitorsFromDataBase;
             return;
         }
-        Monitors = new(MonitorsFromDataBase.Where(x => x.Name!.ToLower().Contains(SearchText.ToLower()) ||
+        Monitors = MonitorsFromDataBase.Where(x => x.Name!.ToLower().Contains(SearchText.ToLower()) ||
                                                     x.InventarNumber!.Contains(SearchText) ||
                                                     x.SerialNumber!.Contains(SearchText) ||
-                                                    x.Computer != null && 
+                                                    x.Computer != null &&
                                                     x.Computer.User != null &&
-                                                    x.Computer.User.FIO.ToLower().Contains(SearchText.ToLower())));
+                                                    x.Computer.User.FIO.ToLower().Contains(SearchText.ToLower()))
+                                       .ToList();
     }
 
     public async Task LoadMonitors()
     {
-        var monitorsResult = await MonitorService.GetMonitors();
-        Monitors = new(monitorsResult);
+        Monitors = await MonitorService.GetMonitors();
         MonitorsFromDataBase = Monitors;
     }
 

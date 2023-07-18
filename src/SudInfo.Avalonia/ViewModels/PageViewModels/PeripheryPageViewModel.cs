@@ -13,9 +13,9 @@ public class PeripheryPageViewModel : BaseRoutableViewModel
     #region Collections
 
     [Reactive]
-    public ObservableCollection<Periphery>? Peripheries { get; set; }
+    public IReadOnlyCollection<Periphery>? Peripheries { get; set; }
 
-    private IEnumerable<Periphery>? PeripheriesFromDatabase { get; set; }
+    private IReadOnlyCollection<Periphery>? PeripheriesFromDatabase { get; set; }
 
     public static IEnumerable<PeripheryType> PeripheryTypes => Enum.GetValues(typeof(PeripheryType)).Cast<PeripheryType>();
 
@@ -37,7 +37,7 @@ public class PeripheryPageViewModel : BaseRoutableViewModel
 
     #endregion
 
-    #region Initialization
+    #region Ctors
 
     public PeripheryPageViewModel(
         PeripheryService peripheryService,
@@ -95,15 +95,15 @@ public class PeripheryPageViewModel : BaseRoutableViewModel
         {
             return;
         }
-        Peripheries = new(PeripheriesFromDatabase.Where(x => x.Name!.ToLower().Contains(SearchText.ToLower()) ||
+        Peripheries = PeripheriesFromDatabase.Where(x => x.Name!.ToLower().Contains(SearchText.ToLower()) ||
                                                              x.InventarNumber!.Contains(SearchText) ||
                                                              x.SerialNumber!.Contains(SearchText) ||
                                                              x.Computer != null &&
                                                              x.Computer.User != null &&
-                                                             x.Computer.User.FIO.ToLower().Contains(SearchText.ToLower())));
+                                                             x.Computer.User.FIO.ToLower().Contains(SearchText.ToLower())).ToList();
         if (IsPeripheryTypeFilter)
-            Peripheries = new(Peripheries.Where(x => IsPeripheryTypeFilter &&
-                                                 x.Type == SelectedPeripheryType));
+            Peripheries = Peripheries.Where(x => IsPeripheryTypeFilter &&
+                                                    x.Type == SelectedPeripheryType).ToList();
     }
 
     public void SelectionPeripheryTypeChanged(object selectionChangedEventArgs)
@@ -117,8 +117,7 @@ public class PeripheryPageViewModel : BaseRoutableViewModel
 
     public async Task LoadPeripheries()
     {
-        var peripheriesResult = await PeripheryService.GetPeripheryList();
-        Peripheries = new(peripheriesResult);
+        Peripheries = await PeripheryService.GetPeripheryList();
         PeripheriesFromDatabase = Peripheries;
         SearchText = string.Empty;
     }

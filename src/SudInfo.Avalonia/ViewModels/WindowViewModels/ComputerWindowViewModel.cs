@@ -15,7 +15,7 @@ public class ComputerWindowViewModel : BaseViewModel
     public static IEnumerable<OS> OsesList => Enum.GetValues(typeof(OS)).Cast<OS>();
 
     [Reactive]
-    public IEnumerable<User>? Users { get; set; }
+    public IReadOnlyCollection<User>? Users { get; set; }
 
     #endregion
 

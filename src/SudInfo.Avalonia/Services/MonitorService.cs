@@ -3,7 +3,7 @@
 public class MonitorService : BaseService
 {
     #region Get Methods Realizations
-    public static async Task<IReadOnlyList<Monitor>> GetMonitors()
+    public static async Task<IReadOnlyCollection<Monitor>> GetMonitors()
     {
         using SudInfoDbContext applicationDBContext = new();
         var monitors = await applicationDBContext.Monitors.Include(x => x.Computer).ThenInclude(x => x.User).ToListAsync();

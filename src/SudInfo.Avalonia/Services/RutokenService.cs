@@ -27,7 +27,7 @@ public class RutokenService : BaseService
             };
         }
     }
-    public static async Task<IReadOnlyList<Rutoken>> GetRutokens()
+    public static async Task<IReadOnlyCollection<Rutoken>> GetRutokens()
     {
         using SudInfoDbContext applicationDBContext = new();
         var rutokens = await applicationDBContext.Rutokens

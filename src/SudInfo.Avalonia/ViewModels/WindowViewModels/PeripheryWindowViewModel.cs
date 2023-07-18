@@ -15,7 +15,7 @@ public class PeripheryWindowViewModel : BaseViewModel
     public static IEnumerable<PeripheryType> PeripheryTypes => Enum.GetValues(typeof(PeripheryType)).Cast<PeripheryType>();
 
     [Reactive]
-    public IEnumerable<Computer>? Computers { get; set; }
+    public IReadOnlyCollection<Computer>? Computers { get; set; }
 
     #endregion
 

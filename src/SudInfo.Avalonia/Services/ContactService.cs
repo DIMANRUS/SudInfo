@@ -4,7 +4,7 @@ public class ContactService : BaseService
 {
     #region Get Methods
 
-    public static async Task<IReadOnlyList<Contact>> GetContacts()
+    public static async Task<IReadOnlyCollection<Contact>> GetContacts()
     {
         using SudInfoDbContext context = new();
         var contacts = await context.Contacts.AsNoTracking().ToListAsync();
