@@ -15,93 +15,105 @@
     CanResize="False"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <i:Interaction.Behaviors>
-        <ia:EventTriggerBehavior EventName="Initialized">
-            <ia:InvokeCommandAction Command="{Binding LoadUsers}" />
-        </ia:EventTriggerBehavior>
-    </i:Interaction.Behaviors>
-    <StackPanel Margin="10" Spacing="5">
-        <TextBox
-            MaxLength="100"
-            Text="{Binding Computer.Name}"
-            Watermark="Название" />
-        <TextBox
-            MaxLength="15"
-            Text="{Binding Computer.Ip}"
-            Watermark="IP адрес" />
-        <ComboBox
-            HorizontalAlignment="Stretch"
-            ItemsSource="{Binding OsesList}"
-            SelectedItem="{Binding Computer.OS}" />
-        <TextBox
-            MaxLength="100"
-            Text="{Binding Computer.CPU}"
-            Watermark="CPU" />
-        <TextBox
-            MaxLength="100"
-            Text="{Binding Computer.GPU}"
-            Watermark="GPU (Необязательно)" />
-        <TextBox
-            MaxLength="5"
-            Text="{Binding Computer.ROM}"
-            Watermark="Размер диска (ГБ)" />
-        <TextBox
-            MaxLength="2"
-            Text="{Binding Computer.RAM}"
-            Watermark="Оперативная память (ГБ)" />
-        <TextBox
-            MaxLength="4"
-            Text="{Binding Computer.YearRelease}"
-            Watermark="Год выпуска" />
-        <TextBox
-            MaxLength="50"
-            Text="{Binding Computer.SerialNumber}"
-            Watermark="Серийный номер" />
-        <TextBox
-            MaxLength="50"
-            Text="{Binding Computer.InventarNumber}"
-            Watermark="Инвентарный номер" />
-        <CheckBox
-            Name="IsBrokenCheckBox"
-            Content="Сломан"
-            IsChecked="{Binding Computer.IsBroken}" />
-        <TextBox
-            Height="100"
-            IsEnabled="{Binding #IsBrokenCheckBox.IsChecked}"
-            MaxLength="200"
-            Text="{Binding Computer.BreakdownDescription}"
-            TextWrapping="Wrap"
-            Watermark="Описание поломки" />
-        <CheckBox Content="ВКС" IsChecked="{Binding Computer.IsVks}" />
-        <CheckBox Content="Списан" IsChecked="{Binding Computer.IsDecommissioned}" />
-        <TextBox
-            IsEnabled="{Binding !#IsUserBox.IsChecked}"
-            MaxLength="4"
-            Text="{Binding Computer.NumberCabinet}"
-            Watermark="Кабинет" />
-        <StackPanel Orientation="Horizontal">
-            <CheckBox Name="IsUserBox" IsChecked="{Binding IsUser}" />
-            <ComboBox
-                Width="252"
-                AutoScrollToSelectedItem="True"
-                IsEnabled="{Binding #IsUserBox.IsChecked}"
-                ItemsSource="{Binding Users}"
-                PlaceholderText="Сотрудник"
-                SelectedItem="{Binding Computer.User}">
-                <ComboBox.DataTemplates>
-                    <DataTemplate x:DataType="{x:Type models:User}">
-                        <TextBlock Text="{Binding FIO}" />
-                    </DataTemplate>
-                </ComboBox.DataTemplates>
-            </ComboBox>
-        </StackPanel>
-        <Button
-            HorizontalAlignment="Stretch"
-            HorizontalContentAlignment="Center"
-            Command="{Binding SaveComputer}"
-            Content="{Binding SaveButtonText}"
-            Cursor="Hand"
-            FontWeight="Bold"
-            IsVisible="{Binding ButtonIsVisible}" />
+  <i:Interaction.Behaviors>
+    <ia:EventTriggerBehavior EventName="Initialized">
+      <ia:InvokeCommandAction Command="{Binding LoadUsers}" />
+    </ia:EventTriggerBehavior>
+  </i:Interaction.Behaviors>
+  <StackPanel
+        Margin="10"
+        Spacing="5">
+    <TextBox
+        MaxLength="100"
+        Text="{Binding Computer.Name}"
+        Watermark="Название" />
+    <TextBox
+        MaxLength="15"
+        Text="{Binding Computer.Ip}"
+        Watermark="IP адрес" />
+    <ComboBox
+        HorizontalAlignment="Stretch"
+        ItemsSource="{Binding OsesList}"
+        SelectedItem="{Binding Computer.OS}" />
+    <TextBox
+        MaxLength="100"
+        Text="{Binding Computer.CPU}"
+        Watermark="CPU" />
+    <TextBox
+        MaxLength="100"
+        Text="{Binding Computer.GPU}"
+        Watermark="GPU (Необязательно)" />
+    <TextBox
+        MaxLength="5"
+        Text="{Binding Computer.ROM}"
+        Watermark="Размер диска (ГБ)" />
+    <TextBox
+        MaxLength="2"
+        Text="{Binding Computer.RAM}"
+        Watermark="Оперативная память (ГБ)" />
+    <TextBox
+        MaxLength="4"
+        Text="{Binding Computer.YearRelease}"
+        Watermark="Год выпуска" />
+    <TextBox
+        MaxLength="50"
+        Text="{Binding Computer.SerialNumber}"
+        Watermark="Серийный номер" />
+    <TextBox
+        MaxLength="50"
+        Text="{Binding Computer.InventarNumber}"
+        Watermark="Инвентарный номер" />
+    <CheckBox
+        Name="IsBrokenCheckBox"
+        Content="Сломан"
+        IsChecked="{Binding Computer.IsBroken}" />
+    <TextBox
+        Height="100"
+        IsEnabled="{Binding #IsBrokenCheckBox.IsChecked}"
+        MaxLength="200"
+        Text="{Binding Computer.BreakdownDescription}"
+        TextWrapping="Wrap"
+        Watermark="Описание поломки" />
+    <CheckBox
+        Content="ВКС"
+        IsChecked="{Binding Computer.IsVks}" />
+    <CheckBox
+        Content="Списан"
+        IsChecked="{Binding Computer.IsDecommissioned}" />
+    <CheckBox
+        Content="На складе"
+        IsChecked="{Binding Computer.IsStock}" />
+    <TextBox
+        IsEnabled="{Binding !#IsUserBox.IsChecked}"
+        MaxLength="4"
+        Text="{Binding Computer.NumberCabinet}"
+        Watermark="Кабинет" />
+    <StackPanel 
+        Orientation="Horizontal">
+      <CheckBox 
+        Name="IsUserBox" 
+        IsChecked="{Binding IsUser}" />
+      <ComboBox
+          Width="252"
+          AutoScrollToSelectedItem="True"
+          IsEnabled="{Binding #IsUserBox.IsChecked}"
+          ItemsSource="{Binding Users}"
+          PlaceholderText="Сотрудник"
+          SelectedItem="{Binding Computer.User}">
+        <ComboBox.DataTemplates>
+          <DataTemplate x:DataType="{x:Type models:User}">
+            <TextBlock Text="{Binding FIO}" />
+          </DataTemplate>
+        </ComboBox.DataTemplates>
+      </ComboBox>
     </StackPanel>
+    <Button
+        HorizontalAlignment="Stretch"
+        HorizontalContentAlignment="Center"
+        Command="{Binding SaveComputer}"
+        Content="{Binding SaveButtonText}"
+        Cursor="Hand"
+        FontWeight="Bold"
+        IsVisible="{Binding ButtonIsVisible}" />
+  </StackPanel>
 </Window>

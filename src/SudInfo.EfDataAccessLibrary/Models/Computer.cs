@@ -53,6 +53,9 @@ public class Computer : BaseModel
     [XLColumn(Header = "Сломан")]
     public bool IsBroken { get; set; }
 
+    [XLColumn(Header = "На складе")]
+    public bool IsStock { get; set; }
+
     [XLColumn(Header = "Описание поломки")]
     [StringLength(200)]
     public string? BreakdownDescription { get; set; }
