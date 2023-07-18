@@ -1,4 +1,5 @@
 ﻿namespace SudInfo.EfDataAccessLibrary.Models;
+
 public class AppEntity : BaseModel
 {
     [XLColumn(Header = "Название")]

@@ -1,4 +1,5 @@
 ﻿namespace SudInfo.EfDataAccessLibrary.Models;
+
 public class Printer : BaseModel
 {
     [XLColumn(Header = "Наименование")]
@@ -13,13 +14,13 @@ public class Printer : BaseModel
     [StringLength(12)]
     [RegularExpression(Const.Ip4RegularExpression, ErrorMessage = Const.NotValidIp4Message)]
     public string? Ip { get; set; }
-    
+
     [XLColumn(Ignore = true)]
     public int NumberCabinet { get; set; }
-    
+
     [XLColumn(Header = "Год производства")]
     [RegularExpression(Const.NumberGreaterThen0, ErrorMessage = Const.NumberCannotBeGreaterThen0Message)]
-    public int YearRelease { get; set; }
+    public int YearRelease { get; set; } = 2019;
     
     [XLColumn(Header = "Серийный номер")]
     [Required(ErrorMessage = Const.FieldRequired)]

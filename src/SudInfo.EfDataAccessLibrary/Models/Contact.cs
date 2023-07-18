@@ -1,4 +1,5 @@
 ﻿namespace SudInfo.EfDataAccessLibrary.Models;
+
 public class Contact : BaseModel
 {
     [XLColumn(Header = "Имя/Наименование контакта")]

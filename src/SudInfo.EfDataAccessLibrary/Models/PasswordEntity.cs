@@ -1,4 +1,5 @@
 ﻿namespace SudInfo.EfDataAccessLibrary.Models;
+
 public class PasswordEntity : BaseModel
 {
     [XLColumn(Header = "Описание")]

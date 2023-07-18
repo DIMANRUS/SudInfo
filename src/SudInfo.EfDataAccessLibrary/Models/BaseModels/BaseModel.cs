@@ -1,4 +1,5 @@
 ﻿namespace SudInfo.EfDataAccessLibrary.Models.BaseModels;
+
 public abstract class BaseModel
 {
     [XLColumn(Ignore = true)]

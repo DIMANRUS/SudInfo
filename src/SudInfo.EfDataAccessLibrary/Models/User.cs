@@ -1,4 +1,5 @@
 ﻿namespace SudInfo.EfDataAccessLibrary.Models;
+
 public class User : BaseModel
 {
     [XLColumn(Header = "Имя")]
@@ -35,5 +36,5 @@ public class User : BaseModel
     [StringLength(3)]
     public string? PhoneLocal { get; set; }
 
-    public List<Computer> Computers { get; set; } = new();
+    public ICollection<Computer> Computers { get; set; } = new List<Computer>();
 }

@@ -48,7 +48,7 @@ public class Computer : BaseModel
     public string? InventarNumber { get; set; }
 
     [XLColumn(Header = "Год производства")]
-    public int YearRelease { get; set; }
+    public int YearRelease { get; set; } = 2019;
 
     [XLColumn(Header = "Сломан")]
     public bool IsBroken { get; set; }
@@ -69,13 +69,19 @@ public class Computer : BaseModel
     [XLColumn(Ignore = true)]
     public User? User { get; set; }
 
+    #region Not mapped properties
+
     [XLColumn(Header = "Номер кабинета")]
     [NotMapped]
     public int Cabinet => User?.NumberCabinet ?? NumberCabinet;
 
     [XLColumn(Ignore = true)]
     [NotMapped]
-    public string ComputerNameWithUserSurFirstName => Name + " - " + User?.LastName + " " + User?.FirstName;
+    public string ComputerNameWithUserSurFirstName => Name + " - " + User?.LastName + " " + User?.FirstName; 
+
+    #endregion
+
+    #region Collections
 
     [XLColumn(Ignore = true)]
     public ICollection<Periphery>? Peripheries { get; set; }
@@ -88,6 +94,8 @@ public class Computer : BaseModel
 
     [XLColumn(Ignore = true)]
     public ICollection<AppEntity>? Apps { get; set; }
+
+    #endregion
 }
 
 public enum OS
