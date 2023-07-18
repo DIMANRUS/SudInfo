@@ -6,6 +6,7 @@ public class CartridgesPageViewModel : BaseRoutableViewModel
 
     private readonly CartridgeService _cartridgeService;
     private readonly DialogService _dialogService;
+    private readonly NavigationService _navigationService;
 
     #endregion
 
@@ -21,34 +22,40 @@ public class CartridgesPageViewModel : BaseRoutableViewModel
 
     #endregion
 
-    #region Initialization
+    #region Ctors
 
     public CartridgesPageViewModel(
         CartridgeService cartridgeService,
-        DialogService dialogService)
+        DialogService dialogService,
+        NavigationService navigationService)
     {
         #region Services Initialization
+
         _cartridgeService = cartridgeService;
         _dialogService = dialogService;
+        _navigationService = navigationService;
+
         #endregion
+
+        eventHandlerClosedWindowDialog += async (s, e) =>
+        {
+            await LoadCartridges();
+        };
     }
 
     #endregion
 
     #region Public methods
 
-    public async Task AddCartridge()
+    public async Task OpenEditCartridgeWindow()
     {
-        if (!ValidationModel(NewCartridge))
+        if (SelectedCartridge == null)
             return;
-        var result = await _cartridgeService.Add(NewCartridge);
-        if (!result.Success)
-        {
-            await _dialogService.ShowMessageBox("Ошибка", $"Ошибка добавления картриджа! Возможно, что такой картридж уже есть. Ошибка: {result.Message}", icon: Icon.Error);
-            return;
-        }
-        await LoadCartridges();
-        NewCartridge = new();
+        await _navigationService.ShowCartridgeWindowDialog(WindowType.Edit, eventHandlerClosedWindowDialog, SelectedCartridge.Id);
+    }
+    public async Task OpenAddCartridgeWindow()
+    {
+        await _navigationService.ShowCartridgeWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog);
     }
     public async Task LoadCartridges()
     {
@@ -70,6 +77,10 @@ public class CartridgesPageViewModel : BaseRoutableViewModel
     public async Task RemoveCartridge()
     {
         if (SelectedCartridge == null)
+            return;
+        var dialogResult = await _dialogService.ShowMessageBox("Сообщение",
+           "Вы действительно хотите удалить картридж?", buttonEnum: ButtonEnum.YesNo, icon: Icon.Question);
+        if (dialogResult == ButtonResult.No)
             return;
         var removeCartridgesResult = await CartridgeService.Remove(SelectedCartridge.Id);
         if (!removeCartridgesResult.Success)

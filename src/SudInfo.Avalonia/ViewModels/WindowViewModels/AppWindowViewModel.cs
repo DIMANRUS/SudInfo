@@ -3,24 +3,31 @@ namespace SudInfo.Avalonia.ViewModels.WindowViewModels;
 public class AppWindowViewModel : BaseViewModel
 {
     #region Services
-    private readonly AppService _appService;
+
     private readonly DialogService _dialogService;
-    private readonly ComputerService _computerService;
+
     #endregion
 
     #region Properties
+
     [Reactive]
     public AppEntity AppEntity { get; set; } = new();
+
     [Reactive]
     public string SaveButtonText { get; private set; } = "Добавить приложение";
+
     [Reactive]
     public bool ButtonIsVisible { get; private set; }
+
     #endregion
 
-    [Reactive] public ObservableCollection<Computer> Computers { get; set; }
+    [Reactive]
+    public ObservableCollection<Computer> Computers { get; set; }
 
     #region Private Fields
+
     private WindowType _windowType;
+
     #endregion
 
     #region Constructors
@@ -29,11 +36,9 @@ public class AppWindowViewModel : BaseViewModel
     {
 
     }
-    public AppWindowViewModel(AppService appService, DialogService dialogService, ComputerService computerService)
+    public AppWindowViewModel(DialogService dialogService)
     {
-        _appService = appService;
         _dialogService = dialogService;
-        _computerService = computerService;
     }
     #endregion
 
@@ -54,7 +59,7 @@ public class AppWindowViewModel : BaseViewModel
         await _dialogService.ShowMessageBox("Сообщение", "Успешно!", true, icon: Icon.Success);
     }
 
-    public async void InitializationData(WindowType windowType, int? id = null)
+    public async Task InitializationData(WindowType windowType, int? id = null)
     {
         _windowType = windowType;
         if (windowType != WindowType.View)

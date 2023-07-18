@@ -30,6 +30,7 @@ public class NavigationService
         _dialogService.SetCurrentWindow(computerWindow);
         await computerWindow.ShowDialog(_mainWindow);
     }
+
     public async Task ShowMonitorWindowDialog(WindowType windowType, EventHandler? closedEvent = null, int? monitorId = null)
     {
         if (_mainWindow == null)
@@ -40,6 +41,7 @@ public class NavigationService
         _dialogService.SetCurrentWindow(monitorWindow);
         await monitorWindow.ShowDialog(_mainWindow);
     }
+
     public async Task ShowPrinterWindowDialog(WindowType windowType, EventHandler? closedEvent = null, int? printerId = null)
     {
         if (_mainWindow == null)
@@ -50,6 +52,7 @@ public class NavigationService
         _dialogService.SetCurrentWindow(printerWindow);
         await printerWindow.ShowDialog(_mainWindow);
     }
+
     public async Task ShowUserWindowDialog(WindowType windowType, EventHandler? closedEvent = null, int? userId = null)
     {
         if (_mainWindow == null)
@@ -110,6 +113,7 @@ public class NavigationService
         _dialogService.SetCurrentWindow(taskWindow);
         await taskWindow.ShowDialog(_mainWindow);
     }
+
     public async Task ShowPasswordWindowDialog(WindowType windowType, EventHandler? closedEvent = null, int? id = null)
     {
         if (_mainWindow == null)
@@ -119,6 +123,7 @@ public class NavigationService
         _dialogService.SetCurrentWindow(window);
         await window.ShowDialog(_mainWindow);
     }
+
     public async Task ShowAppWindowDialog(WindowType windowType, EventHandler? closedEvent = null, int? id = null)
     {
         if (_mainWindow == null)
@@ -128,6 +133,7 @@ public class NavigationService
         _dialogService.SetCurrentWindow(window);
         await window.ShowDialog(_mainWindow);
     }
+
     public async Task ShowContactWindowDialog(WindowType windowType, EventHandler? closedEvent = null, int? id = null)
     {
         if (_mainWindow == null)
@@ -137,11 +143,22 @@ public class NavigationService
         _dialogService.SetCurrentWindow(window);
         await window.ShowDialog(_mainWindow);
     }
+
     public void SetWindow(Window window)
     {
         if (_mainWindow != null)
             return;
         _mainWindow = window;
+    }
+
+    public async Task ShowCartridgeWindowDialog(WindowType windowType, EventHandler? closedEvent = null, int? id = null)
+    {
+        if (_mainWindow == null)
+            return;
+        CartridgeWindow window = new(windowType, id);
+        window.Closed += closedEvent;
+        _dialogService.SetCurrentWindow(window);
+        await window.ShowDialog(_mainWindow);
     }
 
     #endregion

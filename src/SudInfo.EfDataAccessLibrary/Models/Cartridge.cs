@@ -12,7 +12,7 @@ public class Cartridge : BaseModel
     public int Remains { get; set; } = 1;
 
     [XLColumn(Header = "Тип")]
-    public CartridgeType CartridgeType { get; set; } = CartridgeType.Новый;
+    public CartridgeType Type { get; set; } = CartridgeType.Новый;
 }
 
 public enum CartridgeType

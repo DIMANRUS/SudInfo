@@ -5,9 +5,6 @@ public partial class AppWindow : ReactiveWindow<AppWindowViewModel>
     public AppWindow()
     {
         InitializeComponent();
-//#if DEBUG
-//        this.AttachDevTools();
-//#endif
     }
     public AppWindow(WindowType windowType, int? id = null)
     {
