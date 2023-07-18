@@ -10,30 +10,19 @@
              d:DesignWidth="800"
              d:DesignHeight="450"
              x:Class="SudInfo.Avalonia.Views.Pages.TasksPage"
-             x:DataType="viewModels:TasksPageViewModel">
+             x:DataType="viewModels:TasksPageViewModel"
+             x:Name="Root">
   <i:Interaction.Behaviors>
     <ia:EventTriggerBehavior EventName="Initialized">
       <ia:InvokeCommandAction Command="{Binding LoadTasks}"/>
     </ia:EventTriggerBehavior>
   </i:Interaction.Behaviors>
   <Grid RowDefinitions="40,*"
-        ColumnDefinitions="140, *, 40, 40">
+        ColumnDefinitions="140, *, 40">
     <TextBlock Text="Задачи"
                Margin="10"
                FontWeight="Bold"
                FontSize="20"/>
-    <TextBox Watermark="Поиск"
-             Grid.Column="1"
-             Margin="10 5 10 5"
-             UseFloatingWatermark="False"
-             Text="{Binding SearchText}"
-             MaxLength="50">
-      <i:Interaction.Behaviors>
-        <ia:EventTriggerBehavior EventName="KeyUp">
-          <ia:InvokeCommandAction Command="{Binding SearchBoxKeyUp}"/>
-        </ia:EventTriggerBehavior>
-      </i:Interaction.Behaviors>
-    </TextBox>
     <Image Source="/Assets/Images/add.png"
            Grid.Column="2">
       <i:Interaction.Behaviors>
@@ -42,16 +31,7 @@
         </ia:EventTriggerBehavior>
       </i:Interaction.Behaviors>
     </Image>
-    <Image Source="/Assets/Images/ok.png"
-           Grid.Column="3">
-      <i:Interaction.Behaviors>
-        <ia:EventTriggerBehavior EventName="Tapped">
-          <ia:InvokeCommandAction Command="{Binding CompleteTask}"/>
-        </ia:EventTriggerBehavior>
-      </i:Interaction.Behaviors>
-    </Image>
     <DataGrid ItemsSource="{Binding Tasks}"
-              SelectedItem="{Binding SelectedTask}"
               Grid.Row="1"
               Grid.ColumnSpan="5">
       <DataGrid.Columns>
@@ -68,6 +48,18 @@
         <DataGridTextColumn Header="Дата и время"
                             Binding="{Binding ReminderTime}"
                             IsReadOnly="True"/>
+        <DataGridTemplateColumn>
+          <DataTemplate>
+            <Image Source="/Assets/Images/ok.png">
+              <i:Interaction.Behaviors>
+                <ia:EventTriggerBehavior EventName="Tapped">
+                  <ia:InvokeCommandAction Command="{Binding #Root.DataContext.CompleteTaskCommand}"
+                                          CommandParameter="{Binding Id}"/>
+                </ia:EventTriggerBehavior>
+              </i:Interaction.Behaviors>
+            </Image>
+          </DataTemplate>
+        </DataGridTemplateColumn>
       </DataGrid.Columns>
     </DataGrid>
   </Grid>

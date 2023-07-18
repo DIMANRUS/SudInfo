@@ -13,8 +13,7 @@ public class TasksPageViewModel : BaseRoutableViewModel
     #region Collections
 
     [Reactive]
-    public ObservableCollection<TaskEntity>? Tasks { get; set; }
-    private IReadOnlyList<TaskEntity>? TasksFromDatabase { get; set; }
+    public IReadOnlyCollection<TaskEntity>? Tasks { get; set; }
 
     #endregion
 
@@ -24,17 +23,13 @@ public class TasksPageViewModel : BaseRoutableViewModel
 
     #endregion
 
-    #region Properties
+    #region Commands
 
-    [Reactive]
-    public string SearchText { get; set; } = string.Empty;
-
-    [Reactive]
-    public TaskEntity? SelectedTask { get; set; }
+    public ReactiveCommand<int, Unit> CompleteTaskCommand { get; init; }
 
     #endregion
 
-    #region Initialization
+    #region Ctors
 
     public TasksPageViewModel(
         NavigationService navigationService,
@@ -48,6 +43,17 @@ public class TasksPageViewModel : BaseRoutableViewModel
         #endregion
 
         _eventHandlerClosedWindowDialog = async (s, e) => await LoadTasks();
+
+        CompleteTaskCommand = ReactiveCommand.Create<int>(async (int id) =>
+        {
+            var completeTaskResult = await TaskService.CompleteTask(id);
+            if (!completeTaskResult.Success)
+            {
+                await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения данных! Ошибка: {completeTaskResult.Message}", icon: Icon.Error);
+                return;
+            }
+            await LoadTasks();
+        });
     }
 
     #endregion
@@ -57,33 +63,13 @@ public class TasksPageViewModel : BaseRoutableViewModel
     public async Task LoadTasks()
     {
         var tasksResult = await TaskService.GetTasks();
-        Tasks = new(tasksResult);
-        TasksFromDatabase = Tasks;
+        Tasks = tasksResult;
     }
-    public void SearchBoxKeyUp()
-    {
-        if (string.IsNullOrEmpty(SearchText))
-        {
-            Tasks = new(TasksFromDatabase);
-            return;
-        }
-        Tasks = new(TasksFromDatabase.Where(x => x.Description.ToLower().Contains(SearchText.ToLower())));
-    }
-    public async Task CompleteTask()
-    {
-        if (SelectedTask == null)
-            return;
-        var completeTaskResult = await TaskService.CompleteTask(SelectedTask.Id);
-        if (!completeTaskResult.Success)
-        {
-            await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения данных! Ошибка: {completeTaskResult.Message}", icon: Icon.Error);
-            return;
-        }
-        await LoadTasks();
-    }
+
     public async Task OpenAddTaskWindow()
     {
         await _navigationService.ShowTaskWindowDialog(_eventHandlerClosedWindowDialog);
     }
+
     #endregion
 }
