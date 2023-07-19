@@ -4,14 +4,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         CanResize="False"
-        Width="320"
-        Height="250"
+        Width="300"
+        Height="240"
         x:Class="SudInfo.Avalonia.Views.Windows.TaskWindow"
         Title="Создание задачи"
         xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.WindowViewModels;assembly=SudInfo.Avalonia"
         xmlns:i="using:Avalonia.Xaml.Interactivity"
         xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
-        WindowStartupLocation="CenterOwner"
+        WindowStartupLocation="CenterScreen"
         x:DataType="viewModels:TaskWindowViewModel">
   <StackPanel HorizontalAlignment="Center"
               Margin="5"
@@ -19,13 +19,12 @@
     <TextBox TextWrapping="Wrap"
              MaxLength="200"
              Text="{Binding Task.Description}"
-             Width="300"
              Watermark="Задача"
              Height="120"/>
     <DatePicker SelectedDate="{Binding ReminderDate}"
-                Width="300"/>
+                Width="290"/>
     <TimePicker SelectedTime="{Binding ReminderTime}"
-                Width="300"/>
+                Width="290"/>
     <Button Content="Добавить задачу"
             Command="{Binding AddTask}"
             HorizontalAlignment="Stretch"

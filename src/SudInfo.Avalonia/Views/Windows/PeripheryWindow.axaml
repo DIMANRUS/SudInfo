@@ -10,7 +10,7 @@
     xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.WindowViewModels;assembly=SudInfo.Avalonia"
     Title="Периферия"
     Width="300"
-    Height="350"
+    Height="300"
     x:DataType="viewModels:PeripheryWindowViewModel"
     CanResize="False"
     WindowStartupLocation="CenterOwner"

@@ -8,13 +8,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.WindowViewModels;assembly=SudInfo.Avalonia"
     Title="Пользователь"
-    Width="310"
-    Height="440"
+    Width="300"
+    Height="450"
     x:DataType="viewModels:UserWindowViewModel"
     CanResize="False"
-    WindowStartupLocation="CenterOwner"
+    WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-  <StackPanel Margin="10" Spacing="5">
+  <StackPanel Margin="10"
+              Spacing="5">
     <TextBox
         MaxLength="20"
         Text="{Binding User.FirstName}"
