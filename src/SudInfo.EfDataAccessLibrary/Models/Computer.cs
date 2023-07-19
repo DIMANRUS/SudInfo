@@ -77,7 +77,11 @@ public class Computer : BaseModel
 
     [XLColumn(Ignore = true)]
     [NotMapped]
-    public string ComputerNameWithUserSurFirstName => Name + " - " + User?.LastName + " " + User?.FirstName; 
+    public string ComputerNameWithUserSurFirstName => Name + " - " + User?.LastName + " " + User?.FirstName;
+
+    [XLColumn(Ignore = true)]
+    [NotMapped]
+    public bool IsSelected { get; set; }
 
     #endregion
 

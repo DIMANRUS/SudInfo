@@ -15,7 +15,8 @@
         x:DataType="viewModels:AppWindowViewModel"
         CanResize="False"
         Width="600"
-        Height="400">
+        Height="400"
+        Name="Root">
   <StackPanel Margin="10"
               Spacing="5">
     <TextBox Text="{Binding AppEntity.Name}"
@@ -25,20 +26,17 @@
              Watermark="Версия"
              MaxLength="20"/>
     <TextBlock Text="Компьютеры"/>
-    <ListBox ItemsSource="{Binding Computers}"
-             SelectedItems="{Binding AppEntity.Computers}"
-             SelectionMode="Multiple"
+    <ItemsControl ItemsSource="{Binding Computers}"
              Height="200">
-      <ListBox.ItemTemplate>
+      <ItemsControl.DataTemplates>
         <DataTemplate DataType="models:Computer">
-          <StackPanel Orientation="Horizontal">
-            <TextBlock Text="{Binding Name}"/>
-            <TextBlock Text=" | "/>
-            <TextBlock Text="{Binding User.FIO}"/>
-          </StackPanel>
+          <CheckBox Content="{Binding ComputerNameWithUserSurFirstName}"
+                    Command="{Binding #Root.DataContext.SelectionComputerChanged}"
+                    CommandParameter="{Binding Id}"
+                    IsChecked="{Binding IsSelected}"/>
         </DataTemplate>
-      </ListBox.ItemTemplate>
-    </ListBox>
+      </ItemsControl.DataTemplates>
+    </ItemsControl>
     <Button Content="{Binding SaveButtonText}"
             Command="{Binding SaveApp}"
             Cursor="Hand"

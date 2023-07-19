@@ -41,6 +41,7 @@ public class AppService
             await using SudInfoDbContext applicationDbContext = new();
             var server = await applicationDbContext.Apps
                 .AsNoTracking()
+                .Include(x => x.Computers)
                 .SingleOrDefaultAsync(x => x.Id == id) ?? throw new Exception("App not Found");
             return new Result<AppEntity>
             {
@@ -61,13 +62,22 @@ public class AppService
         try
         {
             await using SudInfoDbContext applicationDbContext = new();
-            var computers = entity.Computers;
-            entity.Computers = new List<Computer>();
-            foreach (var computer in computers)
+            var app = await applicationDbContext.Apps.Include(x => x.Computers).SingleAsync(x => x.Id == entity.Id);
+            app.Name = entity.Name;
+            app.Version = entity.Version;
+            if (entity.Computers.Count == 0)
             {
-                entity.Computers.Add(await applicationDbContext.Computers.FirstAsync(x => x.Id == computer.Id));
+                app.Computers = null;
             }
-            applicationDbContext.Update(entity);
+            else
+            {
+                app.Computers = new List<Computer>();
+                foreach (var computer in entity.Computers)
+                {
+                    app.Computers.Add(await applicationDbContext.Computers.FirstAsync(x => x.Id == computer.Id));
+                }
+            }
+            applicationDbContext.Update(app);
             await applicationDbContext.SaveChangesAsync();
             return new Result
             {

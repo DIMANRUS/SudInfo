@@ -21,8 +21,12 @@ public class AppWindowViewModel : BaseViewModel
 
     #endregion
 
+    #region Collections
+
     [Reactive]
-    public ObservableCollection<Computer> Computers { get; set; }
+    public IReadOnlyCollection<Computer>? Computers { get; set; }
+
+    #endregion
 
     #region Private Fields
 
@@ -30,17 +34,34 @@ public class AppWindowViewModel : BaseViewModel
 
     #endregion
 
-    #region Constructors
+    #region Commands
 
-    public AppWindowViewModel()
-    {
+    public ReactiveCommand<int, Unit> SelectionComputerChanged { get; init; }
 
-    }
+    #endregion
+
+    #region Ctors
+
+    public AppWindowViewModel() { }
+
     public AppWindowViewModel(DialogService dialogService)
     {
         _dialogService = dialogService;
+
+        SelectionComputerChanged = ReactiveCommand.Create((int id) =>
+        {
+            var computerExist = AppEntity.Computers.Any(x => x.Id == id);
+            if (computerExist)
+            {
+                AppEntity.Computers.Remove(AppEntity.Computers.Single(x => x.Id == id));
+                return;
+            }
+            AppEntity.Computers.Add(Computers!.Single(x => x.Id == id));
+        });
     }
     #endregion
+
+    #region Public methods
 
     public async Task SaveApp()
     {
@@ -84,7 +105,15 @@ public class AppWindowViewModel : BaseViewModel
             }
             AppEntity = result.Object;
         }
-        var computersResult = await ComputerService.GetComputers();
-        Computers = new(computersResult);
+        Computers = await ComputerService.GetComputers();
+        if (windowType == WindowType.Edit)
+        {
+            foreach (var computer in Computers)
+            {
+                computer.IsSelected = AppEntity!.Computers.Any(x => x.Id == computer.Id);
+            }
+        }
     }
+
+    #endregion
 }
