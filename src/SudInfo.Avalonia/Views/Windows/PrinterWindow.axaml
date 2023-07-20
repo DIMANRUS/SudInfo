@@ -67,7 +67,6 @@
           IsEnabled="{Binding #IsBrokenCheckBox.IsChecked}"
           MaxLength="200"
           Text="{Binding Printer.BreakdownDescription}"
-          TextWrapping="Wrap"
           Watermark="Описание поломки" />
       <CheckBox
           Content="Списан"
@@ -98,8 +97,6 @@
         HorizontalContentAlignment="Center"
         Command="{Binding SavePrinter}"
         Content="{Binding SaveButtonText}"
-        Cursor="Hand"
-        FontWeight="Bold"
         IsVisible="{Binding IsButtonVisible}"
         Grid.Row="1"
         Grid.ColumnSpan="2"/>

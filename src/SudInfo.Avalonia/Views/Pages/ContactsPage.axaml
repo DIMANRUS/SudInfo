@@ -19,9 +19,7 @@
   <Grid RowDefinitions="40,*"
         ColumnDefinitions="*, 40">
     <TextBlock Text="Контакты"
-               Margin="10"
-               FontWeight="Bold"
-               FontSize="20"/>
+                Classes="PageHeader"/>
     <Image Source="/Assets/Images/add.png"
            Grid.Column="1">
       <i:Interaction.Behaviors>
@@ -34,8 +32,7 @@
               SelectedItem="{Binding SelectedContact}"
               Grid.Row="1"
               Grid.ColumnSpan="3"
-              x:DataType="models:Contact"
-              IsReadOnly="True">
+              x:DataType="models:Contact">
       <DataGrid.ContextMenu>
         <ContextMenu>
           <MenuItem Header="Редактировать" Command="{Binding OpenEditContactWindow}"/>

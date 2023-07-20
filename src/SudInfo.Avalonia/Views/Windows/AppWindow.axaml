@@ -39,8 +39,6 @@
     </ItemsControl>
     <Button Content="{Binding SaveButtonText}"
             Command="{Binding SaveApp}"
-            Cursor="Hand"
-            FontWeight="Bold"
             HorizontalAlignment="Stretch"
             HorizontalContentAlignment="Center"
             IsVisible="{Binding ButtonIsVisible}"/>

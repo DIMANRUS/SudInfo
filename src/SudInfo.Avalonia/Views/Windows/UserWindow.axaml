@@ -49,8 +49,6 @@
         HorizontalAlignment="Stretch"
         HorizontalContentAlignment="Center"
         Command="{Binding SaveUser}"
-        Content="{Binding SaveButtonText}"
-        Cursor="Hand"
-        FontWeight="Bold" />
+        Content="{Binding SaveButtonText}"/>
   </StackPanel>
 </Window>

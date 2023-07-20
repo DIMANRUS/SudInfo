@@ -37,7 +37,6 @@
               <Image
                   Grid.RowSpan="2"
                   Grid.Column="2"
-                  Cursor="Hand"
                   Source="/Assets/Images/remove.png">
                 <i:Interaction.Behaviors>
                   <EventTriggerBehavior EventName="Tapped">
@@ -46,35 +45,26 @@
                 </i:Interaction.Behaviors>
               </Image>
             </Grid>
-
-            <Border
-                Width="300"
-                BorderBrush="Orange"
-                BorderThickness="2"
-                CornerRadius="10">
+            <Border Classes="BorderStyle"
+                Width="300">
               <StackPanel>
                 <ItemsControl ItemsSource="{Binding Servers}">
                   <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="models:Server">
-                      <Border
-                          Margin="5"
-                          Padding="5"
-                          BorderBrush="Orange"
-                          BorderThickness="2"
-                          CornerRadius="10">
+                      <Border Classes="BorderStyle">
                         <StackPanel>
                           <TextBlock Text="{Binding Name}" />
                           <TextBlock Text="{Binding IpAddress}" />
                           <TextBlock Text="{Binding OperatingSystem}" />
                           <StackPanel Height="30" Orientation="Horizontal">
-                            <Image Cursor="Hand" Source="/Assets/Images/eye.png">
+                            <Image Source="/Assets/Images/eye.png">
                               <i:Interaction.Behaviors>
                                 <EventTriggerBehavior EventName="Tapped">
                                   <InvokeCommandAction Command="{Binding #Root.DataContext.ViewServerCommand}" CommandParameter="{Binding Id}" />
                                 </EventTriggerBehavior>
                               </i:Interaction.Behaviors>
                             </Image>
-                            <Image Cursor="Hand" Source="/Assets/Images/edit.png">
+                            <Image Source="/Assets/Images/edit.png">
                               <i:Interaction.Behaviors>
                                 <EventTriggerBehavior EventName="Tapped">
                                   <InvokeCommandAction Command="{Binding #Root.DataContext.EditServerCommand}" CommandParameter="{Binding Id}" />
@@ -94,17 +84,11 @@
                     </DataTemplate>
                   </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                <Border
-                    Margin="5"
-                    Padding="20"
-                    BorderBrush="Orange"
-                    BorderThickness="2"
-                    CornerRadius="10">
+                <Border Classes="BorderStyle">
                   <Image
                       Height="50"
                       HorizontalAlignment="Center"
                       VerticalAlignment="Center"
-                      Cursor="Hand"
                       Source="/Assets/Images/add.png">
                     <i:Interaction.Behaviors>
                       <ia:EventTriggerBehavior EventName="Tapped">
@@ -119,17 +103,12 @@
         </DataTemplate>
       </ItemsControl.ItemTemplate>
     </ItemsControl>
-    <Border
-        Width="300"
-        Margin="10"
-        BorderBrush="Orange"
-        BorderThickness="2"
-        CornerRadius="10">
+    <Border Classes="BorderStyle"
+        Width="300">
       <Image
           Height="50"
           HorizontalAlignment="Center"
           VerticalAlignment="Center"
-          Cursor="Hand"
           Source="/Assets/Images/add.png">
         <i:Interaction.Behaviors>
           <ia:EventTriggerBehavior EventName="Tapped">

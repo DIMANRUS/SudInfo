@@ -1,6 +1,5 @@
 namespace SudInfo.EfDataAccessLibrary.Models;
 
-[Index(nameof(Name), IsUnique = true)]
 public class Cartridge : BaseModel
 {
     [XLColumn(Header = "Название")]

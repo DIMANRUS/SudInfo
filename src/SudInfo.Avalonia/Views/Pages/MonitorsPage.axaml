@@ -17,9 +17,7 @@
   <Grid RowDefinitions="40,*"
         ColumnDefinitions="105,*, 40">
     <TextBlock Text="Мониторы"
-               Margin="10"
-               FontWeight="Bold"
-               FontSize="20"/>
+                Classes="PageHeader"/>
     <TextBox Watermark="Поиск по названию, номерам и сотруднику"
              Grid.Column="1"
              Margin="10 5 10 5"
@@ -44,7 +42,7 @@
               SelectedItem="{Binding SelectedMonitor}"
               Grid.Row="1"
               Grid.ColumnSpan="6"
-              IsReadOnly="True">
+              >
       <DataGrid.ContextMenu>
         <ContextMenu>
           <MenuItem Header="Редактировать" Command="{Binding OpenEditMonitorWindow}"/>

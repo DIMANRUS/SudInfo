@@ -39,11 +39,7 @@
       <ItemsControl.ItemTemplate>
         <DataTemplate DataType="models:User">
           <StackPanel>
-            <Border CornerRadius="10"
-                    Padding="5"
-                    BorderBrush="DarkOrange"
-                    BorderThickness="1"
-                    Margin="8">
+            <Border Classes="BorderStyle">
               <StackPanel>
                 <TextBlock Text="{Binding FIO}"/>
                 <ItemsControl ItemsSource="{Binding Computers}">
@@ -76,8 +72,7 @@
                                                             CommandParameter="{Binding Id}"/>
                                   </ia:EventTriggerBehavior>
                                 </i:Interaction.Behaviors>
-                                <Image Height="30"
-                                       Source="/Assets/Images/MenuBar/monitor.png"/>
+                                <Image Source="/Assets/Images/MenuBar/monitor.png"/>
                                 <TextBlock Text="{Binding Name}"/>
                               </StackPanel>
                             </DataTemplate>
@@ -95,8 +90,7 @@
                                   </ia:EventTriggerBehavior>
                                   <EventTriggerBehavior/>
                                 </i:Interaction.Behaviors>
-                                <Image Height="30"
-                                       Source="/Assets/Images/MenuBar/printer.png"/>
+                                <Image Source="/Assets/Images/MenuBar/printer.png"/>
                                 <TextBlock Text="{Binding Name}"/>
                               </StackPanel>
                             </DataTemplate>
@@ -113,8 +107,7 @@
                                                          CommandParameter="{Binding Id}"/>
                                   </EventTriggerBehavior>
                                 </i:Interaction.Behaviors>
-                                <Image Height="30"
-                                       Source="{Binding Icon, Converter={StaticResource UriAssetToBitmapConverter}}"/>
+                                <Image Source="{Binding Icon, Converter={StaticResource UriAssetToBitmapConverter}}"/>
                                 <TextBlock Text="{Binding Name}"/>
                               </StackPanel>
                             </DataTemplate>

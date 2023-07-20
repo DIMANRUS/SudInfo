@@ -24,8 +24,6 @@
               SelectedItem="{Binding Cartridge.Type}" />
     <Button Content="{Binding SaveButtonText}"
             Command="{Binding SaveCartridge}"
-            Cursor="Hand"
-            FontWeight="Bold"
             HorizontalAlignment="Stretch"
             HorizontalContentAlignment="Center"
             IsVisible="{Binding ButtonIsVisible}"/>

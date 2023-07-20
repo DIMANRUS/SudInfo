@@ -16,10 +16,8 @@
     </ia:EventTriggerBehavior>
   </i:Interaction.Behaviors>
   <Grid ColumnDefinitions="150, *, 40" RowDefinitions="40,*">
-    <TextBlock
-        Margin="10"
-        FontSize="20"
-        FontWeight="Bold"
+    <TextBlock 
+        Classes="PageHeader"
         Text="Пользователи" />
     <TextBox
         Grid.Column="1"
@@ -57,33 +55,33 @@
             Width="*"
             Binding="{Binding LastName}"
             Header="Фамилия"
-            IsReadOnly="True" />
+             />
         <DataGridTextColumn
             Width="*"
             Binding="{Binding FirstName}"
             Header="Имя"
-            IsReadOnly="True" />
+             />
         <DataGridTextColumn
             Width="*"
             Binding="{Binding MiddleName}"
             Header="Отчество"
-            IsReadOnly="True" />
+             />
         <DataGridTextColumn
             Binding="{Binding NumberCabinet}"
             Header="Кабинет"
-            IsReadOnly="True" />
+             />
         <DataGridTextColumn
             Binding="{Binding PersonalPhone}"
             Header="Личный телефон"
-            IsReadOnly="True" />
+             />
         <DataGridTextColumn
             Binding="{Binding WorkPhone}"
             Header="Рабочий телефон"
-            IsReadOnly="True" />
+             />
         <DataGridTextColumn
             Binding="{Binding PhoneLocal}"
             Header="Локальный телефон"
-            IsReadOnly="True" />
+             />
       </DataGrid.Columns>
     </DataGrid>
   </Grid>

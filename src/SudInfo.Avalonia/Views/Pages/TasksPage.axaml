@@ -20,9 +20,7 @@
   <Grid RowDefinitions="40,*"
         ColumnDefinitions="140, *, 40">
     <TextBlock Text="Задачи"
-               Margin="10"
-               FontWeight="Bold"
-               FontSize="20"/>
+                Classes="PageHeader"/>
     <Image Source="/Assets/Images/add.png"
            Grid.Column="2">
       <i:Interaction.Behaviors>
@@ -36,18 +34,17 @@
               Grid.ColumnSpan="5">
       <DataGrid.Columns>
         <DataGridTemplateColumn Width="*"
-                                IsReadOnly="True"
+                                
                                 Header="Задача">
           <DataGridTemplateColumn.CellTemplate>
             <DataTemplate>
-              <TextBlock Text="{Binding Description}"
-                         TextWrapping="Wrap"/>
+              <TextBlock Text="{Binding Description}"/>
             </DataTemplate>
           </DataGridTemplateColumn.CellTemplate>
         </DataGridTemplateColumn>
         <DataGridTextColumn Header="Дата и время"
                             Binding="{Binding ReminderTime}"
-                            IsReadOnly="True"/>
+                            />
         <DataGridTemplateColumn>
           <DataTemplate>
             <Image Source="/Assets/Images/ok.png">

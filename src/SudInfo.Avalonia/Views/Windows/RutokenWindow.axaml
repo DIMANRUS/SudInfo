@@ -50,8 +50,6 @@
         HorizontalAlignment="Stretch"
         HorizontalContentAlignment="Center"
         Command="{Binding SaveRutoken}"
-        Content="{Binding SaveButtonText}"
-        Cursor="Hand"
-        FontWeight="Bold" />
+        Content="{Binding SaveButtonText}"/>
   </StackPanel>
 </Window>

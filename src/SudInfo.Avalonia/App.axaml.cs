@@ -2,15 +2,23 @@ namespace SudInfo.Avalonia;
 
 public class App : Application
 {
+    #region Properties
+
     public static Window? MainWindow { get; private set; }
 
+    #endregion
+
     #region Initialization
+
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
     }
+
     public async override void OnFrameworkInitializationCompleted()
     {
+        MainWindow mainWindow = new();
+
         if (!File.Exists("appsettings.json"))
         {
             var json = JsonSerializer.Serialize(new AppSettings());
@@ -21,7 +29,19 @@ public class App : Application
 
         var appsettingsJson = await File.ReadAllTextAsync("appsettings.json");
         AppSettings settings = JsonSerializer.Deserialize<AppSettings>(appsettingsJson);
-        RequestedThemeVariant = settings.Theme.Key.ToString() == "Dark" ? ThemeVariant.Dark : ThemeVariant.Light;
+        RequestedThemeVariant = settings.Theme switch
+        {
+            "Dark" => ThemeVariant.Dark,
+            "Light" => ThemeVariant.Light,
+            _ => ThemeVariant.Dark
+        };
+        if (settings.Theme == "Acrylic")
+        {
+            mainWindow.TransparencyLevelHint = new List<WindowTransparencyLevel>() {
+                WindowTransparencyLevel.AcrylicBlur
+            };
+            mainWindow.Background = null;
+        }
 
         #endregion
 
@@ -44,10 +64,7 @@ public class App : Application
 
         #endregion
 
-        MainWindow mainWindow = new()
-        {
-            DataContext = Locator.Current.GetService<IScreen>()
-        };
+        mainWindow.DataContext = DataContext = Locator.Current.GetService<IScreen>();
 
         ServiceCollectionExtension.ServiceProvider.GetService<NavigationService>()?.SetWindow(mainWindow);
         ServiceCollectionExtension.ServiceProvider.GetService<DialogService>()?.SetMainWindow(mainWindow);
@@ -57,5 +74,6 @@ public class App : Application
         MainWindow = mainWindow;
         base.OnFrameworkInitializationCompleted();
     }
+
     #endregion
 }

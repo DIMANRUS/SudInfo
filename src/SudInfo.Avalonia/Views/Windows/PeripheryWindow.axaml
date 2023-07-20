@@ -58,8 +58,6 @@
         HorizontalContentAlignment="Center"
         Command="{Binding SavePeriphery}"
         Content="{Binding SaveButtonText}"
-        Cursor="Hand"
-        FontWeight="Bold"
         IsVisible="{Binding IsButtonVisible}" />
   </StackPanel>
 </Window>

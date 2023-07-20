@@ -2,5 +2,5 @@
 
 public class AppSettings
 {
-    public ThemeVariant Theme { get; set; } = ThemeVariant.Light;
+    public string Theme { get; set; } = "Light";
 }

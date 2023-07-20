@@ -17,9 +17,7 @@
   </i:Interaction.Behaviors>
   <Grid ColumnDefinitions="140, *, 40" RowDefinitions="40,*">
     <TextBlock
-        Margin="10"
-        FontSize="20"
-        FontWeight="Bold"
+         Classes="PageHeader"
         Text="ЭЦП Рутокен" />
     <Image Grid.Column="2" Source="/Assets/Images/add.png">
       <i:Interaction.Behaviors>
@@ -33,7 +31,7 @@
         Grid.ColumnSpan="6"
         ItemsSource="{Binding Rutokens}"
         SelectedItem="{Binding SelectedRutoken}"
-        IsReadOnly="True">
+        >
       <DataGrid.ContextMenu>
         <ContextMenu>
           <MenuItem Header="Редактировать" Command="{Binding OpenEditRutokenWindow}"/>

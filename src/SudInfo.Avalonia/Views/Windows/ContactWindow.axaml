@@ -28,15 +28,12 @@
              Text="{Binding Contact.Email}"/>
     <TextBox Watermark="Описание"
              MaxLength="500"
-             TextWrapping="Wrap"
              Height="130"
              Text="{Binding Contact.Description}"/>
     <Button Content="{Binding SaveButtonText}"
             Command="{Binding SaveContact}"
             IsVisible="{Binding ButtonIsVisible}"
             Margin="0 5 0 0"
-            Cursor="Hand"
-            FontWeight="Bold"
             HorizontalAlignment="Stretch"
             HorizontalContentAlignment="Center"/>
   </StackPanel>

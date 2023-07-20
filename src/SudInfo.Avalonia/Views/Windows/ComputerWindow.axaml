@@ -78,7 +78,6 @@
           IsEnabled="{Binding #IsBrokenCheckBox.IsChecked}"
           MaxLength="200"
           Text="{Binding Computer.BreakdownDescription}"
-          TextWrapping="Wrap"
           Watermark="Описание поломки" />
       <CheckBox
           Content="ВКС"
@@ -119,8 +118,6 @@
         HorizontalContentAlignment="Center"
         Command="{Binding SaveComputer}"
         Content="{Binding SaveButtonText}"
-        Cursor="Hand"
-        FontWeight="Bold"
         IsVisible="{Binding ButtonIsVisible}"
         Grid.Row="1"
         Grid.ColumnSpan="2"/>

@@ -19,9 +19,7 @@
   </i:Interaction.Behaviors>
   <Grid ColumnDefinitions="140, *, 40,40" RowDefinitions="40,*">
     <TextBlock
-        Margin="10"
-        FontSize="20"
-        FontWeight="Bold"
+        Classes="PageHeader"
         Text="Компьютеры" />
     <TextBox
         Grid.Column="1"
@@ -53,7 +51,7 @@
     <DataGrid
         Grid.Row="1"
         Grid.ColumnSpan="7"
-        IsReadOnly="True"
+        
         ItemsSource="{Binding Computers}"
         SelectedItem="{Binding SelectedComputer}">
       <DataGrid.ContextMenu>
