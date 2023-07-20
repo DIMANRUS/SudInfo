@@ -19,23 +19,19 @@ public class App : Application
     {
         MainWindow mainWindow = new();
 
-        if (!File.Exists("appsettings.json"))
-        {
-            var json = JsonSerializer.Serialize(new AppSettings());
-            await File.WriteAllTextAsync("appsettings.json", json);
-        }
-
         #region Load ThemeVariant
 
-        var appsettingsJson = await File.ReadAllTextAsync("appsettings.json");
-        AppSettings settings = JsonSerializer.Deserialize<AppSettings>(appsettingsJson);
-        RequestedThemeVariant = settings.Theme switch
+        await using SudInfoDbContext sudInfoDbContext = new();
+        AppSetting appSetting = await sudInfoDbContext.AppSettings.AsNoTracking()
+                                                                  .FirstAsync();
+        RequestedThemeVariant = appSetting.Theme switch
         {
             "Dark" => ThemeVariant.Dark,
             "Light" => ThemeVariant.Light,
             _ => ThemeVariant.Dark
         };
-        if (settings.Theme == "Acrylic")
+
+        if (appSetting.Theme == "Acrylic")
         {
             mainWindow.TransparencyLevelHint = new List<WindowTransparencyLevel>() {
                 WindowTransparencyLevel.AcrylicBlur

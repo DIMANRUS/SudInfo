@@ -86,19 +86,18 @@ public class MainWindowViewModel : ReactiveObject, IScreen
 
     public static async Task ChangeTheme()
     {
-        var appsettingsJson = await File.ReadAllTextAsync("appsettings.json");
-        AppSettings appSettings = JsonSerializer.Deserialize<AppSettings>(appsettingsJson);
-        appSettings.Theme = appSettings.Theme switch
+        await using SudInfoDbContext db = new();
+        AppSetting appSetting = await db.AppSettings.FirstAsync();
+        appSetting.Theme = appSetting.Theme switch
         {
             "Dark" => "Light",
             "Light" => "Acrylic",
             _ => "Dark"
         };
-        var json = JsonSerializer.Serialize(appSettings);
-        await File.WriteAllTextAsync("appsettings.json", json);
+        await db.SaveChangesAsync();
         await MessageBoxManager.GetMessageBoxStandard(
             "Предупреждение",
-            $"Тема изменится на {appSettings.Theme} при следующем запуске!",
+            $"Тема изменится на {appSetting.Theme} при следующем запуске!",
             ButtonEnum.Ok,
             Icon.Success).ShowAsync();
     }
