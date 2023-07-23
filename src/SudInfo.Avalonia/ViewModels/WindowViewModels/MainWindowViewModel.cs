@@ -101,5 +101,6 @@ public class MainWindowViewModel : ReactiveObject, IScreen
             ButtonEnum.Ok,
             Icon.Success).ShowAsync();
     }
+
     #endregion
 }

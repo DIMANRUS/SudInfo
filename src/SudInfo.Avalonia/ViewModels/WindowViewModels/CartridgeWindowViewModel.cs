@@ -4,7 +4,7 @@ public class CartridgeWindowViewModel : BaseViewModel
 {
     #region Services
 
-    private readonly DialogService    _dialogService;
+    private readonly DialogService _dialogService;
     private readonly CartridgeService _cartridgeService;
 
     #endregion
@@ -33,7 +33,7 @@ public class CartridgeWindowViewModel : BaseViewModel
     public CartridgeWindowViewModel() { }
 
     public CartridgeWindowViewModel(
-        DialogService dialogService, 
+        DialogService dialogService,
         CartridgeService cartridgeService)
     {
         _dialogService = dialogService;
@@ -44,7 +44,11 @@ public class CartridgeWindowViewModel : BaseViewModel
 
     #region Collections
 
-    public static IEnumerable<CartridgeType> CartridgeTypes => Enum.GetValues(typeof(CartridgeType)).Cast<CartridgeType>();
+    public static IEnumerable<CartridgeType> CartridgeTypes
+        => Enum.GetValues(typeof(CartridgeType)).Cast<CartridgeType>();
+
+    public static IEnumerable<CartridgeStatus> CartridgeStatuses
+        => Enum.GetValues(typeof(CartridgeStatus)).Cast<CartridgeStatus>();
 
     #endregion
 

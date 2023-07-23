@@ -7,7 +7,7 @@
         xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.WindowViewModels;assembly=SudInfo.Avalonia"
         x:DataType="viewModels:CartridgeWindowViewModel"
         Width="300"
-        Height="200"
+        Height="240"
         CanResize="False"
         WindowStartupLocation="CenterScreen"
         Title="Картридж">
@@ -22,6 +22,9 @@
     <ComboBox HorizontalAlignment="Stretch"
               ItemsSource="{Binding CartridgeTypes}"
               SelectedItem="{Binding Cartridge.Type}" />
+    <ComboBox HorizontalAlignment="Stretch"
+          ItemsSource="{Binding CartridgeStatuses}"
+          SelectedItem="{Binding Cartridge.Status}" />
     <Button Content="{Binding SaveButtonText}"
             Command="{Binding SaveCartridge}"
             HorizontalAlignment="Stretch"

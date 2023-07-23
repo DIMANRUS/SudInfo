@@ -28,7 +28,8 @@
         </ia:EventTriggerBehavior>
       </i:Interaction.Behaviors>
     </Image>
-    <DataGrid Grid.Row="1"
+    <DataGrid 
+        Grid.Row="1"
         Grid.ColumnSpan="5"
         ItemsSource="{Binding Cartridges, Mode=TwoWay}"
         SelectedItem="{Binding SelectedCartridge}">
@@ -47,6 +48,9 @@
         <DataGridTextColumn
             Binding="{Binding Type}"
             Header="Тип" />
+        <DataGridTextColumn
+            Binding="{Binding Status}"
+            Header="Статус" />
         <DataGridTextColumn
             Width="*"
             Binding="{Binding Remains}"

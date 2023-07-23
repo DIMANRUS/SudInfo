@@ -11,10 +11,18 @@ public class Cartridge : BaseModel
     public int Remains { get; set; } = 1;
 
     [XLColumn(Header = "Тип")]
-    public CartridgeType Type { get; set; } = CartridgeType.Новый;
+    public CartridgeType Type { get; set; } = CartridgeType.Тонер;
+
+    [XLColumn(Header = "Статус")]
+    public CartridgeStatus Status { get; set; } = CartridgeStatus.Новый;
+}
+
+public enum CartridgeStatus
+{
+    Новый, Заправка, Утилизация
 }
 
 public enum CartridgeType
 {
-    Новый, Заправка, Утилизация
+    Тонер, Драм
 }
