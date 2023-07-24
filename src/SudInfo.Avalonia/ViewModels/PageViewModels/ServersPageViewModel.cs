@@ -4,9 +4,8 @@ public class ServersPageViewModel : BaseRoutableViewModel
 {
     #region Services
 
-    private readonly ServerRackService _serverRackService;
-    private readonly ServerService _serverService;
     private readonly DialogService _dialogService;
+
     private readonly NavigationService _navigationService;
 
     #endregion
@@ -28,9 +27,7 @@ public class ServersPageViewModel : BaseRoutableViewModel
     {
         #region Services Initialization
         _navigationService = navigationService;
-        _serverRackService = serverRackService;
         _dialogService = dialogService;
-        _serverService = serverService;
         #endregion
 
         eventHandlerClosedWindowDialog = async (s, e) => await LoadServerRacks();
@@ -76,6 +73,24 @@ public class ServersPageViewModel : BaseRoutableViewModel
             await _navigationService.ShowServerWindowDialog(WindowType.View, id: id);
         });
 
+        UpServerPositionInServerRack = ReactiveCommand.Create<int>(async (int id) =>
+        {
+            Result result = await ServerService.UpServerPositionInServerRack(id);
+            if (!result.Success)
+                await MessageBoxManager.GetMessageBoxStandard("Ошибка!", result.Message, ButtonEnum.Ok, Icon.Error)
+                                       .ShowAsync();
+            await LoadServerRacks();
+        });
+
+        DownServerPositionInServerRack = ReactiveCommand.Create<int>(async (int id) =>
+        {
+            Result result = await ServerService.DownServerPositionInServerRack(id);
+            if (!result.Success)
+                await MessageBoxManager.GetMessageBoxStandard("Ошибка!", result.Message, ButtonEnum.Ok, Icon.Error)
+                                       .ShowAsync();
+            await LoadServerRacks();
+        });
+
         #endregion
     }
 
@@ -90,6 +105,7 @@ public class ServersPageViewModel : BaseRoutableViewModel
 
     public async Task LoadServerRacks()
     {
+        IsLoading = true;
         var serverRacksResult = await ServerRackService.GetServerRacksWithServers();
         if (!serverRacksResult.Success)
         {
@@ -97,6 +113,7 @@ public class ServersPageViewModel : BaseRoutableViewModel
             return;
         }
         ServerRacks = serverRacksResult.Object;
+        IsLoading = false;
     }
 
     #endregion
@@ -112,5 +129,10 @@ public class ServersPageViewModel : BaseRoutableViewModel
     public ReactiveCommand<int, Unit> ViewServerCommand { get; init; }
 
     public ReactiveCommand<int, Unit> EditServerCommand { get; init; }
+
+    public ReactiveCommand<int, Unit> UpServerPositionInServerRack { get; init; }
+
+    public ReactiveCommand<int, Unit> DownServerPositionInServerRack { get; init; }
+
     #endregion
 }

@@ -6,7 +6,6 @@ public class ComputerWindowViewModel : BaseViewModel
 
     private readonly ComputerService _computerService;
     private readonly DialogService _dialogService;
-    private readonly UserService _usersService;
 
     #endregion
 
@@ -32,30 +31,27 @@ public class ComputerWindowViewModel : BaseViewModel
 
     [Reactive]
     public bool ButtonIsVisible { get; private set; }
+
     #endregion
 
-    #region Constructors
+    #region Ctors
 
     public ComputerWindowViewModel(
         ComputerService computerService,
-        UserService usersService,
         DialogService dialogService)
     {
         #region Service Initialization
         _computerService = computerService;
         _dialogService = dialogService;
-        _usersService = usersService;
         #endregion
-    }
-
-    public ComputerWindowViewModel()
-    {
     }
 
     #endregion
 
     #region Private Fields
+
     private WindowType _windowType;
+
     #endregion
 
     #region Public Methods
@@ -81,33 +77,29 @@ public class ComputerWindowViewModel : BaseViewModel
 
     public async void InitializationData(WindowType windowType, int? id = null)
     {
+        var usersResult = await UserService.GetUsers();
+        Users = usersResult;
+
         _windowType = windowType;
         if (windowType != WindowType.View)
         {
             ButtonIsVisible = true;
         }
-        if (id != null)
+        if (id == null)
+            return;
+        if (windowType != WindowType.View)
         {
-            if (windowType != WindowType.View)
-            {
-                ButtonIsVisible = true;
-                SaveButtonText = "Сохранить компьютер";
-            }
-            var computerResult = await ComputerService.GetComputerById(id.GetValueOrDefault());
-            if (!computerResult.Success)
-            {
-                await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения компьютера! Ошибка: {computerResult.Message}", true, icon: Icon.Error);
-                return;
-            }
-            IsUser = computerResult.Object.User != null;
-            Computer = computerResult.Object;
+            ButtonIsVisible = true;
+            SaveButtonText = "Сохранить компьютер";
         }
-    }
-
-    public async Task LoadUsers()
-    {
-        var usersResult = await UserService.GetUsers();
-        Users = usersResult;
+        var computerResult = await ComputerService.GetComputerById(id.GetValueOrDefault());
+        if (!computerResult.Success)
+        {
+            await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения компьютера! Ошибка: {computerResult.Message}", true, icon: Icon.Error);
+            return;
+        }
+        IsUser = computerResult.Object?.User != null;
+        Computer = computerResult.Object;
     }
 
     #endregion

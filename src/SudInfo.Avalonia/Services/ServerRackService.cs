@@ -11,6 +11,12 @@ public class ServerRackService : BaseService
                 .AsNoTracking()
                 .Include(x => x.Servers)
                 .ToListAsync();
+            foreach (var serverRack in serverRacks)
+            {
+                serverRack.Servers = serverRack.Servers
+                                               .OrderBy(x => x.PosiitionInServerRack)
+                                               .ToList();
+            }
             return new()
             {
                 Success = true,
@@ -26,6 +32,7 @@ public class ServerRackService : BaseService
             };
         }
     }
+
     public static async Task<Result<ServerRack>> GetServerRack(int id)
     {
         try
@@ -50,12 +57,14 @@ public class ServerRackService : BaseService
             };
         }
     }
+
     public static async Task<int> GetNumberServerRacks()
     {
         using SudInfoDbContext sudInfoDbContext = new();
         int numberServerRacks = await sudInfoDbContext.ServerRacks.CountAsync();
         return numberServerRacks;
     }
+
     public static async Task<Result> RemoveServerRack(int id)
     {
         try

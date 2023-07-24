@@ -44,6 +44,6 @@ internal static class ServiceCollectionExtension
             .AddTransient<CartridgeService>()
             .AddTransient<CartridgeWindowViewModel>()
             .AddTransient<ContactWindowViewModel>()
-            .AddSingleton<ExcelService>()
+            .AddTransient<ExcelService>()
             .BuildServiceProvider();
 }

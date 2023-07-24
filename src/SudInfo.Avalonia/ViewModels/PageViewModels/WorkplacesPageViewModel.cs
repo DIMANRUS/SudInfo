@@ -24,7 +24,7 @@ public class WorkplacesPageViewModel : BaseRoutableViewModel
 
     #endregion
 
-    #region Initialization
+    #region Ctors
 
     public WorkplacesPageViewModel(
         NavigationService navigationService)
