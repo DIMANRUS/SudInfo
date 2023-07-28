@@ -10,6 +10,8 @@ public class TaskWindowViewModel : BaseViewModel
 
     #endregion
 
+    private Action _closedWindow;
+
     public TaskEntity Task { get; set; } = new();
     public DateTimeOffset ReminderDate { get; set; } = DateTimeOffset.Now;
     public TimeSpan ReminderTime { get; set; } = DateTime.Now.TimeOfDay;
@@ -18,6 +20,12 @@ public class TaskWindowViewModel : BaseViewModel
         _navigationService = navigationService;
         _taskService = taskService;
     }
+
+    public void Initialization(Action close)
+    {
+        _closedWindow = close;
+    }
+
     public async Task AddTask()
     {
         if (!ValidationModel(Task))
@@ -29,5 +37,6 @@ public class TaskWindowViewModel : BaseViewModel
             await DialogService.ShowErrorMessageBox(addTaskResult.Message);
             return;
         }
+        _closedWindow();
     }
 }

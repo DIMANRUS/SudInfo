@@ -5,7 +5,7 @@ public class PeripheryWindowViewModel : BaseViewModel
     #region Services
 
     private readonly PeripheryService _peripheryService;
-    
+
     private readonly ComputerService _computerService;
 
     #endregion
@@ -38,12 +38,12 @@ public class PeripheryWindowViewModel : BaseViewModel
 
     public PeripheryWindowViewModel(
         PeripheryService peripheryService,
-        
+
         ComputerService computerService)
     {
         #region Service Initialization
         _peripheryService = peripheryService;
-        
+
         _computerService = computerService;
         #endregion
     }
@@ -57,6 +57,8 @@ public class PeripheryWindowViewModel : BaseViewModel
     #region Private Fields
 
     private WindowType _windowType;
+
+    private Action _closedWindow;
 
     #endregion
 
@@ -78,10 +80,13 @@ public class PeripheryWindowViewModel : BaseViewModel
             await DialogService.ShowErrorMessageBox(computerResult.Message);
             return;
         }
+        _closedWindow();
     }
-    public async Task InitializationData(WindowType windowType, int? id = null)
+    public async Task Initialization(WindowType windowType, Action close, int? id = null)
     {
         _windowType = windowType;
+        _closedWindow = close;
+
         if (windowType != WindowType.View)
             IsButtonVisible = true;
         if (id != null)

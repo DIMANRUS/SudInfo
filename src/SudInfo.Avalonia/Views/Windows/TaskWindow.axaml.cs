@@ -6,6 +6,7 @@ public partial class TaskWindow : ReactiveWindow<TaskWindowViewModel>
     {
         InitializeComponent();
         var viewModel = ServiceCollectionExtension.ServiceProvider.GetService<TaskWindowViewModel>();
+        viewModel.Initialization(Close);
         DataContext = viewModel;
         InitializeComponent();
     }

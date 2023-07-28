@@ -4,7 +4,6 @@ public class CartridgeWindowViewModel : BaseViewModel
 {
     #region Services
 
-    
     private readonly CartridgeService _cartridgeService;
 
     #endregion
@@ -25,6 +24,7 @@ public class CartridgeWindowViewModel : BaseViewModel
     #region Private Fields
 
     private WindowType _windowType;
+    private Action _closedWindow;
 
     #endregion
 
@@ -33,10 +33,10 @@ public class CartridgeWindowViewModel : BaseViewModel
     public CartridgeWindowViewModel() { }
 
     public CartridgeWindowViewModel(
-        
+
         CartridgeService cartridgeService)
     {
-        
+
         _cartridgeService = cartridgeService;
     }
 
@@ -68,11 +68,13 @@ public class CartridgeWindowViewModel : BaseViewModel
             await DialogService.ShowErrorMessageBox(result.Message);
             return;
         }
+        _closedWindow();
     }
 
-    public async Task InitializationData(WindowType windowType, int? id = null)
+    public async Task Initialization(WindowType windowType, Action close, int? id = null)
     {
         _windowType = windowType;
+        _closedWindow = close;
         if (windowType != WindowType.View)
         {
             ButtonIsVisible = true;

@@ -53,6 +53,8 @@ public class ComputerWindowViewModel : BaseViewModel
 
     private WindowType _windowType;
 
+    private Action _closedWindow;
+
     #endregion
 
     #region Public Methods
@@ -73,14 +75,17 @@ public class ComputerWindowViewModel : BaseViewModel
             await DialogService.ShowErrorMessageBox(computerResult.Message);
             return;
         }
+        _closedWindow();
     }
 
-    public async void InitializationData(WindowType windowType, int? id = null)
+    public async void Initialization(WindowType windowType, Action close, int? id = null)
     {
         var usersResult = await _userService.Get();
         Users = usersResult;
 
         _windowType = windowType;
+        _closedWindow = close;
+
         if (windowType != WindowType.View)
         {
             ButtonIsVisible = true;

@@ -11,6 +11,6 @@ public partial class AppWindow : ReactiveWindow<AppWindowViewModel>
         var viewModel = ServiceCollectionExtension.ServiceProvider.GetService<AppWindowViewModel>();
         DataContext = viewModel;
         InitializeComponent();
-        viewModel.InitializationData(windowType, id);
+        viewModel.Initialization(windowType, Close, id);
     }
 }

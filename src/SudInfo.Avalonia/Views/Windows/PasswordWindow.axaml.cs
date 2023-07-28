@@ -10,6 +10,6 @@ public partial class PasswordWindow : ReactiveWindow<PasswordWindowViewModel>
         var viewModel = ServiceCollectionExtension.ServiceProvider.GetService<PasswordWindowViewModel>();
         DataContext = viewModel;
         InitializeComponent();
-        viewModel.InitializationData(windowType, id);
+        viewModel.Initialization(windowType, Close, id);
     }
 }

@@ -23,7 +23,7 @@
              MaxLength="50"
              Text="{Binding Server.InventarNumber}"/>
     <TextBox Watermark="IP адрес"
-             MaxLength="20"
+             MaxLength="15"
              Text="{Binding Server.IpAddress}"/>
     <ComboBox Width="280"
               AutoScrollToSelectedItem="True"

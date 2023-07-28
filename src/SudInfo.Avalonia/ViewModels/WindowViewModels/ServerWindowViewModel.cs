@@ -4,12 +4,16 @@ public class ServerWindowViewModel : BaseViewModel
 {
     #region Services
     private readonly ServerService _serverService;
-    
+
 
     #endregion
 
     #region Private Fields
+
     private WindowType _windowType;
+
+    private Action _closedWindow;
+
     #endregion
 
     #region Properties
@@ -28,16 +32,19 @@ public class ServerWindowViewModel : BaseViewModel
         #region Service Set
 
         _serverService = serverService;
-        
+
         #endregion
     }
 
     #endregion
 
     #region Public Methods
-    public async void InitializationData(WindowType windowType, int? id = null, ServerRack serverRack = null)
+
+    public async void Initialization(WindowType windowType, Action close, int? id = null, ServerRack serverRack = null)
     {
         _windowType = windowType;
+        _closedWindow = close;
+
         if (windowType != WindowType.View)
         {
             ButtonIsVisible = true;
@@ -63,6 +70,7 @@ public class ServerWindowViewModel : BaseViewModel
             Server = server.Object;
         }
     }
+
     public async Task SaveServer()
     {
         if (!ValidationModel(Server))
@@ -77,7 +85,9 @@ public class ServerWindowViewModel : BaseViewModel
             await DialogService.ShowErrorMessageBox(serverResult.Message);
             return;
         }
+        _closedWindow();
     }
+
     #endregion
 
     #region Collections

@@ -14,29 +14,15 @@ public class UserWindowViewModel : BaseViewModel
     public string SaveButtonText { get; private set; } = "Добавить пользователя";
     #endregion
 
-    #region Public Methods
-    public async void InitializationData(WindowType windowType, int? id = null)
-    {
-        _windowType = windowType;
-        if (id != null)
-        {
-            SaveButtonText = "Сохранить пользователя";
-            var userResult = await _usersService.Get(id.GetValueOrDefault());
-            if (!userResult.Success)
-            {
-                await DialogService.ShowErrorMessageBox(userResult.Message);
-                return;
-            }
-            User = userResult.Object;
-        }
-    }
-    #endregion
-
     #region Private Fields
+
     private WindowType _windowType;
+
+    private Action _closedWindow;
+
     #endregion
 
-    #region Constructors
+    #region Ctors
 
     public UserWindowViewModel(UserService usersService)
     {
@@ -49,6 +35,7 @@ public class UserWindowViewModel : BaseViewModel
     #endregion
 
     #region Public Methods
+
     public async Task SaveUser()
     {
         if (!ValidationModel(User))
@@ -63,6 +50,26 @@ public class UserWindowViewModel : BaseViewModel
             await DialogService.ShowErrorMessageBox(userResult.Message);
             return;
         }
+        _closedWindow();
     }
+
+    public async void Initialization(WindowType windowType, Action close, int? id = null)
+    {
+        _windowType = windowType;
+        _closedWindow = close;
+
+        if (id != null)
+        {
+            SaveButtonText = "Сохранить пользователя";
+            var userResult = await _usersService.Get(id.GetValueOrDefault());
+            if (!userResult.Success)
+            {
+                await DialogService.ShowErrorMessageBox(userResult.Message);
+                return;
+            }
+            User = userResult.Object;
+        }
+    }
+
     #endregion
 }

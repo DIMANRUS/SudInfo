@@ -41,7 +41,11 @@ public class RutokenWindowViewModel : BaseViewModel
     #endregion
 
     #region Private Fields
+
     private WindowType _windowType;
+
+    private Action _closedWindow;
+
     #endregion
 
     #region Public Methods
@@ -60,10 +64,14 @@ public class RutokenWindowViewModel : BaseViewModel
             await DialogService.ShowErrorMessageBox(rutokenResult.Message);
             return;
         }
+        _closedWindow();
     }
-    public async void InitializationData(WindowType windowType, int? id = null)
+
+    public async void Initialization(WindowType windowType, Action close, int? id = null)
     {
         _windowType = windowType;
+        _closedWindow = close;
+
         if (id != null)
         {
             SaveButtonText = "Сохранить рутокен";

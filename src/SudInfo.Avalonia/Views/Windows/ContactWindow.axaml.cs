@@ -11,6 +11,6 @@ public partial class ContactWindow : ReactiveWindow<ContactWindowViewModel>
         var viewModel = ServiceCollectionExtension.ServiceProvider.GetService<ContactWindowViewModel>();
         DataContext = viewModel;
         InitializeComponent();
-        viewModel.InitializationData(windowType, id);
+        viewModel.Initialization(windowType, Close, id);
     }
 }

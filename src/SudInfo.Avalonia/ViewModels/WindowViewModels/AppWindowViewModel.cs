@@ -34,6 +34,8 @@ public class AppWindowViewModel : BaseViewModel
 
     private WindowType _windowType;
 
+    private Action _closedWindow;
+
     #endregion
 
     #region Commands
@@ -83,16 +85,17 @@ public class AppWindowViewModel : BaseViewModel
             await DialogService.ShowErrorMessageBox(result.Message);
             return;
         }
+        _closedWindow();
     }
 
-    public async Task InitializationData(WindowType windowType, int? id = null)
+    public async Task Initialization(WindowType windowType, Action closeWindow, int? id = null)
     {
         _windowType = windowType;
+        _closedWindow = closeWindow;
         if (windowType != WindowType.View)
         {
             ButtonIsVisible = true;
         }
-
         if (id != null)
         {
             if (windowType != WindowType.View)

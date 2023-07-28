@@ -5,7 +5,7 @@ public class PrinterWindowViewModel : BaseViewModel
     #region Services
 
     private readonly PrinterService _printersService;
-    
+
     private readonly ComputerService _computerService;
 
     #endregion
@@ -27,9 +27,11 @@ public class PrinterWindowViewModel : BaseViewModel
 
     #region Public Methods
 
-    public async void InitializationData(WindowType windowType, int? id = null)
+    public async void Initialization(WindowType windowType, Action close, int? id = null)
     {
         _windowType = windowType;
+        _closedWindow = close;
+
         if (windowType != WindowType.View)
             IsButtonVisible = true;
         if (id != null)
@@ -47,6 +49,7 @@ public class PrinterWindowViewModel : BaseViewModel
             Printer = printerResult.Object;
         }
     }
+
     public async Task SavePrinter()
     {
         if (!ValidationModel(Printer))
@@ -63,7 +66,9 @@ public class PrinterWindowViewModel : BaseViewModel
             await DialogService.ShowErrorMessageBox(printerResult.Message);
             return;
         }
+        _closedWindow();
     }
+
     public async Task LoadComputers()
     {
         var computersResult = await _computerService.GetComputerNamesWithUser();
@@ -75,6 +80,8 @@ public class PrinterWindowViewModel : BaseViewModel
     #region Private Fields
 
     private WindowType _windowType;
+
+    private Action _closedWindow;
 
     #endregion
 
@@ -89,11 +96,11 @@ public class PrinterWindowViewModel : BaseViewModel
 
     #region Constructors
 
-    public PrinterWindowViewModel(PrinterService printersService,  ComputerService computerService)
+    public PrinterWindowViewModel(PrinterService printersService, ComputerService computerService)
     {
         #region Service initialization
         _printersService = printersService;
-        
+
         _computerService = computerService;
         #endregion
     }

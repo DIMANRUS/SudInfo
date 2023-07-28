@@ -20,7 +20,7 @@ public class Server : BaseModel
 
     [XLColumn(Header = "IP Адрес")]
     [RegularExpression(Const.Ip4RegularExpression, ErrorMessage = Const.NotValidIp4Message)]
-    [StringLength(20)]
+    [StringLength(15)]
     public string? IpAddress { get; set; }
 
     [XLColumn(Ignore = true)]

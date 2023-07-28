@@ -8,7 +8,7 @@ public partial class PrinterWindow : ReactiveWindow<PrinterWindowViewModel>
         var printerWindowViewModel = ServiceCollectionExtension.ServiceProvider.GetService<PrinterWindowViewModel>();
         DataContext = printerWindowViewModel;
         InitializeComponent();
-        printerWindowViewModel.InitializationData(windowType, printerId);
+        printerWindowViewModel.Initialization(windowType, Close, printerId);
     } 
     #endregion
 }

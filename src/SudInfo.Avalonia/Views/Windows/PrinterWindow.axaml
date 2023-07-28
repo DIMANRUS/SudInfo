@@ -30,7 +30,7 @@
           Text="{Binding Printer.Name}"
           Watermark="Название" />
       <TextBox
-          MaxLength="12"
+          MaxLength="15"
           Text="{Binding Printer.Ip}"
           Watermark="IP Адрес" />
       <TextBox

@@ -4,11 +4,15 @@ public class ServerRackWindowViewModel : BaseViewModel
 {
     #region Services
     private readonly ServerRackService _serverRackService;
-    
+
     #endregion
 
     #region Private Fields
+
     private WindowType _windowType;
+
+    private Action _closedWindow;
+
     #endregion
 
     #region Properties
@@ -24,16 +28,19 @@ public class ServerRackWindowViewModel : BaseViewModel
     {
         #region Service Set
         _serverRackService = serverRackService;
-        
+
         #endregion
     }
 
     #endregion
 
     #region Public Methods
-    public async void InitializationData(WindowType windowType, int? id = null, ServerRack serverRack = null)
+
+    public async void Initialization(WindowType windowType, Action close, int? id = null, ServerRack serverRack = null)
     {
         _windowType = windowType;
+        _closedWindow = close;
+
         if (id != null)
         {
             SaveButtonText = "Сохранить серверную стойку";
@@ -46,6 +53,7 @@ public class ServerRackWindowViewModel : BaseViewModel
             ServerRack = server.Object;
         }
     }
+
     public async Task SaveServerRack()
     {
         if (_windowType == WindowType.Add)
@@ -63,6 +71,8 @@ public class ServerRackWindowViewModel : BaseViewModel
             await DialogService.ShowErrorMessageBox(serverRackResult.Message);
             return;
         }
+        _closedWindow();
     }
+
     #endregion
 }

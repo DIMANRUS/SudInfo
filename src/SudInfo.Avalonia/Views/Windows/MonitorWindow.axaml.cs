@@ -11,7 +11,7 @@ public partial class MonitorWindow : Window
         var monitorWindowViewModel = ServiceCollectionExtension.ServiceProvider.GetService<MonitorWindowViewModel>();
         DataContext = monitorWindowViewModel;
         InitializeComponent();
-        monitorWindowViewModel.InitializationData(windowType, computerId);
+        monitorWindowViewModel.Initialization(windowType, Close, computerId);
     } 
     #endregion
 }

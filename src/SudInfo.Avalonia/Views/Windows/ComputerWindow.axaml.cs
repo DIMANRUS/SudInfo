@@ -9,7 +9,7 @@ public partial class ComputerWindow : ReactiveWindow<ComputerWindowViewModel>
         InitializeComponent();
         var computerWindowViewModel = ServiceCollectionExtension.ServiceProvider.GetService<ComputerWindowViewModel>();
         DataContext = computerWindowViewModel;
-        computerWindowViewModel.InitializationData(windowType, computerId);
+        computerWindowViewModel.Initialization(windowType, Close, computerId);
     }
     #endregion
 }

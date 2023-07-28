@@ -11,7 +11,7 @@ public class Printer : BaseModel
     public PrinterType Type { get; set; } = PrinterType.Принтер;
     
     [XLColumn(Header = "IP Адрес")]
-    [StringLength(12)]
+    [StringLength(15)]
     [RegularExpression(Const.Ip4RegularExpression, ErrorMessage = Const.NotValidIp4Message)]
     public string? Ip { get; set; }
 

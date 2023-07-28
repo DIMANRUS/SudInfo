@@ -5,7 +5,7 @@ public class MonitorWindowViewModel : BaseViewModel
     #region Services
 
     private readonly MonitorService _monitorService;
-    
+
     private readonly ComputerService _computerService;
 
     #endregion
@@ -39,7 +39,7 @@ public class MonitorWindowViewModel : BaseViewModel
     {
         #region Service Initialization
         _monitorService = monitorService;
-        
+
         _computerService = computerService;
         #endregion
     }
@@ -50,13 +50,17 @@ public class MonitorWindowViewModel : BaseViewModel
 
     private WindowType _windowType;
 
+    private Action _closedWindow;
+
     #endregion
 
     #region Public Methods
 
-    public async void InitializationData(WindowType windowType, int? id = null)
+    public async void Initialization(WindowType windowType, Action close, int? id = null)
     {
         _windowType = windowType;
+        _closedWindow = close;
+
         if (windowType != WindowType.View)
             IsButtonVisible = true;
         if (id != null)
@@ -90,6 +94,7 @@ public class MonitorWindowViewModel : BaseViewModel
             await DialogService.ShowErrorMessageBox(monitorResult.Message);
             return;
         }
+        _closedWindow();
     }
     public async Task LoadComputer()
     {

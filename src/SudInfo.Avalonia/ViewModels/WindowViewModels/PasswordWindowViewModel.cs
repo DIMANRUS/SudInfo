@@ -1,4 +1,5 @@
 ﻿namespace SudInfo.Avalonia.ViewModels.WindowViewModels;
+
 public class PasswordWindowViewModel : BaseViewModel
 {
     #region Services
@@ -30,10 +31,15 @@ public class PasswordWindowViewModel : BaseViewModel
     #endregion
 
     #region Private Fields
+
     private WindowType _windowType;
+
+    private Action _closedWindow;
+
     #endregion
 
     #region Public Methods
+
     public async Task SavePassword()
     {
         if (!ValidationModel(Password))
@@ -48,10 +54,14 @@ public class PasswordWindowViewModel : BaseViewModel
             await DialogService.ShowErrorMessageBox(result.Message);
             return;
         }
+        _closedWindow();
     }
-    public async void InitializationData(WindowType windowType, int? id = null)
+
+    public async void Initialization(WindowType windowType, Action close, int? id = null)
     {
         _windowType = windowType;
+        _closedWindow = close;
+
         if (windowType != WindowType.View)
         {
             ButtonIsVisible = true;
@@ -72,5 +82,6 @@ public class PasswordWindowViewModel : BaseViewModel
             Password = result.Object;
         }
     }
+
     #endregion
 }
