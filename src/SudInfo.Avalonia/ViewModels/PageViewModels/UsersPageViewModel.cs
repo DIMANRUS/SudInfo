@@ -4,9 +4,9 @@ public class UsersPageViewModel : BaseRoutableViewModel
 {
     #region Services
 
-    private readonly UserService _usersService;
-    private readonly DialogService _dialogService;
     private readonly NavigationService _navigationService;
+
+    private readonly UserService _userService;
 
     #endregion
 
@@ -31,15 +31,13 @@ public class UsersPageViewModel : BaseRoutableViewModel
 
     #region Ctors
 
-    public UsersPageViewModel(
-        NavigationService navigationService,
-        UserService usersService,
-        DialogService dialogService)
+    public UsersPageViewModel(NavigationService navigationService, UserService userService)
     {
         #region Serives Initialization
-        _dialogService = dialogService;
-        _usersService = usersService;
+
         _navigationService = navigationService;
+        _userService = userService;
+
         #endregion
 
         eventHandlerClosedWindowDialog = async (s, e) => await LoadUsers();
@@ -65,13 +63,13 @@ public class UsersPageViewModel : BaseRoutableViewModel
     {
         if (SelectedUser == null)
             return;
-        var dialogResult = await _dialogService.ShowMessageBox("Сообщение", "Вы действительно хотите удалить пользователя?", buttonEnum: ButtonEnum.YesNo, icon: Icon.Question);
+        var dialogResult = await DialogService.ShowQuestionMessageBox("Вы действительно хотите удалить пользователя?");
         if (dialogResult == ButtonResult.No)
             return;
-        var removeUserResult = await UserService.RemoveUserById(SelectedUser.Id);
+        var removeUserResult = await _userService.Remove(SelectedUser.Id);
         if (!removeUserResult.Success)
         {
-            await _dialogService.ShowMessageBox("Ошибка", $"Ошибка удаления пользователя! Ошибка: {removeUserResult.Message}", icon: Icon.Error);
+            await DialogService.ShowErrorMessageBox(removeUserResult.Message);
             return;
         }
         await LoadUsers();
@@ -91,7 +89,7 @@ public class UsersPageViewModel : BaseRoutableViewModel
 
     public async Task LoadUsers()
     {
-        Users = await UserService.GetUsers();
+        Users = await _userService.Get();
         UsersFromDataBase = Users;
     }
 

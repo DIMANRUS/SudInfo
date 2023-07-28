@@ -5,7 +5,7 @@ public class CartridgesPageViewModel : BaseRoutableViewModel
     #region Services
 
     private readonly CartridgeService _cartridgeService;
-    private readonly DialogService _dialogService;
+    
     private readonly NavigationService _navigationService;
 
     #endregion
@@ -30,13 +30,12 @@ public class CartridgesPageViewModel : BaseRoutableViewModel
 
     public CartridgesPageViewModel(
         CartridgeService cartridgeService,
-        DialogService dialogService,
         NavigationService navigationService)
     {
         #region Services Initialization
 
         _cartridgeService = cartridgeService;
-        _dialogService = dialogService;
+        
         _navigationService = navigationService;
 
         #endregion
@@ -65,34 +64,20 @@ public class CartridgesPageViewModel : BaseRoutableViewModel
 
     public async Task LoadCartridges()
     {
-        Cartridges = await CartridgeService.GetCartridges();
-    }
-
-    public async Task SaveCartridges()
-    {
-        if (Cartridges == null || Cartridges.Count == 0)
-            return;
-        var saveCartridgesResult = await _cartridgeService.Update(Cartridges.ToArray());
-        if (!saveCartridgesResult.Success)
-        {
-            await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения данных! Ошибка: {saveCartridgesResult.Message}", icon: Icon.Error);
-            return;
-        }
-        await _dialogService.ShowMessageBox("Успешно", $"Сохранено!", icon: Icon.Success);
+        Cartridges = await _cartridgeService.Get();
     }
 
     public async Task RemoveCartridge()
     {
         if (SelectedCartridge == null)
             return;
-        var dialogResult = await _dialogService.ShowMessageBox("Сообщение",
-           "Вы действительно хотите удалить картридж?", buttonEnum: ButtonEnum.YesNo, icon: Icon.Question);
+        var dialogResult = await DialogService.ShowQuestionMessageBox("Вы действительно хотите удалить картридж?");
         if (dialogResult == ButtonResult.No)
             return;
-        var removeCartridgesResult = await CartridgeService.Remove(SelectedCartridge.Id);
+        var removeCartridgesResult = await _cartridgeService.Remove(SelectedCartridge.Id);
         if (!removeCartridgesResult.Success)
         {
-            await _dialogService.ShowMessageBox("Ошибка", $"Ошибка удаления! Ошибка: {removeCartridgesResult.Message}", icon: Icon.Error);
+            await DialogService.ShowErrorMessageBox(removeCartridgesResult.Message);
             return;
         }
         await LoadCartridges();

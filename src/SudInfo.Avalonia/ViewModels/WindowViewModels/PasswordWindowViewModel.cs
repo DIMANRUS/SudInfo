@@ -2,8 +2,9 @@
 public class PasswordWindowViewModel : BaseViewModel
 {
     #region Services
+
     private readonly PasswordService _passwordService;
-    private readonly DialogService _dialogService;
+
     #endregion
 
     #region Properties
@@ -16,17 +17,16 @@ public class PasswordWindowViewModel : BaseViewModel
     #endregion
 
     #region Constructors
-    public PasswordWindowViewModel(PasswordService passwordService, DialogService dialogService)
+
+    public PasswordWindowViewModel(PasswordService passwordService)
     {
         #region Service Set
+
         _passwordService = passwordService;
-        _dialogService = dialogService;
+
         #endregion
     }
 
-    public PasswordWindowViewModel()
-    {
-    }
     #endregion
 
     #region Private Fields
@@ -45,10 +45,9 @@ public class PasswordWindowViewModel : BaseViewModel
         };
         if (!result.Success)
         {
-            await _dialogService.ShowMessageBox("Ошибка", result.Message, icon: Icon.Error);
+            await DialogService.ShowErrorMessageBox(result.Message);
             return;
         }
-        await _dialogService.ShowMessageBox("Сообщение", "Успешно!", true, icon: Icon.Success);
     }
     public async void InitializationData(WindowType windowType, int? id = null)
     {
@@ -64,10 +63,10 @@ public class PasswordWindowViewModel : BaseViewModel
                 ButtonIsVisible = true;
                 SaveButtonText = "Сохранить пароль";
             }
-            var result = await PasswordService.GetPasswordEntity(id.GetValueOrDefault());
+            var result = await _passwordService.Get(id.GetValueOrDefault());
             if (!result.Success)
             {
-                await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения компьютера! Ошибка: {result.Message}", true, icon: Icon.Error);
+                await DialogService.ShowErrorMessageBox(result.Message);
                 return;
             }
             Password = result.Object;

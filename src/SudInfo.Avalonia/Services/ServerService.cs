@@ -1,41 +1,39 @@
 ﻿namespace SudInfo.Avalonia.Services;
 
-public class ServerService : BaseService
+public class ServerService : BaseService<Server>
 {
-    public static async Task<Result<Server>> GetServer(int id)
+    #region Ctors
+
+    public ServerService(SudInfoDatabaseContext context) : base(context)
+    {
+    } 
+
+    #endregion
+
+    public async Task<Result<Server>> Get(int id)
     {
         try
-        {
-            using SudInfoDbContext applicationDBContext = new();
-            var server = await applicationDBContext.Servers
+        {          
+            var server = await context.Servers
                 .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.Id == id);
             return server == null
                 ? throw new Exception("Server not Found")
-                : new()
-                {
-                    Success = true,
-                    Object = server
-                };
+                : new(server, true);
         }
         catch (Exception ex)
         {
-            return new()
-            {
-                Success = false,
-                Message = ex.Message
-            };
+            return new(null, message: ex.Message);
         }
     }
 
-    public static async Task<Result> RemoveServer(int id)
+    public async Task<Result> Remove(int id)
     {
         try
-        {
-            await using SudInfoDbContext applicationDBContext = new();
-            Server server = (await applicationDBContext.Servers.SingleOrDefaultAsync(x => x.Id == id)) ?? throw new Exception("Server not found");
-            applicationDBContext.Remove(server);
-            await applicationDBContext.SaveChangesAsync();
+        {     
+            Server server = (await context.Servers.SingleOrDefaultAsync(x => x.Id == id)) ?? throw new Exception("Server not found");
+            context.Remove(server);
+            await context.SaveChangesAsync();
             return new()
             {
                 Success = true
@@ -50,10 +48,9 @@ public class ServerService : BaseService
         }
     }
 
-    public static async Task<Result> UpServerPositionInServerRack(int id)
-    {
-        await using SudInfoDbContext applicationDBContext = new();
-        Server? server = await applicationDBContext.Servers
+    public async Task<Result> UpServerPositionInServerRack(int id)
+    {    
+        Server? server = await context.Servers
                                                    .Include(x => x.ServerRack)
                                                    .ThenInclude(x => x.Servers)
                                                    .SingleOrDefaultAsync(x => x.Id == id);
@@ -61,18 +58,17 @@ public class ServerService : BaseService
             return new(message: "Сервер не найден");
         if (server.PosiitionInServerRack == 1)
             return new(message: "Сервер уже находится в самом вверху");
-        var previousServer = await applicationDBContext.Servers.FirstOrDefaultAsync(x => x.ServerRackId == server.ServerRackId &&
+        var previousServer = await context.Servers.FirstOrDefaultAsync(x => x.ServerRackId == server.ServerRackId &&
                                                                                                      x.PosiitionInServerRack == server.PosiitionInServerRack - 1);
         previousServer.PosiitionInServerRack++;
         server.PosiitionInServerRack--;
-        await applicationDBContext.SaveChangesAsync();
+        await context.SaveChangesAsync();
         return new(true);
     }
 
-    public static async Task<Result> DownServerPositionInServerRack(int id)
-    {
-        await using SudInfoDbContext applicationDBContext = new();
-        Server? server = await applicationDBContext.Servers
+    public async Task<Result> DownServerPositionInServerRack(int id)
+    {       
+        Server? server = await context.Servers
                                                    .Include(x => x.ServerRack)
                                                    .ThenInclude(x => x.Servers)
                                                    .SingleOrDefaultAsync(x => x.Id == id);
@@ -80,11 +76,11 @@ public class ServerService : BaseService
             return new(message: "Сервер не найден");
         if (server.PosiitionInServerRack == server.ServerRack?.Servers.Count)
             return new(message: "Сервер уже находится в самом низу");
-        var nextServer = await applicationDBContext.Servers.FirstOrDefaultAsync(x => x.ServerRackId == server.ServerRackId &&
+        var nextServer = await context.Servers.FirstOrDefaultAsync(x => x.ServerRackId == server.ServerRackId &&
                                                                                              x.PosiitionInServerRack == server.PosiitionInServerRack + 1);
         nextServer.PosiitionInServerRack--;
         server.PosiitionInServerRack++;
-        await applicationDBContext.SaveChangesAsync();
+        await context.SaveChangesAsync();
         return new(true);
     }
 }

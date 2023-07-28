@@ -5,7 +5,7 @@ public class RutokenWindowViewModel : BaseViewModel
     #region Services
 
     private readonly RutokenService _rutokenService;
-    private readonly DialogService _dialogService;
+
     private readonly UserService _usersService;
 
     #endregion
@@ -29,17 +29,14 @@ public class RutokenWindowViewModel : BaseViewModel
 
     public RutokenWindowViewModel(
         RutokenService rutokenSerrvice,
-        UserService usersService,
-        DialogService dialogService)
+        UserService usersService)
     {
         #region Service Initialization
         _rutokenService = rutokenSerrvice;
-        _dialogService = dialogService;
+
         _usersService = usersService;
         #endregion
     }
-
-    public RutokenWindowViewModel() { }
 
     #endregion
 
@@ -55,15 +52,14 @@ public class RutokenWindowViewModel : BaseViewModel
             Rutoken.User = null;
         Result rutokenResult = _windowType switch
         {
-            WindowType.Add => await RutokenService.AddRutoken(Rutoken),
+            WindowType.Add => await _rutokenService.Add(Rutoken),
             _ => await _rutokenService.Update(Rutoken)
         };
         if (!rutokenResult.Success)
         {
-            await _dialogService.ShowMessageBox("Ошибка", rutokenResult.Message, icon: Icon.Error);
+            await DialogService.ShowErrorMessageBox(rutokenResult.Message);
             return;
         }
-        await _dialogService.ShowMessageBox("Сообщение", "Успешно!", true, icon: Icon.Success);
     }
     public async void InitializationData(WindowType windowType, int? id = null)
     {
@@ -71,10 +67,10 @@ public class RutokenWindowViewModel : BaseViewModel
         if (id != null)
         {
             SaveButtonText = "Сохранить рутокен";
-            var rutokenResult = await RutokenService.GetRutokenById(id.GetValueOrDefault());
+            var rutokenResult = await _rutokenService.Get(id.GetValueOrDefault());
             if (!rutokenResult.Success)
             {
-                await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения рутокена! Ошибка: {rutokenResult.Message}", true, icon: Icon.Error);
+                await DialogService.ShowErrorMessageBox(rutokenResult.Message);
                 return;
             }
             Rutoken = rutokenResult.Object;
@@ -82,7 +78,7 @@ public class RutokenWindowViewModel : BaseViewModel
     }
     public async Task LoadUsers()
     {
-        var usersResult = await UserService.GetUsers();
+        var usersResult = await _usersService.Get();
         Users = usersResult;
     }
 

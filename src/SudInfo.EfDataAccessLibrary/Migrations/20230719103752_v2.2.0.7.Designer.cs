@@ -10,7 +10,7 @@ using SudInfo.EfDataAccessLibrary.Contexts;
 
 namespace SudInfo.EfDataAccessLibrary.Migrations
 {
-    [DbContext(typeof(SudInfoDbContext))]
+    [DbContext(typeof(SudInfoDatabaseContext))]
     [Migration("20230719103752_v2.2.0.7")]
     partial class v2207
     {

@@ -21,8 +21,8 @@ public class App : Application
 
         #region Load ThemeVariant
 
-        await using SudInfoDbContext sudInfoDbContext = new();
-        AppSetting appSetting = await sudInfoDbContext.AppSettings.AsNoTracking()
+        await using SudInfoDatabaseContext context = new();
+        AppSetting appSetting = await context.AppSettings.AsNoTracking()
                                                                   .FirstAsync();
         RequestedThemeVariant = appSetting.Theme switch
         {
@@ -63,8 +63,6 @@ public class App : Application
         mainWindow.DataContext = DataContext = Locator.Current.GetService<IScreen>();
 
         ServiceCollectionExtension.ServiceProvider.GetService<NavigationService>()?.SetWindow(mainWindow);
-        ServiceCollectionExtension.ServiceProvider.GetService<DialogService>()?.SetMainWindow(mainWindow);
-        ServiceCollectionExtension.ServiceProvider.GetService<DialogService>()?.SetCurrentWindow(mainWindow);
 
         mainWindow.Show();
         MainWindow = mainWindow;

@@ -1,86 +1,70 @@
 ﻿namespace SudInfo.Avalonia.Services;
 
-public class MonitorService : BaseService
+public class MonitorService : BaseService<Monitor>
 {
-    #region Get Methods Realizations
-    public static async Task<IReadOnlyCollection<Monitor>> GetMonitors()
-    {
-        using SudInfoDbContext applicationDBContext = new();
-        var monitors = await applicationDBContext.Monitors.Include(x => x.Computer).ThenInclude(x => x.User).ToListAsync();
-        return monitors;
-    }
-    public static async Task<Result<Monitor>> GetMonitorById(int id)
-    {
-        try
-        {
-            using SudInfoDbContext applicationDBContext = new();
-            var monitor = await applicationDBContext.Monitors.Include(x => x.Computer).ThenInclude(x => x.User).FirstOrDefaultAsync(x => x.Id == id);
-            if (monitor == null)
-                throw new Exception("Computer not Found");
-            return new()
-            {
-                Success = true,
-                Object = monitor
-            };
-        }
-        catch (Exception ex)
-        {
-            return new()
-            {
-                Success = false,
-                Message = ex.Message
-            };
-        }
-    }
+    #region Ctors
+
+    public MonitorService(SudInfoDatabaseContext context) : base(context) { }
+
     #endregion
 
-    public static async Task<Result> RemoveMonitorById(int id)
+    #region Get Methods
+
+    public async Task<IReadOnlyCollection<Monitor>> Get()
+    {
+        var monitors = await context.Monitors.Include(x => x.Computer)
+                                             .ThenInclude(x => x.User)
+                                             .ToListAsync();
+        return monitors;
+    }
+
+    public async Task<Result<Monitor>> Get(int id)
     {
         try
         {
-            using SudInfoDbContext applicationDBContext = new();
-            var monitor = await applicationDBContext.Monitors.FirstOrDefaultAsync(x => x.Id == id);
-            if (monitor == null)
-                throw new Exception("Monitor not found");
-            applicationDBContext.Monitors.Remove(monitor);
-            await applicationDBContext.SaveChangesAsync();
-            return new()
-            {
-                Success = true
-            };
+            var monitor = await context.Monitors.Include(x => x.Computer)
+                                                .ThenInclude(x => x.User)
+                                                .FirstOrDefaultAsync(x => x.Id == id);
+            return monitor == null ? throw new Exception("Computer not Found") : new(monitor, true);
         }
         catch (Exception ex)
         {
-            return new()
-            {
-                Success = false,
-                Message = ex.Message
-            };
+            return new(null, message: ex.Message);
         }
     }
-    public static async Task<Result> AddMonitor(Monitor monitor)
+
+    #endregion
+
+    public async Task<Result> Remove(int id)
     {
         try
         {
-            using SudInfoDbContext applicationDBContext = new();
-            if (monitor.Computer != null)
-            {
-                monitor.Computer = await applicationDBContext.Computers.SingleOrDefaultAsync(x => x.Id == monitor.Computer.Id);
-            }
-            await applicationDBContext.Monitors.AddAsync(monitor);
-            await applicationDBContext.SaveChangesAsync();
-            return new()
-            {
-                Success = true
-            };
+            var monitor = await context.Monitors.FirstOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Monitor not found");
+            context.Monitors.Remove(monitor);
+            await context.SaveChangesAsync();
+            return new(true);
         }
         catch (Exception ex)
         {
-            return new()
+            return new(message: ex.Message);
+        }
+    }
+
+    public override async Task<Result> Add(Monitor monitor)
+    {
+        try
+        {
+            if (monitor.Computer != null)
             {
-                Success = false,
-                Message = ex.Message
-            };
+                monitor.Computer = await context.Computers.SingleOrDefaultAsync(x => x.Id == monitor.Computer.Id);
+            }
+            await context.Monitors.AddAsync(monitor);
+            await context.SaveChangesAsync();
+            return new(true);
+        }
+        catch (Exception ex)
+        {
+            return new(message: ex.Message);
         }
     }
 }

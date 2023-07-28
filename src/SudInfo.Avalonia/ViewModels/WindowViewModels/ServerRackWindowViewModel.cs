@@ -1,9 +1,10 @@
 ﻿namespace SudInfo.Avalonia.ViewModels.WindowViewModels;
+
 public class ServerRackWindowViewModel : BaseViewModel
 {
     #region Services
     private readonly ServerRackService _serverRackService;
-    private readonly DialogService _dialogService;
+    
     #endregion
 
     #region Private Fields
@@ -18,14 +19,15 @@ public class ServerRackWindowViewModel : BaseViewModel
     #endregion
 
     #region Constructors
-    public ServerRackWindowViewModel(ServerRackService serverRackService, DialogService dialogService)
+
+    public ServerRackWindowViewModel(ServerRackService serverRackService)
     {
         #region Service Set
         _serverRackService = serverRackService;
-        _dialogService = dialogService;
+        
         #endregion
     }
-    public ServerRackWindowViewModel() { }
+
     #endregion
 
     #region Public Methods
@@ -35,10 +37,10 @@ public class ServerRackWindowViewModel : BaseViewModel
         if (id != null)
         {
             SaveButtonText = "Сохранить серверную стойку";
-            var server = await ServerRackService.GetServerRack(id.GetValueOrDefault());
+            var server = await _serverRackService.Get(id.GetValueOrDefault());
             if (!server.Success)
             {
-                await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения серверной стойки! Ошибка: {server.Message}", true, icon: Icon.Error);
+                await DialogService.ShowErrorMessageBox(server.Message);
                 return;
             }
             ServerRack = server.Object;
@@ -48,7 +50,7 @@ public class ServerRackWindowViewModel : BaseViewModel
     {
         if (_windowType == WindowType.Add)
         {
-            var result = await ServerRackService.GetNumberServerRacks();
+            var result = await _serverRackService.GetNumberServerRacks();
             ServerRack.Position = ++result;
         }
         Result serverRackResult = _windowType switch
@@ -58,10 +60,9 @@ public class ServerRackWindowViewModel : BaseViewModel
         };
         if (!serverRackResult.Success)
         {
-            await _dialogService.ShowMessageBox("Ошибка", serverRackResult.Message, icon: Icon.Error);
+            await DialogService.ShowErrorMessageBox(serverRackResult.Message);
             return;
         }
-        await _dialogService.ShowMessageBox("Сообщение", "Успешно!", true, icon: Icon.Success);
     }
     #endregion
 }

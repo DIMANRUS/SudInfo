@@ -4,9 +4,9 @@ public class RutokensPageViewModel : BaseRoutableViewModel
 {
     #region Services
 
-    private readonly RutokenService _rutokensService;
-    private readonly DialogService _dialogService;
     private readonly NavigationService _navigationService;
+
+    private readonly RutokenService _rutokenService;
 
     #endregion
 
@@ -26,15 +26,13 @@ public class RutokensPageViewModel : BaseRoutableViewModel
 
     #region Ctors
 
-    public RutokensPageViewModel(
-        NavigationService navigationService,
-        RutokenService rutokensService,
-        DialogService dialogService)
+    public RutokensPageViewModel(NavigationService navigationService, RutokenService rutokenService)
     {
         #region Serives Initialization
-        _dialogService = dialogService;
-        _rutokensService = rutokensService;
+
         _navigationService = navigationService;
+        _rutokenService = rutokenService;
+
         #endregion
 
         _eventHandlerClosedWindowDialog = async (s, e) => await LoadRutokens();
@@ -66,13 +64,13 @@ public class RutokensPageViewModel : BaseRoutableViewModel
     {
         if (SelectedRutoken == null)
             return;
-        var dialogResult = await _dialogService.ShowMessageBox("Сообщение", "Вы действительно хотите удалить рутокен?", buttonEnum: ButtonEnum.YesNo, icon: Icon.Question);
+        var dialogResult = await DialogService.ShowQuestionMessageBox("Вы действительно хотите удалить рутокен?");
         if (dialogResult == ButtonResult.No)
             return;
-        var removeRutokenResult = await RutokenService.RemoveRutokenById(SelectedRutoken.Id);
+        var removeRutokenResult = await _rutokenService.Remove(SelectedRutoken.Id);
         if (!removeRutokenResult.Success)
         {
-            await _dialogService.ShowMessageBox("Ошибка", $"Ошибка удаления рутокена! Ошибка: {removeRutokenResult.Message}", icon: Icon.Error);
+            await DialogService.ShowErrorMessageBox(removeRutokenResult.Message);
             return;
         }
         await LoadRutokens();
@@ -80,7 +78,7 @@ public class RutokensPageViewModel : BaseRoutableViewModel
 
     public async Task LoadRutokens()
     {
-        Rutokens = await RutokenService.GetRutokens();
+        Rutokens = await _rutokenService.Get();
     }
 
     #endregion

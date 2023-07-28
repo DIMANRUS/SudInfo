@@ -4,7 +4,7 @@ public class PrintersPageViewModel : BaseRoutableViewModel
 {
     #region Services
     private readonly PrinterService _printersService;
-    private readonly DialogService _dialogService;
+    
     private readonly NavigationService _navigationService;
     #endregion
 
@@ -30,14 +30,14 @@ public class PrintersPageViewModel : BaseRoutableViewModel
     #region Ctors
 
     public PrintersPageViewModel(
-        PrinterService printersService,
-        DialogService dialogService,
+        PrinterService printersService,   
         NavigationService navigationService)
     {
         #region Services Initialization
+
         _printersService = printersService;
-        _dialogService = dialogService;
         _navigationService = navigationService;
+
         #endregion
 
         eventHandlerClosedWindowDialog = async (s, e) => await LoadPrinters();
@@ -63,13 +63,13 @@ public class PrintersPageViewModel : BaseRoutableViewModel
     {
         if (SelectedPrinter == null)
             return;
-        var dialogResult = await _dialogService.ShowMessageBox("Сообщение", "Вы действительно хотите удалить принтер?", buttonEnum: ButtonEnum.YesNo, icon: Icon.Question);
+        var dialogResult = await DialogService.ShowQuestionMessageBox("Вы действительно хотите удалить принтер?");
         if (dialogResult == ButtonResult.No)
             return;
-        var removePrinterResult = await PrinterService.RemovePrinterById(SelectedPrinter.Id);
+        var removePrinterResult = await _printersService.Remove(SelectedPrinter.Id);
         if (!removePrinterResult.Success)
         {
-            await _dialogService.ShowMessageBox("Ошибка", $"Ошибка удаления принтера! Ошибка: {removePrinterResult.Message}", icon: Icon.Error);
+            await DialogService.ShowErrorMessageBox(removePrinterResult.Message);
             return;
         }
         await LoadPrinters();
@@ -94,7 +94,7 @@ public class PrintersPageViewModel : BaseRoutableViewModel
 
     public async Task LoadPrinters()
     {
-        Printers = await PrinterService.GetPrinters();
+        Printers = await _printersService.Get();
         PrintersFromDataBase = Printers;
     }
 

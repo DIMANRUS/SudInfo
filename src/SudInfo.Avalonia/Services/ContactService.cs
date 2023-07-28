@@ -1,59 +1,52 @@
 ﻿namespace SudInfo.Avalonia.Services;
 
-public class ContactService : BaseService
+public class ContactService : BaseService<Contact>
 {
+    #region Ctors
+
+    public ContactService(SudInfoDatabaseContext context) : base(context)
+    {
+    }
+
+    #endregion
+
     #region Get Methods
 
-    public static async Task<IReadOnlyCollection<Contact>> GetContacts()
+    public async Task<IReadOnlyCollection<Contact>> Get()
     {
-        using SudInfoDbContext context = new();
         var contacts = await context.Contacts.AsNoTracking().ToListAsync();
         return contacts;
     }
-    public static async Task<Result<Contact>> GetContact(int id)
+
+    public async Task<Result<Contact>> Get(int id)
     {
         try
         {
-            using SudInfoDbContext applicationDBContext = new();
-            var server = await applicationDBContext.Contacts
+            var server = await context.Contacts
                 .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Contact not Found");
-            return new()
-            {
-                Success = true,
-                Object = server
-            };
+            return new(server, true);
         }
         catch (Exception ex)
         {
-            return new()
-            {
-                Message = ex.Message
-            };
+            return new(null, message: ex.Message);
         }
     }
 
     #endregion
 
-    public static async Task<Result> RemoveContact(int id)
+    public async Task<Result> Remove(int id)
     {
         try
         {
-            using SudInfoDbContext context = new();
             var entity = await context.Contacts.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Contact not found");
             context.Contacts.Remove(entity);
             await context.SaveChangesAsync();
-            return new()
-            {
-                Success = true
-            };
+            return new(true);
         }
         catch (Exception ex)
         {
-            return new()
-            {
-                Message = ex.Message
-            };
+            return new(message: ex.Message);
         }
     }
 }

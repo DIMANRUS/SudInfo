@@ -5,7 +5,7 @@ public class AppsPageViewModel : BaseRoutableViewModel
     #region Services
 
     private readonly AppService _appService;
-    private readonly DialogService _dialogService;
+
     private readonly NavigationService _navigationService;
 
     #endregion
@@ -30,12 +30,11 @@ public class AppsPageViewModel : BaseRoutableViewModel
 
     public AppsPageViewModel(
         AppService appService,
-        DialogService dialogService,
         NavigationService navigationService)
     {
         #region Services initialization
         _appService = appService;
-        _dialogService = dialogService;
+
         _navigationService = navigationService;
         #endregion
 
@@ -53,7 +52,7 @@ public class AppsPageViewModel : BaseRoutableViewModel
 
     public async Task LoadApps()
     {
-        Apps = await AppService.GetApps();
+        Apps = await _appService.Get();
     }
 
     public async Task OpenAddAppWindow()
@@ -72,13 +71,13 @@ public class AppsPageViewModel : BaseRoutableViewModel
     {
         if (SelectedApp == null)
             return;
-        var dialogResult = await _dialogService.ShowMessageBox("Сообщение", "Вы действительно хотите удалить приложение?", buttonEnum: ButtonEnum.YesNo, icon: Icon.Question);
+        var dialogResult = await DialogService.ShowQuestionMessageBox("Вы действительно хотите удалить приложение?");
         if (dialogResult == ButtonResult.No)
             return;
-        var removeComputerResult = await AppService.RemoveApp(SelectedApp.Id);
+        var removeComputerResult = await _appService.Remove(SelectedApp.Id);
         if (!removeComputerResult.Success)
         {
-            await _dialogService.ShowMessageBox("Ошибка", $"Ошибка удаления приложения! Ошибка: {removeComputerResult.Message}", icon: Icon.Error);
+            await DialogService.ShowErrorMessageBox(removeComputerResult.Message);
             return;
         }
         await LoadApps();

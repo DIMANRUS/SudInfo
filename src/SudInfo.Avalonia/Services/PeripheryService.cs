@@ -1,92 +1,73 @@
 ﻿namespace SudInfo.Avalonia.Services;
 
-public class PeripheryService : BaseService
+public class PeripheryService : BaseService<Periphery>
 {
+    #region Ctors
+
+    public PeripheryService(SudInfoDatabaseContext context) : base(context) { }
+
+    #endregion
+
     #region Get Methods
 
-    public static async Task<Result<Periphery>> GetPeripheryById(int id)
+    public async Task<Result<Periphery>> Get(int id)
     {
         try
         {
-            using SudInfoDbContext applicationDBContext = new();
-            var periphery = await applicationDBContext.Peripheries
-                                                      .Include(x => x.Computer)
-                                                      .ThenInclude(x => x.User)
-                                                      .FirstOrDefaultAsync(x => x.Id == id);
+            var periphery = await context.Peripheries.Include(x => x.Computer)
+                                                     .ThenInclude(x => x.User)
+                                                     .FirstOrDefaultAsync(x => x.Id == id);
             return periphery == null
                 ? throw new Exception("Пепреферия не найдена")
-                : new()
-                {
-                    Success = true,
-                    Object = periphery
-                };
+                : new(periphery, true);
         }
         catch (Exception ex)
         {
-            return new()
-            {
-                Success = false,
-                Message = ex.Message
-            };
+            return new(null, message: ex.Message);
         }
     }
-    public static async Task<IReadOnlyCollection<Periphery>> GetPeripheryList()
+
+    public async Task<IReadOnlyCollection<Periphery>> Get()
     {
-        using SudInfoDbContext applicationDBContext = new();
-        var peripheries = await applicationDBContext.Peripheries
-            .Include(x => x.Computer)
-            .ThenInclude(x => x.User)
-            .ToListAsync();
+
+        var peripheries = await context.Peripheries.Include(x => x.Computer)
+                                                   .ThenInclude(x => x.User)
+                                                   .ToListAsync();
         return peripheries;
     }
 
     #endregion
 
-    public static async Task<Result> AddPeriphery(Periphery periphery)
+    public override async Task<Result> Add(Periphery periphery)
     {
         try
         {
-            using SudInfoDbContext applicationDBContext = new();
             if (periphery.Computer != null)
             {
-                periphery.Computer = await applicationDBContext.Computers.SingleOrDefaultAsync(x => x.Id == periphery.Computer.Id);
+                periphery.Computer = await context.Computers.SingleOrDefaultAsync(x => x.Id == periphery.Computer.Id);
             }
-            await applicationDBContext.Peripheries.AddAsync(periphery);
-            await applicationDBContext.SaveChangesAsync();
-            return new()
-            {
-                Success = true
-            };
+            await context.Peripheries.AddAsync(periphery);
+            await context.SaveChangesAsync();
+            return new(true);
         }
         catch (Exception ex)
         {
-            return new()
-            {
-                Success = false,
-                Message = ex.Message
-            };
+            return new(message: ex.Message);
         }
     }
-    public static async Task<Result> RemovePeripheryById(int id)
+
+    public async Task<Result> Remove(int id)
     {
         try
         {
-            using SudInfoDbContext applicationDBContext = new();
-            var periphery = await applicationDBContext.Peripheries.FirstOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Переферия не найдена");
-            applicationDBContext.Peripheries.Remove(periphery);
-            await applicationDBContext.SaveChangesAsync();
-            return new()
-            {
-                Success = true
-            };
+            var periphery = await context.Peripheries.FirstOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Переферия не найдена");
+            context.Peripheries.Remove(periphery);
+            await context.SaveChangesAsync();
+            return new(true);
         }
         catch (Exception ex)
         {
-            return new()
-            {
-                Success = false,
-                Message = ex.Message
-            };
+            return new(message: ex.Message);
         }
     }
 }

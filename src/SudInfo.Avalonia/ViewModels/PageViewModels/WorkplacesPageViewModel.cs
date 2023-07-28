@@ -6,6 +6,8 @@ public class WorkplacesPageViewModel : BaseRoutableViewModel
 
     private readonly NavigationService _navigationService;
 
+    private readonly UserService _userService;
+
     #endregion
 
     #region Properties
@@ -26,10 +28,10 @@ public class WorkplacesPageViewModel : BaseRoutableViewModel
 
     #region Ctors
 
-    public WorkplacesPageViewModel(
-        NavigationService navigationService)
+    public WorkplacesPageViewModel(NavigationService navigationService, UserService userService)
     {
         _navigationService = navigationService;
+        _userService = userService;
     }
 
     #endregion
@@ -87,7 +89,7 @@ public class WorkplacesPageViewModel : BaseRoutableViewModel
 
     public async Task LoadWorkplaces()
     {
-        var usersLoadResult = await UserService.GetUsersWithComputers();
+        var usersLoadResult = await _userService.Get();
         Users = usersLoadResult;
         UsersFromDatabase = Users;
     }

@@ -9,8 +9,8 @@ using SudInfo.EfDataAccessLibrary.Contexts;
 
 namespace SudInfo.EfDataAccessLibrary.Migrations
 {
-    [DbContext(typeof(SudInfoDbContext))]
-    partial class SudInfoDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(SudInfoDatabaseContext))]
+    partial class contextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {

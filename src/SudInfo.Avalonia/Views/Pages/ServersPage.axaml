@@ -19,10 +19,6 @@
     </ia:EventTriggerBehavior>
   </i:Interaction.Behaviors>
   <Grid>
-    <ProgressBar IsIndeterminate="True"
-                 VerticalAlignment="Center"
-                 HorizontalAlignment="Center"
-                 IsVisible="{Binding IsLoading}"/>
     <StackPanel HorizontalAlignment="Center"
                 Orientation="Horizontal"
                 IsVisible="{Binding !IsLoading}">

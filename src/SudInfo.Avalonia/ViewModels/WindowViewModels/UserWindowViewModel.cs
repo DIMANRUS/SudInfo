@@ -4,7 +4,7 @@ public class UserWindowViewModel : BaseViewModel
 {
     #region Services
     private readonly UserService _usersService;
-    private readonly DialogService _dialogService;
+
     #endregion
 
     #region Properties
@@ -21,10 +21,10 @@ public class UserWindowViewModel : BaseViewModel
         if (id != null)
         {
             SaveButtonText = "Сохранить пользователя";
-            var userResult = await UserService.GetUserById(id.GetValueOrDefault());
+            var userResult = await _usersService.Get(id.GetValueOrDefault());
             if (!userResult.Success)
             {
-                await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения пользователя! Ошибка: {userResult.Message}", true, icon: Icon.Error);
+                await DialogService.ShowErrorMessageBox(userResult.Message);
                 return;
             }
             User = userResult.Object;
@@ -37,14 +37,15 @@ public class UserWindowViewModel : BaseViewModel
     #endregion
 
     #region Constructors
-    public UserWindowViewModel(UserService usersService, DialogService dialogService)
+
+    public UserWindowViewModel(UserService usersService)
     {
         #region Service Set
         _usersService = usersService;
-        _dialogService = dialogService;
+
         #endregion
     }
-    public UserWindowViewModel() { }
+
     #endregion
 
     #region Public Methods
@@ -59,10 +60,9 @@ public class UserWindowViewModel : BaseViewModel
         };
         if (!userResult.Success)
         {
-            await _dialogService.ShowMessageBox("Ошибка", userResult.Message, icon: Icon.Error);
+            await DialogService.ShowErrorMessageBox(userResult.Message);
             return;
         }
-        await _dialogService.ShowMessageBox("Сообщение", "Успешно!", true, icon: Icon.Success);
     }
     #endregion
 }

@@ -1,16 +1,32 @@
 ﻿namespace SudInfo.Avalonia.Services;
 
-public class BaseService
+public class BaseService<T> where T : class
 {
-    public virtual async Task<Result> Update<T>(params T[] entity) where T : class
+    #region Private variables
+
+    protected readonly SudInfoDatabaseContext context;
+
+    #endregion
+
+    #region Ctors
+
+    public BaseService(SudInfoDatabaseContext context)
+    {
+        this.context = context;
+    }
+
+    #endregion
+
+    #region Methods
+
+    public virtual async Task<Result> Update(params T[] entity)
     {
         try
         {
             if (entity == null)
                 throw new("Entity null");
-            using SudInfoDbContext applicationDBContext = new();
-            applicationDBContext.UpdateRange(entity);
-            await applicationDBContext.SaveChangesAsync();
+            context.UpdateRange(entity);
+            await context.SaveChangesAsync();
             return new()
             {
                 Success = true
@@ -24,15 +40,15 @@ public class BaseService
             };
         }
     }
-    public virtual async Task<Result> Add<T>(T entity) where T : class
+
+    public virtual async Task<Result> Add(T entity)
     {
         try
         {
             if (entity == null)
                 throw new("Entity null");
-            using SudInfoDbContext applicationDBContext = new();
-            await applicationDBContext.AddAsync(entity);
-            await applicationDBContext.SaveChangesAsync();
+            await context.AddAsync(entity);
+            await context.SaveChangesAsync();
             return new()
             {
                 Success = true
@@ -46,4 +62,6 @@ public class BaseService
             };
         }
     }
+
+    #endregion
 }

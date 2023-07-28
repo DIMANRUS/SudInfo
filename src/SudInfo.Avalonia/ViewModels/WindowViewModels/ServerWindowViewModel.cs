@@ -4,7 +4,7 @@ public class ServerWindowViewModel : BaseViewModel
 {
     #region Services
     private readonly ServerService _serverService;
-    private readonly DialogService _dialogService;
+    
 
     #endregion
 
@@ -22,15 +22,16 @@ public class ServerWindowViewModel : BaseViewModel
     #endregion
 
     #region Constructors
-    public ServerWindowViewModel(ServerService serverService, DialogService dialogService)
+
+    public ServerWindowViewModel(ServerService serverService)
     {
         #region Service Set
 
         _serverService = serverService;
-        _dialogService = dialogService;
+        
         #endregion
     }
-    public ServerWindowViewModel() { }
+
     #endregion
 
     #region Public Methods
@@ -53,10 +54,10 @@ public class ServerWindowViewModel : BaseViewModel
                 ButtonIsVisible = true;
                 SaveButtonText = "Сохранить сервер";
             }
-            var server = await ServerService.GetServer(id.GetValueOrDefault());
+            var server = await _serverService.Get(id.GetValueOrDefault());
             if (!server.Success)
             {
-                await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения сервера! Ошибка: {server.Message}", true, icon: Icon.Error);
+                await DialogService.ShowErrorMessageBox(server.Message);
                 return;
             }
             Server = server.Object;
@@ -73,10 +74,9 @@ public class ServerWindowViewModel : BaseViewModel
         };
         if (!serverResult.Success)
         {
-            await _dialogService.ShowMessageBox("Ошибка", serverResult.Message, icon: Icon.Error);
+            await DialogService.ShowErrorMessageBox(serverResult.Message);
             return;
         }
-        await _dialogService.ShowMessageBox("Сообщение", "Успешно!", true, icon: Icon.Success);
     }
     #endregion
 

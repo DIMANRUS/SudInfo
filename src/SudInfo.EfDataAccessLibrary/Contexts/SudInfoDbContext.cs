@@ -3,11 +3,11 @@ using TaskEntity = SudInfo.EfDataAccessLibrary.Models.TaskEntity;
 
 namespace SudInfo.EfDataAccessLibrary.Contexts;
 
-public class SudInfoDbContext : DbContext
+public class SudInfoDatabaseContext : DbContext
 {
     #region Ctors
 
-    public SudInfoDbContext()
+    public SudInfoDatabaseContext()
     {
         Database.Migrate();
     }

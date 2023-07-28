@@ -5,7 +5,7 @@ public class PeripheryPageViewModel : BaseRoutableViewModel
     #region Services
 
     private readonly PeripheryService _peripheryService;
-    private readonly DialogService _dialogService;
+    
     private readonly NavigationService _navigationService;
 
     #endregion
@@ -41,12 +41,12 @@ public class PeripheryPageViewModel : BaseRoutableViewModel
 
     public PeripheryPageViewModel(
         PeripheryService peripheryService,
-        DialogService dialogService,
+        
         NavigationService navigationService)
     {
         #region Services Initialization
         _peripheryService = peripheryService;
-        _dialogService = dialogService;
+        
         _navigationService = navigationService;
         #endregion
 
@@ -73,13 +73,13 @@ public class PeripheryPageViewModel : BaseRoutableViewModel
     {
         if (SelectedPeriphery == null)
             return;
-        var dialogResult = await _dialogService.ShowMessageBox("Сообщение", "Вы действительно хотите удалить периферию?", buttonEnum: ButtonEnum.YesNo, icon: Icon.Question);
+        var dialogResult = await DialogService.ShowQuestionMessageBox("Вы действительно хотите удалить периферию?");
         if (dialogResult == ButtonResult.No)
             return;
-        var removePeripheryResult = await PeripheryService.RemovePeripheryById(SelectedPeriphery.Id);
+        var removePeripheryResult = await _peripheryService.Remove(SelectedPeriphery.Id);
         if (!removePeripheryResult.Success)
         {
-            await _dialogService.ShowMessageBox("Ошибка", $"Ошибка удаления периферии! Ошибка: {removePeripheryResult.Message}", icon: Icon.Error);
+            await DialogService.ShowErrorMessageBox(removePeripheryResult.Message);
             return;
         }
         await LoadPeripheries();
@@ -117,7 +117,7 @@ public class PeripheryPageViewModel : BaseRoutableViewModel
 
     public async Task LoadPeripheries()
     {
-        Peripheries = await PeripheryService.GetPeripheryList();
+        Peripheries = await _peripheryService.Get();
         PeripheriesFromDatabase = Peripheries;
         SearchText = string.Empty;
     }

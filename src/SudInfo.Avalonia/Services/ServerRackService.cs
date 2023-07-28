@@ -1,90 +1,74 @@
 ﻿namespace SudInfo.Avalonia.Services;
 
-public class ServerRackService : BaseService
+public class ServerRackService : BaseService<ServerRack>
 {
-    public static async Task<Result<IReadOnlyCollection<ServerRack>>> GetServerRacksWithServers()
+    #region Ctors
+
+    public ServerRackService(SudInfoDatabaseContext context) : base(context)
+    {
+    }
+
+    #endregion
+
+    #region Get Methods
+
+    public async Task<Result<IReadOnlyCollection<ServerRack>>> Get()
     {
         try
         {
-            using SudInfoDbContext applicationDBContext = new();
-            var serverRacks = await applicationDBContext.ServerRacks
-                .AsNoTracking()
-                .Include(x => x.Servers)
-                .ToListAsync();
+            var serverRacks = await context.ServerRacks.AsNoTracking()
+                                                       .Include(x => x.Servers)
+                                                       .ToListAsync();
             foreach (var serverRack in serverRacks)
             {
                 serverRack.Servers = serverRack.Servers
                                                .OrderBy(x => x.PosiitionInServerRack)
                                                .ToList();
             }
-            return new()
-            {
-                Success = true,
-                Object = serverRacks
-            };
+            return new(serverRacks, true);
         }
         catch (Exception ex)
         {
-            return new()
-            {
-                Success = false,
-                Message = ex.Message
-            };
+            return new(null, message: ex.Message);
         }
     }
 
-    public static async Task<Result<ServerRack>> GetServerRack(int id)
+    public async Task<Result<ServerRack>> Get(int id)
     {
         try
         {
-            using SudInfoDbContext applicationDBContext = new();
-            var serverRack = await applicationDBContext.ServerRacks
+            var serverRack = await context.ServerRacks
                 .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.Id == id)
                 ?? throw new Exception("Серверна стойка не найдена");
-            return new()
-            {
-                Success = true,
-                Object = serverRack
-            };
+            return new(serverRack, true);
         }
         catch (Exception ex)
         {
-            return new()
-            {
-                Success = false,
-                Message = ex.Message
-            };
+            return new(null, message: ex.Message);
         }
     }
 
-    public static async Task<int> GetNumberServerRacks()
+    public async Task<int> GetNumberServerRacks()
     {
-        using SudInfoDbContext sudInfoDbContext = new();
-        int numberServerRacks = await sudInfoDbContext.ServerRacks.CountAsync();
+        int numberServerRacks = await context.ServerRacks.CountAsync();
         return numberServerRacks;
-    }
+    } 
 
-    public static async Task<Result> RemoveServerRack(int id)
+    #endregion
+
+    public async Task<Result> Remove(int id)
     {
         try
-        {
-            using SudInfoDbContext applicationDBContext = new();
-            var serverRack = await applicationDBContext.ServerRacks.SingleOrDefaultAsync(x => x.Id == id) ?? throw new Exception("ServerRack not found");
-            applicationDBContext.Remove(serverRack);
-            await applicationDBContext.SaveChangesAsync();
-            return new()
-            {
-                Success = true
-            };
+        {         
+            var serverRack = await context.ServerRacks.SingleOrDefaultAsync(x => x.Id == id) ?? throw new Exception("ServerRack not found");
+            context.Remove(serverRack);
+            await context.SaveChangesAsync();
+            return new(true);
         }
         catch (Exception ex)
         {
-            return new()
-            {
-                Success = false,
-                Message = ex.Message
-            };
+            return new(message: ex.Message);
         }
     }
 }

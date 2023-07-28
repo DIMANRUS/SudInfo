@@ -5,7 +5,7 @@ public class PrinterWindowViewModel : BaseViewModel
     #region Services
 
     private readonly PrinterService _printersService;
-    private readonly DialogService _dialogService;
+    
     private readonly ComputerService _computerService;
 
     #endregion
@@ -38,10 +38,10 @@ public class PrinterWindowViewModel : BaseViewModel
             {
                 SaveButtonText = "Сохранить принтер";
             }
-            var printerResult = await PrinterService.GetPrinterById(id.GetValueOrDefault());
+            var printerResult = await _printersService.Get(id.GetValueOrDefault());
             if (!printerResult.Success)
             {
-                await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получени компьютера! Ошибка: {printerResult.Message}", true, icon: Icon.Error);
+                await DialogService.ShowErrorMessageBox(printerResult.Message);
                 return;
             }
             Printer = printerResult.Object;
@@ -55,19 +55,18 @@ public class PrinterWindowViewModel : BaseViewModel
             Printer.Computer = null;
         Result printerResult = _windowType switch
         {
-            WindowType.Add => await PrinterService.AddPrinter(Printer),
+            WindowType.Add => await _printersService.Add(Printer),
             _ => await _printersService.Update(Printer)
         };
         if (!printerResult.Success)
         {
-            await _dialogService.ShowMessageBox("Ошибка", printerResult.Message, icon: Icon.Error);
+            await DialogService.ShowErrorMessageBox(printerResult.Message);
             return;
         }
-        await _dialogService.ShowMessageBox("Сообщение", "Успешно!", true, icon: Icon.Success);
     }
     public async Task LoadComputers()
     {
-        var computersResult = await ComputerService.GetComputerNamesWithUser();
+        var computersResult = await _computerService.GetComputerNamesWithUser();
         Computers = computersResult;
     }
 
@@ -90,11 +89,11 @@ public class PrinterWindowViewModel : BaseViewModel
 
     #region Constructors
 
-    public PrinterWindowViewModel(PrinterService printersService, DialogService dialogService, ComputerService computerService)
+    public PrinterWindowViewModel(PrinterService printersService,  ComputerService computerService)
     {
         #region Service initialization
         _printersService = printersService;
-        _dialogService = dialogService;
+        
         _computerService = computerService;
         #endregion
     }

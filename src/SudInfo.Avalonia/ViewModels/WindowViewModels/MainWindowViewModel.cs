@@ -86,7 +86,7 @@ public class MainWindowViewModel : ReactiveObject, IScreen
 
     public static async Task ChangeTheme()
     {
-        await using SudInfoDbContext db = new();
+        await using SudInfoDatabaseContext db = new();
         AppSetting appSetting = await db.AppSettings.FirstAsync();
         appSetting.Theme = appSetting.Theme switch
         {

@@ -1,46 +1,35 @@
 ﻿namespace SudInfo.Avalonia.Services;
 
-public class UserService : BaseService
+public class UserService : BaseService<User>
 {
-    #region Get Methods Realization
+    #region Ctors
 
-    public static async Task<Result<User>> GetUserById(int userId)
+    public UserService(SudInfoDatabaseContext context) : base(context)
+    {
+    }
+
+    #endregion
+
+    #region Get Methods
+
+    public async Task<Result<User>> Get(int id)
     {
         try
         {
-            using SudInfoDbContext applicationDBContext = new();
-            var user = await applicationDBContext.Users
+            var user = await context.Users
                 .AsNoTracking()
-                .SingleOrDefaultAsync(x => x.Id == userId);
-            if (user == null)
-                throw new Exception("User not Found");
-            return new()
-            {
-                Success = true,
-                Object = user
-            };
+                .SingleOrDefaultAsync(x => x.Id == id);
+            return user == null ? throw new Exception("User not Found") : new(user, true);
         }
         catch (Exception ex)
         {
-            return new()
-            {
-                Success = false,
-                Message = ex.Message
-            };
+            return new(null, message: ex.Message);
         }
     }
-    public static async Task<IReadOnlyCollection<User>> GetUsers()
+
+    public async Task<IReadOnlyCollection<User>> Get()
     {
-        using SudInfoDbContext applicationDBContext = new();
-        var users = await applicationDBContext.Users
-            .AsNoTracking()
-            .ToListAsync();
-        return users;
-    }
-    public static async Task<IReadOnlyCollection<User>> GetUsersWithComputers()
-    {
-        using SudInfoDbContext applicationDBContext = new();
-        var users = await applicationDBContext.Users
+        var users = await context.Users
             .AsNoTracking()
             .Include(x => x.Computers)
             .ThenInclude(x => x.Monitors)
@@ -54,26 +43,18 @@ public class UserService : BaseService
 
     #endregion
 
-    public static async Task<Result> RemoveUserById(int userId)
+    public async Task<Result> Remove(int id)
     {
         try
         {
-            using SudInfoDbContext applicationDBContext = new();
-            var user = await applicationDBContext.Users.SingleOrDefaultAsync(x => x.Id == userId) ?? throw new Exception("User not found");
-            applicationDBContext.Remove(user);
-            await applicationDBContext.SaveChangesAsync();
-            return new()
-            {
-                Success = true
-            };
+            var user = await context.Users.SingleOrDefaultAsync(x => x.Id == id) ?? throw new Exception("User not found");
+            context.Remove(user);
+            await context.SaveChangesAsync();
+            return new(true);
         }
         catch (Exception ex)
         {
-            return new()
-            {
-                Success = false,
-                Message = ex.Message
-            };
+            return new(message: ex.Message);
         }
     }
 }

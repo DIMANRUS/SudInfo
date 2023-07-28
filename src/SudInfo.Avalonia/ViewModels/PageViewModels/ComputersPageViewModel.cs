@@ -4,10 +4,9 @@ public class ComputersPageViewModel : BaseRoutableViewModel
 {
     #region Services
 
-    private readonly ComputerService _computersService;
-    private readonly DialogService _dialogService;
     private readonly NavigationService _navigationService;
-    private readonly ExcelService _excelService;
+
+    private readonly ComputerService _computerService;
 
     #endregion
 
@@ -36,20 +35,14 @@ public class ComputersPageViewModel : BaseRoutableViewModel
 
     #endregion
 
-    #region Initialization
+    #region Ctors
 
-    public ComputersPageViewModel(
-        NavigationService navigationService,
-        ComputerService computersService,
-        DialogService dialogService,
-        ExcelService excelService)
+    public ComputersPageViewModel(NavigationService navigationService, ComputerService computerService)
     {
         #region Services Initialization
 
-        _dialogService = dialogService;
-        _computersService = computersService;
         _navigationService = navigationService;
-        _excelService = excelService;
+        _computerService = computerService;
 
         #endregion
 
@@ -76,15 +69,13 @@ public class ComputersPageViewModel : BaseRoutableViewModel
     {
         if (SelectedComputer == null)
             return;
-        var dialogResult = await _dialogService.ShowMessageBox("Сообщение",
-            "Вы действительно хотите удалить компьютер?", buttonEnum: ButtonEnum.YesNo, icon: Icon.Question);
+        var dialogResult = await DialogService.ShowQuestionMessageBox("Вы действительно хотите удалить компьютер?");
         if (dialogResult == ButtonResult.No)
             return;
-        var removeComputerResult = await ComputerService.RemoveComputerById(SelectedComputer.Id);
+        var removeComputerResult = await _computerService.Remove(SelectedComputer.Id);
         if (!removeComputerResult.Success)
         {
-            await _dialogService.ShowMessageBox("Ошибка",
-                $"Ошибка удаления компьютера! Ошибка: {removeComputerResult.Message}", icon: Icon.Error);
+            await DialogService.ShowErrorMessageBox(removeComputerResult.Message);
             return;
         }
 
@@ -110,8 +101,8 @@ public class ComputersPageViewModel : BaseRoutableViewModel
         Computers = ComputersFromDataBase.Where(x => x.Name!.ToLower()
                                                                    .Contains(SearchText.ToLower()) ||
                                                             x.InventarNumber!.Contains(SearchText) ||
-                                                            x.SerialNumber!.Contains(SearchText)   ||
-                                                            x.User != null                         &&
+                                                            x.SerialNumber!.Contains(SearchText) ||
+                                                            x.User != null &&
                                                             x.User.FIO.ToLower().Contains(SearchText.ToLower()))
                                          .ToList();
     }
@@ -119,7 +110,7 @@ public class ComputersPageViewModel : BaseRoutableViewModel
     public async Task LoadComputers()
     {
         SearchText = string.Empty;
-        Computers = await ComputerService.GetComputers();
+        Computers = await _computerService.Get();
         ComputersFromDataBase = Computers;
     }
 

@@ -2,50 +2,21 @@
 
 public class DialogService
 {
-    #region Private Variables
-
-    private Window? _currentWindow;
-    private Window? _mainWindow;
-
-    #endregion
-
-    #region Consts
-
-    private const int widthDialog = 500;
-
-    #endregion
-
-    #region Setters
-
-    public void SetCurrentWindow(Window currentWindow) =>
-        _currentWindow = currentWindow;
-    public void SetMainWindow(Window mainWindow) =>
-        _mainWindow = mainWindow;
-
-    #endregion
-
-    #region MessageBoxes Shows
-
-    public async Task<ButtonResult> ShowMessageBox(string title, string text, bool isCLosedWindow = false, ButtonEnum buttonEnum = ButtonEnum.Ok, Icon icon = Icon.Info)
+    public static async Task ShowErrorMessageBox(string message)
     {
-        var result = await MessageBoxManager.GetMessageBoxStandard(new MessageBoxStandardParams
-        {
-            ContentTitle = title,
-            ContentMessage = text,
-            WindowStartupLocation = WindowStartupLocation.CenterOwner,
-            CanResize = false,
-            MaxWidth = widthDialog,
-            MinWidth = widthDialog,
-            SizeToContent = SizeToContent.WidthAndHeight,
-            ShowInCenter = true,
-            ButtonDefinitions = buttonEnum,
-            Icon = icon,
-            Topmost = true
-        }).ShowWindowDialogAsync(_currentWindow?.IsActive == true ? _currentWindow : _mainWindow);
-        if (isCLosedWindow)
-            _currentWindow?.Close();
-        return result;
+        await MessageBoxManager.GetMessageBoxStandard("Ошибка",
+                                                      message,
+                                                      icon: Icon.Error)
+                               .ShowAsync();
     }
 
-    #endregion;
+    public static async Task<ButtonResult> ShowQuestionMessageBox(string message)
+    {
+        ButtonResult result = await MessageBoxManager.GetMessageBoxStandard("Сообщение",
+                                                                            message,
+                                                                            ButtonEnum.YesNo,
+                                                                            icon: Icon.Question)
+                                                     .ShowAsync();
+        return result;
+    }
 }

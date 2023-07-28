@@ -4,7 +4,9 @@ public class AppWindowViewModel : BaseViewModel
 {
     #region Services
 
-    private readonly DialogService _dialogService;
+    private readonly ComputerService _computerService;
+
+    private readonly AppService _appService;
 
     #endregion
 
@@ -42,12 +44,8 @@ public class AppWindowViewModel : BaseViewModel
 
     #region Ctors
 
-    public AppWindowViewModel() { }
-
-    public AppWindowViewModel(DialogService dialogService)
+    public AppWindowViewModel(ComputerService computerService, AppService appService)
     {
-        _dialogService = dialogService;
-
         SelectionComputerChanged = ReactiveCommand.Create((int id) =>
         {
             var computerExist = AppEntity.Computers.Any(x => x.Id == id);
@@ -58,7 +56,15 @@ public class AppWindowViewModel : BaseViewModel
             }
             AppEntity.Computers.Add(Computers!.Single(x => x.Id == id));
         });
+
+        #region Services initialization
+
+        _computerService = computerService;
+        _appService = appService;
+
+        #endregion
     }
+
     #endregion
 
     #region Public methods
@@ -69,15 +75,14 @@ public class AppWindowViewModel : BaseViewModel
             return;
         Result result = _windowType switch
         {
-            WindowType.Add => await AppService.AddApp(AppEntity),
-            _ => await AppService.UpdateApp(AppEntity)
+            WindowType.Add => await _appService.Add(AppEntity),
+            _ => await _appService.Update(AppEntity)
         };
         if (!result.Success)
         {
-            await _dialogService.ShowMessageBox("Ошибка", result.Message, icon: Icon.Error);
+            await DialogService.ShowErrorMessageBox(result.Message);
             return;
         }
-        await _dialogService.ShowMessageBox("Сообщение", "Успешно!", true, icon: Icon.Success);
     }
 
     public async Task InitializationData(WindowType windowType, int? id = null)
@@ -96,21 +101,20 @@ public class AppWindowViewModel : BaseViewModel
                 SaveButtonText = "Сохранить приложение";
             }
 
-            var result = await AppService.GetApp(id.GetValueOrDefault());
+            var result = await _appService.Get(id.GetValueOrDefault());
             if (!result.Success)
             {
-                await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения компьютера! Ошибка: {result.Message}",
-                    true, icon: Icon.Error);
+                await DialogService.ShowErrorMessageBox(result.Message);
                 return;
             }
             AppEntity = result.Object;
         }
-        Computers = await ComputerService.GetComputers();
+        Computers = await _computerService.Get();
         if (windowType == WindowType.Edit)
         {
             foreach (var computer in Computers)
             {
-                computer.IsSelected = AppEntity!.Computers.Any(x => x.Id == computer.Id);
+                computer.IsSelected = AppEntity.Computers.Any(x => x.Id == computer.Id);
             }
         }
     }

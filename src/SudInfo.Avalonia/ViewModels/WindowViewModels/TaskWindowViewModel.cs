@@ -1,17 +1,22 @@
 ﻿namespace SudInfo.Avalonia.ViewModels.WindowViewModels;
+
 public class TaskWindowViewModel : BaseViewModel
 {
+    #region Services
+
     private readonly NavigationService _navigationService;
+
     private readonly TaskService _taskService;
-    private readonly DialogService _dialogService;
+
+    #endregion
+
     public TaskEntity Task { get; set; } = new();
     public DateTimeOffset ReminderDate { get; set; } = DateTimeOffset.Now;
     public TimeSpan ReminderTime { get; set; } = DateTime.Now.TimeOfDay;
-    public TaskWindowViewModel(NavigationService navigationService, TaskService taskService, DialogService dialogService)
+    public TaskWindowViewModel(NavigationService navigationService, TaskService taskService)
     {
         _navigationService = navigationService;
         _taskService = taskService;
-        _dialogService = dialogService;
     }
     public async Task AddTask()
     {
@@ -21,9 +26,8 @@ public class TaskWindowViewModel : BaseViewModel
         var addTaskResult = await _taskService.Add(Task);
         if (!addTaskResult.Success)
         {
-            await _dialogService.ShowMessageBox("Ошибка", addTaskResult.Message, icon: Icon.Error);
+            await DialogService.ShowErrorMessageBox(addTaskResult.Message);
             return;
         }
-        await _dialogService.ShowMessageBox("Сообщение", "Успешно!", true, icon: Icon.Success);
     }
 }

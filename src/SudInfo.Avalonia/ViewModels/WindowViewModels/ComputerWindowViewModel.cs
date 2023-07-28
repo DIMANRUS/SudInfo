@@ -5,7 +5,8 @@ public class ComputerWindowViewModel : BaseViewModel
     #region Services
 
     private readonly ComputerService _computerService;
-    private readonly DialogService _dialogService;
+
+    private readonly UserService _userService;
 
     #endregion
 
@@ -36,13 +37,13 @@ public class ComputerWindowViewModel : BaseViewModel
 
     #region Ctors
 
-    public ComputerWindowViewModel(
-        ComputerService computerService,
-        DialogService dialogService)
+    public ComputerWindowViewModel(ComputerService computerService, UserService userService)
     {
         #region Service Initialization
+
         _computerService = computerService;
-        _dialogService = dialogService;
+        _userService = userService;
+
         #endregion
     }
 
@@ -64,20 +65,19 @@ public class ComputerWindowViewModel : BaseViewModel
             Computer.User = null;
         Result computerResult = _windowType switch
         {
-            WindowType.Add => await ComputerService.AddComputer(Computer),
+            WindowType.Add => await _computerService.Add(Computer),
             _ => await _computerService.Update(Computer)
         };
         if (!computerResult.Success)
         {
-            await _dialogService.ShowMessageBox("Ошибка", computerResult.Message, icon: Icon.Error);
+            await DialogService.ShowErrorMessageBox(computerResult.Message);
             return;
         }
-        await _dialogService.ShowMessageBox("Сообщение", "Успешно!", true, icon: Icon.Success);
     }
 
     public async void InitializationData(WindowType windowType, int? id = null)
     {
-        var usersResult = await UserService.GetUsers();
+        var usersResult = await _userService.Get();
         Users = usersResult;
 
         _windowType = windowType;
@@ -92,10 +92,10 @@ public class ComputerWindowViewModel : BaseViewModel
             ButtonIsVisible = true;
             SaveButtonText = "Сохранить компьютер";
         }
-        var computerResult = await ComputerService.GetComputerById(id.GetValueOrDefault());
+        var computerResult = await _computerService.Get(id.GetValueOrDefault());
         if (!computerResult.Success)
         {
-            await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения компьютера! Ошибка: {computerResult.Message}", true, icon: Icon.Error);
+            await DialogService.ShowErrorMessageBox(computerResult.Message);
             return;
         }
         IsUser = computerResult.Object?.User != null;

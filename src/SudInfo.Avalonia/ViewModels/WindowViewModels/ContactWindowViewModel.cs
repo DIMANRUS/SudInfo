@@ -3,8 +3,9 @@
 public class ContactWindowViewModel : BaseViewModel
 {
     #region Services
+
     private readonly ContactService _contactService;
-    private readonly DialogService _dialogService;
+
     #endregion
 
     #region Properties
@@ -17,16 +18,13 @@ public class ContactWindowViewModel : BaseViewModel
     #endregion
 
     #region Constructors
-    public ContactWindowViewModel(ContactService contactService, DialogService dialogService)
+    public ContactWindowViewModel(ContactService contactService)
     {
         #region Service Set
-        _contactService = contactService;
-        _dialogService = dialogService;
-        #endregion
-    }
 
-    public ContactWindowViewModel()
-    {
+        _contactService = contactService;
+
+        #endregion
     }
     #endregion
 
@@ -35,6 +33,7 @@ public class ContactWindowViewModel : BaseViewModel
     #endregion
 
     #region Public Methods
+
     public async Task SaveContact()
     {
         if (!ValidationModel(Contact))
@@ -46,11 +45,11 @@ public class ContactWindowViewModel : BaseViewModel
         };
         if (!result.Success)
         {
-            await _dialogService.ShowMessageBox("Ошибка", result.Message, icon: Icon.Error);
+            await DialogService.ShowErrorMessageBox(result.Message);
             return;
         }
-        await _dialogService.ShowMessageBox("Сообщение", "Успешно!", true, icon: Icon.Success);
     }
+
     public async void InitializationData(WindowType windowType, int? id = null)
     {
         _windowType = windowType;
@@ -65,14 +64,15 @@ public class ContactWindowViewModel : BaseViewModel
                 ButtonIsVisible = true;
                 SaveButtonText = "Сохранить контакт";
             }
-            var result = await ContactService.GetContact(id.GetValueOrDefault());
+            var result = await _contactService.Get(id.GetValueOrDefault());
             if (!result.Success)
             {
-                await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения контакта! Ошибка: {result.Message}", true, icon: Icon.Error);
+                await DialogService.ShowErrorMessageBox(result.Message);
                 return;
             }
             Contact = result.Object;
         }
     }
+
     #endregion
 }

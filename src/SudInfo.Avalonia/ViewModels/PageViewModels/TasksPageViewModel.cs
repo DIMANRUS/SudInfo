@@ -4,9 +4,9 @@ public class TasksPageViewModel : BaseRoutableViewModel
 {
     #region Services
 
-    private readonly TaskService _taskService;
-    private readonly DialogService _dialogService;
     private readonly NavigationService _navigationService;
+
+    private readonly TaskService _taskService;
 
     #endregion
 
@@ -31,25 +31,23 @@ public class TasksPageViewModel : BaseRoutableViewModel
 
     #region Ctors
 
-    public TasksPageViewModel(
-        NavigationService navigationService,
-        TaskService taskService,
-        DialogService dialogService)
+    public TasksPageViewModel(NavigationService navigationService, TaskService taskService)
     {
         #region Serives Initialization
-        _dialogService = dialogService;
-        _taskService = taskService;
+
         _navigationService = navigationService;
+        _taskService = taskService;
+
         #endregion
 
         _eventHandlerClosedWindowDialog = async (s, e) => await LoadTasks();
 
         CompleteTaskCommand = ReactiveCommand.Create<int>(async (int id) =>
         {
-            var completeTaskResult = await TaskService.CompleteTask(id);
+            var completeTaskResult = await _taskService.CompleteTask(id);
             if (!completeTaskResult.Success)
             {
-                await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения данных! Ошибка: {completeTaskResult.Message}", icon: Icon.Error);
+                await DialogService.ShowErrorMessageBox(completeTaskResult.Message);
                 return;
             }
             await LoadTasks();
@@ -62,7 +60,7 @@ public class TasksPageViewModel : BaseRoutableViewModel
 
     public async Task LoadTasks()
     {
-        var tasksResult = await TaskService.GetTasks();
+        var tasksResult = await _taskService.Get();
         Tasks = tasksResult;
     }
 

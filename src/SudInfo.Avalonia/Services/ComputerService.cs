@@ -1,104 +1,88 @@
 ﻿namespace SudInfo.Avalonia.Services;
 
-public class ComputerService : BaseService
+public class ComputerService : BaseService<Computer>
 {
+    #region Ctors
+
+    public ComputerService(SudInfoDatabaseContext context) : base(context)
+    {
+    }
+
+    #endregion
+
     #region Get Methods
 
-    public static async Task<Result<Computer>> GetComputerById(int id)
+    public async Task<Result<Computer>> Get(int id)
     {
         try
         {
-            using SudInfoDbContext applicationDBContext = new();
-            var computer = await applicationDBContext.Computers
-                                                     .AsNoTracking()
-                                                     .Include(x => x.User)
-                                                     .FirstOrDefaultAsync(x => x.Id == id);
+            var computer = await context.Computers.AsNoTracking()
+                                                  .Include(x => x.User)
+                                                  .FirstOrDefaultAsync(x => x.Id == id);
             return computer == null
                 ? throw new Exception("Computer not Found")
-                : new()
-                {
-                    Success = true,
-                    Object = computer
-                };
+                : new(computer, true);
         }
         catch (Exception ex)
         {
-            return new()
-            {
-                Success = false,
-                Message = ex.Message
-            };
+            return new(null, message: ex.Message);
         }
     }
-    public static async Task<IReadOnlyCollection<Computer>> GetComputers()
+
+    public async Task<IReadOnlyCollection<Computer>> Get()
     {
-        using SudInfoDbContext applicationDBContext = new();
-        var computers = await applicationDBContext.Computers.AsNoTracking().Include(x => x.User).ToListAsync();
+        var computers = await context.Computers.AsNoTracking()
+                                               .Include(x => x.User)
+                                               .ToListAsync();
         return computers;
     }
-    public static async Task<IReadOnlyCollection<Computer>> GetComputerNamesWithUser()
+
+    public async Task<IReadOnlyCollection<Computer>> GetComputerNamesWithUser()
     {
-        using SudInfoDbContext applicationDBContext = new();
-        var computerNames = await applicationDBContext.Computers
-                                                      .AsNoTracking()
-                                                      .Include(x => x.User)
-                                                      .Select(x => new Computer()
-                                                      {
-                                                          Name = x.Name,
-                                                          Id = x.Id,
-                                                          User = x.User
-                                                      })
-                                                      .ToListAsync();
+        var computerNames = await context.Computers.AsNoTracking()
+                                                   .Include(x => x.User)
+                                                   .Select(x => new Computer()
+                                                   {
+                                                       Name = x.Name,
+                                                       Id = x.Id,
+                                                       User = x.User
+                                                   })
+                                                   .ToListAsync();
         return computerNames;
     }
 
     #endregion
 
-    public static async Task<Result> AddComputer(Computer computer)
+    public override async Task<Result> Add(Computer computer)
     {
         try
         {
-            using SudInfoDbContext applicationDBContext = new();
             if (computer.User != null)
             {
-                computer.User = await applicationDBContext.Users.SingleOrDefaultAsync(x => x.Id == computer.User.Id);
+                computer.User = await context.Users.SingleOrDefaultAsync(x => x.Id == computer.User.Id);
             }
-            await applicationDBContext.AddAsync(computer);
-            await applicationDBContext.SaveChangesAsync();
-            return new()
-            {
-                Success = true
-            };
+            await context.AddAsync(computer);
+            await context.SaveChangesAsync();
+            return new(true);
         }
         catch (Exception ex)
         {
-            return new()
-            {
-                Success = false,
-                Message = ex.Message
-            };
+            return new(message: ex.Message);
         }
     }
-    public static async Task<Result> RemoveComputerById(int id)
+
+    public async Task<Result> Remove(int id)
     {
         try
         {
-            using SudInfoDbContext applicationDBContext = new();
-            var computer = await applicationDBContext.Computers.FirstOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Computer not found");
-            applicationDBContext.Remove(computer);
-            await applicationDBContext.SaveChangesAsync();
-            return new()
-            {
-                Success = true
-            };
+            var computer = await context.Computers.FirstOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Computer not found");
+            context.Remove(computer);
+            await context.SaveChangesAsync();
+            return new(true);
         }
         catch (Exception ex)
         {
-            return new()
-            {
-                Success = false,
-                Message = ex.Message
-            };
+            return new(message: ex.Message);
         }
     }
 }

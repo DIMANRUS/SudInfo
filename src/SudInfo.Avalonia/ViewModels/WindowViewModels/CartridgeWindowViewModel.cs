@@ -4,7 +4,7 @@ public class CartridgeWindowViewModel : BaseViewModel
 {
     #region Services
 
-    private readonly DialogService _dialogService;
+    
     private readonly CartridgeService _cartridgeService;
 
     #endregion
@@ -33,10 +33,10 @@ public class CartridgeWindowViewModel : BaseViewModel
     public CartridgeWindowViewModel() { }
 
     public CartridgeWindowViewModel(
-        DialogService dialogService,
+        
         CartridgeService cartridgeService)
     {
-        _dialogService = dialogService;
+        
         _cartridgeService = cartridgeService;
     }
 
@@ -65,10 +65,9 @@ public class CartridgeWindowViewModel : BaseViewModel
         };
         if (!result.Success)
         {
-            await _dialogService.ShowMessageBox("Ошибка", result.Message, icon: Icon.Error);
+            await DialogService.ShowErrorMessageBox(result.Message);
             return;
         }
-        await _dialogService.ShowMessageBox("Сообщение", "Успешно!", true, icon: Icon.Success);
     }
 
     public async Task InitializationData(WindowType windowType, int? id = null)
@@ -87,11 +86,10 @@ public class CartridgeWindowViewModel : BaseViewModel
                 SaveButtonText = "Сохранить картридж";
             }
 
-            var result = await CartridgeService.GetCartridge(id.GetValueOrDefault());
+            var result = await _cartridgeService.Get(id.GetValueOrDefault());
             if (!result.Success)
             {
-                await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения картриджа! Ошибка: {result.Message}",
-                    true, icon: Icon.Error);
+                await DialogService.ShowErrorMessageBox(result.Message);
                 return;
             }
             Cartridge = result.Object;

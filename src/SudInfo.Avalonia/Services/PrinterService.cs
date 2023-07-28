@@ -1,95 +1,75 @@
 ﻿namespace SudInfo.Avalonia.Services;
 
-public class PrinterService : BaseService
+public class PrinterService : BaseService<Printer>
 {
+    #region Ctors
+
+    public PrinterService(SudInfoDatabaseContext context) : base(context)
+    {
+    }
+
+    #endregion
+
     #region Get Methods
 
-    public static async Task<Result<Printer>> GetPrinterById(int id)
+    public async Task<Result<Printer>> Get(int id)
     {
         try
         {
-            using SudInfoDbContext applicationDBContext = new();
-            var printer = await applicationDBContext.Printers
-                .AsNoTracking()
-                .Include(x => x.Computer)
-                .FirstOrDefaultAsync(x => x.Id == id);
+            var printer = await context.Printers.AsNoTracking()
+                                                .Include(x => x.Computer)
+                                                .FirstOrDefaultAsync(x => x.Id == id);
             return printer == null
                 ? throw new Exception("Принтер не найден.")
-                : new()
-                {
-                    Success = true,
-                    Object = printer
-                };
+                : new(printer, true);
         }
         catch (Exception ex)
         {
-            return new()
-            {
-                Success = false,
-                Message = ex.Message
-            };
+            return new(null, message: ex.Message);
         }
     }
-    public static async Task<IReadOnlyCollection<Printer>> GetPrinters()
+
+    public async Task<IReadOnlyCollection<Printer>> Get()
     {
-        using SudInfoDbContext applicationDBContext = new();
-        var printers = await applicationDBContext.Printers
-            .AsNoTracking()
-            .Include(x => x.Computer)
-            .ThenInclude(x => x.User)
-            .ToListAsync();
+        var printers = await context.Printers.AsNoTracking()
+                                             .Include(x => x.Computer)
+                                             .ThenInclude(x => x.User)
+                                             .ToListAsync();
         return printers;
     }
 
     #endregion
 
-    public static async Task<Result> AddPrinter(Printer printer)
+    public override async Task<Result> Add(Printer printer)
     {
         try
         {
-            using SudInfoDbContext applicationDBContext = new();
             if (printer.Computer != null)
             {
-                printer.Computer = await applicationDBContext.Computers.SingleOrDefaultAsync(x => x.Id == printer.Computer.Id);
+                printer.Computer = await context.Computers.SingleOrDefaultAsync(x => x.Id == printer.Computer.Id);
             }
-            await applicationDBContext.Printers.AddAsync(printer);
-            await applicationDBContext.SaveChangesAsync();
-            return new()
-            {
-                Success = true
-            };
+            await context.Printers.AddAsync(printer);
+            await context.SaveChangesAsync();
+            return new(true);
         }
         catch (Exception ex)
         {
-            return new()
-            {
-                Success = false,
-                Message = ex.Message
-            };
+            return new(message: ex.Message);
         }
     }
-    public static async Task<Result> RemovePrinterById(int id)
+
+    public async Task<Result> Remove(int id)
     {
         try
         {
-            using SudInfoDbContext applicationDBContext = new();
-            var printer = await applicationDBContext.Printers.FirstOrDefaultAsync(x => x.Id == id);
-            if (printer == null)
-                throw new Exception("Printer not found");
-            applicationDBContext.Printers.Remove(printer);
-            await applicationDBContext.SaveChangesAsync();
-            return new()
-            {
-                Success = true
-            };
+            var printer = await context.Printers.FirstOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Printer not found");
+            context.Printers.Remove(printer);
+            await context.SaveChangesAsync();
+            return new(true);
         }
         catch (Exception ex)
         {
-            return new()
-            {
-                Success = false,
-                Message = ex.Message
-            };
+            return new(message: ex.Message);
         }
     }
 }

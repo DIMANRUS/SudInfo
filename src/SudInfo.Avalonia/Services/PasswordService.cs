@@ -1,54 +1,53 @@
 ﻿namespace SudInfo.Avalonia.Services;
 
-public class PasswordService : BaseService
+public class PasswordService : BaseService<PasswordEntity>
 {
-    public static async Task<IReadOnlyCollection<PasswordEntity>> GetPasswords()
+    #region Ctors
+
+    public PasswordService(SudInfoDatabaseContext context) : base(context)
     {
-        using SudInfoDbContext context = new();
+    }
+
+    #endregion
+
+    #region Get Methods
+
+    public async Task<IReadOnlyCollection<PasswordEntity>> Get()
+    {
         var passwords = await context.Passwords.AsNoTracking().ToListAsync();
         return passwords;
     }
-    public static async Task<Result> RemovePassword(int id)
+
+    public async Task<Result<PasswordEntity>> Get(int id)
     {
         try
         {
-            using SudInfoDbContext context = new();
-            var passwordEntity = await context.Passwords.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Password not found");
-            context.Passwords.Remove(passwordEntity);
-            await context.SaveChangesAsync();
-            return new()
-            {
-                Success = true
-            };
-        }
-        catch (Exception ex)
-        {
-            return new()
-            {
-                Message = ex.Message
-            };
-        }
-    }
-    public static async Task<Result<PasswordEntity>> GetPasswordEntity(int id)
-    {
-        try
-        {
-            using SudInfoDbContext applicationDBContext = new();
-            var server = await applicationDBContext.Passwords
+            var server = await context.Passwords
                 .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Server not Found");
-            return new()
-            {
-                Success = true,
-                Object = server
-            };
+            return new(server, true);
         }
         catch (Exception ex)
         {
-            return new()
-            {
-                Message = ex.Message
-            };
+            return new(null, message: ex.Message);
+        }
+    } 
+
+    #endregion
+
+    public async Task<Result> Remove(int id)
+    {
+        try
+        {
+            var passwordEntity = await context.Passwords.AsNoTracking()
+                                              .SingleOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Password not found");
+            context.Passwords.Remove(passwordEntity);
+            await context.SaveChangesAsync();
+            return new(true);
+        }
+        catch (Exception ex)
+        {
+            return new(message: ex.Message);
         }
     }
 }

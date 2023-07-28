@@ -4,9 +4,9 @@ public class PasswordsPageViewModel : BaseRoutableViewModel
 {
     #region Services
 
-    private readonly PasswordService _passwordService;
-    private readonly DialogService _dialogService;
     private readonly NavigationService _navigationService;
+
+    private readonly PasswordService _passwordService;
 
     #endregion
 
@@ -29,27 +29,28 @@ public class PasswordsPageViewModel : BaseRoutableViewModel
 
     #endregion
 
-    #region Initialization
-    public PasswordsPageViewModel(
-        NavigationService navigationService,
-        PasswordService passwordService,
-        DialogService dialogService)
+    #region Ctors
+
+    public PasswordsPageViewModel(NavigationService navigationService, PasswordService passwordService)
     {
         #region Serives Initialization
-        _dialogService = dialogService;
-        _passwordService = passwordService;
+
         _navigationService = navigationService;
+        _passwordService = passwordService;
+
         #endregion
 
         eventHandlerClosedWindowDialog = async (s, e) => await LoadPasswords();
+
     }
+
     #endregion
 
     #region Public Methods
 
     public async Task LoadPasswords()
     {
-        Passwords = await PasswordService.GetPasswords();
+        Passwords = await _passwordService.Get();
         PasswordsFromDatabase = Passwords;
     }
 
@@ -82,10 +83,10 @@ public class PasswordsPageViewModel : BaseRoutableViewModel
     {
         if (SelectedPassword == null)
             return;
-        var result = await PasswordService.RemovePassword(SelectedPassword.Id);
+        var result = await _passwordService.Remove(SelectedPassword.Id);
         if (!result.Success)
         {
-            await _dialogService.ShowMessageBox("Ошибка", $"Ошибка удаления. Ошибка: {result.Message}", icon: Icon.Error);
+            await DialogService.ShowErrorMessageBox(result.Message);
             return;
         }
         await LoadPasswords();

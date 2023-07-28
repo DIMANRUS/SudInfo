@@ -5,7 +5,7 @@ public class MonitorWindowViewModel : BaseViewModel
     #region Services
 
     private readonly MonitorService _monitorService;
-    private readonly DialogService _dialogService;
+    
     private readonly ComputerService _computerService;
 
     #endregion
@@ -35,12 +35,11 @@ public class MonitorWindowViewModel : BaseViewModel
 
     public MonitorWindowViewModel(
         MonitorService monitorService,
-        ComputerService computerService,
-        DialogService dialogService)
+        ComputerService computerService)
     {
         #region Service Initialization
         _monitorService = monitorService;
-        _dialogService = dialogService;
+        
         _computerService = computerService;
         #endregion
     }
@@ -66,10 +65,10 @@ public class MonitorWindowViewModel : BaseViewModel
             {
                 SaveButtonText = "Сохранить монитор";
             }
-            var monitorResult = await MonitorService.GetMonitorById(id.GetValueOrDefault());
+            var monitorResult = await _monitorService.Get(id.GetValueOrDefault());
             if (!monitorResult.Success)
             {
-                await _dialogService.ShowMessageBox("Ошибка", $"Ошибка получения монитора! Ошибка: {monitorResult.Message}", true, icon: Icon.Error);
+                await DialogService.ShowErrorMessageBox(monitorResult.Message);
                 return;
             }
             Monitor = monitorResult.Object;
@@ -83,19 +82,18 @@ public class MonitorWindowViewModel : BaseViewModel
             Monitor.Computer = null;
         Result monitorResult = _windowType switch
         {
-            WindowType.Add => await MonitorService.AddMonitor(Monitor),
+            WindowType.Add => await _monitorService.Add(Monitor),
             _ => await _monitorService.Update(Monitor)
         };
         if (!monitorResult.Success)
         {
-            await _dialogService.ShowMessageBox("Ошибка", monitorResult.Message, icon: Icon.Error);
+            await DialogService.ShowErrorMessageBox(monitorResult.Message);
             return;
         }
-        await _dialogService.ShowMessageBox("Сообщение", "Успешно!", true, icon: Icon.Success);
     }
     public async Task LoadComputer()
     {
-        var computersResult = await ComputerService.GetComputerNamesWithUser();
+        var computersResult = await _computerService.GetComputerNamesWithUser();
         Computers = computersResult;
     }
 

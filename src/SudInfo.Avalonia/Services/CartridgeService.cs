@@ -1,59 +1,54 @@
 namespace SudInfo.Avalonia.Services;
 
-public class CartridgeService : BaseService
+public class CartridgeService : BaseService<Cartridge>
 {
+    #region Ctors
+
+    public CartridgeService(SudInfoDatabaseContext context) : base(context)
+    {
+    }
+
+    #endregion
+
     #region Get Methods
 
-    public static async Task<Result<Cartridge>> GetCartridge(int id)
+    public async Task<Result<Cartridge>> Get(int id)
     {
         try
         {
-            using SudInfoDbContext applicationDBContext = new();
-            var cartridge = await applicationDBContext.Cartridges.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            var cartridge = await context.Cartridges.AsNoTracking()
+                                                    .FirstOrDefaultAsync(x => x.Id == id);
             return cartridge == null
                 ? throw new Exception("Cartridge not Found")
-                : new()
-                {
-                    Success = true,
-                    Object = cartridge
-                };
+                : new(cartridge, true);
         }
         catch (Exception ex)
         {
-            return new()
-            {
-                Message = ex.Message
-            };
+            return new(null, message: ex.Message);
         }
     }
-    public static async Task<IReadOnlyCollection<Cartridge>> GetCartridges()
+
+    public async Task<IReadOnlyCollection<Cartridge>> Get()
     {
-        using SudInfoDbContext applicationDBContext = new();
-        var cartridges = await applicationDBContext.Cartridges.AsNoTracking().ToListAsync();
+        var cartridges = await context.Cartridges.AsNoTracking()
+                                                 .ToListAsync();
         return cartridges;
     }
 
     #endregion
 
-    public static async Task<Result> Remove(int id)
+    public async Task<Result> Remove(int id)
     {
         try
         {
-            using SudInfoDbContext applicationDBContext = new();
-            var cartridge = await applicationDBContext.Cartridges.FirstOrDefaultAsync(x => x.Id == id);
-            applicationDBContext.Cartridges.Remove(cartridge);
-            await applicationDBContext.SaveChangesAsync();
-            return new()
-            {
-                Success = true
-            };
+            var cartridge = await context.Cartridges.FirstOrDefaultAsync(x => x.Id == id);
+            context.Cartridges.Remove(cartridge);
+            await context.SaveChangesAsync();
+            return new(true);
         }
         catch (Exception ex)
         {
-            return new()
-            {
-                Message = ex.Message
-            };
+            return new(message: ex.Message);
         }
     }
 }

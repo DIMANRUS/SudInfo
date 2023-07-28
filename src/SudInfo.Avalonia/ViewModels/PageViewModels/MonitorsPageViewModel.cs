@@ -4,8 +4,9 @@ public class MonitorsPageViewModel : BaseRoutableViewModel
 {
     #region Services
 
-    private readonly DialogService _dialogService;
-    private readonly MonitorService _monitorsService;
+
+    private readonly MonitorService _monitorService;
+
     private readonly NavigationService _navigationService;
 
     #endregion
@@ -29,17 +30,17 @@ public class MonitorsPageViewModel : BaseRoutableViewModel
 
     #endregion
 
-    #region Initialization
+    #region Ctors
 
     public MonitorsPageViewModel(
         NavigationService navigationService,
-        DialogService dialogService,
         MonitorService monitorsService)
     {
         #region Serives Initialization
-        _dialogService = dialogService;
-        _monitorsService = monitorsService;
+
+        _monitorService = monitorsService;
         _navigationService = navigationService;
+
         #endregion
 
         eventHandlerClosedWindowDialog = async (s, e) => await LoadMonitors();
@@ -65,13 +66,13 @@ public class MonitorsPageViewModel : BaseRoutableViewModel
     {
         if (SelectedMonitor == null)
             return;
-        var dialogResult = await _dialogService.ShowMessageBox("Сообщение", "Вы действительно хотите удалить монитор?", buttonEnum: ButtonEnum.YesNo, icon: Icon.Question);
+        var dialogResult = await DialogService.ShowQuestionMessageBox("Вы действительно хотите удалить монитор?");
         if (dialogResult == ButtonResult.No)
             return;
-        var removeMonitorResult = await MonitorService.RemoveMonitorById(SelectedMonitor.Id);
+        var removeMonitorResult = await _monitorService.Remove(SelectedMonitor.Id);
         if (!removeMonitorResult.Success)
         {
-            await _dialogService.ShowMessageBox("Ошибка", $"Ошибка удаления монитора! Ошибка: {removeMonitorResult.Message}", icon: Icon.Error);
+            await DialogService.ShowErrorMessageBox(removeMonitorResult.Message);
             return;
         }
         await LoadMonitors();
@@ -97,7 +98,7 @@ public class MonitorsPageViewModel : BaseRoutableViewModel
 
     public async Task LoadMonitors()
     {
-        Monitors = await MonitorService.GetMonitors();
+        Monitors = await _monitorService.Get();
         MonitorsFromDataBase = Monitors;
     }
 
