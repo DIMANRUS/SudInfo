@@ -106,7 +106,10 @@ public class ComputerWindowViewModel : BaseViewModel
             return;
         }
         IsUser = computerResult.Object?.User != null;
+        if (computerResult.Object?.User != null)
+            computerResult.Object.User = Users.First(x => x.Id == computerResult.Object.User.Id);
         Computer = computerResult.Object;
+        
     }
 
     #endregion

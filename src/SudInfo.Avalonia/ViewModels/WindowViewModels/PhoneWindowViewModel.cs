@@ -22,7 +22,6 @@ public class PhoneWindowViewModel : BaseViewModel
     [Reactive]
     public Phone Phone { get; set; } = new();
 
-
     [Reactive]
     public bool IsUser { get; set; }
 
@@ -104,6 +103,9 @@ public class PhoneWindowViewModel : BaseViewModel
             await DialogService.ShowErrorMessageBox(result.Message);
             return;
         }
+        IsUser = result.Object?.User != null;
+        if (result.Object?.User != null)
+            result.Object.User = Users.First(x => x.Id == result.Object.User.Id);
         Phone = result.Object;
     }
 

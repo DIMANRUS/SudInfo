@@ -1,4 +1,6 @@
-﻿namespace SudInfo.Avalonia.ViewModels.WindowViewModels;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+
+namespace SudInfo.Avalonia.ViewModels.WindowViewModels;
 
 public class PeripheryWindowViewModel : BaseViewModel
 {
@@ -24,6 +26,7 @@ public class PeripheryWindowViewModel : BaseViewModel
     [Reactive]
     public Periphery Periphery { get; set; } = new();
 
+    [Reactive]
     public bool IsComputer { get; set; }
 
     [Reactive]
@@ -101,6 +104,9 @@ public class PeripheryWindowViewModel : BaseViewModel
                 await DialogService.ShowErrorMessageBox(peripheryResult.Message);
                 return;
             }
+            IsComputer = peripheryResult.Object?.Computer != null;
+            if (peripheryResult.Object?.Computer != null)
+                peripheryResult.Object.Computer = Computers.First(x => x.Id == peripheryResult.Object.Computer.Id);
             Periphery = peripheryResult.Object;
         }
     }

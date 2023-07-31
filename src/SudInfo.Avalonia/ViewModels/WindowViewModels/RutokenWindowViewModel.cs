@@ -18,11 +18,16 @@ public class RutokenWindowViewModel : BaseViewModel
     #endregion
 
     #region Properties
+
     [Reactive]
     public Rutoken Rutoken { get; set; } = new();
+
+    [Reactive]
     public bool IsUser { get; set; }
+
     [Reactive]
     public string SaveButtonText { get; private set; } = "Добавить рутокен";
+
     #endregion
 
     #region Constructors
@@ -81,6 +86,9 @@ public class RutokenWindowViewModel : BaseViewModel
                 await DialogService.ShowErrorMessageBox(rutokenResult.Message);
                 return;
             }
+            IsUser = rutokenResult.Object?.User != null;
+            if (rutokenResult.Object?.User != null)
+                rutokenResult.Object.User = Users.First(x => x.Id == rutokenResult.Object.User.Id);
             Rutoken = rutokenResult.Object;
         }
     }

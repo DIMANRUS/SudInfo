@@ -9,7 +9,7 @@
         xmlns:models="using:SudInfo.EfDataAccessLibrary.Models"
         xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.WindowViewModels;assembly=SudInfo.Avalonia"
         Title="Телефон"
-        Width="580"
+        Width="600"
         Height="500"
         x:DataType="viewModels:PhoneWindowViewModel"
         CanResize="False"
@@ -44,7 +44,7 @@
         Name="IsUserBox"
         IsChecked="{Binding IsUser}" />
       <ComboBox
-          Width="252"
+          Width="257"
           AutoScrollToSelectedItem="True"
           IsEnabled="{Binding #IsUserBox.IsChecked}"
           ItemsSource="{Binding Users}"

@@ -9,7 +9,7 @@
     xmlns:models="using:SudInfo.EfDataAccessLibrary.Models"
     xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.WindowViewModels;assembly=SudInfo.Avalonia"
     Title="Монитор"
-    Width="580"
+    Width="600"
     Height="390"
     x:DataType="viewModels:MonitorWindowViewModel"
     CanResize="False"
@@ -76,7 +76,7 @@
       <StackPanel Orientation="Horizontal">
         <CheckBox Name="IsUserBox" IsChecked="{Binding IsComputer}" />
         <ComboBox
-            Width="252"
+            Width="257"
             AutoScrollToSelectedItem="True"
             IsEnabled="{Binding #IsUserBox.IsChecked}"
             ItemsSource="{Binding Computers}"

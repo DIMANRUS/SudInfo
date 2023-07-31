@@ -1,4 +1,6 @@
-﻿namespace SudInfo.Avalonia.ViewModels.WindowViewModels;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+
+namespace SudInfo.Avalonia.ViewModels.WindowViewModels;
 
 public class MonitorWindowViewModel : BaseViewModel
 {
@@ -22,6 +24,7 @@ public class MonitorWindowViewModel : BaseViewModel
     [Reactive]
     public Monitor Monitor { get; set; } = new();
 
+    [Reactive]
     public bool IsComputer { get; set; }
 
     [Reactive]
@@ -75,6 +78,9 @@ public class MonitorWindowViewModel : BaseViewModel
                 await DialogService.ShowErrorMessageBox(monitorResult.Message);
                 return;
             }
+            IsComputer = monitorResult.Object?.Computer != null;
+            if (monitorResult.Object?.Computer != null)
+                monitorResult.Object.Computer = Computers.First(x => x.Id == monitorResult.Object.Computer.Id);
             Monitor = monitorResult.Object;
         }
     }

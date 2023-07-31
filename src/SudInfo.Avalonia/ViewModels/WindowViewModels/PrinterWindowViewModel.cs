@@ -21,6 +21,7 @@ public class PrinterWindowViewModel : BaseViewModel
     [Reactive]
     public bool IsButtonVisible { get; set; }
 
+    [Reactive]
     public bool IsComputer { get; set; }
 
     #endregion
@@ -46,6 +47,9 @@ public class PrinterWindowViewModel : BaseViewModel
                 await DialogService.ShowErrorMessageBox(printerResult.Message);
                 return;
             }
+            IsComputer = printerResult.Object?.Computer != null;
+            if (printerResult.Object?.Computer != null)
+                printerResult.Object.Computer = Computers.First(x => x.Id == printerResult.Object.Computer.Id);
             Printer = printerResult.Object;
         }
     }
