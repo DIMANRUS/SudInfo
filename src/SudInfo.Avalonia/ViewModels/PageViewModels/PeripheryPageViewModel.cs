@@ -57,6 +57,13 @@ public class PeripheryPageViewModel : BaseRoutableViewModel
 
     #region Public Methods
 
+    public async Task CreateExcelTable()
+    {
+        if (Peripheries == null || Peripheries.Count == 0)
+            return;
+        await ExcelService.CreateExcelTableFromEntity(Peripheries);
+    }
+
     public async Task OpenAddPeripheryWindow()
     {
         await _navigationService.ShowPeripheryWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog);

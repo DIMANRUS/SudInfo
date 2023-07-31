@@ -47,6 +47,13 @@ public class PrintersPageViewModel : BaseRoutableViewModel
 
     #region Public Methods
 
+    public async Task CreateExcelTable()
+    {
+        if (Printers == null || Printers.Count == 0)
+            return;
+        await ExcelService.CreateExcelTableFromEntity(Printers);
+    }
+
     public async Task OpenAddPrinterWindow()
     {
         await _navigationService.ShowPrinterWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog);

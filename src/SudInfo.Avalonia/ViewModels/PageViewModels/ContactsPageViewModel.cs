@@ -49,6 +49,13 @@ public class ContactsPageViewModel : BaseRoutableViewModel
 
     #region Public Methods
 
+    public async Task CreateExcelTable()
+    {
+        if (Contacts == null || Contacts.Count == 0)
+            return;
+        await ExcelService.CreateExcelTableFromEntity(Contacts);
+    }
+
     public async Task LoadContacts()
     {
         Contacts = await _contactService.Get();

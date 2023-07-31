@@ -50,6 +50,13 @@ public class CartridgesPageViewModel : BaseRoutableViewModel
 
     #region Public methods
 
+    public async Task CreateExcelTable()
+    {
+        if (Cartridges == null || Cartridges.Count == 0)
+            return;
+        await ExcelService.CreateExcelTableFromEntity(Cartridges);
+    }
+
     public async Task OpenEditCartridgeWindow()
     {
         if (SelectedCartridge == null)

@@ -18,7 +18,7 @@
     </ia:EventTriggerBehavior>
   </i:Interaction.Behaviors>
   <Grid RowDefinitions="40,*"
-        ColumnDefinitions="140, *, 40">
+        ColumnDefinitions="140, *,40">
     <TextBlock Text="Задачи"
                 Classes="PageHeader"/>
     <Image Source="/Assets/Images/add.png"

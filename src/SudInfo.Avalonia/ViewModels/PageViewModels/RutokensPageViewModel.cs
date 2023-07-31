@@ -48,6 +48,13 @@ public class RutokensPageViewModel : BaseRoutableViewModel
 
     #region Public Methods
 
+    public async Task CreateExcelTable()
+    {
+        if (Rutokens == null || Rutokens.Count == 0)
+            return;
+        await ExcelService.CreateExcelTableFromEntity(Rutokens);
+    }
+
     public async Task OpenAddRutokenWindow()
     {
         await _navigationService.ShowRutokenWindowDialog(WindowType.Add, _eventHandlerClosedWindowDialog);

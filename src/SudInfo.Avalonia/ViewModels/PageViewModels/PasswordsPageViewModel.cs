@@ -48,6 +48,13 @@ public class PasswordsPageViewModel : BaseRoutableViewModel
 
     #region Public Methods
 
+    public async Task CreateExcelTable()
+    {
+        if (Passwords == null || Passwords.Count == 0)
+            return;
+        await ExcelService.CreateExcelTableFromEntity(Passwords);
+    }
+
     public async Task LoadPasswords()
     {
         Passwords = await _passwordService.Get();

@@ -1,4 +1,6 @@
-﻿namespace SudInfo.Avalonia.ViewModels.PageViewModels;
+﻿using SudInfo.EfDataAccessLibrary.Models;
+
+namespace SudInfo.Avalonia.ViewModels.PageViewModels;
 
 public class AppsPageViewModel : BaseRoutableViewModel
 {
@@ -81,6 +83,13 @@ public class AppsPageViewModel : BaseRoutableViewModel
             return;
         }
         await LoadApps();
+    }
+
+    public async Task CreateExcelTable()
+    {
+        if (Apps == null || Apps.Count == 0)
+            return;
+        await ExcelService.CreateExcelTableFromEntity(Apps);
     }
 
     #endregion

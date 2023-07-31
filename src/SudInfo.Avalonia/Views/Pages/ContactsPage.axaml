@@ -17,11 +17,18 @@
     </ia:EventTriggerBehavior>
   </i:Interaction.Behaviors>
   <Grid RowDefinitions="40,*"
-        ColumnDefinitions="*, 40">
+        ColumnDefinitions="*, 40,40">
     <TextBlock Text="Контакты"
                 Classes="PageHeader"/>
+    <Image Grid.Column="1" Source="/Assets/Images/excel.png">
+      <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="Tapped">
+          <ia:InvokeCommandAction Command="{Binding CreateExcelTable}" />
+        </ia:EventTriggerBehavior>
+      </i:Interaction.Behaviors>
+    </Image>
     <Image Source="/Assets/Images/add.png"
-           Grid.Column="1">
+           Grid.Column="2">
       <i:Interaction.Behaviors>
         <ia:EventTriggerBehavior EventName="Tapped">
           <ia:InvokeCommandAction Command="{Binding OpenAddContactWindow}"/>

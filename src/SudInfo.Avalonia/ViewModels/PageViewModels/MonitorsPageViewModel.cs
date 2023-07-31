@@ -50,6 +50,13 @@ public class MonitorsPageViewModel : BaseRoutableViewModel
 
     #region Public Methods
 
+    public async Task CreateExcelTable()
+    {
+        if (Monitors == null || Monitors.Count == 0)
+            return;
+        await ExcelService.CreateExcelTableFromEntity(Monitors);
+    }
+
     public async Task OpenAddMonitorWindow()
     {
         await _navigationService.ShowMonitorWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog);

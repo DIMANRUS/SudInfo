@@ -17,10 +17,10 @@
       <ia:InvokeCommandAction Command="{Binding LoadPeripheries}" />
     </ia:EventTriggerBehavior>
   </i:Interaction.Behaviors>
-  <Grid ColumnDefinitions="140, *,20,150, 40" RowDefinitions="40,*">
+  <Grid ColumnDefinitions="140, *,20,150, 40,40" RowDefinitions="40,*">
     <TextBlock
          Classes="PageHeader"
-        Text="Периферия" />
+         Text="Периферия" />
     <TextBox
         Grid.Column="1"
         Margin="10,5,10,5"
@@ -60,7 +60,14 @@
         </EventTriggerBehavior>
       </i:Interaction.Behaviors>
     </ComboBox>
-    <Image Grid.Column="4" Source="/Assets/Images/add.png">
+    <Image Grid.Column="4" Source="/Assets/Images/excel.png">
+      <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="Tapped">
+          <ia:InvokeCommandAction Command="{Binding CreateExcelTable}" />
+        </ia:EventTriggerBehavior>
+      </i:Interaction.Behaviors>
+    </Image>
+    <Image Grid.Column="5" Source="/Assets/Images/add.png">
       <i:Interaction.Behaviors>
         <ia:EventTriggerBehavior EventName="Tapped">
           <ia:InvokeCommandAction Command="{Binding OpenAddPeripheryWindow}" />

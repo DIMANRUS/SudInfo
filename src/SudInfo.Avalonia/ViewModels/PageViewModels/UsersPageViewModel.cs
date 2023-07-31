@@ -47,6 +47,13 @@ public class UsersPageViewModel : BaseRoutableViewModel
 
     #region Public Methods
 
+    public async Task CreateExcelTable()
+    {
+        if (Users == null || Users.Count == 0)
+            return;
+        await ExcelService.CreateExcelTableFromEntity(Users);
+    }
+
     public async Task OpenAddUserWindow()
     {
         await _navigationService.ShowUserWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog);
