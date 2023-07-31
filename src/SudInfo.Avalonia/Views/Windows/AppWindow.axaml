@@ -26,17 +26,19 @@
              Watermark="Версия"
              MaxLength="20"/>
     <TextBlock Text="Компьютеры"/>
-    <ItemsControl ItemsSource="{Binding Computers}"
-             Height="200">
-      <ItemsControl.DataTemplates>
-        <DataTemplate DataType="models:Computer">
-          <CheckBox Content="{Binding ComputerNameWithUserSurFirstName}"
-                    Command="{Binding #Root.DataContext.SelectionComputerChanged}"
-                    CommandParameter="{Binding Id}"
-                    IsChecked="{Binding IsSelected}"/>
-        </DataTemplate>
-      </ItemsControl.DataTemplates>
-    </ItemsControl>
+    <ScrollViewer Height="200">
+      <ItemsControl ItemsSource="{Binding Computers}">
+        <ItemsControl.DataTemplates>
+          <DataTemplate DataType="models:Computer">
+            <CheckBox Content="{Binding ComputerNameWithUserSurFirstName}"
+                      Command="{Binding #Root.DataContext.SelectionComputerChanged}"
+                      CommandParameter="{Binding Id}"
+                      IsChecked="{Binding IsSelected}"
+                      Width="550"/>
+          </DataTemplate>
+        </ItemsControl.DataTemplates>
+      </ItemsControl>
+    </ScrollViewer>
     <Button Content="{Binding SaveButtonText}"
             Command="{Binding SaveApp}"
             HorizontalAlignment="Stretch"
