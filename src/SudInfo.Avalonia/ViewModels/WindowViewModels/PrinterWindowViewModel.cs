@@ -56,6 +56,8 @@ public class PrinterWindowViewModel : BaseViewModel
             return;
         if (!IsComputer)
             Printer.Computer = null;
+        if (!Printer.IsBroken)
+            Printer.BreakdownDescription = string.Empty;
         Result printerResult = _windowType switch
         {
             WindowType.Add => await _printersService.Add(Printer),
@@ -94,7 +96,7 @@ public class PrinterWindowViewModel : BaseViewModel
 
     #endregion
 
-    #region Constructors
+    #region Ctors
 
     public PrinterWindowViewModel(PrinterService printersService, ComputerService computerService)
     {

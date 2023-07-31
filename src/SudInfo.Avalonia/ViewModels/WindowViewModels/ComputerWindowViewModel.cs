@@ -65,6 +65,8 @@ public class ComputerWindowViewModel : BaseViewModel
             return;
         if (!IsUser)
             Computer.User = null;
+        if (!Computer.IsBroken)
+            Computer.BreakdownDescription = string.Empty;
         Result computerResult = _windowType switch
         {
             WindowType.Add => await _computerService.Add(Computer),

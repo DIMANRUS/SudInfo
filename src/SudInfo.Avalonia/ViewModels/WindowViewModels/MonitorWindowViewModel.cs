@@ -84,6 +84,8 @@ public class MonitorWindowViewModel : BaseViewModel
             return;
         if (!IsComputer)
             Monitor.Computer = null;
+        if (!Monitor.IsBroken)
+            Monitor.BreakdownDescription = string.Empty;
         Result monitorResult = _windowType switch
         {
             WindowType.Add => await _monitorService.Add(Monitor),

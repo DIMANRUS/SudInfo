@@ -64,6 +64,8 @@ public class PhoneWindowViewModel : BaseViewModel
             return;
         if (!IsUser)
             Phone.User = null;
+        if (!Phone.IsBroken)
+            Phone.BreakdownDescription = string.Empty;
         Result computerResult = _windowType switch
         {
             WindowType.Add => await _phoneService.Add(Phone),
