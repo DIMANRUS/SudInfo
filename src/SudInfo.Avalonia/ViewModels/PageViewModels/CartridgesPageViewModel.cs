@@ -5,7 +5,7 @@ public class CartridgesPageViewModel : BaseRoutableViewModel
     #region Services
 
     private readonly CartridgeService _cartridgeService;
-    
+
     private readonly NavigationService _navigationService;
 
     #endregion
@@ -35,7 +35,7 @@ public class CartridgesPageViewModel : BaseRoutableViewModel
         #region Services Initialization
 
         _cartridgeService = cartridgeService;
-        
+
         _navigationService = navigationService;
 
         #endregion

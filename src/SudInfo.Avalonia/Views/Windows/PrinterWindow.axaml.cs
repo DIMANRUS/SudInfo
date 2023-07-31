@@ -9,6 +9,6 @@ public partial class PrinterWindow : ReactiveWindow<PrinterWindowViewModel>
         DataContext = printerWindowViewModel;
         InitializeComponent();
         printerWindowViewModel.Initialization(windowType, Close, printerId);
-    } 
+    }
     #endregion
 }

@@ -54,34 +54,27 @@
         <DataGridTextColumn
             Width="*"
             Binding="{Binding LastName}"
-            Header="Фамилия"
-             />
+            Header="Фамилия"/>
         <DataGridTextColumn
             Width="*"
             Binding="{Binding FirstName}"
-            Header="Имя"
-             />
+            Header="Имя"/>
         <DataGridTextColumn
             Width="*"
             Binding="{Binding MiddleName}"
-            Header="Отчество"
-             />
+            Header="Отчество"/>
         <DataGridTextColumn
             Binding="{Binding NumberCabinet}"
-            Header="Кабинет"
-             />
+            Header="Кабинет"/>
         <DataGridTextColumn
             Binding="{Binding PersonalPhone}"
-            Header="Личный телефон"
-             />
+            Header="Личный телефон"/>
         <DataGridTextColumn
             Binding="{Binding WorkPhone}"
-            Header="Рабочий телефон"
-             />
+            Header="Рабочий телефон"/>
         <DataGridTextColumn
-            Binding="{Binding PhoneLocal}"
-            Header="Локальный телефон"
-             />
+            Binding="{Binding LocalPhone}"
+            Header="Локальный телефон"/>
       </DataGrid.Columns>
     </DataGrid>
   </Grid>

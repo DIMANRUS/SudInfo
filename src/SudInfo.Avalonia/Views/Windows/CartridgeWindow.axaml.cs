@@ -7,6 +7,6 @@ public partial class CartridgeWindow : ReactiveWindow<CartridgeWindowViewModel>
         var viewModel = ServiceCollectionExtension.ServiceProvider.GetService<CartridgeWindowViewModel>()!;
         DataContext = viewModel;
         InitializeComponent();
-        viewModel.Initialization(windowType, Close,id);
+        viewModel.Initialization(windowType, Close, id);
     }
 }

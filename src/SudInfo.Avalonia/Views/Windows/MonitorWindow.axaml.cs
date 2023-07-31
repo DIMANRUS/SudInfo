@@ -12,6 +12,6 @@ public partial class MonitorWindow : Window
         DataContext = monitorWindowViewModel;
         InitializeComponent();
         monitorWindowViewModel.Initialization(windowType, Close, computerId);
-    } 
+    }
     #endregion
 }

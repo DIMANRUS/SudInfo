@@ -61,5 +61,7 @@ public class SudInfoDatabaseContext : DbContext
 
     public DbSet<AppSetting> AppSettings => Set<AppSetting>();
 
+    public DbSet<Phone> Phones => Set<Phone>();
+
     #endregion
 }

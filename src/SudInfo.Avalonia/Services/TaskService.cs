@@ -6,7 +6,7 @@ public class TaskService : BaseService<TaskEntity>
 
     public TaskService(SudInfoDatabaseContext context) : base(context)
     {
-    } 
+    }
 
     #endregion
 

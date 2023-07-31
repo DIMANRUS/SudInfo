@@ -34,7 +34,7 @@ public class User : BaseModel
 
     [XLColumn(Header = "Внутренний телефон")]
     [StringLength(3)]
-    public string? PhoneLocal { get; set; }
+    public string? LocalPhone { get; set; }
 
     public ICollection<Computer> Computers { get; set; } = new List<Computer>();
 }

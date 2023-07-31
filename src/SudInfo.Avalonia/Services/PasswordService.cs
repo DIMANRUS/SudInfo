@@ -31,7 +31,7 @@ public class PasswordService : BaseService<PasswordEntity>
         {
             return new(null, message: ex.Message);
         }
-    } 
+    }
 
     #endregion
 

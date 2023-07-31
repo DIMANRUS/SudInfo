@@ -17,6 +17,7 @@ internal static class ServiceCollectionExtension
             .AddSingleton<AppsPageViewModel>()
             .AddSingleton<ContactsPageViewModel>()
             .AddSingleton<CartridgesPageViewModel>()
+            .AddSingleton<PhonesPageViewModel>()
     #endregion
     #region Window view models
             .AddTransient<AppWindowViewModel>()
@@ -32,6 +33,7 @@ internal static class ServiceCollectionExtension
             .AddTransient<UserWindowViewModel>()
             .AddTransient<MonitorWindowViewModel>()
             .AddTransient<PrinterWindowViewModel>()
+            .AddTransient<PhoneWindowViewModel>()
     #endregion
     #region Services
             .AddTransient<ExcelService>()
@@ -49,6 +51,7 @@ internal static class ServiceCollectionExtension
             .AddTransient<ServerRackService>()
             .AddSingleton<NavigationService>()
             .AddTransient<ComputerService>()
+            .AddTransient<PhoneService>()
     #endregion
             .AddTransient<SudInfoDatabaseContext>()
             .BuildServiceProvider();

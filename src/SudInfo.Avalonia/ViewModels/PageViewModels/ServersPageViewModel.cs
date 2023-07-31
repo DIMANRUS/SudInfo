@@ -99,7 +99,7 @@ public class ServersPageViewModel : BaseRoutableViewModel
     {
         await _navigationService.ShowServerRackWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog);
     }
-    
+
     public async Task LoadServerRacks()
     {
         var serverRacksResult = await _serverRackService.Get();

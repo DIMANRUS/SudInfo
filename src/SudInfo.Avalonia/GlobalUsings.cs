@@ -10,7 +10,6 @@ global using Avalonia.Styling;
 
 global using ClosedXML.Excel;
 
-global using MessageBox.Avalonia.DTO;
 global using MessageBox.Avalonia.Enums;
 
 global using Microsoft.EntityFrameworkCore;
@@ -37,13 +36,9 @@ global using SudInfo.EfDataAccessLibrary.Models;
 
 global using System;
 global using System.Collections.Generic;
-global using System.Collections.ObjectModel;
 global using System.ComponentModel.DataAnnotations;
 global using System.Data;
 global using System.Globalization;
-global using System.IO;
 global using System.Linq;
-global using System.Text.Json;
-global using System.Threading.Tasks;
 global using System.Reactive;
-global using Avalonia.Collections;
+global using System.Threading.Tasks;

@@ -5,7 +5,7 @@ public class PeripheryPageViewModel : BaseRoutableViewModel
     #region Services
 
     private readonly PeripheryService _peripheryService;
-    
+
     private readonly NavigationService _navigationService;
 
     #endregion
@@ -41,12 +41,12 @@ public class PeripheryPageViewModel : BaseRoutableViewModel
 
     public PeripheryPageViewModel(
         PeripheryService peripheryService,
-        
+
         NavigationService navigationService)
     {
         #region Services Initialization
         _peripheryService = peripheryService;
-        
+
         _navigationService = navigationService;
         #endregion
 

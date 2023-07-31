@@ -83,6 +83,10 @@ public class MainWindowViewModel : ReactiveObject, IScreen
     {
         Router.Navigate.Execute(ServiceCollectionExtension.ServiceProvider.GetService<CartridgesPageViewModel>());
     }
+    public void OpenPhonesPage()
+    {
+        Router.Navigate.Execute(ServiceCollectionExtension.ServiceProvider.GetService<PhonesPageViewModel>());
+    }
 
     public static async Task ChangeTheme()
     {

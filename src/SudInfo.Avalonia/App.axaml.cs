@@ -23,7 +23,7 @@ public class App : Application
 
         await using SudInfoDatabaseContext context = new();
         AppSetting appSetting = await context.AppSettings.AsNoTracking()
-                                                                  .FirstAsync();
+                                                         .FirstAsync();
         RequestedThemeVariant = appSetting.Theme switch
         {
             "Dark" => ThemeVariant.Dark,
@@ -57,6 +57,7 @@ public class App : Application
         Locator.CurrentMutable.Register<IViewFor<AppsPageViewModel>>(() => new AppsPage());
         Locator.CurrentMutable.Register<IViewFor<ContactsPageViewModel>>(() => new ContactsPage());
         Locator.CurrentMutable.Register<IViewFor<CartridgesPageViewModel>>(() => new CartridgesPage());
+        Locator.CurrentMutable.Register<IViewFor<PhonesPageViewModel>>(() => new PhonesPage());
 
         #endregion
 

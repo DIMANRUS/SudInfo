@@ -4,7 +4,7 @@ public class PrintersPageViewModel : BaseRoutableViewModel
 {
     #region Services
     private readonly PrinterService _printersService;
-    
+
     private readonly NavigationService _navigationService;
     #endregion
 
@@ -30,7 +30,7 @@ public class PrintersPageViewModel : BaseRoutableViewModel
     #region Ctors
 
     public PrintersPageViewModel(
-        PrinterService printersService,   
+        PrinterService printersService,
         NavigationService navigationService)
     {
         #region Services Initialization

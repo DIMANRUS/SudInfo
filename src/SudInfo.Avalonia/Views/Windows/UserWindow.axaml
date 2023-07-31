@@ -42,7 +42,7 @@
         Watermark="Рабочий телефон (Необязательно)" />
     <TextBox
         MaxLength="3"
-        Text="{Binding User.PhoneLocal}"
+        Text="{Binding User.LocalPhone}"
         Watermark="Внутренний телефон (Необязательно)" />
     <Button
         Margin="0,5,0,0"

@@ -5,7 +5,7 @@ public class ServerRack : BaseModel
 {
     [XLColumn(Ignore = true)]
     public int Position { get; set; } = 1;
-    
+
     [XLColumn(Header = "Инвентарный номер")]
     [StringLength(50)]
     public string? InventarNumber { get; set; }

@@ -6,14 +6,14 @@ public class ServerService : BaseService<Server>
 
     public ServerService(SudInfoDatabaseContext context) : base(context)
     {
-    } 
+    }
 
     #endregion
 
     public async Task<Result<Server>> Get(int id)
     {
         try
-        {          
+        {
             var server = await context.Servers
                 .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.Id == id);
@@ -30,7 +30,7 @@ public class ServerService : BaseService<Server>
     public async Task<Result> Remove(int id)
     {
         try
-        {     
+        {
             Server server = (await context.Servers.SingleOrDefaultAsync(x => x.Id == id)) ?? throw new Exception("Server not found");
             context.Remove(server);
             await context.SaveChangesAsync();
@@ -49,7 +49,7 @@ public class ServerService : BaseService<Server>
     }
 
     public async Task<Result> UpServerPositionInServerRack(int id)
-    {    
+    {
         Server? server = await context.Servers
                                                    .Include(x => x.ServerRack)
                                                    .ThenInclude(x => x.Servers)
@@ -67,7 +67,7 @@ public class ServerService : BaseService<Server>
     }
 
     public async Task<Result> DownServerPositionInServerRack(int id)
-    {       
+    {
         Server? server = await context.Servers
                                                    .Include(x => x.ServerRack)
                                                    .ThenInclude(x => x.Servers)

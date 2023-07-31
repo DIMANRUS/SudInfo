@@ -53,14 +53,14 @@ public class ServerRackService : BaseService<ServerRack>
     {
         int numberServerRacks = await context.ServerRacks.CountAsync();
         return numberServerRacks;
-    } 
+    }
 
     #endregion
 
     public async Task<Result> Remove(int id)
     {
         try
-        {         
+        {
             var serverRack = await context.ServerRacks.SingleOrDefaultAsync(x => x.Id == id) ?? throw new Exception("ServerRack not found");
             context.Remove(serverRack);
             await context.SaveChangesAsync();

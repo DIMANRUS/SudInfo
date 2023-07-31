@@ -138,6 +138,16 @@ public class NavigationService
         await window.ShowDialog(_mainWindow);
     }
 
+    public async Task ShowPhoneWindowDialog(WindowType windowType, EventHandler? closedEvent = null, int? computerId = null)
+    {
+        if (_mainWindow == null)
+            return;
+        PhoneWindow window = new(windowType, computerId);
+        if (closedEvent != null)
+            window.Closed += closedEvent;
+        await window.ShowDialog(_mainWindow);
+    }
+
     #endregion
 }
 public enum WindowType
