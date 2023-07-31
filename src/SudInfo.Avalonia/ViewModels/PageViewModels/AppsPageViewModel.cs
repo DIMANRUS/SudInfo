@@ -1,6 +1,4 @@
-﻿using SudInfo.EfDataAccessLibrary.Models;
-
-namespace SudInfo.Avalonia.ViewModels.PageViewModels;
+﻿namespace SudInfo.Avalonia.ViewModels.PageViewModels;
 
 public class AppsPageViewModel : BaseRoutableViewModel
 {

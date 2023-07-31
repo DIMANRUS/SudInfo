@@ -15,6 +15,11 @@ public class WorkplacesPageViewModel : BaseRoutableViewModel
     [Reactive]
     public string SearchText { get; set; } = string.Empty;
 
+    [Reactive]
+    public int SelectedIndex { get; set; } = -1;
+
+    public User? SelectedUser { get; set; }
+
     #endregion
 
     #region Collections
@@ -37,6 +42,11 @@ public class WorkplacesPageViewModel : BaseRoutableViewModel
     #endregion
 
     #region Public methods
+
+    public void CloseRowDetail()
+    {
+        SelectedIndex = -1;
+    }
 
     public void SearchBoxKeyUp()
     {
