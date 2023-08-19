@@ -1,4 +1,6 @@
-﻿namespace SudInfo.Avalonia.ViewModels.PageViewModels;
+﻿using SudInfo.EfDataAccessLibrary.Models;
+
+namespace SudInfo.Avalonia.ViewModels.PageViewModels;
 
 public class WorkplacesPageViewModel : BaseRoutableViewModel
 {
@@ -35,9 +37,48 @@ public class WorkplacesPageViewModel : BaseRoutableViewModel
 
     public WorkplacesPageViewModel(NavigationService navigationService, UserService userService)
     {
+        #region Services initialization
+
         _navigationService = navigationService;
         _userService = userService;
+
+        #endregion
+
+        SearchBoxKeyUpCommand = ReactiveCommand.Create((KeyEventArgs keyEventArgs) =>
+        {
+            if (string.IsNullOrWhiteSpace(SearchText))
+            {
+                Users = UsersFromDatabase;
+                return;
+            }
+            if (keyEventArgs.Key != Key.Enter || UsersFromDatabase == null)
+                return;
+            string searchTextLower = SearchText.ToLower();
+            Users = new List<User>(UsersFromDatabase.Where(x => x.FIO.ToLower().Contains(searchTextLower) ||
+                                                                x.Computers.Any(c =>
+                                                                    c.Name!.ToLower().Contains(searchTextLower) ||
+                                                                    c.InventarNumber!.Contains(searchTextLower) ||
+                                                                    c.SerialNumber!.Contains(searchTextLower) ||
+                                                                    c.Monitors != null &&
+                                                                    c.Monitors.Any(m =>
+                                                                        m.Name!.ToLower().Contains(searchTextLower) ||
+                                                                        m.InventarNumber!.Contains(searchTextLower) ||
+                                                                        m.SerialNumber!.Contains(searchTextLower)
+                                                                    ) ||
+                                                                    c.Printers != null &&
+                                                                    c.Printers.Any(p =>
+                                                                        p.Name!.ToLower().Contains(searchTextLower) ||
+                                                                        p.InventarNumber!.Contains(searchTextLower) ||
+                                                                        p.SerialNumber!.Contains(searchTextLower)
+                                                                    ))));
+        });
     }
+
+    #endregion
+
+    #region Commands
+
+    public ReactiveCommand<KeyEventArgs, Unit> SearchBoxKeyUpCommand { get; set; }
 
     #endregion
 
@@ -46,35 +87,6 @@ public class WorkplacesPageViewModel : BaseRoutableViewModel
     public void CloseRowDetail()
     {
         SelectedIndex = -1;
-    }
-
-    public void SearchBoxKeyUp()
-    {
-        if (UsersFromDatabase == null)
-            return;
-        string searchTextLower = SearchText.ToLower();
-        if (string.IsNullOrWhiteSpace(SearchText))
-        {
-            Users = new List<User>(UsersFromDatabase);
-            return;
-        }
-        Users = new List<User>(UsersFromDatabase.Where(x => x.FIO.ToLower().Contains(searchTextLower) ||
-                                                            x.Computers.Any(c =>
-                                                                c.Name!.ToLower().Contains(searchTextLower) ||
-                                                                c.InventarNumber!.Contains(searchTextLower) ||
-                                                                c.SerialNumber!.Contains(searchTextLower) ||
-                                                                c.Monitors != null &&
-                                                                c.Monitors.Any(m =>
-                                                                    m.Name!.ToLower().Contains(searchTextLower) ||
-                                                                    m.InventarNumber!.Contains(searchTextLower) ||
-                                                                    m.SerialNumber!.Contains(searchTextLower)
-                                                                ) ||
-                                                                c.Printers != null &&
-                                                                c.Printers.Any(p =>
-                                                                    p.Name!.ToLower().Contains(searchTextLower) ||
-                                                                    p.InventarNumber!.Contains(searchTextLower) ||
-                                                                    p.SerialNumber!.Contains(searchTextLower)
-                                                                ))));
     }
 
     public async Task OpenViewComputerWindow(object id)

@@ -41,7 +41,31 @@ public class PrintersPageViewModel : BaseRoutableViewModel
         #endregion
 
         eventHandlerClosedWindowDialog = async (s, e) => await LoadPrinters();
+
+        SearchBoxKeyUpCommand = ReactiveCommand.Create((KeyEventArgs keyEventArgs) =>
+        {
+            if (string.IsNullOrEmpty(SearchText))
+            {
+                Printers = PrintersFromDataBase;
+                return;
+            }
+            if (keyEventArgs.Key != Key.Enter || PrintersFromDataBase == null)
+                return;
+            Printers = PrintersFromDataBase.Where(x => x.Name!.ToLower().Contains(SearchText.ToLower()) ||
+                                                           x.InventarNumber!.Contains(SearchText) ||
+                                                           x.SerialNumber!.Contains(SearchText) ||
+                                                           x.Computer != null &&
+                                                           x.Computer.User != null &&
+                                                           x.Computer.User.FIO.ToLower().Contains(SearchText.ToLower()))
+                                           .ToList();
+        });
     }
+
+    #endregion
+
+    #region Commands
+
+    public ReactiveCommand<KeyEventArgs, Unit> SearchBoxKeyUpCommand { get; set; }
 
     #endregion
 
@@ -80,23 +104,6 @@ public class PrintersPageViewModel : BaseRoutableViewModel
             return;
         }
         await LoadPrinters();
-    }
-
-    public void SearchBoxKeyUp()
-    {
-        if (PrintersFromDataBase == null)
-            return;
-        if (string.IsNullOrEmpty(SearchText))
-        {
-            Printers = PrintersFromDataBase;
-            return;
-        }
-        Printers = PrintersFromDataBase.Where(x => x.Name!.ToLower().Contains(SearchText.ToLower()) ||
-                                                       x.InventarNumber!.Contains(SearchText) ||
-                                                       x.SerialNumber!.Contains(SearchText) ||
-                                                       x.Computer != null &&
-                                                       x.Computer.User != null &&
-                                                       x.Computer.User.FIO.ToLower().Contains(SearchText.ToLower())).ToList();
     }
 
     public async Task LoadPrinters()

@@ -33,7 +33,7 @@ public class UsersPageViewModel : BaseRoutableViewModel
 
     public UsersPageViewModel(NavigationService navigationService, UserService userService)
     {
-        #region Serives Initialization
+        #region Services Initialization
 
         _navigationService = navigationService;
         _userService = userService;
@@ -41,7 +41,26 @@ public class UsersPageViewModel : BaseRoutableViewModel
         #endregion
 
         eventHandlerClosedWindowDialog = async (s, e) => await LoadUsers();
+
+        SearchBoxKeyUpCommand = ReactiveCommand.Create((KeyEventArgs keyEventArgs) =>
+        {
+            if (string.IsNullOrEmpty(SearchText))
+            {
+                Users = UsersFromDataBase;
+                return;
+            }
+            if (keyEventArgs.Key != Key.Enter || UsersFromDataBase == null)
+                return;
+            Users = UsersFromDataBase.Where(x => x.FIO!.ToLower().Contains(SearchText.ToLower()))
+                                     .ToList();
+        });
     }
+
+    #endregion
+
+    #region Commands
+
+    public ReactiveCommand<KeyEventArgs, Unit> SearchBoxKeyUpCommand { get; set; }
 
     #endregion
 
@@ -80,18 +99,6 @@ public class UsersPageViewModel : BaseRoutableViewModel
             return;
         }
         await LoadUsers();
-    }
-
-    public void SearchBoxKeyUp()
-    {
-        if (UsersFromDataBase == null)
-            return;
-        if (string.IsNullOrEmpty(SearchText))
-        {
-            Users = UsersFromDataBase;
-            return;
-        }
-        Users = UsersFromDataBase.Where(x => x.FIO!.ToLower().Contains(SearchText.ToLower())).ToList();
     }
 
     public async Task LoadUsers()

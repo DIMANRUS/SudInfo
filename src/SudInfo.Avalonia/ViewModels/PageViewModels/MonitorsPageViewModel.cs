@@ -1,4 +1,6 @@
-﻿namespace SudInfo.Avalonia.ViewModels.PageViewModels;
+﻿using SudInfo.EfDataAccessLibrary.Models;
+
+namespace SudInfo.Avalonia.ViewModels.PageViewModels;
 
 public class MonitorsPageViewModel : BaseRoutableViewModel
 {
@@ -44,7 +46,31 @@ public class MonitorsPageViewModel : BaseRoutableViewModel
         #endregion
 
         eventHandlerClosedWindowDialog = async (s, e) => await LoadMonitors();
+
+        SearchBoxKeyUpCommand = ReactiveCommand.Create((KeyEventArgs keyEventArgs) =>
+        {
+            if (string.IsNullOrEmpty(SearchText))
+            {
+                Monitors = MonitorsFromDataBase;
+                return;
+            }
+            if (keyEventArgs.Key != Key.Enter || MonitorsFromDataBase == null)
+                return;
+            Monitors = MonitorsFromDataBase.Where(x => x.Name!.ToLower().Contains(SearchText.ToLower()) ||
+                                            x.InventarNumber!.Contains(SearchText) ||
+                                            x.SerialNumber!.Contains(SearchText) ||
+                                            x.Computer != null &&
+                                            x.Computer.User != null &&
+                                            x.Computer.User.FIO.ToLower().Contains(SearchText.ToLower()))
+                               .ToList();
+        });
     }
+
+    #endregion
+
+    #region Commands
+
+    public ReactiveCommand<KeyEventArgs, Unit> SearchBoxKeyUpCommand { get; set; }
 
     #endregion
 
@@ -83,24 +109,6 @@ public class MonitorsPageViewModel : BaseRoutableViewModel
             return;
         }
         await LoadMonitors();
-    }
-
-    public void SearchBoxKeyUp()
-    {
-        if (MonitorsFromDataBase == null)
-            return;
-        if (string.IsNullOrEmpty(SearchText))
-        {
-            Monitors = MonitorsFromDataBase;
-            return;
-        }
-        Monitors = MonitorsFromDataBase.Where(x => x.Name!.ToLower().Contains(SearchText.ToLower()) ||
-                                                    x.InventarNumber!.Contains(SearchText) ||
-                                                    x.SerialNumber!.Contains(SearchText) ||
-                                                    x.Computer != null &&
-                                                    x.Computer.User != null &&
-                                                    x.Computer.User.FIO.ToLower().Contains(SearchText.ToLower()))
-                                       .ToList();
     }
 
     public async Task LoadMonitors()

@@ -1,4 +1,6 @@
-﻿namespace SudInfo.Avalonia.ViewModels.PageViewModels;
+﻿using SudInfo.EfDataAccessLibrary.Models;
+
+namespace SudInfo.Avalonia.ViewModels.PageViewModels;
 
 public class PhonesPageViewModel : BaseRoutableViewModel
 {
@@ -47,7 +49,30 @@ public class PhonesPageViewModel : BaseRoutableViewModel
         #endregion
 
         _eventHandlerClosedWindowDialog = async (s, e) => await LoadPhones();
+
+        SearchBoxKeyUpCommand = ReactiveCommand.Create((KeyEventArgs keyEventArgs) =>
+        {
+            if (string.IsNullOrEmpty(SearchText))
+            {
+                Phones = PhonesFromDataBase;
+                return;
+            }
+            if (keyEventArgs.Key != Key.Enter || PhonesFromDataBase == null)
+                return;
+            Phones = PhonesFromDataBase.Where(x => x.Name!.ToLower().Contains(SearchText.ToLower()) ||
+                                                                x.InventarNumber!.Contains(SearchText) ||
+                                                                x.SerialNumber!.Contains(SearchText) ||
+                                                                x.User != null &&
+                                                                x.User.FIO.ToLower().Contains(SearchText.ToLower()))
+                                             .ToList();
+        });
     }
+
+    #endregion
+
+    #region Commands
+
+    public ReactiveCommand<KeyEventArgs, Unit> SearchBoxKeyUpCommand { get; set; }
 
     #endregion
 
@@ -87,23 +112,6 @@ public class PhonesPageViewModel : BaseRoutableViewModel
         if (Phones == null || Phones.Count == 0)
             return;
         await ExcelService.CreateExcelTableFromEntity(Phones);
-    }
-
-    public void SearchBoxKeyUp()
-    {
-        if (PhonesFromDataBase == null)
-            return;
-        if (string.IsNullOrEmpty(SearchText))
-        {
-            Phones = PhonesFromDataBase;
-            return;
-        }
-        Phones = PhonesFromDataBase.Where(x => x.Name!.ToLower().Contains(SearchText.ToLower()) ||
-                                                            x.InventarNumber!.Contains(SearchText) ||
-                                                            x.SerialNumber!.Contains(SearchText) ||
-                                                            x.User != null &&
-                                                            x.User.FIO.ToLower().Contains(SearchText.ToLower()))
-                                         .ToList();
     }
 
     public async Task LoadPhones()

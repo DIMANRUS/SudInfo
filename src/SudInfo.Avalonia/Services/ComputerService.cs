@@ -18,7 +18,7 @@ public class ComputerService : BaseService<Computer>
         {
             var computer = await context.Computers.AsNoTracking()
                                                   .Include(x => x.User)
-                                                  .FirstOrDefaultAsync(x => x.Id == id);
+                                                  .SingleOrDefaultAsync(x => x.Id == id);
             return computer == null
                 ? throw new Exception("Computer not Found")
                 : new(computer, true);
@@ -59,7 +59,8 @@ public class ComputerService : BaseService<Computer>
         {
             if (computer.User != null)
             {
-                computer.User = await context.Users.SingleOrDefaultAsync(x => x.Id == computer.User.Id);
+                computer.User = await context.Users.AsNoTracking()
+                                                   .SingleOrDefaultAsync(x => x.Id == computer.User.Id);
             }
             await context.AddAsync(computer);
             await context.SaveChangesAsync();
@@ -75,7 +76,8 @@ public class ComputerService : BaseService<Computer>
     {
         try
         {
-            var computer = await context.Computers.FirstOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Computer not found");
+            var computer = await context.Computers.AsNoTracking()
+                                                  .SingleOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Computer not found");
             context.Remove(computer);
             await context.SaveChangesAsync();
             return new(true);

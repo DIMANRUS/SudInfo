@@ -42,7 +42,25 @@ public class PasswordsPageViewModel : BaseRoutableViewModel
 
         eventHandlerClosedWindowDialog = async (s, e) => await LoadPasswords();
 
+        SearchBoxKeyUpCommand = ReactiveCommand.Create((KeyEventArgs keyEventArgs) =>
+        {
+            if (string.IsNullOrEmpty(SearchText))
+            {
+                Passwords = PasswordsFromDatabase;
+                return;
+            }
+            if (keyEventArgs.Key != Key.Enter || PasswordsFromDatabase == null)
+                return;
+            Passwords = PasswordsFromDatabase.Where(x => x.Description!.ToLower().Contains(SearchText.ToLower()))
+                                             .ToList();
+        });
     }
+
+    #endregion
+
+    #region Commands
+
+    public ReactiveCommand<KeyEventArgs, Unit> SearchBoxKeyUpCommand { get; set; }
 
     #endregion
 
@@ -59,19 +77,6 @@ public class PasswordsPageViewModel : BaseRoutableViewModel
     {
         Passwords = await _passwordService.Get();
         PasswordsFromDatabase = Passwords;
-    }
-
-    public void SearchBoxKeyUp()
-    {
-        if (PasswordsFromDatabase == null)
-            return;
-        if (string.IsNullOrEmpty(SearchText))
-        {
-            Passwords = PasswordsFromDatabase;
-            return;
-        }
-        Passwords = PasswordsFromDatabase.Where(x => x.Description!.ToLower().Contains(SearchText.ToLower()))
-                                         .ToList();
     }
 
     public async Task OpenAddPasswordWindow()

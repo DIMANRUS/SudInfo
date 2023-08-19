@@ -10,8 +10,6 @@ global using Avalonia.Styling;
 
 global using ClosedXML.Excel;
 
-global using MessageBox.Avalonia.Enums;
-
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.DependencyInjection;
 
@@ -42,3 +40,4 @@ global using System.Globalization;
 global using System.Linq;
 global using System.Reactive;
 global using System.Threading.Tasks;
+global using Avalonia.Input;
