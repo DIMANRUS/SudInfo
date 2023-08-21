@@ -3,7 +3,6 @@
 public class Computer : BaseModel
 {
     [XLColumn(Header = "IP адрес")]
-    [Required(ErrorMessage = Const.FieldRequired)]
     [StringLength(15)]
     [RegularExpression(Const.Ip4RegularExpression, ErrorMessage = Const.NotValidIp4Message)]
     public string? Ip { get; set; }
