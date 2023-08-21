@@ -44,7 +44,7 @@ public class AppService : BaseService<AppEntity>
         try
         {
             var entity = await context.Apps.AsNoTracking()
-                                           .SingleOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Password not found");
+                                           .FirstAsync(x => x.Id == id) ?? throw new Exception("Password not found");
             entity.Computers.Clear();
             context.Apps.Remove(entity);
             await context.SaveChangesAsync();
@@ -61,7 +61,8 @@ public class AppService : BaseService<AppEntity>
         try
         {
 
-            var app = await context.Apps.Include(x => x.Computers).SingleAsync(x => x.Id == entity.Id);
+            var app = await context.Apps.Include(x => x.Computers)
+                                        .FirstAsync(x => x.Id == entity.Id);
             app.Name = entity.Name;
             app.Version = entity.Version;
             if (entity.Computers.Count == 0)
@@ -73,7 +74,7 @@ public class AppService : BaseService<AppEntity>
                 app.Computers = new List<Computer>();
                 foreach (var computer in entity.Computers)
                 {
-                    app.Computers.Add(await context.Computers.FirstAsync(x => x.Id == computer.Id));
+                    app.Computers.Add(await context.Computers.FindAsync(computer.Id));
                 }
             }
             context.Update(app);
@@ -95,7 +96,7 @@ public class AppService : BaseService<AppEntity>
             entity.Computers = new List<Computer>();
             foreach (var computer in computers)
             {
-                entity.Computers.Add(await context.Computers.FirstAsync(x => x.Id == computer.Id));
+                entity.Computers.Add(await context.Computers.FindAsync(computer.Id));
             }
             await context.AddAsync(entity);
             await context.SaveChangesAsync();

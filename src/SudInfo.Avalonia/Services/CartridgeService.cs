@@ -41,7 +41,7 @@ public class CartridgeService : BaseService<Cartridge>
     {
         try
         {
-            var cartridge = await context.Cartridges.FirstOrDefaultAsync(x => x.Id == id);
+            var cartridge = await context.Cartridges.FindAsync(id);
             context.Cartridges.Remove(cartridge);
             await context.SaveChangesAsync();
             return new(true);

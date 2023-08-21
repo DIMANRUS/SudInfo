@@ -53,6 +53,6 @@ internal static class ServiceCollectionExtension
             .AddTransient<ComputerService>()
             .AddTransient<PhoneService>()
     #endregion
-            .AddDbContext<SudInfoDatabaseContext>()
+            .AddTransient<SudInfoDatabaseContext>()
             .BuildServiceProvider();
 }

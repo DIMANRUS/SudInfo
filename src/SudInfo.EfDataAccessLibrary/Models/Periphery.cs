@@ -20,6 +20,9 @@ public class Periphery : BaseModel
     [StringLength(50)]
     public string? InventarNumber { get; set; }
 
+    [XLColumn(Header = "Личное")]
+    public bool IsPersonal { get; set; }
+
     public Computer? Computer { get; set; }
 
     [XLColumn(Ignore = true)]

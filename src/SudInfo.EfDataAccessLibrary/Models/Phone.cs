@@ -20,6 +20,9 @@ public class Phone : BaseModel
     [XLColumn(Header = "Сломан")]
     public bool IsBroken { get; set; }
 
+    [XLColumn(Header = "Личный")]
+    public bool IsPersonal { get; set; }
+
     [XLColumn(Header = "На складе")]
     public bool IsStock { get; set; }
 
