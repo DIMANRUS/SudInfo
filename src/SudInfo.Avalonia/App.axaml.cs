@@ -67,7 +67,7 @@ public class App : Application
 
         mainWindow.Show();
         MainWindow = mainWindow;
-        base.OnFrameworkInitializationCompleted();
+ 
     }
 
     #endregion

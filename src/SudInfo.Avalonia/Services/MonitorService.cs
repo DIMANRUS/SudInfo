@@ -12,7 +12,8 @@ public class MonitorService : BaseService<Monitor>
 
     public async Task<IReadOnlyCollection<Monitor>> Get()
     {
-        var monitors = await context.Monitors.Include(x => x.Computer)
+        var monitors = await context.Monitors.AsNoTracking()
+                                             .Include(x => x.Computer)
                                              .ThenInclude(x => x.User)
                                              .ToListAsync();
         return monitors;
@@ -22,7 +23,8 @@ public class MonitorService : BaseService<Monitor>
     {
         try
         {
-            var monitor = await context.Monitors.Include(x => x.Computer)
+            var monitor = await context.Monitors.AsNoTracking()
+                                                .Include(x => x.Computer)
                                                 .ThenInclude(x => x.User)
                                                 .FirstOrDefaultAsync(x => x.Id == id);
             return monitor == null ? throw new Exception("Computer not Found") : new(monitor, true);

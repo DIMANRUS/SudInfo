@@ -1,4 +1,6 @@
-﻿namespace SudInfo.Avalonia.ViewModels.WindowViewModels;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+
+namespace SudInfo.Avalonia.ViewModels.WindowViewModels;
 
 public class ComputerWindowViewModel : BaseViewModel
 {
@@ -109,7 +111,6 @@ public class ComputerWindowViewModel : BaseViewModel
         if (computerResult.Object?.User != null)
             computerResult.Object.User = Users.First(x => x.Id == computerResult.Object.User.Id);
         Computer = computerResult.Object;
-        
     }
 
     #endregion

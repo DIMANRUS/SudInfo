@@ -25,7 +25,7 @@ public class BaseService<T> where T : class
         {
             if (entity == null)
                 throw new("Entity null");
-            context.Computers.UpdateRange(entity.First() as Computer);
+            context.UpdateRange(entity);
             await context.SaveChangesAsync();
             return new()
             {

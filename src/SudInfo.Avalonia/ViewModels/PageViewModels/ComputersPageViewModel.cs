@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SudInfo.Avalonia.ViewModels.PageViewModels;
+﻿namespace SudInfo.Avalonia.ViewModels.PageViewModels;
 
 public class ComputersPageViewModel : BaseRoutableViewModel
 {

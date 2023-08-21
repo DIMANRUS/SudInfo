@@ -58,6 +58,7 @@
                                     <StackPanel Margin="5">
                                         <TextBlock
                                             HorizontalAlignment="Center"
+                                            Cursor="Hand"
                                             FontWeight="Bold"
                                             Text="{Binding Name}">
                                             <i:Interaction.Behaviors>
