@@ -66,10 +66,7 @@
                 <DataGridTextColumn Binding="{Binding IsBroken}" Header="Сломан" />
                 <DataGridTextColumn Binding="{Binding IsStock}" Header="На складе" />
                 <DataGridTextColumn Binding="{Binding BreakdownDescription}" Header="Описание поломки" />
-                <DataGridTextColumn
-                    Width="*"
-                    Binding="{Binding Computer.User.FIO}"
-                    Header="ФИО сотрудника" />
+                <DataGridTextColumn Binding="{Binding Computer.User.FIO}" Header="ФИО сотрудника" />
                 <DataGridTextColumn Binding="{Binding Computer.Cabinet}" Header="Кабинет" />
             </DataGrid.Columns>
         </DataGrid>

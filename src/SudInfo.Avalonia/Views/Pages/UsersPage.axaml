@@ -56,18 +56,9 @@
                 </ContextMenu>
             </DataGrid.ContextMenu>
             <DataGrid.Columns>
-                <DataGridTextColumn
-                    Width="*"
-                    Binding="{Binding LastName}"
-                    Header="Фамилия" />
-                <DataGridTextColumn
-                    Width="*"
-                    Binding="{Binding FirstName}"
-                    Header="Имя" />
-                <DataGridTextColumn
-                    Width="*"
-                    Binding="{Binding MiddleName}"
-                    Header="Отчество" />
+                <DataGridTextColumn Binding="{Binding LastName}" Header="Фамилия" />
+                <DataGridTextColumn Binding="{Binding FirstName}" Header="Имя" />
+                <DataGridTextColumn Binding="{Binding MiddleName}" Header="Отчество" />
                 <DataGridTextColumn Binding="{Binding NumberCabinet}" Header="Кабинет" />
                 <DataGridTextColumn Binding="{Binding PersonalPhone}" Header="Личный телефон" />
                 <DataGridTextColumn Binding="{Binding WorkPhone}" Header="Рабочий телефон" />
