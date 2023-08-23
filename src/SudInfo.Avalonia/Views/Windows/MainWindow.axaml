@@ -11,7 +11,7 @@
     xmlns:rxui="clr-namespace:Avalonia.ReactiveUI;assembly=Avalonia.ReactiveUI"
     xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.WindowViewModels;assembly=SudInfo.Avalonia"
     xmlns:vm="using:SudInfo.Avalonia.ViewModels"
-    Title="СудИнфо - Инженер v2.2.1"
+    Title="СудИнфо - Инженер v2.3.0"
     MinWidth="1000"
     MinHeight="700"
     x:DataType="viewModels:MainWindowViewModel"

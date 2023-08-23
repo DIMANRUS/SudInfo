@@ -39,7 +39,8 @@ public class ContactService : BaseService<Contact>
     {
         try
         {
-            var entity = await context.Contacts.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Contact not found");
+            var entity = await context.Contacts.AsNoTracking()
+                                               .FirstAsync(x => x.Id == id);
             context.Contacts.Remove(entity);
             await context.SaveChangesAsync();
             return new(true);

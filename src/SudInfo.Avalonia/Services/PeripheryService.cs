@@ -44,7 +44,8 @@ public class PeripheryService : BaseService<Periphery>
         {
             if (periphery.Computer != null)
             {
-                periphery.Computer = await context.Computers.SingleOrDefaultAsync(x => x.Id == periphery.Computer.Id);
+                periphery.Computer = await context.Computers.AsNoTracking()
+                                                            .FirstAsync(x => x.Id == periphery.Computer.Id);
             }
             await context.Peripheries.AddAsync(periphery);
             await context.SaveChangesAsync();
@@ -60,7 +61,8 @@ public class PeripheryService : BaseService<Periphery>
     {
         try
         {
-            var periphery = await context.Peripheries.FirstOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Переферия не найдена");
+            var periphery = await context.Peripheries.AsNoTracking()
+                                                     .FirstAsync(x => x.Id == id);
             context.Peripheries.Remove(periphery);
             await context.SaveChangesAsync();
             return new(true);

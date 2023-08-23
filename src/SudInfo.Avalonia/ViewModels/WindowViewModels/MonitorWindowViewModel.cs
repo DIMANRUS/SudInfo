@@ -1,6 +1,4 @@
-﻿using DocumentFormat.OpenXml.Spreadsheet;
-
-namespace SudInfo.Avalonia.ViewModels.WindowViewModels;
+﻿namespace SudInfo.Avalonia.ViewModels.WindowViewModels;
 
 public class MonitorWindowViewModel : BaseViewModel
 {

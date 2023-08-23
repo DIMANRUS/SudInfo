@@ -12,9 +12,8 @@ public class TaskService : BaseService<TaskEntity>
 
     public async Task<IReadOnlyCollection<TaskEntity>> Get()
     {
-        var tasks = await context.Tasks
-            .AsNoTracking()
-            .ToListAsync();
+        var tasks = await context.Tasks.AsNoTracking()
+                                       .ToListAsync();
         return tasks;
     }
 
@@ -22,7 +21,8 @@ public class TaskService : BaseService<TaskEntity>
     {
         try
         {
-            var task = await context.Tasks.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Task not found");
+            var task = await context.Tasks.AsNoTracking()
+                                          .FirstAsync(x => x.Id == id);
             context.Tasks.Remove(task);
             await context.SaveChangesAsync();
             return new(true);

@@ -43,7 +43,8 @@ public class PhoneService : BaseService<Phone>
         {
             if (phone.User != null)
             {
-                phone.User = await context.Users.SingleOrDefaultAsync(x => x.Id == phone.User.Id);
+                phone.User = await context.Users.AsNoTracking()
+                                                .FirstAsync(x => x.Id == phone.User.Id);
             }
             await context.AddAsync(phone);
             await context.SaveChangesAsync();
@@ -59,7 +60,8 @@ public class PhoneService : BaseService<Phone>
     {
         try
         {
-            var phone = await context.Phones.FirstOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Телефон не найден.");
+            var phone = await context.Phones.AsNoTracking()
+                                            .FirstAsync(x => x.Id == id);
             context.Remove(phone);
             await context.SaveChangesAsync();
             return new(true);

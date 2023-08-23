@@ -42,7 +42,8 @@ public class RutokenService : BaseService<Rutoken>
     {
         try
         {
-            var rutoken = await context.Rutokens.FirstOrDefaultAsync(x => x.Id == id) ?? throw new Exception("ЭЦП не найден");
+            var rutoken = await context.Rutokens.AsNoTracking()
+                                                .FirstAsync(x => x.Id == id) ?? throw new Exception("ЭЦП не найден");
             context.Rutokens.Remove(rutoken);
             await context.SaveChangesAsync();
             return new(true);
@@ -59,7 +60,8 @@ public class RutokenService : BaseService<Rutoken>
         {
             if (rutoken.User != null)
             {
-                rutoken.User = await context.Users.SingleOrDefaultAsync(x => x.Id == rutoken.User.Id);
+                rutoken.User = await context.Users.AsNoTracking()
+                                                  .FirstAsync(x => x.Id == rutoken.User.Id);
             }
             await context.Rutokens.AddAsync(rutoken);
             await context.SaveChangesAsync();

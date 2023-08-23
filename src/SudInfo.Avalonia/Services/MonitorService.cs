@@ -41,7 +41,8 @@ public class MonitorService : BaseService<Monitor>
     {
         try
         {
-            var monitor = await context.Monitors.FirstOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Monitor not found");
+            var monitor = await context.Monitors.AsNoTracking()
+                                                .FirstAsync(x => x.Id == id);
             context.Monitors.Remove(monitor);
             await context.SaveChangesAsync();
             return new(true);
@@ -58,8 +59,10 @@ public class MonitorService : BaseService<Monitor>
         {
             if (monitor.Computer != null)
             {
-                monitor.Computer = await context.Computers.SingleOrDefaultAsync(x => x.Id == monitor.Computer.Id);
+                monitor.Computer = await context.Computers.AsNoTracking()
+                                                          .FirstAsync(x => x.Id == monitor.Computer.Id);
             }
+            context.Entry(monitor).State = EntityState.Added;
             await context.Monitors.AddAsync(monitor);
             await context.SaveChangesAsync();
             return new(true);

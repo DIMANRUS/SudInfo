@@ -44,8 +44,9 @@ public class AppService : BaseService<AppEntity>
         try
         {
             var entity = await context.Apps.AsNoTracking()
-                                           .FirstAsync(x => x.Id == id) ?? throw new Exception("Password not found");
-            entity.Computers.Clear();
+                                           .Include(x => x.Computers)
+                                           .FirstAsync(x => x.Id == id);
+            entity.Computers!.Clear();
             context.Apps.Remove(entity);
             await context.SaveChangesAsync();
             return new(true);
@@ -60,12 +61,11 @@ public class AppService : BaseService<AppEntity>
     {
         try
         {
-
             var app = await context.Apps.Include(x => x.Computers)
                                         .FirstAsync(x => x.Id == entity.Id);
             app.Name = entity.Name;
             app.Version = entity.Version;
-            if (entity.Computers.Count == 0)
+            if (entity.Computers!.Count == 0)
             {
                 app.Computers = null;
             }
@@ -91,7 +91,6 @@ public class AppService : BaseService<AppEntity>
     {
         try
         {
-
             var computers = entity.Computers;
             entity.Computers = new List<Computer>();
             foreach (var computer in computers)

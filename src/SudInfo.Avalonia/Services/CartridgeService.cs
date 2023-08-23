@@ -17,7 +17,7 @@ public class CartridgeService : BaseService<Cartridge>
         try
         {
             var cartridge = await context.Cartridges.AsNoTracking()
-                                                    .FirstOrDefaultAsync(x => x.Id == id);
+                                                    .FirstAsync(x => x.Id == id);
             return cartridge == null
                 ? throw new Exception("Cartridge not Found")
                 : new(cartridge, true);
@@ -41,7 +41,8 @@ public class CartridgeService : BaseService<Cartridge>
     {
         try
         {
-            var cartridge = await context.Cartridges.FindAsync(id);
+            var cartridge = await context.Cartridges.AsNoTracking()
+                                                    .FirstAsync(x => x.Id == id);
             context.Cartridges.Remove(cartridge);
             await context.SaveChangesAsync();
             return new(true);

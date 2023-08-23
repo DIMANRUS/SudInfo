@@ -14,12 +14,9 @@ public class ServerService : BaseService<Server>
     {
         try
         {
-            var server = await context.Servers
-                .AsNoTracking()
-                .SingleOrDefaultAsync(x => x.Id == id);
-            return server == null
-                ? throw new Exception("Server not Found")
-                : new(server, true);
+            var server = await context.Servers.AsNoTracking()
+                                              .FirstAsync(x => x.Id == id);
+            return new(server, true);
         }
         catch (Exception ex)
         {
@@ -31,7 +28,8 @@ public class ServerService : BaseService<Server>
     {
         try
         {
-            Server server = (await context.Servers.SingleOrDefaultAsync(x => x.Id == id)) ?? throw new Exception("Server not found");
+            Server server = await context.Servers.AsNoTracking()
+                                                 .FirstAsync(x => x.Id == id);
             context.Remove(server);
             await context.SaveChangesAsync();
             return new()
@@ -50,16 +48,17 @@ public class ServerService : BaseService<Server>
 
     public async Task<Result> UpServerPositionInServerRack(int id)
     {
-        Server? server = await context.Servers
-                                                   .Include(x => x.ServerRack)
-                                                   .ThenInclude(x => x.Servers)
-                                                   .SingleOrDefaultAsync(x => x.Id == id);
+        Server? server = await context.Servers.AsNoTracking()
+                                              .Include(x => x.ServerRack)
+                                              .ThenInclude(x => x.Servers)
+                                              .SingleOrDefaultAsync(x => x.Id == id);
         if (server == null)
             return new(message: "Сервер не найден");
         if (server.PosiitionInServerRack == 1)
             return new(message: "Сервер уже находится в самом вверху");
-        var previousServer = await context.Servers.FirstOrDefaultAsync(x => x.ServerRackId == server.ServerRackId &&
-                                                                                                     x.PosiitionInServerRack == server.PosiitionInServerRack - 1);
+        var previousServer = await context.Servers.AsNoTracking()
+                                                  .FirstAsync(x => x.ServerRackId == server.ServerRackId &&
+                                                                   x.PosiitionInServerRack == server.PosiitionInServerRack - 1);
         previousServer.PosiitionInServerRack++;
         server.PosiitionInServerRack--;
         await context.SaveChangesAsync();
@@ -68,16 +67,17 @@ public class ServerService : BaseService<Server>
 
     public async Task<Result> DownServerPositionInServerRack(int id)
     {
-        Server? server = await context.Servers
-                                                   .Include(x => x.ServerRack)
-                                                   .ThenInclude(x => x.Servers)
-                                                   .SingleOrDefaultAsync(x => x.Id == id);
+        Server? server = await context.Servers.AsNoTracking()
+                                              .Include(x => x.ServerRack)
+                                              .ThenInclude(x => x.Servers)
+                                              .FirstAsync(x => x.Id == id);
         if (server == null)
             return new(message: "Сервер не найден");
         if (server.PosiitionInServerRack == server.ServerRack?.Servers.Count)
             return new(message: "Сервер уже находится в самом низу");
-        var nextServer = await context.Servers.FirstOrDefaultAsync(x => x.ServerRackId == server.ServerRackId &&
-                                                                                             x.PosiitionInServerRack == server.PosiitionInServerRack + 1);
+        var nextServer = await context.Servers.AsNoTracking()
+                                              .FirstAsync(x => x.ServerRackId == server.ServerRackId &&
+                                                               x.PosiitionInServerRack == server.PosiitionInServerRack + 1);
         nextServer.PosiitionInServerRack--;
         server.PosiitionInServerRack++;
         await context.SaveChangesAsync();

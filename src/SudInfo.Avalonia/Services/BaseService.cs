@@ -25,6 +25,8 @@ public class BaseService<T> where T : class
         {
             if (entity == null)
                 throw new("Entity null");
+            foreach (var item in entity)
+                context.Entry(item).State = EntityState.Modified;
             context.UpdateRange(entity);
             await context.SaveChangesAsync();
             return new()

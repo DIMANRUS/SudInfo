@@ -40,7 +40,7 @@ public class PasswordService : BaseService<PasswordEntity>
         try
         {
             var passwordEntity = await context.Passwords.AsNoTracking()
-                                              .SingleOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Password not found");
+                                                        .FirstAsync(x => x.Id == id);
             context.Passwords.Remove(passwordEntity);
             await context.SaveChangesAsync();
             return new(true);

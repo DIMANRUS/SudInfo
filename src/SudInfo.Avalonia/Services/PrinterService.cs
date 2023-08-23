@@ -46,7 +46,8 @@ public class PrinterService : BaseService<Printer>
         {
             if (printer.Computer != null)
             {
-                printer.Computer = await context.Computers.SingleOrDefaultAsync(x => x.Id == printer.Computer.Id);
+                printer.Computer = await context.Computers.AsNoTracking()
+                                                          .FirstAsync(x => x.Id == printer.Computer.Id);
             }
             await context.Printers.AddAsync(printer);
             await context.SaveChangesAsync();
@@ -62,7 +63,8 @@ public class PrinterService : BaseService<Printer>
     {
         try
         {
-            var printer = await context.Printers.FirstOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Printer not found");
+            var printer = await context.Printers.AsNoTracking()
+                                                .FirstAsync(x => x.Id == id) ?? throw new Exception("Printer not found");
             context.Printers.Remove(printer);
             await context.SaveChangesAsync();
             return new(true);

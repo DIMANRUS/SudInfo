@@ -47,7 +47,8 @@ public class UserService : BaseService<User>
     {
         try
         {
-            var user = await context.Users.SingleOrDefaultAsync(x => x.Id == id) ?? throw new Exception("User not found");
+            var user = await context.Users.AsNoTracking()
+                                          .FirstAsync(x => x.Id == id);
             context.Remove(user);
             await context.SaveChangesAsync();
             return new(true);

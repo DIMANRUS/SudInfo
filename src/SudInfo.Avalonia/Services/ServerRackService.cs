@@ -61,7 +61,8 @@ public class ServerRackService : BaseService<ServerRack>
     {
         try
         {
-            var serverRack = await context.ServerRacks.SingleOrDefaultAsync(x => x.Id == id) ?? throw new Exception("ServerRack not found");
+            var serverRack = await context.ServerRacks.AsNoTracking()
+                                                      .FirstAsync(x => x.Id == id) ?? throw new Exception("ServerRack not found");
             context.Remove(serverRack);
             await context.SaveChangesAsync();
             return new(true);
