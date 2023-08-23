@@ -97,6 +97,7 @@ public class AppService : BaseService<AppEntity>
             {
                 entity.Computers.Add(await context.Computers.FindAsync(computer.Id));
             }
+            context.Entry(entity).State = EntityState.Added;
             await context.AddAsync(entity);
             await context.SaveChangesAsync();
             return new Result(true);

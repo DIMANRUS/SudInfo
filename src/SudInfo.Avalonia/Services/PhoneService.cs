@@ -15,8 +15,8 @@ public class PhoneService : BaseService<Phone>
         try
         {
             var phone = await context.Phones.AsNoTracking()
-                                               .Include(x => x.User)
-                                               .SingleOrDefaultAsync(x => x.Id == id);
+                                            .Include(x => x.User)
+                                            .FirstAsync(x => x.Id == id);
             return phone == null
                 ? throw new Exception("Телефон не найден")
                 : new(phone, true);
@@ -46,6 +46,7 @@ public class PhoneService : BaseService<Phone>
                 phone.User = await context.Users.AsNoTracking()
                                                 .FirstAsync(x => x.Id == phone.User.Id);
             }
+            context.Entry(phone).State = EntityState.Added;
             await context.AddAsync(phone);
             await context.SaveChangesAsync();
             return new(true);

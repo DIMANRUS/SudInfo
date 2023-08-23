@@ -51,9 +51,7 @@ public class ServerService : BaseService<Server>
         Server? server = await context.Servers.AsNoTracking()
                                               .Include(x => x.ServerRack)
                                               .ThenInclude(x => x.Servers)
-                                              .SingleOrDefaultAsync(x => x.Id == id);
-        if (server == null)
-            return new(message: "Сервер не найден");
+                                              .FirstAsync(x => x.Id == id);
         if (server.PosiitionInServerRack == 1)
             return new(message: "Сервер уже находится в самом вверху");
         var previousServer = await context.Servers.AsNoTracking()
@@ -71,8 +69,6 @@ public class ServerService : BaseService<Server>
                                               .Include(x => x.ServerRack)
                                               .ThenInclude(x => x.Servers)
                                               .FirstAsync(x => x.Id == id);
-        if (server == null)
-            return new(message: "Сервер не найден");
         if (server.PosiitionInServerRack == server.ServerRack?.Servers.Count)
             return new(message: "Сервер уже находится в самом низу");
         var nextServer = await context.Servers.AsNoTracking()

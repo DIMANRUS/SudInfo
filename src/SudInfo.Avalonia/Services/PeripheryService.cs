@@ -16,10 +16,8 @@ public class PeripheryService : BaseService<Periphery>
         {
             var periphery = await context.Peripheries.Include(x => x.Computer)
                                                      .ThenInclude(x => x.User)
-                                                     .FirstOrDefaultAsync(x => x.Id == id);
-            return periphery == null
-                ? throw new Exception("Пепреферия не найдена")
-                : new(periphery, true);
+                                                     .FirstAsync(x => x.Id == id);
+            return new(periphery, true);
         }
         catch (Exception ex)
         {
@@ -47,6 +45,7 @@ public class PeripheryService : BaseService<Periphery>
                 periphery.Computer = await context.Computers.AsNoTracking()
                                                             .FirstAsync(x => x.Id == periphery.Computer.Id);
             }
+            context.Entry(periphery).State = EntityState.Added;
             await context.Peripheries.AddAsync(periphery);
             await context.SaveChangesAsync();
             return new(true);

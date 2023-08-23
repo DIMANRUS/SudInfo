@@ -21,9 +21,8 @@ public class ServerRackService : BaseService<ServerRack>
                                                        .ToListAsync();
             foreach (var serverRack in serverRacks)
             {
-                serverRack.Servers = serverRack.Servers
-                                               .OrderBy(x => x.PosiitionInServerRack)
-                                               .ToList();
+                serverRack.Servers = serverRack.Servers.OrderBy(x => x.PosiitionInServerRack)
+                                                       .ToList();
             }
             return new(serverRacks, true);
         }
@@ -37,10 +36,8 @@ public class ServerRackService : BaseService<ServerRack>
     {
         try
         {
-            var serverRack = await context.ServerRacks
-                .AsNoTracking()
-                .SingleOrDefaultAsync(x => x.Id == id)
-                ?? throw new Exception("Серверна стойка не найдена");
+            var serverRack = await context.ServerRacks.AsNoTracking()
+                                                      .FirstAsync(x => x.Id == id);
             return new(serverRack, true);
         }
         catch (Exception ex)
@@ -62,7 +59,7 @@ public class ServerRackService : BaseService<ServerRack>
         try
         {
             var serverRack = await context.ServerRacks.AsNoTracking()
-                                                      .FirstAsync(x => x.Id == id) ?? throw new Exception("ServerRack not found");
+                                                      .FirstAsync(x => x.Id == id);
             context.Remove(serverRack);
             await context.SaveChangesAsync();
             return new(true);

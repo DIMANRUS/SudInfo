@@ -49,6 +49,7 @@ public class BaseService<T> where T : class
         {
             if (entity == null)
                 throw new("Entity null");
+            context.Entry(entity).State = EntityState.Added;
             await context.AddAsync(entity);
             await context.SaveChangesAsync();
             return new()

@@ -14,7 +14,8 @@ public class ContactService : BaseService<Contact>
 
     public async Task<IReadOnlyCollection<Contact>> Get()
     {
-        var contacts = await context.Contacts.AsNoTracking().ToListAsync();
+        var contacts = await context.Contacts.AsNoTracking()
+                                             .ToListAsync();
         return contacts;
     }
 
@@ -22,9 +23,8 @@ public class ContactService : BaseService<Contact>
     {
         try
         {
-            var server = await context.Contacts
-                .AsNoTracking()
-                .SingleOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Contact not Found");
+            var server = await context.Contacts.AsNoTracking()
+                                               .FirstAsync(x => x.Id == id) ?? throw new Exception("Contact not Found");
             return new(server, true);
         }
         catch (Exception ex)

@@ -16,10 +16,9 @@ public class UserService : BaseService<User>
     {
         try
         {
-            var user = await context.Users
-                .AsNoTracking()
-                .SingleOrDefaultAsync(x => x.Id == id);
-            return user == null ? throw new Exception("User not Found") : new(user, true);
+            var user = await context.Users.AsNoTracking()
+                                          .FirstAsync(x => x.Id == id);
+            return new(user, true);
         }
         catch (Exception ex)
         {
@@ -29,15 +28,14 @@ public class UserService : BaseService<User>
 
     public async Task<IReadOnlyCollection<User>> Get()
     {
-        var users = await context.Users
-            .AsNoTracking()
-            .Include(x => x.Computers)
-            .ThenInclude(x => x.Monitors)
-            .Include(x => x.Computers)
-            .ThenInclude(x => x.Printers)
-            .Include(x => x.Computers)
-            .ThenInclude(x => x.Peripheries)
-            .ToListAsync();
+        var users = await context.Users.AsNoTracking()
+                                       .Include(x => x.Computers)
+                                       .ThenInclude(x => x.Monitors)
+                                       .Include(x => x.Computers)
+                                       .ThenInclude(x => x.Printers)
+                                       .Include(x => x.Computers)
+                                       .ThenInclude(x => x.Peripheries)
+                                       .ToListAsync();
         return users;
     }
 

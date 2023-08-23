@@ -14,7 +14,8 @@ public class PasswordService : BaseService<PasswordEntity>
 
     public async Task<IReadOnlyCollection<PasswordEntity>> Get()
     {
-        var passwords = await context.Passwords.AsNoTracking().ToListAsync();
+        var passwords = await context.Passwords.AsNoTracking()
+                                               .ToListAsync();
         return passwords;
     }
 
@@ -22,9 +23,8 @@ public class PasswordService : BaseService<PasswordEntity>
     {
         try
         {
-            var server = await context.Passwords
-                .AsNoTracking()
-                .SingleOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Server not Found");
+            var server = await context.Passwords.AsNoTracking()
+                                                .FirstAsync(x => x.Id == id);
             return new(server, true);
         }
         catch (Exception ex)

@@ -62,6 +62,7 @@ public class ComputerService : BaseService<Computer>
                 computer.User = await context.Users.AsNoTracking()
                                                    .SingleOrDefaultAsync(x => x.Id == computer.User.Id);
             }
+            context.Entry(computer).State = EntityState.Added;
             await context.AddAsync(computer);
             await context.SaveChangesAsync();
             return new(true);
