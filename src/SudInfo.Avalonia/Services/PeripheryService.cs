@@ -62,6 +62,7 @@ public class PeripheryService : BaseService<Periphery>
         {
             var periphery = await context.Peripheries.AsNoTracking()
                                                      .FirstAsync(x => x.Id == id);
+            context.Entry(periphery).State = EntityState.Deleted;
             context.Peripheries.Remove(periphery);
             await context.SaveChangesAsync();
             return new(true);

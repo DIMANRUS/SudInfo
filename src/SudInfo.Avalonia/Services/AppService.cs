@@ -47,6 +47,7 @@ public class AppService : BaseService<AppEntity>
                                            .Include(x => x.Computers)
                                            .FirstAsync(x => x.Id == id);
             entity.Computers!.Clear();
+            
             context.Apps.Remove(entity);
             await context.SaveChangesAsync();
             return new(true);
