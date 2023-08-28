@@ -1,4 +1,6 @@
-﻿namespace SudInfo.Avalonia.Services;
+﻿using SudInfo.EfDataAccessLibrary.Models;
+
+namespace SudInfo.Avalonia.Services;
 
 public class AppService : BaseService<AppEntity>
 {
@@ -47,7 +49,7 @@ public class AppService : BaseService<AppEntity>
                                            .Include(x => x.Computers)
                                            .FirstAsync(x => x.Id == id);
             entity.Computers!.Clear();
-            
+            context.Entry(entity).State = EntityState.Deleted;
             context.Apps.Remove(entity);
             await context.SaveChangesAsync();
             return new(true);

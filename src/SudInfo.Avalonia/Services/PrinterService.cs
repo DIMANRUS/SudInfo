@@ -1,4 +1,6 @@
-﻿namespace SudInfo.Avalonia.Services;
+﻿using DocumentFormat.OpenXml.Vml.Office;
+
+namespace SudInfo.Avalonia.Services;
 
 public class PrinterService : BaseService<Printer>
 {
@@ -66,6 +68,7 @@ public class PrinterService : BaseService<Printer>
         {
             var printer = await context.Printers.AsNoTracking()
                                                 .FirstAsync(x => x.Id == id);
+            context.Entry(printer).State = EntityState.Deleted;
             context.Printers.Remove(printer);
             await context.SaveChangesAsync();
             return new(true);

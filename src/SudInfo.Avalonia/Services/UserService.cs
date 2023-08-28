@@ -47,6 +47,7 @@ public class UserService : BaseService<User>
         {
             var user = await context.Users.AsNoTracking()
                                           .FirstAsync(x => x.Id == id);
+            context.Entry(user).State = EntityState.Deleted;
             context.Remove(user);
             await context.SaveChangesAsync();
             return new(true);

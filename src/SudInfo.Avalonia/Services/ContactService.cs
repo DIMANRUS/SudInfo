@@ -41,6 +41,7 @@ public class ContactService : BaseService<Contact>
         {
             var entity = await context.Contacts.AsNoTracking()
                                                .FirstAsync(x => x.Id == id);
+            context.Entry(entity).State = EntityState.Deleted;
             context.Contacts.Remove(entity);
             await context.SaveChangesAsync();
             return new(true);

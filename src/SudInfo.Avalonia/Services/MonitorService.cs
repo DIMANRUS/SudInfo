@@ -1,4 +1,6 @@
-﻿namespace SudInfo.Avalonia.Services;
+﻿using DocumentFormat.OpenXml.Vml.Office;
+
+namespace SudInfo.Avalonia.Services;
 
 public class MonitorService : BaseService<Monitor>
 {
@@ -43,6 +45,7 @@ public class MonitorService : BaseService<Monitor>
         {
             var monitor = await context.Monitors.AsNoTracking()
                                                 .FirstAsync(x => x.Id == id);
+            context.Entry(monitor).State = EntityState.Deleted;
             context.Monitors.Remove(monitor);
             await context.SaveChangesAsync();
             return new(true);

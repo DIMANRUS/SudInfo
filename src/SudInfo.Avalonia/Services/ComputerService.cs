@@ -1,4 +1,6 @@
-﻿namespace SudInfo.Avalonia.Services;
+﻿using DocumentFormat.OpenXml.Vml.Office;
+
+namespace SudInfo.Avalonia.Services;
 
 public class ComputerService : BaseService<Computer>
 {
@@ -79,6 +81,7 @@ public class ComputerService : BaseService<Computer>
         {
             var computer = await context.Computers.AsNoTracking()
                                                   .SingleOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Computer not found");
+            context.Entry(computer).State = EntityState.Deleted;
             context.Remove(computer);
             await context.SaveChangesAsync();
             return new(true);

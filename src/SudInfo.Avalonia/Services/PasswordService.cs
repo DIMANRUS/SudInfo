@@ -41,6 +41,7 @@ public class PasswordService : BaseService<PasswordEntity>
         {
             var passwordEntity = await context.Passwords.AsNoTracking()
                                                         .FirstAsync(x => x.Id == id);
+            context.Entry(passwordEntity).State = EntityState.Deleted;
             context.Passwords.Remove(passwordEntity);
             await context.SaveChangesAsync();
             return new(true);

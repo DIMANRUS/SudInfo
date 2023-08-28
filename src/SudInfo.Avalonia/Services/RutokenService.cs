@@ -1,4 +1,6 @@
-﻿namespace SudInfo.Avalonia.Services;
+﻿using DocumentFormat.OpenXml.Vml.Office;
+
+namespace SudInfo.Avalonia.Services;
 
 public class RutokenService : BaseService<Rutoken>
 {
@@ -45,6 +47,7 @@ public class RutokenService : BaseService<Rutoken>
         {
             var rutoken = await context.Rutokens.AsNoTracking()
                                                 .FirstAsync(x => x.Id == id);
+            context.Entry(rutoken).State = EntityState.Deleted;
             context.Rutokens.Remove(rutoken);
             await context.SaveChangesAsync();
             return new(true);

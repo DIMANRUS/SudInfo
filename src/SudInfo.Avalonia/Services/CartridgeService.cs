@@ -1,3 +1,5 @@
+using DocumentFormat.OpenXml.Vml.Office;
+
 namespace SudInfo.Avalonia.Services;
 
 public class CartridgeService : BaseService<Cartridge>
@@ -41,6 +43,7 @@ public class CartridgeService : BaseService<Cartridge>
         {
             var cartridge = await context.Cartridges.AsNoTracking()
                                                     .FirstAsync(x => x.Id == id);
+            context.Entry(cartridge).State = EntityState.Deleted;
             context.Cartridges.Remove(cartridge);
             await context.SaveChangesAsync();
             return new(true);

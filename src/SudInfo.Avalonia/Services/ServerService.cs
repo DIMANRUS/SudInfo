@@ -1,4 +1,6 @@
-﻿namespace SudInfo.Avalonia.Services;
+﻿using DocumentFormat.OpenXml.Vml.Office;
+
+namespace SudInfo.Avalonia.Services;
 
 public class ServerService : BaseService<Server>
 {
@@ -30,6 +32,7 @@ public class ServerService : BaseService<Server>
         {
             Server server = await context.Servers.AsNoTracking()
                                                  .FirstAsync(x => x.Id == id);
+            context.Entry(server).State = EntityState.Deleted;
             context.Remove(server);
             await context.SaveChangesAsync();
             return new()

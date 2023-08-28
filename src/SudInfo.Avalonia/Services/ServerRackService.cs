@@ -60,6 +60,7 @@ public class ServerRackService : BaseService<ServerRack>
         {
             var serverRack = await context.ServerRacks.AsNoTracking()
                                                       .FirstAsync(x => x.Id == id);
+            context.Entry(serverRack).State = EntityState.Deleted;
             context.Remove(serverRack);
             await context.SaveChangesAsync();
             return new(true);

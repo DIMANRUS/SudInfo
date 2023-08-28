@@ -1,4 +1,6 @@
-﻿namespace SudInfo.Avalonia.Services;
+﻿using DocumentFormat.OpenXml.Vml.Office;
+
+namespace SudInfo.Avalonia.Services;
 
 public class PhoneService : BaseService<Phone>
 {
@@ -63,6 +65,7 @@ public class PhoneService : BaseService<Phone>
         {
             var phone = await context.Phones.AsNoTracking()
                                             .FirstAsync(x => x.Id == id);
+            context.Entry(phone).State = EntityState.Deleted;
             context.Remove(phone);
             await context.SaveChangesAsync();
             return new(true);
