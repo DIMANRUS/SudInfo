@@ -25,15 +25,12 @@ public class Computer : BaseModel
     public string? GPU { get; set; }
 
     [XLColumn(Header = "Диск")]
-    [RegularExpression(Const.NumberGreaterThen0, ErrorMessage = Const.NumberCannotBeGreaterThen0Message)]
     public int ROM { get; set; } = 120;
 
     [XLColumn(Header = "Оперативная память")]
-    [RegularExpression(Const.NumberGreaterThen0, ErrorMessage = Const.NumberCannotBeGreaterThen0Message)]
     public int RAM { get; set; } = 1;
 
     [XLColumn(Ignore = true)]
-    [RegularExpression(Const.NumberGreaterThen0, ErrorMessage = Const.NumberCannotBeGreaterThen0Message)]
     public int NumberCabinet { get; set; } = 1;
 
     [XLColumn(Header = "Серийный номер")]

@@ -19,7 +19,6 @@ public class Printer : BaseModel
     public int NumberCabinet { get; set; }
 
     [XLColumn(Header = "Год производства")]
-    [RegularExpression(Const.NumberGreaterThen0, ErrorMessage = Const.NumberCannotBeGreaterThen0Message)]
     public int YearRelease { get; set; } = 2019;
 
     [XLColumn(Header = "Серийный номер")]

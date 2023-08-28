@@ -8,15 +8,12 @@ public class Monitor : BaseModel
     public string? Name { get; set; }
 
     [XLColumn(Header = "Размер экрана")]
-    [RegularExpression(Const.NumberGreaterThen0, ErrorMessage = Const.NumberCannotBeGreaterThen0Message)]
     public int ScreenSize { get; set; } = 24;
 
     [XLColumn(Ignore = true)]
-    [RegularExpression(Const.NumberGreaterThen0, ErrorMessage = Const.NumberCannotBeGreaterThen0Message)]
     public int ScreenResolutionWidth { get; set; } = 1920;
 
     [XLColumn(Ignore = true)]
-    [RegularExpression(Const.NumberGreaterThen0, ErrorMessage = Const.NumberCannotBeGreaterThen0Message)]
     public int ScreenResolutionHeight { get; set; } = 1080;
 
     [XLColumn(Header = "Разрешение экрана")]
