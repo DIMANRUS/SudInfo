@@ -38,11 +38,10 @@ public class Computer : BaseModel
 
     [XLColumn(Header = "Серийный номер")]
     [Required(ErrorMessage = Const.FieldRequired)]
-    [StringLength(50)]
+    [StringLength(50, MinimumLength = 2, ErrorMessage = Const.LengthMore2)]
     public string? SerialNumber { get; set; }
 
     [XLColumn(Header = "Инвентарный номер")]
-    [Required(ErrorMessage = Const.FieldRequired)]
     [StringLength(50)]
     public string? InventarNumber { get; set; }
 
