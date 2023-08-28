@@ -23,8 +23,7 @@ public class PasswordService : BaseService<PasswordEntity>
     {
         try
         {
-            var server = await context.Passwords.AsNoTracking()
-                                                .FirstAsync(x => x.Id == id);
+            var server = await context.Passwords.FirstAsync(x => x.Id == id);
             return new(server, true);
         }
         catch (Exception ex)

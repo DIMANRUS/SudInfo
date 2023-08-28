@@ -23,9 +23,8 @@ public class ContactService : BaseService<Contact>
     {
         try
         {
-            var server = await context.Contacts.AsNoTracking()
-                                               .FirstAsync(x => x.Id == id) ?? throw new Exception("Contact not Found");
-            return new(server, true);
+            var entity = await context.Contacts.FirstAsync(x => x.Id == id);
+            return new(entity, true);
         }
         catch (Exception ex)
         {

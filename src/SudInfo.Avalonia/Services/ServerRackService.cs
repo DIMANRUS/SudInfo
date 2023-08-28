@@ -36,8 +36,7 @@ public class ServerRackService : BaseService<ServerRack>
     {
         try
         {
-            var serverRack = await context.ServerRacks.AsNoTracking()
-                                                      .FirstAsync(x => x.Id == id);
+            var serverRack = await context.ServerRacks.FirstAsync(x => x.Id == id);
             return new(serverRack, true);
         }
         catch (Exception ex)

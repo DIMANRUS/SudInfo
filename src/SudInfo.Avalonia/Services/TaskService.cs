@@ -13,7 +13,7 @@ public class TaskService : BaseService<TaskEntity>
     public async Task<IReadOnlyCollection<TaskEntity>> Get()
     {
         var tasks = await context.Tasks.AsNoTracking()
-                                       .ToListAsync();
+                                                     .ToListAsync();
         return tasks;
     }
 

@@ -1,6 +1,4 @@
-﻿using DocumentFormat.OpenXml.Vml.Office;
-
-namespace SudInfo.Avalonia.Services;
+﻿namespace SudInfo.Avalonia.Services;
 
 public class PrinterService : BaseService<Printer>
 {
@@ -18,9 +16,8 @@ public class PrinterService : BaseService<Printer>
     {
         try
         {
-            var printer = await context.Printers.AsNoTracking()
-                                                .Include(x => x.Computer)
-                                                .FirstOrDefaultAsync(x => x.Id == id);
+            var printer = await context.Printers.Include(x => x.Computer)
+                                                       .FirstOrDefaultAsync(x => x.Id == id);
             return printer == null
                 ? throw new Exception("Принтер не найден.")
                 : new(printer, true);
@@ -77,5 +74,24 @@ public class PrinterService : BaseService<Printer>
         {
             return new(message: ex.Message);
         }
+    }
+
+    public override async Task<Result> Update(Printer printer)
+    {
+        /*        try
+                {*/
+        var entity = await context.Printers.Include(x => x.Computer)
+                                                  .FirstAsync(x => x.Id == printer.Id);
+        entity.Computer = printer.Computer;
+        await context.SaveChangesAsync();
+        return new(true);
+        /*        }
+                catch (Exception ex)
+                {
+                    return new()
+                    {
+                        Message = ex.Message
+                    };
+                }*/
     }
 }

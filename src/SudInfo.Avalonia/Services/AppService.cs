@@ -1,6 +1,4 @@
-﻿using SudInfo.EfDataAccessLibrary.Models;
-
-namespace SudInfo.Avalonia.Services;
+﻿namespace SudInfo.Avalonia.Services;
 
 public class AppService : BaseService<AppEntity>
 {
@@ -28,9 +26,8 @@ public class AppService : BaseService<AppEntity>
         try
         {
             var server = await context.Apps
-                .AsNoTracking()
                 .Include(x => x.Computers)
-                .SingleOrDefaultAsync(x => x.Id == id) ?? throw new Exception("App not Found");
+                .FirstAsync(x => x.Id == id);
             return new(server, true);
         }
         catch (Exception ex)

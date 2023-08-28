@@ -19,15 +19,14 @@ public class BaseService<T> where T : class
 
     #region Methods
 
-    public virtual async Task<Result> Update(params T[] entity)
+    public virtual async Task<Result> Update(T entity)
     {
         try
         {
             if (entity == null)
                 throw new("Entity null");
-            foreach (var item in entity)
-                context.Entry(item).State = EntityState.Modified;
-            context.UpdateRange(entity);
+            context.Entry(entity).State = EntityState.Modified;
+            context.Update(entity);
             await context.SaveChangesAsync();
             return new()
             {

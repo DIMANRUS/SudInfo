@@ -1,6 +1,4 @@
-﻿using DocumentFormat.OpenXml.Vml.Office;
-
-namespace SudInfo.Avalonia.Services;
+﻿namespace SudInfo.Avalonia.Services;
 
 public class PhoneService : BaseService<Phone>
 {
@@ -16,9 +14,8 @@ public class PhoneService : BaseService<Phone>
     {
         try
         {
-            var phone = await context.Phones.AsNoTracking()
-                                            .Include(x => x.User)
-                                            .FirstAsync(x => x.Id == id);
+            var phone = await context.Phones.Include(x => x.User)
+                                                  .FirstAsync(x => x.Id == id);
             return phone == null
                 ? throw new Exception("Телефон не найден")
                 : new(phone, true);
@@ -64,7 +61,7 @@ public class PhoneService : BaseService<Phone>
         try
         {
             var phone = await context.Phones.AsNoTracking()
-                                            .FirstAsync(x => x.Id == id);
+                                                  .FirstAsync(x => x.Id == id);
             context.Entry(phone).State = EntityState.Deleted;
             context.Remove(phone);
             await context.SaveChangesAsync();

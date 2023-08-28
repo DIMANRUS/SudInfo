@@ -72,4 +72,23 @@ public class PeripheryService : BaseService<Periphery>
             return new(message: ex.Message);
         }
     }
+
+    public override async Task<Result> Update(Periphery periphery)
+    {
+        try
+        {
+            var entity = await context.Peripheries.Include(x => x.Computer)
+                                                           .FirstAsync(x => x.Id == periphery.Id);
+            entity.Computer = periphery.Computer;
+            await context.SaveChangesAsync();
+            return new(true);
+        }
+        catch (Exception ex)
+        {
+            return new()
+            {
+                Message = ex.Message
+            };
+        }
+    }
 }

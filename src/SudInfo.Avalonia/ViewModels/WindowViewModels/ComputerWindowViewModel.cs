@@ -1,6 +1,4 @@
-﻿using DocumentFormat.OpenXml.Office2010.Excel;
-
-namespace SudInfo.Avalonia.ViewModels.WindowViewModels;
+﻿namespace SudInfo.Avalonia.ViewModels.WindowViewModels;
 
 public class ComputerWindowViewModel : BaseViewModel
 {

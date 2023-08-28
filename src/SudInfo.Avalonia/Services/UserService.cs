@@ -16,8 +16,7 @@ public class UserService : BaseService<User>
     {
         try
         {
-            var user = await context.Users.AsNoTracking()
-                                          .FirstAsync(x => x.Id == id);
+            var user = await context.Users.FirstAsync(x => x.Id == id);
             return new(user, true);
         }
         catch (Exception ex)

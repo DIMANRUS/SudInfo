@@ -18,8 +18,7 @@ public class CartridgeService : BaseService<Cartridge>
     {
         try
         {
-            var cartridge = await context.Cartridges.AsNoTracking()
-                                                    .FirstAsync(x => x.Id == id);
+            var cartridge = await context.Cartridges.FirstAsync(x => x.Id == id);
             return new(cartridge, true);
         }
         catch (Exception ex)

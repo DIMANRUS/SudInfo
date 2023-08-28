@@ -25,10 +25,9 @@ public class MonitorService : BaseService<Monitor>
     {
         try
         {
-            var monitor = await context.Monitors.AsNoTracking()
-                                                .Include(x => x.Computer)
-                                                .ThenInclude(x => x.User)
-                                                .FirstOrDefaultAsync(x => x.Id == id);
+            var monitor = await context.Monitors.Include(x => x.Computer)
+                                                       .ThenInclude(x => x.User)
+                                                       .FirstOrDefaultAsync(x => x.Id == id);
             return monitor == null ? throw new Exception("Computer not Found") : new(monitor, true);
         }
         catch (Exception ex)
@@ -73,6 +72,25 @@ public class MonitorService : BaseService<Monitor>
         catch (Exception ex)
         {
             return new(message: ex.Message);
+        }
+    }
+
+    public override async Task<Result> Update(Monitor monitor)
+    {
+        try
+        {
+            var entity = await context.Monitors.Include(x => x.Computer)
+                                                      .FirstAsync(x => x.Id == monitor.Id);
+            entity.Computer = monitor.Computer;
+            await context.SaveChangesAsync();
+            return new(true);
+        }
+        catch (Exception ex)
+        {
+            return new()
+            {
+                Message = ex.Message
+            };
         }
     }
 }

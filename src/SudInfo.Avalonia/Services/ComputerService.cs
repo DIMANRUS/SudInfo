@@ -1,6 +1,4 @@
-﻿using DocumentFormat.OpenXml.Vml.Office;
-
-namespace SudInfo.Avalonia.Services;
+﻿namespace SudInfo.Avalonia.Services;
 
 public class ComputerService : BaseService<Computer>
 {
@@ -18,9 +16,8 @@ public class ComputerService : BaseService<Computer>
     {
         try
         {
-            var computer = await context.Computers.AsNoTracking()
-                                                  .Include(x => x.User)
-                                                  .SingleOrDefaultAsync(x => x.Id == id);
+            var computer = await context.Computers.Include(x => x.User)
+                                                  .FirstAsync(x => x.Id == id);
             return computer == null
                 ? throw new Exception("Computer not Found")
                 : new(computer, true);
@@ -80,7 +77,7 @@ public class ComputerService : BaseService<Computer>
         try
         {
             var computer = await context.Computers.AsNoTracking()
-                                                  .SingleOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Computer not found");
+                                                          .SingleOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Computer not found");
             context.Entry(computer).State = EntityState.Deleted;
             context.Remove(computer);
             await context.SaveChangesAsync();
@@ -91,4 +88,25 @@ public class ComputerService : BaseService<Computer>
             return new(message: ex.Message);
         }
     }
+
+    /*   public override async Task<Result> Update(Computer computer)
+       {
+           try
+           {
+               var computerFromDatabase = await context.Computers.Include(x => x.User).FirstAsync(x => x.Id == computer.Id);
+               computerFromDatabase.User = computer.User;
+               await context.SaveChangesAsync();
+               return new()
+               {
+                   Success = true
+               };
+           }
+           catch (Exception ex)
+           {
+               return new()
+               {
+                   Message = ex.Message
+               };
+           }
+       }*/
 }
