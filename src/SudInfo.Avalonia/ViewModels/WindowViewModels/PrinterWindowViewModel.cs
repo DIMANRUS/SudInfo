@@ -77,7 +77,7 @@ public class PrinterWindowViewModel : BaseViewModel
 
     public async Task LoadComputers()
     {
-        var computersResult = await _computerService.GetComputerNamesWithUser();
+        var computersResult = await _computerService.Get();
         Computers = computersResult;
     }
 

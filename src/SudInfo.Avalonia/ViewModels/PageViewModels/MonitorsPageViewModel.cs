@@ -55,7 +55,8 @@ public class MonitorsPageViewModel : BaseRoutableViewModel
             if (keyEventArgs.Key != Key.Enter || MonitorsFromDataBase == null)
                 return;
             Monitors = MonitorsFromDataBase.Where(x => x.Name!.ToLower().Contains(SearchText.ToLower()) ||
-                                            x.InventarNumber!.Contains(SearchText) ||
+                                            x.InventarNumber != null &&
+                                            x.InventarNumber.Contains(SearchText) ||
                                             x.SerialNumber!.Contains(SearchText) ||
                                             x.Computer != null &&
                                             x.Computer.User != null &&

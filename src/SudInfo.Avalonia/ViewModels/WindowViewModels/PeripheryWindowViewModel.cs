@@ -1,6 +1,4 @@
-﻿using DocumentFormat.OpenXml.Spreadsheet;
-
-namespace SudInfo.Avalonia.ViewModels.WindowViewModels;
+﻿namespace SudInfo.Avalonia.ViewModels.WindowViewModels;
 
 public class PeripheryWindowViewModel : BaseViewModel
 {
@@ -112,7 +110,7 @@ public class PeripheryWindowViewModel : BaseViewModel
     }
     public async Task LoadComputers()
     {
-        var computersResult = await _computerService.GetComputerNamesWithUser();
+        var computersResult = await _computerService.Get();
         Computers = computersResult;
     }
 

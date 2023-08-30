@@ -23,21 +23,16 @@ public class BaseService<T> where T : class
     {
         try
         {
-            if (entity == null)
-                throw new("Entity null");
             context.Entry(entity).State = EntityState.Modified;
             context.Update(entity);
             await context.SaveChangesAsync();
-            return new()
-            {
-                Success = true
-            };
+            return new(true);
         }
-        catch (Exception ex)
+        catch (DbUpdateException ex)
         {
             return new()
             {
-                Message = ex.Message
+                Message = ex.InnerException.Message
             };
         }
     }
@@ -46,8 +41,6 @@ public class BaseService<T> where T : class
     {
         try
         {
-            if (entity == null)
-                throw new("Entity null");
             context.Entry(entity).State = EntityState.Added;
             await context.AddAsync(entity);
             await context.SaveChangesAsync();

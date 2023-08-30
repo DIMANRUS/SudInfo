@@ -36,20 +36,6 @@ public class ComputerService : BaseService<Computer>
         return computers;
     }
 
-    public async Task<IReadOnlyCollection<Computer>> GetComputerNamesWithUser()
-    {
-        var computerNames = await context.Computers.AsNoTracking()
-                                                   .Include(x => x.User)
-                                                   .Select(x => new Computer()
-                                                   {
-                                                       Name = x.Name,
-                                                       Id = x.Id,
-                                                       User = x.User
-                                                   })
-                                                   .ToListAsync();
-        return computerNames;
-    }
-
     #endregion
 
     public override async Task<Result> Add(Computer computer)
