@@ -86,6 +86,10 @@
       <CheckBox Name="IsPersonalCheckBox"
                 Content="Личное"
                 IsChecked="{Binding Computer.IsPersonal}" />
+      <ComboBox
+        HorizontalAlignment="Stretch"
+        ItemsSource="{Binding RomTypes}"
+        SelectedItem="{Binding Computer.TypeROM}" />
       <TextBox
         IsEnabled="{Binding !#IsUserBox.IsChecked}"
         MaxLength="4"

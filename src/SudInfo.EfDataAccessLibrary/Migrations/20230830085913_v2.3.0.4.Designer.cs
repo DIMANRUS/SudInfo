@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SudInfo.EfDataAccessLibrary.Contexts;
 
@@ -10,9 +11,11 @@ using SudInfo.EfDataAccessLibrary.Contexts;
 namespace SudInfo.EfDataAccessLibrary.Migrations
 {
     [DbContext(typeof(SudInfoDatabaseContext))]
-    partial class SudInfoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230830085913_v2.3.0.4")]
+    partial class v2304
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.10");
@@ -165,7 +168,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("TypeROM")
+                    b.Property<int>("TyepROM")
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("UserId")

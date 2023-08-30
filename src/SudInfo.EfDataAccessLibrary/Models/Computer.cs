@@ -45,6 +45,9 @@ public class Computer : BaseModel
     [XLColumn(Header = "Год производства")]
     public int YearRelease { get; set; } = 2019;
 
+    [XLColumn(Header = "Тип диска")]
+    public TypeROM TypeROM { get; set; } = TypeROM.HDD;
+
     [XLColumn(Header = "Сломан")]
     public bool IsBroken { get; set; }
 
@@ -103,4 +106,9 @@ public class Computer : BaseModel
 public enum OS
 {
     Windows7, Windows10, Linux, WindowsXP
+}
+
+public enum TypeROM
+{
+    HDD, SSD
 }

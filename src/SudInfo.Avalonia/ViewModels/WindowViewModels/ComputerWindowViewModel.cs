@@ -12,6 +12,8 @@ public class ComputerWindowViewModel : BaseViewModel
 
     #region Collections
 
+    public static IEnumerable<TypeROM> RomTypes => Enum.GetValues(typeof(TypeROM)).Cast<TypeROM>();
+
     public static IEnumerable<OS> OsesList => Enum.GetValues(typeof(OS)).Cast<OS>();
 
     [Reactive]
