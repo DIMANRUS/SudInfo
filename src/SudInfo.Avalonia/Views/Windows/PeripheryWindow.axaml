@@ -10,7 +10,7 @@
     xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.WindowViewModels;assembly=SudInfo.Avalonia"
     Title="Периферия"
     Width="300"
-    Height="330"
+    Height="480"
     x:DataType="viewModels:PeripheryWindowViewModel"
     CanResize="False"
     WindowStartupLocation="CenterOwner"
@@ -39,6 +39,16 @@
         HorizontalAlignment="Stretch"
         ItemsSource="{Binding PeripheryTypes}"
         SelectedItem="{Binding Periphery.Type}" />
+    <CheckBox
+      Name="IsBrokenCheckBox"
+      Content="Сломан"
+      IsChecked="{Binding Periphery.IsBroken}" />
+    <TextBox
+      Height="100"
+      IsEnabled="{Binding #IsBrokenCheckBox.IsChecked}"
+      MaxLength="200"
+      Text="{Binding Periphery.BreakdownDescription}"
+      Watermark="Описание поломки" />
     <StackPanel Orientation="Horizontal">
       <CheckBox Name="IsComputerBox" IsChecked="{Binding IsComputer}" />
       <ComboBox

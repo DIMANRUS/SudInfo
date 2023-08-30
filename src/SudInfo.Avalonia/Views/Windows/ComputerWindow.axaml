@@ -1,99 +1,106 @@
 <Window
-    x:Class="SudInfo.Avalonia.Views.Windows.ComputerWindow"
-    xmlns="https://github.com/avaloniaui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:i="using:Avalonia.Xaml.Interactivity"
-    xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="using:SudInfo.EfDataAccessLibrary.Models"
-    xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.WindowViewModels;assembly=SudInfo.Avalonia"
-    Title="Компьютер"
-    Width="600"
-    Height="540"
-    x:DataType="viewModels:ComputerWindowViewModel"
-    CanResize="False"
-    WindowStartupLocation="CenterScreen"
-    mc:Ignorable="d">
+  x:Class="SudInfo.Avalonia.Views.Windows.ComputerWindow"
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:i="using:Avalonia.Xaml.Interactivity"
+  xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:models="using:SudInfo.EfDataAccessLibrary.Models"
+  xmlns:viewModels="clr-namespace:SudInfo.Avalonia.ViewModels.WindowViewModels;assembly=SudInfo.Avalonia"
+  Title="Компьютер"
+  Width="600"
+  Height="540"
+  x:DataType="viewModels:ComputerWindowViewModel"
+  CanResize="False"
+  WindowStartupLocation="CenterScreen"
+  mc:Ignorable="d">
   <Grid
-      Margin="2"
-      ColumnDefinitions="*,*"
-      RowDefinitions="*, 50">
-    <StackPanel Margin="5" Spacing="5">
+    Margin="2"
+    ColumnDefinitions="*,*"
+    RowDefinitions="*, 50">
+    <StackPanel Margin="5"
+                Spacing="5">
       <TextBox
-          MaxLength="100"
-          Text="{Binding Computer.Name}"
-          Watermark="Название" />
+        MaxLength="100"
+        Text="{Binding Computer.Name}"
+        Watermark="Название" />
       <TextBox
-          MaxLength="15"
-          Text="{Binding Computer.Ip}"
-          Watermark="IP адрес" />
+        MaxLength="15"
+        Text="{Binding Computer.Ip}"
+        Watermark="IP адрес" />
       <ComboBox
-          HorizontalAlignment="Stretch"
-          ItemsSource="{Binding OsesList}"
-          SelectedItem="{Binding Computer.OS}" />
+        HorizontalAlignment="Stretch"
+        ItemsSource="{Binding OsesList}"
+        SelectedItem="{Binding Computer.OS}" />
       <TextBox
-          MaxLength="100"
-          Text="{Binding Computer.CPU}"
-          Watermark="CPU" />
+        MaxLength="100"
+        Text="{Binding Computer.CPU}"
+        Watermark="CPU" />
       <TextBox
-          MaxLength="100"
-          Text="{Binding Computer.GPU}"
-          Watermark="GPU (Необязательно)" />
+        MaxLength="100"
+        Text="{Binding Computer.GPU}"
+        Watermark="GPU (Необязательно)" />
       <TextBox
-          MaxLength="5"
-          Text="{Binding Computer.ROM}"
-          Watermark="Размер диска (ГБ)" />
+        MaxLength="5"
+        Text="{Binding Computer.ROM}"
+        Watermark="Размер диска (ГБ)" />
       <TextBox
-          MaxLength="2"
-          Text="{Binding Computer.RAM}"
-          Watermark="Оперативная память (ГБ)" />
+        MaxLength="2"
+        Text="{Binding Computer.RAM}"
+        Watermark="Оперативная память (ГБ)" />
       <TextBox
-          MaxLength="4"
-          Text="{Binding Computer.YearRelease}"
-          Watermark="Год выпуска" />
+        MaxLength="4"
+        Text="{Binding Computer.YearRelease}"
+        Watermark="Год выпуска" />
       <TextBox
-          MaxLength="50"
-          Text="{Binding Computer.SerialNumber}"
-          Watermark="Серийный номер" />
+        MaxLength="50"
+        Text="{Binding Computer.SerialNumber}"
+        Watermark="Серийный номер" />
     </StackPanel>
     <StackPanel
-        Grid.Column="1"
-        Margin="5"
-        Spacing="5">
+      Grid.Column="1"
+      Margin="5"
+      Spacing="5">
       <TextBox
-          MaxLength="50"
-          Text="{Binding Computer.InventarNumber}"
-          Watermark="Инвентарный номер" 
-          IsEnabled="{Binding !#IsPersonalCheckBox.IsChecked}"/>
+        MaxLength="50"
+        Text="{Binding Computer.InventarNumber}"
+        Watermark="Инвентарный номер"
+        IsEnabled="{Binding !#IsPersonalCheckBox.IsChecked}"/>
       <CheckBox
-          Name="IsBrokenCheckBox"
-          Content="Сломан"
-          IsChecked="{Binding Computer.IsBroken}" />
+        Name="IsBrokenCheckBox"
+        Content="Сломан"
+        IsChecked="{Binding Computer.IsBroken}" />
       <TextBox
-          Height="100"
-          IsEnabled="{Binding #IsBrokenCheckBox.IsChecked}"
-          MaxLength="200"
-          Text="{Binding Computer.BreakdownDescription}"
-          Watermark="Описание поломки" />
-      <CheckBox Content="ВКС" IsChecked="{Binding Computer.IsVks}" />
-      <CheckBox Content="Списан" IsChecked="{Binding Computer.IsDecommissioned}" />
-      <CheckBox Content="На складе" IsChecked="{Binding Computer.IsStock}" />
-      <CheckBox Name="IsPersonalCheckBox" Content="Личное" IsChecked="{Binding Computer.IsPersonal}" />
+        Height="100"
+        IsEnabled="{Binding #IsBrokenCheckBox.IsChecked}"
+        MaxLength="200"
+        Text="{Binding Computer.BreakdownDescription}"
+        Watermark="Описание поломки" />
+      <CheckBox Content="ВКС"
+                IsChecked="{Binding Computer.IsVks}" />
+      <CheckBox Content="Списан"
+                IsChecked="{Binding Computer.IsDecommissioned}" />
+      <CheckBox Content="На складе"
+                IsChecked="{Binding Computer.IsStock}" />
+      <CheckBox Name="IsPersonalCheckBox"
+                Content="Личное"
+                IsChecked="{Binding Computer.IsPersonal}" />
       <TextBox
-          IsEnabled="{Binding !#IsUserBox.IsChecked}"
-          MaxLength="4"
-          Text="{Binding Computer.NumberCabinet}"
-          Watermark="Кабинет" />
+        IsEnabled="{Binding !#IsUserBox.IsChecked}"
+        MaxLength="4"
+        Text="{Binding Computer.NumberCabinet}"
+        Watermark="Кабинет" />
       <StackPanel Orientation="Horizontal">
-        <CheckBox Name="IsUserBox" IsChecked="{Binding IsUser}" />
+        <CheckBox Name="IsUserBox"
+                  IsChecked="{Binding IsUser}" />
         <ComboBox
-            Width="257"
-            AutoScrollToSelectedItem="True"
-            IsEnabled="{Binding #IsUserBox.IsChecked}"
-            ItemsSource="{Binding Users}"
-            PlaceholderText="Сотрудник"
-            SelectedItem="{Binding Computer.User}">
+          Width="257"
+          AutoScrollToSelectedItem="True"
+          IsEnabled="{Binding #IsUserBox.IsChecked}"
+          ItemsSource="{Binding Users}"
+          PlaceholderText="Сотрудник"
+          SelectedItem="{Binding Computer.User}">
           <ComboBox.DataTemplates>
             <DataTemplate x:DataType="{x:Type models:User}">
               <TextBlock Text="{Binding FIO}" />
@@ -103,12 +110,12 @@
       </StackPanel>
     </StackPanel>
     <Button
-        Grid.Row="1"
-        Grid.ColumnSpan="2"
-        HorizontalAlignment="Stretch"
-        HorizontalContentAlignment="Center"
-        Command="{Binding SaveComputer}"
-        Content="{Binding SaveButtonText}"
-        IsVisible="{Binding ButtonIsVisible}" />
+      Grid.Row="1"
+      Grid.ColumnSpan="2"
+      HorizontalAlignment="Stretch"
+      HorizontalContentAlignment="Center"
+      Command="{Binding SaveComputer}"
+      Content="{Binding SaveButtonText}"
+      IsVisible="{Binding ButtonIsVisible}" />
   </Grid>
 </Window>

@@ -22,6 +22,13 @@ public class Periphery : BaseModel
     [XLColumn(Header = "Личное")]
     public bool IsPersonal { get; set; }
 
+    [XLColumn(Header = "Сломан")]
+    public bool IsBroken { get; set; }
+
+    [XLColumn(Header = "Описание поломки")]
+    [StringLength(200)]
+    public string? BreakdownDescription { get; set; }
+
     public Computer? Computer { get; set; }
 
     [XLColumn(Ignore = true)]
