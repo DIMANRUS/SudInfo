@@ -64,6 +64,9 @@ public class Computer : BaseModel
     [XLColumn(Ignore = true)]
     public User? User { get; set; }
 
+    [XLColumn(Header = "Личное")]
+    public bool IsPersonal { get; set; }
+
     #region Not mapped properties
 
     [XLColumn(Header = "Номер кабинета")]

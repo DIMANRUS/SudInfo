@@ -69,6 +69,7 @@
                 <DataGridTextColumn Binding="{Binding User.FIO}" Header="ФИО сотрудника" />
                 <DataGridTextColumn Binding="{Binding Cabinet}" Header="Кабинет" />
                 <DataGridTextColumn Binding="{Binding IsVks}" Header="ВКС" />
+              <DataGridTextColumn Binding="{Binding IsPersonal}" Header="Личное" />
                 <DataGridTextColumn Binding="{Binding IsDecommissioned}" Header="Списан" />
                 <DataGridTextColumn Binding="{Binding IsBroken}" Header="Сломан" />
                 <DataGridTextColumn Binding="{Binding IsStock}" Header="На складе" />

@@ -90,9 +90,7 @@
                 <DataGridTextColumn Binding="{Binding InventarNumber}" Header="Инвентарный" />
                 <DataGridTextColumn Binding="{Binding SerialNumber}" Header="Серийный" />
                 <DataGridTextColumn Binding="{Binding Computer.Name}" Header="Компьютер" />
-                <DataGridTextColumn
-                    Width="*"
-                    Binding="{Binding Computer.User.FIO}"
+                <DataGridTextColumn Binding="{Binding Computer.User.FIO}"
                     Header="ФИО сотрудника" />
                 <DataGridTextColumn Binding="{Binding Computer.Cabinet}" Header="Кабинет" />
                 <DataGridTextColumn Binding="{Binding IsPersonal}" Header="Личное" />
