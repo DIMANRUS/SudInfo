@@ -41,8 +41,6 @@
           <InvokeCommandAction Command="{Binding SearchBoxKeyUp}"
                                PassEventArgsToCommand="True" />
         </EventTriggerBehavior>
-      </i:Interaction.Behaviors>
-      <i:Interaction.Behaviors>
         <EventTriggerBehavior EventName="Unchecked">
           <InvokeCommandAction Command="{Binding SearchBoxKeyUp}"
                                PassEventArgsToCommand="True" />
