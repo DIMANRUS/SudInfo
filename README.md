@@ -3,7 +3,7 @@
 ***
 ## Стек технологий:
 * Avalonia
-* .NET 7, C#
+* .NET 8, C#
 * EF Core
 * SqlLite
 ***
