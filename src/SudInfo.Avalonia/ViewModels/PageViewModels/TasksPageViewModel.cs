@@ -60,8 +60,7 @@ public class TasksPageViewModel : BaseRoutableViewModel
 
     public async Task LoadTasks()
     {
-        var tasksResult = await _taskService.Get();
-        Tasks = tasksResult;
+        Tasks = await _taskService.Get();
     }
 
     public async Task OpenAddTaskWindow()

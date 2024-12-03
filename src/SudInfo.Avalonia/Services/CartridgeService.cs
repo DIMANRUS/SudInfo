@@ -2,13 +2,9 @@ using DocumentFormat.OpenXml.Vml.Office;
 
 namespace SudInfo.Avalonia.Services;
 
-public class CartridgeService : BaseService<Cartridge>
+public class CartridgeService(SudInfoDatabaseContext context) : BaseService<Cartridge>(context)
 {
     #region Ctors
-
-    public CartridgeService(SudInfoDatabaseContext context) : base(context)
-    {
-    }
 
     #endregion
 
@@ -29,9 +25,8 @@ public class CartridgeService : BaseService<Cartridge>
 
     public async Task<IReadOnlyCollection<Cartridge>> Get()
     {
-        var cartridges = await context.Cartridges.AsNoTracking()
+        return await context.Cartridges.AsNoTracking()
                                                  .ToListAsync();
-        return cartridges;
     }
 
     #endregion

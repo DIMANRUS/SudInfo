@@ -36,7 +36,6 @@ public class CartridgeWindowViewModel : BaseViewModel
 
         CartridgeService cartridgeService)
     {
-
         _cartridgeService = cartridgeService;
     }
 
@@ -45,10 +44,10 @@ public class CartridgeWindowViewModel : BaseViewModel
     #region Collections
 
     public static IEnumerable<CartridgeType> CartridgeTypes
-        => Enum.GetValues(typeof(CartridgeType)).Cast<CartridgeType>();
+        => Enum.GetValues<CartridgeType>().Cast<CartridgeType>();
 
     public static IEnumerable<CartridgeStatus> CartridgeStatuses
-        => Enum.GetValues(typeof(CartridgeStatus)).Cast<CartridgeStatus>();
+        => Enum.GetValues<CartridgeStatus>().Cast<CartridgeStatus>();
 
     #endregion
 

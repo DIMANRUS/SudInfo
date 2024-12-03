@@ -1,12 +1,8 @@
 ﻿namespace SudInfo.Avalonia.Services;
 
-public class PrinterService : BaseService<Printer>
+public class PrinterService(SudInfoDatabaseContext context) : BaseService<Printer>(context)
 {
     #region Ctors
-
-    public PrinterService(SudInfoDatabaseContext context) : base(context)
-    {
-    }
 
     #endregion
 
@@ -30,11 +26,10 @@ public class PrinterService : BaseService<Printer>
 
     public async Task<IReadOnlyCollection<Printer>> Get()
     {
-        var printers = await context.Printers.AsNoTracking()
+        return await context.Printers.AsNoTracking()
                                              .Include(x => x.Computer)
                                              .ThenInclude(x => x.User)
                                              .ToListAsync();
-        return printers;
     }
 
     #endregion

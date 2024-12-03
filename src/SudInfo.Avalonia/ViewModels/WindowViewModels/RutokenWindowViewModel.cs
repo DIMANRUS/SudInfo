@@ -94,8 +94,7 @@ public class RutokenWindowViewModel : BaseViewModel
     }
     public async Task LoadUsers()
     {
-        var usersResult = await _usersService.Get();
-        Users = usersResult;
+        Users = await _usersService.Get();
     }
 
     #endregion

@@ -3,6 +3,7 @@
 internal static class ServiceCollectionExtension
 {
     public static readonly IServiceProvider ServiceProvider = new ServiceCollection()
+
     #region Page view models
             .AddScoped<ComputersPageViewModel>()
             .AddScoped<PrintersPageViewModel>()
@@ -19,6 +20,7 @@ internal static class ServiceCollectionExtension
             .AddScoped<CartridgesPageViewModel>()
             .AddScoped<PhonesPageViewModel>()
     #endregion
+
     #region Window view models
             .AddScoped<AppWindowViewModel>()
             .AddScoped<CartridgeWindowViewModel>()
@@ -35,8 +37,8 @@ internal static class ServiceCollectionExtension
             .AddScoped<PrinterWindowViewModel>()
             .AddScoped<PhoneWindowViewModel>()
     #endregion
+
     #region Services
-            .AddTransient<ExcelService>()
             .AddTransient<PrinterService>()
             .AddTransient<RutokenService>()
             .AddTransient<PeripheryService>()
@@ -52,7 +54,7 @@ internal static class ServiceCollectionExtension
             .AddSingleton<NavigationService>()
             .AddTransient<ComputerService>()
             .AddTransient<PhoneService>()
-    #endregion
             .AddTransient<SudInfoDatabaseContext>()
             .BuildServiceProvider();
+    #endregion
 }

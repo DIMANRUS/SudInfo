@@ -1,20 +1,15 @@
 ﻿namespace SudInfo.Avalonia.Services;
 
-public class TaskService : BaseService<TaskEntity>
+public class TaskService(SudInfoDatabaseContext context) : BaseService<TaskEntity>(context)
 {
     #region Ctors
-
-    public TaskService(SudInfoDatabaseContext context) : base(context)
-    {
-    }
 
     #endregion
 
     public async Task<IReadOnlyCollection<TaskEntity>> Get()
     {
-        var tasks = await context.Tasks.AsNoTracking()
+        return await context.Tasks.AsNoTracking()
                                                      .ToListAsync();
-        return tasks;
     }
 
     public async Task<Result> CompleteTask(int id)

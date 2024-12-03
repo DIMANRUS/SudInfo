@@ -1,10 +1,8 @@
 ﻿namespace SudInfo.Avalonia.Services;
 
-public class PhoneService : BaseService<Phone>
+public class PhoneService(SudInfoDatabaseContext context) : BaseService<Phone>(context)
 {
     #region Ctors
-
-    public PhoneService(SudInfoDatabaseContext context) : base(context) { }
 
     #endregion
 
@@ -28,10 +26,9 @@ public class PhoneService : BaseService<Phone>
 
     public async Task<IReadOnlyCollection<Phone>> Get()
     {
-        var phones = await context.Phones.AsNoTracking()
+        return await context.Phones.AsNoTracking()
                                          .Include(x => x.User)
                                          .ToListAsync();
-        return phones;
     }
 
     #endregion

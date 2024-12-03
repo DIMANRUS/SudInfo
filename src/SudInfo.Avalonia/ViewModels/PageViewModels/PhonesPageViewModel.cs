@@ -59,12 +59,12 @@ public class PhonesPageViewModel : BaseRoutableViewModel
             }
             if (keyEventArgs.Key != Key.Enter || PhonesFromDataBase == null)
                 return;
-            Phones = PhonesFromDataBase.Where(x => x.Name!.ToLower().Contains(SearchText.ToLower()) ||
-                                                                x.InventarNumber != null && 
-                                                                x.InventarNumber.Contains(SearchText) ||
+            Phones = PhonesFromDataBase.Where(x => x.Name!.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase) ||
+                                                                (x.InventarNumber != null && 
+                                                                x.InventarNumber.Contains(SearchText)) ||
                                                                 x.SerialNumber!.Contains(SearchText) ||
-                                                                x.User != null &&
-                                                                x.User.FIO.ToLower().Contains(SearchText.ToLower()))
+                                                                (x.User != null &&
+                                                                x.User.FIO.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase)))
                                              .ToList();
         });
     }

@@ -2,13 +2,9 @@
 
 namespace SudInfo.Avalonia.Services;
 
-public class ServerService : BaseService<Server>
+public class ServerService(SudInfoDatabaseContext context) : BaseService<Server>(context)
 {
     #region Ctors
-
-    public ServerService(SudInfoDatabaseContext context) : base(context)
-    {
-    }
 
     #endregion
 

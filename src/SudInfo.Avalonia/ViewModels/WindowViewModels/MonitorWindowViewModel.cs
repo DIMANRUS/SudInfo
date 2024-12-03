@@ -104,8 +104,7 @@ public class MonitorWindowViewModel : BaseViewModel
     }
     public async Task LoadComputer()
     {
-        var computersResult = await _computerService.Get();
-        Computers = computersResult;
+        Computers = await _computerService.Get();
     }
 
     #endregion

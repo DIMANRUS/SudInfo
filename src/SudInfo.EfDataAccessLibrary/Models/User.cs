@@ -36,5 +36,5 @@ public class User : BaseModel
     [StringLength(3)]
     public string? LocalPhone { get; set; }
 
-    public ICollection<Computer> Computers { get; set; } = new List<Computer>();
+    public ICollection<Computer> Computers { get; set; } = [];
 }

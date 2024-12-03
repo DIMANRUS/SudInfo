@@ -51,24 +51,24 @@ public class WorkplacesPageViewModel : BaseRoutableViewModel
             }
             if (keyEventArgs.Key != Key.Enter || UsersFromDatabase == null)
                 return;
-            string searchTextLower = SearchText.ToLower();
-            Users = new List<User>(UsersFromDatabase.Where(x => x.FIO.ToLower().Contains(searchTextLower) ||
+            string searchTextLower = SearchText.ToLower(CultureInfo.CurrentCulture);
+            Users = new List<User>(UsersFromDatabase.Where(x => x.FIO.Contains(searchTextLower, StringComparison.CurrentCultureIgnoreCase) ||
                                                                 x.Computers.Any(c =>
-                                                                    c.Name!.ToLower().Contains(searchTextLower) ||
+                                                                    c.Name!.Contains(searchTextLower, StringComparison.CurrentCultureIgnoreCase) ||
                                                                     c.InventarNumber!.Contains(searchTextLower) ||
                                                                     c.SerialNumber!.Contains(searchTextLower) ||
-                                                                    c.Monitors != null &&
+                                                                    (c.Monitors != null &&
                                                                     c.Monitors.Any(m =>
-                                                                        m.Name!.ToLower().Contains(searchTextLower) ||
+                                                                        m.Name!.Contains(searchTextLower, StringComparison.CurrentCultureIgnoreCase) ||
                                                                         m.InventarNumber!.Contains(searchTextLower) ||
                                                                         m.SerialNumber!.Contains(searchTextLower)
-                                                                    ) ||
-                                                                    c.Printers != null &&
+                                                                    )) ||
+                                                                    (c.Printers != null &&
                                                                     c.Printers.Any(p =>
-                                                                        p.Name!.ToLower().Contains(searchTextLower) ||
+                                                                        p.Name!.Contains(searchTextLower, StringComparison.CurrentCultureIgnoreCase) ||
                                                                         p.InventarNumber!.Contains(searchTextLower) ||
                                                                         p.SerialNumber!.Contains(searchTextLower)
-                                                                    ))));
+                                                                    )))));
         });
     }
 
@@ -109,8 +109,7 @@ public class WorkplacesPageViewModel : BaseRoutableViewModel
 
     public async Task LoadWorkplaces()
     {
-        var usersLoadResult = await _userService.Get();
-        Users = usersLoadResult;
+        Users = await _userService.Get();
         UsersFromDatabase = Users;
     }
 

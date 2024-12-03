@@ -1,12 +1,8 @@
 ﻿namespace SudInfo.Avalonia.Services;
 
-public class PasswordService : BaseService<PasswordEntity>
+public class PasswordService(SudInfoDatabaseContext context) : BaseService<PasswordEntity>(context)
 {
     #region Ctors
-
-    public PasswordService(SudInfoDatabaseContext context) : base(context)
-    {
-    }
 
     #endregion
 
@@ -14,9 +10,8 @@ public class PasswordService : BaseService<PasswordEntity>
 
     public async Task<IReadOnlyCollection<PasswordEntity>> Get()
     {
-        var passwords = await context.Passwords.AsNoTracking()
+        return await context.Passwords.AsNoTracking()
                                                .ToListAsync();
-        return passwords;
     }
 
     public async Task<Result<PasswordEntity>> Get(int id)

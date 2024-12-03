@@ -17,7 +17,7 @@ public class PeripheryPageViewModel : BaseRoutableViewModel
 
     private IReadOnlyCollection<Periphery>? PeripheriesFromDatabase { get; set; }
 
-    public static IEnumerable<PeripheryType> PeripheryTypes => Enum.GetValues(typeof(PeripheryType)).Cast<PeripheryType>();
+    public static IEnumerable<PeripheryType> PeripheryTypes => Enum.GetValues<PeripheryType>().Cast<PeripheryType>();
 
     #endregion
 
@@ -30,7 +30,7 @@ public class PeripheryPageViewModel : BaseRoutableViewModel
     public Periphery? SelectedPeriphery { get; set; }
 
     [Reactive]
-    public PeripheryType SelectedPeripheryType { get; set; } = Enum.GetValues(typeof(PeripheryType)).Cast<PeripheryType>().First();
+    public PeripheryType SelectedPeripheryType { get; set; } = Enum.GetValues<PeripheryType>().Cast<PeripheryType>().First();
 
     [Reactive]
     public bool IsPeripheryTypeFilter { get; set; }
@@ -102,24 +102,22 @@ public class PeripheryPageViewModel : BaseRoutableViewModel
         {
             return;
         }
-        Peripheries = PeripheriesFromDatabase.Where(x => x.Name!.ToLower().Contains(SearchText.ToLower()) ||
-                                                             x.InventarNumber != null &&
-                                                             x.InventarNumber.Contains(SearchText) ||
+        Peripheries = PeripheriesFromDatabase.Where(x => x.Name!.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase) ||
+                                                             (x.InventarNumber?.Contains(SearchText) == true) ||
                                                              x.SerialNumber!.Contains(SearchText) ||
-                                                             x.Computer != null &&
-                                                             x.Computer.User != null &&
-                                                             x.Computer.User.FIO.ToLower().Contains(SearchText.ToLower())).ToList();
+                                                             (x.Computer != null &&
+                                                             x.Computer.User?.FIO.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase) == true)).ToList();
         if (IsPeripheryTypeFilter)
-            Peripheries = Peripheries.Where(x => IsPeripheryTypeFilter &&
-                                                    x.Type == SelectedPeripheryType).ToList();
+        {
+            Peripheries = Peripheries.Where(x => IsPeripheryTypeFilter && x.Type == SelectedPeripheryType).ToList();
+        }
     }
 
     public void SelectionPeripheryTypeChanged(object selectionChangedEventArgs)
     {
         if (Peripheries == null)
             return;
-        PeripheryType selectedType = (PeripheryType)((ComboBox)((SelectionChangedEventArgs)selectionChangedEventArgs).Source).SelectedItem;
-        SelectedPeripheryType = selectedType;
+        SelectedPeripheryType = (PeripheryType)((ComboBox)((SelectionChangedEventArgs)selectionChangedEventArgs).Source).SelectedItem;
         SearchBoxKeyUp();
     }
 

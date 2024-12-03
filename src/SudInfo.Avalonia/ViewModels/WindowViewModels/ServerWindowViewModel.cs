@@ -5,7 +5,6 @@ public class ServerWindowViewModel : BaseViewModel
     #region Services
     private readonly ServerService _serverService;
 
-
     #endregion
 
     #region Private Fields
@@ -40,7 +39,7 @@ public class ServerWindowViewModel : BaseViewModel
 
     #region Public Methods
 
-    public async void Initialization(WindowType windowType, Action close, int? id = null, ServerRack serverRack = null)
+    public async void Initialization(WindowType windowType, Action close, int? id = null, ServerRack? serverRack = null)
     {
         _windowType = windowType;
         _closedWindow = close;
@@ -92,7 +91,7 @@ public class ServerWindowViewModel : BaseViewModel
 
     #region Collections
 
-    public static IEnumerable<ServerOperatingSystem> OperatingSystems => Enum.GetValues(typeof(ServerOperatingSystem)).Cast<ServerOperatingSystem>();
+    public static IEnumerable<ServerOperatingSystem> OperatingSystems => Enum.GetValues<ServerOperatingSystem>().Cast<ServerOperatingSystem>();
 
     #endregion
 }

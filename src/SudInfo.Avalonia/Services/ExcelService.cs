@@ -1,6 +1,6 @@
 ﻿namespace SudInfo.Avalonia.Services;
 
-public class ExcelService
+public static class ExcelService
 {
     public static async Task CreateExcelTableFromEntity<T>(IReadOnlyCollection<T> entity)
     {
@@ -15,14 +15,14 @@ public class ExcelService
         {
             Title = "Выберите путь сохранения",
             InitialFileName = "Table.xlsx",
-            Filters = new()
-            {
+            Filters =
+            [
                 new()
                 {
                     Name = "Excel",
-                    Extensions = new(){"xlsx"}
+                    Extensions = ["xlsx"]
                 }
-            }
+            ]
         };
         var dialogResult = await saveFileDialog.ShowAsync(App.MainWindow);
         wb.SaveAs(dialogResult);

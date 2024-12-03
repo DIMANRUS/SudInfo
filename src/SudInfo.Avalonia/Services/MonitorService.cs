@@ -2,11 +2,9 @@
 
 namespace SudInfo.Avalonia.Services;
 
-public class MonitorService : BaseService<Monitor>
+public class MonitorService(SudInfoDatabaseContext context) : BaseService<Monitor>(context)
 {
     #region Ctors
-
-    public MonitorService(SudInfoDatabaseContext context) : base(context) { }
 
     #endregion
 
@@ -14,11 +12,10 @@ public class MonitorService : BaseService<Monitor>
 
     public async Task<IReadOnlyCollection<Monitor>> Get()
     {
-        var monitors = await context.Monitors.AsNoTracking()
+        return await context.Monitors.AsNoTracking()
                                              .Include(x => x.Computer)
                                              .ThenInclude(x => x.User)
                                              .ToListAsync();
-        return monitors;
     }
 
     public async Task<Result<Monitor>> Get(int id)

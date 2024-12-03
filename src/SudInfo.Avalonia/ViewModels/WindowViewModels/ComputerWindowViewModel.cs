@@ -12,9 +12,9 @@ public class ComputerWindowViewModel : BaseViewModel
 
     #region Collections
 
-    public static IEnumerable<TypeROM> RomTypes => Enum.GetValues(typeof(TypeROM)).Cast<TypeROM>();
+    public static IEnumerable<TypeROM> RomTypes => Enum.GetValues<TypeROM>().Cast<TypeROM>();
 
-    public static IEnumerable<OS> OsesList => Enum.GetValues(typeof(OS)).Cast<OS>();
+    public static IEnumerable<OS> OsesList => Enum.GetValues<OS>().Cast<OS>();
 
     [Reactive]
     public IReadOnlyCollection<User>? Users { get; set; }
@@ -84,8 +84,7 @@ public class ComputerWindowViewModel : BaseViewModel
 
     public async void Initialization(WindowType windowType, Action close, int? id = null)
     {
-        var usersResult = await _userService.Get();
-        Users = usersResult;
+        Users = await _userService.Get();
 
         _windowType = windowType;
         _closedWindow = close;

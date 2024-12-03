@@ -1,12 +1,12 @@
 ﻿namespace SudInfo.Avalonia.ViewModels.WindowViewModels;
 
-public class TaskWindowViewModel : BaseViewModel
+public class TaskWindowViewModel(NavigationService navigationService, TaskService taskService) : BaseViewModel
 {
     #region Services
 
-    private readonly NavigationService _navigationService;
+    private readonly NavigationService _navigationService = navigationService;
 
-    private readonly TaskService _taskService;
+    private readonly TaskService _taskService = taskService;
 
     #endregion
 
@@ -15,11 +15,6 @@ public class TaskWindowViewModel : BaseViewModel
     public TaskEntity Task { get; set; } = new();
     public DateTimeOffset ReminderDate { get; set; } = DateTimeOffset.Now;
     public TimeSpan ReminderTime { get; set; } = DateTime.Now.TimeOfDay;
-    public TaskWindowViewModel(NavigationService navigationService, TaskService taskService)
-    {
-        _navigationService = navigationService;
-        _taskService = taskService;
-    }
 
     public void Initialization(Action close)
     {

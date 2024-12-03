@@ -1,19 +1,13 @@
 ﻿namespace SudInfo.Avalonia.Services;
 
-public class BaseService<T> where T : class
+public class BaseService<T>(SudInfoDatabaseContext context) where T : class
 {
     #region Private variables
 
-    protected readonly SudInfoDatabaseContext context;
+    protected readonly SudInfoDatabaseContext context = context;
 
     #endregion
-
     #region Ctors
-
-    public BaseService(SudInfoDatabaseContext context)
-    {
-        this.context = context;
-    }
 
     #endregion
 

@@ -51,7 +51,7 @@ public class UsersPageViewModel : BaseRoutableViewModel
             }
             if (keyEventArgs.Key != Key.Enter || UsersFromDataBase == null)
                 return;
-            Users = UsersFromDataBase.Where(x => x.FIO!.ToLower().Contains(SearchText.ToLower()))
+            Users = UsersFromDataBase.Where(x => x.FIO!.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase))
                                      .ToList();
         });
     }

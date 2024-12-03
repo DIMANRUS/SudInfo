@@ -2,13 +2,9 @@
 
 namespace SudInfo.Avalonia.Services;
 
-public class RutokenService : BaseService<Rutoken>
+public class RutokenService(SudInfoDatabaseContext context) : BaseService<Rutoken>(context)
 {
     #region Ctors
-
-    public RutokenService(SudInfoDatabaseContext context) : base(context)
-    {
-    }
 
     #endregion
 
@@ -32,11 +28,9 @@ public class RutokenService : BaseService<Rutoken>
 
     public async Task<IReadOnlyCollection<Rutoken>> Get()
     {
-
-        var rutokens = await context.Rutokens
+        return await context.Rutokens
             .Include(x => x.User)
             .ToListAsync();
-        return rutokens;
     }
 
     #endregion

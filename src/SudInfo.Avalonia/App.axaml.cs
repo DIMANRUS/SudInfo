@@ -33,9 +33,9 @@ public class App : Application
 
         if (appSetting.Theme == "Acrylic")
         {
-            mainWindow.TransparencyLevelHint = new List<WindowTransparencyLevel>() {
+            mainWindow.TransparencyLevelHint = [
                 WindowTransparencyLevel.AcrylicBlur
-            };
+            ];
             mainWindow.Background = null;
         }
 
@@ -67,7 +67,6 @@ public class App : Application
 
         mainWindow.Show();
         MainWindow = mainWindow;
- 
     }
 
     #endregion

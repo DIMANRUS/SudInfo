@@ -3,7 +3,7 @@ public partial class ServerWindow : ReactiveWindow<ServerWindowViewModel>
 {
     #region Constructors
     public ServerWindow() { }
-    public ServerWindow(WindowType windowType, int? id = null, ServerRack serverRack = null)
+    public ServerWindow(WindowType windowType, int? id = null, ServerRack? serverRack = null)
     {
         var viewModel = ServiceCollectionExtension.ServiceProvider.GetService<ServerWindowViewModel>();
         DataContext = viewModel;

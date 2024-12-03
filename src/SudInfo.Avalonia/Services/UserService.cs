@@ -1,12 +1,8 @@
 ﻿namespace SudInfo.Avalonia.Services;
 
-public class UserService : BaseService<User>
+public class UserService(SudInfoDatabaseContext context) : BaseService<User>(context)
 {
     #region Ctors
-
-    public UserService(SudInfoDatabaseContext context) : base(context)
-    {
-    }
 
     #endregion
 
@@ -27,7 +23,7 @@ public class UserService : BaseService<User>
 
     public async Task<IReadOnlyCollection<User>> Get()
     {
-        var users = await context.Users.AsNoTracking()
+        return await context.Users.AsNoTracking()
                                        .Include(x => x.Computers)
                                        .ThenInclude(x => x.Monitors)
                                        .Include(x => x.Computers)
@@ -35,7 +31,6 @@ public class UserService : BaseService<User>
                                        .Include(x => x.Computers)
                                        .ThenInclude(x => x.Peripheries)
                                        .ToListAsync();
-        return users;
     }
 
     #endregion

@@ -36,7 +36,7 @@ public class ServerRackWindowViewModel : BaseViewModel
 
     #region Public Methods
 
-    public async void Initialization(WindowType windowType, Action close, int? id = null, ServerRack serverRack = null)
+    public async void Initialization(WindowType windowType, Action close, int? id = null)
     {
         _windowType = windowType;
         _closedWindow = close;

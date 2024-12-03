@@ -1,12 +1,8 @@
 ﻿namespace SudInfo.Avalonia.Services;
 
-public class ServerRackService : BaseService<ServerRack>
+public class ServerRackService(SudInfoDatabaseContext context) : BaseService<ServerRack>(context)
 {
     #region Ctors
-
-    public ServerRackService(SudInfoDatabaseContext context) : base(context)
-    {
-    }
 
     #endregion
 
@@ -47,8 +43,7 @@ public class ServerRackService : BaseService<ServerRack>
 
     public async Task<int> GetNumberServerRacks()
     {
-        int numberServerRacks = await context.ServerRacks.CountAsync();
-        return numberServerRacks;
+        return await context.ServerRacks.CountAsync();
     }
 
     #endregion

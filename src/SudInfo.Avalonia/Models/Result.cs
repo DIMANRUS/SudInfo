@@ -1,23 +1,13 @@
 ﻿namespace SudInfo.Avalonia.Models;
 
-public class Result<T> : Result
+public class Result<T>(T? obj, bool success = false, string message = "") : Result(success, message)
 {
-    public Result(T? obj, bool success = false, string message = "") : base(success, message)
-    {
-        Object = obj;
-    }
-
-    public T? Object { get; set; }
+    public T? Object { get; set; } = obj;
 }
-public class Result
+
+public class Result(bool success = false, string message = "")
 {
-    public Result(bool success = false, string message = "")
-    {
-        Success = success;
-        Message = message;
-    }
+    public bool Success { get; set; } = success;
 
-    public bool Success { get; set; }
-
-    public string Message { get; set; } = string.Empty;
+    public string Message { get; set; } = message;
 }

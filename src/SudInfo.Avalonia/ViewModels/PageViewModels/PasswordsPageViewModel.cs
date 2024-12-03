@@ -51,7 +51,7 @@ public class PasswordsPageViewModel : BaseRoutableViewModel
             }
             if (keyEventArgs.Key != Key.Enter || PasswordsFromDatabase == null)
                 return;
-            Passwords = PasswordsFromDatabase.Where(x => x.Description!.ToLower().Contains(SearchText.ToLower()))
+            Passwords = PasswordsFromDatabase.Where(x => x.Description!.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase))
                                              .ToList();
         });
     }

@@ -77,8 +77,7 @@ public class PrinterWindowViewModel : BaseViewModel
 
     public async Task LoadComputers()
     {
-        var computersResult = await _computerService.Get();
-        Computers = computersResult;
+        Computers = await _computerService.Get();
     }
 
     #endregion
@@ -93,7 +92,7 @@ public class PrinterWindowViewModel : BaseViewModel
 
     #region Collections
 
-    public static IEnumerable<PrinterType> PrinterTypes => Enum.GetValues(typeof(PrinterType)).Cast<PrinterType>();
+    public static IEnumerable<PrinterType> PrinterTypes => Enum.GetValues<PrinterType>().Cast<PrinterType>();
 
     [Reactive]
     public IReadOnlyCollection<Computer>? Computers { get; private set; }

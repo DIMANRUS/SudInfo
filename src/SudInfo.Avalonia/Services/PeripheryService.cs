@@ -1,10 +1,8 @@
 ﻿namespace SudInfo.Avalonia.Services;
 
-public class PeripheryService : BaseService<Periphery>
+public class PeripheryService(SudInfoDatabaseContext context) : BaseService<Periphery>(context)
 {
     #region Ctors
-
-    public PeripheryService(SudInfoDatabaseContext context) : base(context) { }
 
     #endregion
 
@@ -27,11 +25,9 @@ public class PeripheryService : BaseService<Periphery>
 
     public async Task<IReadOnlyCollection<Periphery>> Get()
     {
-
-        var peripheries = await context.Peripheries.Include(x => x.Computer)
+        return await context.Peripheries.Include(x => x.Computer)
                                                    .ThenInclude(x => x.User)
                                                    .ToListAsync();
-        return peripheries;
     }
 
     #endregion

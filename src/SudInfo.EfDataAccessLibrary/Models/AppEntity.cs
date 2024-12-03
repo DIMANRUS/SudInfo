@@ -12,5 +12,5 @@ public class AppEntity : BaseModel
     [StringLength(20, ErrorMessage = Const.LengthMore2, MinimumLength = 2)]
     public string? Version { get; set; }
 
-    public ICollection<Computer>? Computers { get; set; } = new List<Computer>();
+    public ICollection<Computer>? Computers { get; set; } = [];
 }

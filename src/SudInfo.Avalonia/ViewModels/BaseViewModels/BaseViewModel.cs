@@ -6,6 +6,6 @@ public abstract class BaseViewModel : ReactiveObject
     {
         if (model == null)
             return false;
-        return Validator.TryValidateObject(model, new(model), new List<ValidationResult>(), true);
+        return Validator.TryValidateObject(model, new(model), [], true);
     }
 }

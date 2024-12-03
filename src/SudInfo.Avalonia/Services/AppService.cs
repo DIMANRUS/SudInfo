@@ -1,12 +1,8 @@
 ﻿namespace SudInfo.Avalonia.Services;
 
-public class AppService : BaseService<AppEntity>
+public class AppService(SudInfoDatabaseContext context) : BaseService<AppEntity>(context)
 {
     #region Ctors
-
-    public AppService(SudInfoDatabaseContext context) : base(context)
-    {
-    }
 
     #endregion
 
@@ -14,11 +10,10 @@ public class AppService : BaseService<AppEntity>
 
     public async Task<IReadOnlyCollection<AppEntity>> Get()
     {
-        var apps = await context.Apps.AsNoTracking()
+        return await context.Apps.AsNoTracking()
                                      .Include(x => x.Computers)
                                      .ThenInclude(x => x.User)
                                      .ToListAsync();
-        return apps;
     }
 
     public async Task<Result<AppEntity>> Get(int id)
@@ -71,7 +66,7 @@ public class AppService : BaseService<AppEntity>
             }
             else
             {
-                app.Computers = new List<Computer>();
+                app.Computers = [];
                 foreach (var computer in entity.Computers)
                 {
                     app.Computers.Add(await context.Computers.FindAsync(computer.Id));
@@ -92,7 +87,7 @@ public class AppService : BaseService<AppEntity>
         try
         {
             var computers = entity.Computers;
-            entity.Computers = new List<Computer>();
+            entity.Computers = [];
             foreach (var computer in computers)
             {
                 entity.Computers.Add(await context.Computers.FindAsync(computer.Id));

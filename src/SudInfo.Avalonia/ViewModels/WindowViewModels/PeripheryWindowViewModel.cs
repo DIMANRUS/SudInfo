@@ -12,7 +12,7 @@ public class PeripheryWindowViewModel : BaseViewModel
 
     #region Collections
 
-    public static IEnumerable<PeripheryType> PeripheryTypes => Enum.GetValues(typeof(PeripheryType)).Cast<PeripheryType>();
+    public static IEnumerable<PeripheryType> PeripheryTypes => Enum.GetValues<PeripheryType>().Cast<PeripheryType>();
 
     [Reactive]
     public IReadOnlyCollection<Computer>? Computers { get; set; }
@@ -110,8 +110,7 @@ public class PeripheryWindowViewModel : BaseViewModel
     }
     public async Task LoadComputers()
     {
-        var computersResult = await _computerService.Get();
-        Computers = computersResult;
+        Computers = await _computerService.Get();
     }
 
     #endregion

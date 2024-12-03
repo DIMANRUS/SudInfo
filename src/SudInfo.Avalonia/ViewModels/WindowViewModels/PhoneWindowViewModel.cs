@@ -80,8 +80,7 @@ public class PhoneWindowViewModel : BaseViewModel
 
     public async void Initialization(WindowType windowType, Action close, int? id = null)
     {
-        var usersResult = await _userService.Get();
-        Users = usersResult;
+        Users = await _userService.Get();
 
         _windowType = windowType;
         _closedWindow = close;

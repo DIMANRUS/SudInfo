@@ -1,12 +1,8 @@
 ﻿namespace SudInfo.Avalonia.Services;
 
-public class ContactService : BaseService<Contact>
+public class ContactService(SudInfoDatabaseContext context) : BaseService<Contact>(context)
 {
     #region Ctors
-
-    public ContactService(SudInfoDatabaseContext context) : base(context)
-    {
-    }
 
     #endregion
 
@@ -14,9 +10,8 @@ public class ContactService : BaseService<Contact>
 
     public async Task<IReadOnlyCollection<Contact>> Get()
     {
-        var contacts = await context.Contacts.AsNoTracking()
+        return await context.Contacts.AsNoTracking()
                                              .ToListAsync();
-        return contacts;
     }
 
     public async Task<Result<Contact>> Get(int id)

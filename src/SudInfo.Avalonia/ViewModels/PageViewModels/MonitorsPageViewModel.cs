@@ -4,7 +4,6 @@ public class MonitorsPageViewModel : BaseRoutableViewModel
 {
     #region Services
 
-
     private readonly MonitorService _monitorService;
 
     private readonly NavigationService _navigationService;
@@ -54,13 +53,13 @@ public class MonitorsPageViewModel : BaseRoutableViewModel
             }
             if (keyEventArgs.Key != Key.Enter || MonitorsFromDataBase == null)
                 return;
-            Monitors = MonitorsFromDataBase.Where(x => x.Name!.ToLower().Contains(SearchText.ToLower()) ||
-                                            x.InventarNumber != null &&
-                                            x.InventarNumber.Contains(SearchText) ||
+            Monitors = MonitorsFromDataBase.Where(x => x.Name!.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase) ||
+                                            (x.InventarNumber != null &&
+                                            x.InventarNumber.Contains(SearchText)) ||
                                             x.SerialNumber!.Contains(SearchText) ||
-                                            x.Computer != null &&
+                                            (x.Computer != null &&
                                             x.Computer.User != null &&
-                                            x.Computer.User.FIO.ToLower().Contains(SearchText.ToLower()))
+                                            x.Computer.User.FIO.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase)))
                                .ToList();
         });
     }
