@@ -57,18 +57,16 @@ public class WorkplacesPageViewModel : BaseRoutableViewModel
                                                                     c.Name!.Contains(searchTextLower, StringComparison.CurrentCultureIgnoreCase) ||
                                                                     c.InventarNumber!.Contains(searchTextLower) ||
                                                                     c.SerialNumber!.Contains(searchTextLower) ||
-                                                                    (c.Monitors != null &&
-                                                                    c.Monitors.Any(m =>
+                                                                    (c.Monitors?.Any(m =>
                                                                         m.Name!.Contains(searchTextLower, StringComparison.CurrentCultureIgnoreCase) ||
                                                                         m.InventarNumber!.Contains(searchTextLower) ||
                                                                         m.SerialNumber!.Contains(searchTextLower)
-                                                                    )) ||
-                                                                    (c.Printers != null &&
-                                                                    c.Printers.Any(p =>
+                                                                    ) == true) ||
+                                                                    (c.Printers?.Any(p =>
                                                                         p.Name!.Contains(searchTextLower, StringComparison.CurrentCultureIgnoreCase) ||
                                                                         p.InventarNumber!.Contains(searchTextLower) ||
                                                                         p.SerialNumber!.Contains(searchTextLower)
-                                                                    )))));
+                                                                    ) == true))));
         });
     }
 

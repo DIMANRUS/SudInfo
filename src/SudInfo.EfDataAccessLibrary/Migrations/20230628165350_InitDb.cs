@@ -12,35 +12,35 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
         {
             migrationBuilder.CreateTable(
                 name: "Apps",
-                columns: table => new
+                columns: static table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
                     Version = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false)
                 },
-                constraints: table =>
+                constraints: static table =>
                 {
-                    table.PrimaryKey("PK_Apps", x => x.Id);
+                    table.PrimaryKey("PK_Apps", static x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Cartridges",
-                columns: table => new
+                columns: static table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
                     Remains = table.Column<int>(type: "INTEGER", nullable: false)
                 },
-                constraints: table =>
+                constraints: static table =>
                 {
-                    table.PrimaryKey("PK_Cartridges", x => x.Id);
+                    table.PrimaryKey("PK_Cartridges", static x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Contacts",
-                columns: table => new
+                columns: static table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
@@ -49,14 +49,14 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     Email = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true),
                     Description = table.Column<string>(type: "TEXT", maxLength: 500, nullable: false)
                 },
-                constraints: table =>
+                constraints: static table =>
                 {
-                    table.PrimaryKey("PK_Contacts", x => x.Id);
+                    table.PrimaryKey("PK_Contacts", static x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Passwords",
-                columns: table => new
+                columns: static table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
@@ -65,42 +65,42 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     Login = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
                     Password = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false)
                 },
-                constraints: table =>
+                constraints: static table =>
                 {
-                    table.PrimaryKey("PK_Passwords", x => x.Id);
+                    table.PrimaryKey("PK_Passwords", static x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "ServerRacks",
-                columns: table => new
+                columns: static table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Position = table.Column<int>(type: "INTEGER", nullable: false),
                     InventarNumber = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true)
                 },
-                constraints: table =>
+                constraints: static table =>
                 {
-                    table.PrimaryKey("PK_ServerRacks", x => x.Id);
+                    table.PrimaryKey("PK_ServerRacks", static x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Tasks",
-                columns: table => new
+                columns: static table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Description = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
                     ReminderTime = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
-                constraints: table =>
+                constraints: static table =>
                 {
-                    table.PrimaryKey("PK_Tasks", x => x.Id);
+                    table.PrimaryKey("PK_Tasks", static x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Users",
-                columns: table => new
+                columns: static table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
@@ -112,14 +112,14 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     WorkPhone = table.Column<string>(type: "TEXT", maxLength: 11, nullable: true),
                     PhoneLocal = table.Column<string>(type: "TEXT", maxLength: 3, nullable: true)
                 },
-                constraints: table =>
+                constraints: static table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.PrimaryKey("PK_Users", static x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Servers",
-                columns: table => new
+                columns: static table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
@@ -131,19 +131,19 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     ServerRackId = table.Column<int>(type: "INTEGER", nullable: true),
                     OperatingSystem = table.Column<int>(type: "INTEGER", nullable: false)
                 },
-                constraints: table =>
+                constraints: static table =>
                 {
-                    table.PrimaryKey("PK_Servers", x => x.Id);
+                    table.PrimaryKey("PK_Servers", static x => x.Id);
                     table.ForeignKey(
                         name: "FK_Servers_ServerRacks_ServerRackId",
-                        column: x => x.ServerRackId,
+                        column: static x => x.ServerRackId,
                         principalTable: "ServerRacks",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "Computers",
-                columns: table => new
+                columns: static table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
@@ -160,19 +160,19 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     YearRelease = table.Column<int>(type: "INTEGER", nullable: false),
                     UserId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
-                constraints: table =>
+                constraints: static table =>
                 {
-                    table.PrimaryKey("PK_Computers", x => x.Id);
+                    table.PrimaryKey("PK_Computers", static x => x.Id);
                     table.ForeignKey(
                         name: "FK_Computers_Users_UserId",
-                        column: x => x.UserId,
+                        column: static x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "Rutokens",
-                columns: table => new
+                columns: static table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
@@ -180,35 +180,35 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     EndDateCertificate = table.Column<DateTime>(type: "TEXT", nullable: true),
                     UserId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
-                constraints: table =>
+                constraints: static table =>
                 {
-                    table.PrimaryKey("PK_Rutokens", x => x.Id);
+                    table.PrimaryKey("PK_Rutokens", static x => x.Id);
                     table.ForeignKey(
                         name: "FK_Rutokens_Users_UserId",
-                        column: x => x.UserId,
+                        column: static x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "AppEntityComputer",
-                columns: table => new
+                columns: static table => new
                 {
                     AppsId = table.Column<int>(type: "INTEGER", nullable: false),
                     ComputersId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
-                constraints: table =>
+                constraints: static table =>
                 {
-                    table.PrimaryKey("PK_AppEntityComputer", x => new { x.AppsId, x.ComputersId });
+                    table.PrimaryKey("PK_AppEntityComputer", static x => new { x.AppsId, x.ComputersId });
                     table.ForeignKey(
                         name: "FK_AppEntityComputer_Apps_AppsId",
-                        column: x => x.AppsId,
+                        column: static x => x.AppsId,
                         principalTable: "Apps",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_AppEntityComputer_Computers_ComputersId",
-                        column: x => x.ComputersId,
+                        column: static x => x.ComputersId,
                         principalTable: "Computers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -216,7 +216,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Monitors",
-                columns: table => new
+                columns: static table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
@@ -229,19 +229,19 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     YearRelease = table.Column<int>(type: "INTEGER", nullable: false),
                     ComputerId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
-                constraints: table =>
+                constraints: static table =>
                 {
-                    table.PrimaryKey("PK_Monitors", x => x.Id);
+                    table.PrimaryKey("PK_Monitors", static x => x.Id);
                     table.ForeignKey(
                         name: "FK_Monitors_Computers_ComputerId",
-                        column: x => x.ComputerId,
+                        column: static x => x.ComputerId,
                         principalTable: "Computers",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "Peripheries",
-                columns: table => new
+                columns: static table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
@@ -251,19 +251,19 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     InventarNumber = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
                     ComputerId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
-                constraints: table =>
+                constraints: static table =>
                 {
-                    table.PrimaryKey("PK_Peripheries", x => x.Id);
+                    table.PrimaryKey("PK_Peripheries", static x => x.Id);
                     table.ForeignKey(
                         name: "FK_Peripheries_Computers_ComputerId",
-                        column: x => x.ComputerId,
+                        column: static x => x.ComputerId,
                         principalTable: "Computers",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "Printers",
-                columns: table => new
+                columns: static table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
@@ -276,12 +276,12 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     InventarNumber = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
                     ComputerId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
-                constraints: table =>
+                constraints: static table =>
                 {
-                    table.PrimaryKey("PK_Printers", x => x.Id);
+                    table.PrimaryKey("PK_Printers", static x => x.Id);
                     table.ForeignKey(
                         name: "FK_Printers_Computers_ComputerId",
-                        column: x => x.ComputerId,
+                        column: static x => x.ComputerId,
                         principalTable: "Computers",
                         principalColumn: "Id");
                 });

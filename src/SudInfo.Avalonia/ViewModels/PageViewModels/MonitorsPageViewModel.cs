@@ -42,7 +42,7 @@ public class MonitorsPageViewModel : BaseRoutableViewModel
 
         #endregion
 
-        eventHandlerClosedWindowDialog = async (s, e) => await LoadMonitors();
+        EventHandlerClosedWindowDialog = async (s, e) => await LoadMonitors();
 
         SearchBoxKeyUpCommand = ReactiveCommand.Create((KeyEventArgs keyEventArgs) =>
         {
@@ -53,14 +53,11 @@ public class MonitorsPageViewModel : BaseRoutableViewModel
             }
             if (keyEventArgs.Key != Key.Enter || MonitorsFromDataBase == null)
                 return;
-            Monitors = MonitorsFromDataBase.Where(x => x.Name!.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase) ||
-                                            (x.InventarNumber != null &&
-                                            x.InventarNumber.Contains(SearchText)) ||
+            Monitors = [.. MonitorsFromDataBase.Where(x => x.Name!.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase) ||
+                                            (x.InventarNumber?.Contains(SearchText) == true) ||
                                             x.SerialNumber!.Contains(SearchText) ||
                                             (x.Computer != null &&
-                                            x.Computer.User != null &&
-                                            x.Computer.User.FIO.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase)))
-                               .ToList();
+                                            x.Computer.User?.FIO.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase) == true))];
         });
     }
 
@@ -83,14 +80,14 @@ public class MonitorsPageViewModel : BaseRoutableViewModel
 
     public async Task OpenAddMonitorWindow()
     {
-        await _navigationService.ShowMonitorWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog);
+        await _navigationService.ShowMonitorWindowDialog(WindowType.Add, EventHandlerClosedWindowDialog);
     }
 
     public async Task OpenEditMonitorWindow()
     {
         if (SelectedMonitor == null)
             return;
-        await _navigationService.ShowMonitorWindowDialog(WindowType.Edit, eventHandlerClosedWindowDialog, SelectedMonitor.Id);
+        await _navigationService.ShowMonitorWindowDialog(WindowType.Edit, EventHandlerClosedWindowDialog, SelectedMonitor.Id);
     }
 
     public async Task RemoveMonitor()

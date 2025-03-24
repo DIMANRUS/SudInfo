@@ -4,7 +4,7 @@ public partial class WorkplacesPage : ReactiveUserControl<WorkplacesPageViewMode
 {
     public WorkplacesPage()
     {
-        this.WhenActivated(disposables => { });
+        this.WhenActivated(static disposables => { });
         InitializeComponent();
     }
 }

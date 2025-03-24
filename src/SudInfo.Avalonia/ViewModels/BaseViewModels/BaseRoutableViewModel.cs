@@ -11,7 +11,7 @@ public abstract class BaseRoutableViewModel : BaseViewModel, IRoutableViewModel
 
     #region Protected Variables
 
-    protected EventHandler? eventHandlerClosedWindowDialog { get; init; }
+    protected EventHandler? EventHandlerClosedWindowDialog { get; init; }
 
     #endregion
 }

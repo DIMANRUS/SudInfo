@@ -1,13 +1,7 @@
-﻿using DocumentFormat.OpenXml.Vml.Office;
-
-namespace SudInfo.Avalonia.Services;
+﻿namespace SudInfo.Avalonia.Services;
 
 public class ServerService(SudInfoDatabaseContext context) : BaseService<Server>(context)
 {
-    #region Ctors
-
-    #endregion
-
     public async Task<Result<Server>> Get(int id)
     {
         try

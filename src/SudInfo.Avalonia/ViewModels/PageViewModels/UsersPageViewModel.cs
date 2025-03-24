@@ -40,7 +40,7 @@ public class UsersPageViewModel : BaseRoutableViewModel
 
         #endregion
 
-        eventHandlerClosedWindowDialog = async (s, e) => await LoadUsers();
+        EventHandlerClosedWindowDialog = async (s, e) => await LoadUsers();
 
         SearchBoxKeyUpCommand = ReactiveCommand.Create((KeyEventArgs keyEventArgs) =>
         {
@@ -51,8 +51,7 @@ public class UsersPageViewModel : BaseRoutableViewModel
             }
             if (keyEventArgs.Key != Key.Enter || UsersFromDataBase == null)
                 return;
-            Users = UsersFromDataBase.Where(x => x.FIO!.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase))
-                                     .ToList();
+            Users = [.. UsersFromDataBase.Where(x => x.FIO!.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase))];
         });
     }
 
@@ -75,14 +74,14 @@ public class UsersPageViewModel : BaseRoutableViewModel
 
     public async Task OpenAddUserWindow()
     {
-        await _navigationService.ShowUserWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog);
+        await _navigationService.ShowUserWindowDialog(WindowType.Add, EventHandlerClosedWindowDialog);
     }
 
     public async Task OpenEditUserWindow()
     {
         if (SelectedUser == null)
             return;
-        await _navigationService.ShowUserWindowDialog(WindowType.Edit, eventHandlerClosedWindowDialog, SelectedUser.Id);
+        await _navigationService.ShowUserWindowDialog(WindowType.Edit, EventHandlerClosedWindowDialog, SelectedUser.Id);
     }
 
     public async Task RemoveUser()

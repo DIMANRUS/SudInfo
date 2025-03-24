@@ -2,16 +2,11 @@
 
 public class PasswordService(SudInfoDatabaseContext context) : BaseService<PasswordEntity>(context)
 {
-    #region Ctors
-
-    #endregion
-
     #region Get Methods
 
     public async Task<IReadOnlyCollection<PasswordEntity>> Get()
     {
-        return await context.Passwords.AsNoTracking()
-                                               .ToListAsync();
+        return await context.Passwords.AsNoTracking().ToListAsync();
     }
 
     public async Task<Result<PasswordEntity>> Get(int id)

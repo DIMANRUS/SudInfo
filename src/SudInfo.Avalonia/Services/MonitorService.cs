@@ -1,20 +1,14 @@
-﻿using DocumentFormat.OpenXml.Vml.Office;
-
-namespace SudInfo.Avalonia.Services;
+﻿namespace SudInfo.Avalonia.Services;
 
 public class MonitorService(SudInfoDatabaseContext context) : BaseService<Monitor>(context)
 {
-    #region Ctors
-
-    #endregion
-
     #region Get Methods
 
     public async Task<IReadOnlyCollection<Monitor>> Get()
     {
         return await context.Monitors.AsNoTracking()
-                                             .Include(x => x.Computer)
-                                             .ThenInclude(x => x.User)
+                                             .Include(static x => x.Computer)
+                                             .ThenInclude(static x => x.User)
                                              .ToListAsync();
     }
 

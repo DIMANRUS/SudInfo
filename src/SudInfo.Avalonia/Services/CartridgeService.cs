@@ -1,13 +1,7 @@
-using DocumentFormat.OpenXml.Vml.Office;
-
 namespace SudInfo.Avalonia.Services;
 
 public class CartridgeService(SudInfoDatabaseContext context) : BaseService<Cartridge>(context)
 {
-    #region Ctors
-
-    #endregion
-
     #region Get Methods
 
     public async Task<Result<Cartridge>> Get(int id)

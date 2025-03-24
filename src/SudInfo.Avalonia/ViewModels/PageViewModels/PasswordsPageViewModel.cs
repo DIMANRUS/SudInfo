@@ -40,7 +40,7 @@ public class PasswordsPageViewModel : BaseRoutableViewModel
 
         #endregion
 
-        eventHandlerClosedWindowDialog = async (s, e) => await LoadPasswords();
+        EventHandlerClosedWindowDialog = async (s, e) => await LoadPasswords();
 
         SearchBoxKeyUpCommand = ReactiveCommand.Create((KeyEventArgs keyEventArgs) =>
         {
@@ -51,8 +51,7 @@ public class PasswordsPageViewModel : BaseRoutableViewModel
             }
             if (keyEventArgs.Key != Key.Enter || PasswordsFromDatabase == null)
                 return;
-            Passwords = PasswordsFromDatabase.Where(x => x.Description!.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase))
-                                             .ToList();
+            Passwords = [.. PasswordsFromDatabase.Where(x => x.Description!.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase))];
         });
     }
 
@@ -81,14 +80,14 @@ public class PasswordsPageViewModel : BaseRoutableViewModel
 
     public async Task OpenAddPasswordWindow()
     {
-        await _navigationService.ShowPasswordWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog);
+        await _navigationService.ShowPasswordWindowDialog(WindowType.Add, EventHandlerClosedWindowDialog);
     }
 
     public async Task OpenEditPasswordWindow()
     {
         if (SelectedPassword == null)
             return;
-        await _navigationService.ShowPasswordWindowDialog(WindowType.Edit, eventHandlerClosedWindowDialog, SelectedPassword.Id);
+        await _navigationService.ShowPasswordWindowDialog(WindowType.Edit, EventHandlerClosedWindowDialog, SelectedPassword.Id);
     }
 
     public async Task RemovePassword()

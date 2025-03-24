@@ -2,10 +2,6 @@
 
 public class UserService(SudInfoDatabaseContext context) : BaseService<User>(context)
 {
-    #region Ctors
-
-    #endregion
-
     #region Get Methods
 
     public async Task<Result<User>> Get(int id)
@@ -24,12 +20,12 @@ public class UserService(SudInfoDatabaseContext context) : BaseService<User>(con
     public async Task<IReadOnlyCollection<User>> Get()
     {
         return await context.Users.AsNoTracking()
-                                       .Include(x => x.Computers)
-                                       .ThenInclude(x => x.Monitors)
-                                       .Include(x => x.Computers)
-                                       .ThenInclude(x => x.Printers)
-                                       .Include(x => x.Computers)
-                                       .ThenInclude(x => x.Peripheries)
+                                       .Include(static x => x.Computers)
+                                       .ThenInclude(static x => x.Monitors)
+                                       .Include(static x => x.Computers)
+                                       .ThenInclude(static x => x.Printers)
+                                       .Include(static x => x.Computers)
+                                       .ThenInclude(static x => x.Peripheries)
                                        .ToListAsync();
     }
 

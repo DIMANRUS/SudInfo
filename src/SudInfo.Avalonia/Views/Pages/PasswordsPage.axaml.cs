@@ -3,7 +3,7 @@ public partial class PasswordsPage : ReactiveUserControl<PasswordsPageViewModel>
 {
     public PasswordsPage()
     {
-        this.WhenActivated(disposables => { });
+        this.WhenActivated(static disposables => { });
         InitializeComponent();
     }
 }

@@ -40,7 +40,7 @@ public class CartridgesPageViewModel : BaseRoutableViewModel
 
         #endregion
 
-        eventHandlerClosedWindowDialog += async (s, e) =>
+        EventHandlerClosedWindowDialog += async (s, e) =>
         {
             await LoadCartridges();
         };
@@ -61,12 +61,12 @@ public class CartridgesPageViewModel : BaseRoutableViewModel
     {
         if (SelectedCartridge == null)
             return;
-        await _navigationService.ShowCartridgeWindowDialog(WindowType.Edit, eventHandlerClosedWindowDialog, SelectedCartridge.Id);
+        await _navigationService.ShowCartridgeWindowDialog(WindowType.Edit, EventHandlerClosedWindowDialog, SelectedCartridge.Id);
     }
 
     public async Task OpenAddCartridgeWindow()
     {
-        await _navigationService.ShowCartridgeWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog);
+        await _navigationService.ShowCartridgeWindowDialog(WindowType.Add, EventHandlerClosedWindowDialog);
     }
 
     public async Task LoadCartridges()

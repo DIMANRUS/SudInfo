@@ -2,10 +2,6 @@
 
 public class ComputerService(SudInfoDatabaseContext context) : BaseService<Computer>(context)
 {
-    #region Ctors
-
-    #endregion
-
     #region Get Methods
 
     public async Task<Result<Computer>> Get(int id)
@@ -27,7 +23,7 @@ public class ComputerService(SudInfoDatabaseContext context) : BaseService<Compu
     public async Task<IReadOnlyCollection<Computer>> Get()
     {
         return await context.Computers.AsNoTracking()
-                                               .Include(x => x.User)
+                                               .Include(static x => x.User)
                                                .ToListAsync();
     }
 

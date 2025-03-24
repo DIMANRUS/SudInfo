@@ -3,7 +3,7 @@ public partial class PrintersPage : ReactiveUserControl<PrintersPageViewModel>
 {
     public PrintersPage()
     {
-        this.WhenActivated(disposables => { });
+        this.WhenActivated(static disposables => { });
         InitializeComponent();
     }
 }

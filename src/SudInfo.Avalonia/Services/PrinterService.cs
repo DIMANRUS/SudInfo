@@ -2,10 +2,6 @@
 
 public class PrinterService(SudInfoDatabaseContext context) : BaseService<Printer>(context)
 {
-    #region Ctors
-
-    #endregion
-
     #region Get Methods
 
     public async Task<Result<Printer>> Get(int id)
@@ -27,8 +23,8 @@ public class PrinterService(SudInfoDatabaseContext context) : BaseService<Printe
     public async Task<IReadOnlyCollection<Printer>> Get()
     {
         return await context.Printers.AsNoTracking()
-                                             .Include(x => x.Computer)
-                                             .ThenInclude(x => x.User)
+                                             .Include(static x => x.Computer)
+                                             .ThenInclude(static x => x.User)
                                              .ToListAsync();
     }
 

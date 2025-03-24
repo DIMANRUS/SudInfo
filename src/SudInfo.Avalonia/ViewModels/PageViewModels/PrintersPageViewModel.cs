@@ -40,7 +40,7 @@ public class PrintersPageViewModel : BaseRoutableViewModel
 
         #endregion
 
-        eventHandlerClosedWindowDialog = async (s, e) => await LoadPrinters();
+        EventHandlerClosedWindowDialog = async (s, e) => await LoadPrinters();
 
         SearchBoxKeyUpCommand = ReactiveCommand.Create((KeyEventArgs keyEventArgs) =>
         {
@@ -51,14 +51,11 @@ public class PrintersPageViewModel : BaseRoutableViewModel
             }
             if (keyEventArgs.Key != Key.Enter || PrintersFromDataBase == null)
                 return;
-            Printers = PrintersFromDataBase.Where(x => x.Name!.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase) ||
-                                                           (x.InventarNumber != null && 
-                                                           x.InventarNumber.Contains(SearchText)) ||
+            Printers = [.. PrintersFromDataBase.Where(x => x.Name!.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase) ||
+                                                           (x.InventarNumber?.Contains(SearchText) == true) ||
                                                            x.SerialNumber!.Contains(SearchText) ||
                                                            (x.Computer != null &&
-                                                           x.Computer.User != null &&
-                                                           x.Computer.User.FIO.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase)))
-                                           .ToList();
+                                                           x.Computer.User?.FIO.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase) == true))];
         });
     }
 
@@ -81,14 +78,14 @@ public class PrintersPageViewModel : BaseRoutableViewModel
 
     public async Task OpenAddPrinterWindow()
     {
-        await _navigationService.ShowPrinterWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog);
+        await _navigationService.ShowPrinterWindowDialog(WindowType.Add, EventHandlerClosedWindowDialog);
     }
 
     public async Task OpenEditPrinterWindow()
     {
         if (SelectedPrinter == null)
             return;
-        await _navigationService.ShowPrinterWindowDialog(WindowType.Edit, eventHandlerClosedWindowDialog, SelectedPrinter.Id);
+        await _navigationService.ShowPrinterWindowDialog(WindowType.Edit, EventHandlerClosedWindowDialog, SelectedPrinter.Id);
     }
 
     public async Task RemovePrinter()

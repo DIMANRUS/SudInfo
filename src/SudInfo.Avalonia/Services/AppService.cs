@@ -2,17 +2,13 @@
 
 public class AppService(SudInfoDatabaseContext context) : BaseService<AppEntity>(context)
 {
-    #region Ctors
-
-    #endregion
-
     #region Get Methods
 
     public async Task<IReadOnlyCollection<AppEntity>> Get()
     {
         return await context.Apps.AsNoTracking()
-                                     .Include(x => x.Computers)
-                                     .ThenInclude(x => x.User)
+                                     .Include(static x => x.Computers)
+                                     .ThenInclude(static x => x.User)
                                      .ToListAsync();
     }
 
@@ -52,7 +48,7 @@ public class AppService(SudInfoDatabaseContext context) : BaseService<AppEntity>
         }
     }
 
-    public async Task<Result> Update(AppEntity entity)
+    public override async Task<Result> Update(AppEntity entity)
     {
         try
         {

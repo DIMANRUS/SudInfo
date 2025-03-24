@@ -2,10 +2,6 @@
 
 public class PhoneService(SudInfoDatabaseContext context) : BaseService<Phone>(context)
 {
-    #region Ctors
-
-    #endregion
-
     #region Get methods
 
     public async Task<Result<Phone>> Get(int id)
@@ -27,7 +23,7 @@ public class PhoneService(SudInfoDatabaseContext context) : BaseService<Phone>(c
     public async Task<IReadOnlyCollection<Phone>> Get()
     {
         return await context.Phones.AsNoTracking()
-                                         .Include(x => x.User)
+                                         .Include(static x => x.User)
                                          .ToListAsync();
     }
 

@@ -2,10 +2,6 @@
 
 public class ContactService(SudInfoDatabaseContext context) : BaseService<Contact>(context)
 {
-    #region Ctors
-
-    #endregion
-
     #region Get Methods
 
     public async Task<IReadOnlyCollection<Contact>> Get()

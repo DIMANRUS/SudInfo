@@ -17,7 +17,7 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Phones",
-                columns: table => new
+                columns: static table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
@@ -30,12 +30,12 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
                     IsDecommissioned = table.Column<bool>(type: "INTEGER", nullable: false),
                     UserId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
-                constraints: table =>
+                constraints: static table =>
                 {
-                    table.PrimaryKey("PK_Phones", x => x.Id);
+                    table.PrimaryKey("PK_Phones", static x => x.Id);
                     table.ForeignKey(
                         name: "FK_Phones_Users_UserId",
-                        column: x => x.UserId,
+                        column: static x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id");
                 });

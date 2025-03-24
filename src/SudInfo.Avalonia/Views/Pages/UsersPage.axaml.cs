@@ -3,7 +3,7 @@ public partial class UsersPage : ReactiveUserControl<UsersPageViewModel>
 {
     public UsersPage()
     {
-        this.WhenActivated(disposables => { });
+        this.WhenActivated(static disposables => { });
         InitializeComponent();
     }
 }

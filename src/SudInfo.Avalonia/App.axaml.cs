@@ -44,20 +44,20 @@ public class App : Application
         #region Locator Pages Initialization
 
         Locator.CurrentMutable.RegisterConstant<IScreen>(new MainWindowViewModel());
-        Locator.CurrentMutable.Register<IViewFor<ComputersPageViewModel>>(() => new ComputersPage());
-        Locator.CurrentMutable.Register<IViewFor<PrintersPageViewModel>>(() => new PrintersPage());
-        Locator.CurrentMutable.Register<IViewFor<MonitorsPageViewModel>>(() => new MonitorsPage());
-        Locator.CurrentMutable.Register<IViewFor<UsersPageViewModel>>(() => new UsersPage());
-        Locator.CurrentMutable.Register<IViewFor<RutokensPageViewModel>>(() => new RutokensPage());
-        Locator.CurrentMutable.Register<IViewFor<PeripheryPageViewModel>>(() => new PeripheryPage());
-        Locator.CurrentMutable.Register<IViewFor<WorkplacesPageViewModel>>(() => new WorkplacesPage());
-        Locator.CurrentMutable.Register<IViewFor<ServersPageViewModel>>(() => new ServersPage());
-        Locator.CurrentMutable.Register<IViewFor<TasksPageViewModel>>(() => new TasksPage());
-        Locator.CurrentMutable.Register<IViewFor<PasswordsPageViewModel>>(() => new PasswordsPage());
-        Locator.CurrentMutable.Register<IViewFor<AppsPageViewModel>>(() => new AppsPage());
-        Locator.CurrentMutable.Register<IViewFor<ContactsPageViewModel>>(() => new ContactsPage());
-        Locator.CurrentMutable.Register<IViewFor<CartridgesPageViewModel>>(() => new CartridgesPage());
-        Locator.CurrentMutable.Register<IViewFor<PhonesPageViewModel>>(() => new PhonesPage());
+        Locator.CurrentMutable.Register<IViewFor<ComputersPageViewModel>>(static () => new ComputersPage());
+        Locator.CurrentMutable.Register<IViewFor<PrintersPageViewModel>>(static () => new PrintersPage());
+        Locator.CurrentMutable.Register<IViewFor<MonitorsPageViewModel>>(static () => new MonitorsPage());
+        Locator.CurrentMutable.Register<IViewFor<UsersPageViewModel>>(static () => new UsersPage());
+        Locator.CurrentMutable.Register<IViewFor<RutokensPageViewModel>>(static () => new RutokensPage());
+        Locator.CurrentMutable.Register<IViewFor<PeripheryPageViewModel>>(static () => new PeripheryPage());
+        Locator.CurrentMutable.Register<IViewFor<WorkplacesPageViewModel>>(static () => new WorkplacesPage());
+        Locator.CurrentMutable.Register<IViewFor<ServersPageViewModel>>(static () => new ServersPage());
+        Locator.CurrentMutable.Register<IViewFor<TasksPageViewModel>>(static () => new TasksPage());
+        Locator.CurrentMutable.Register<IViewFor<PasswordsPageViewModel>>(static () => new PasswordsPage());
+        Locator.CurrentMutable.Register<IViewFor<AppsPageViewModel>>(static () => new AppsPage());
+        Locator.CurrentMutable.Register<IViewFor<ContactsPageViewModel>>(static () => new ContactsPage());
+        Locator.CurrentMutable.Register<IViewFor<CartridgesPageViewModel>>(static () => new CartridgesPage());
+        Locator.CurrentMutable.Register<IViewFor<PhonesPageViewModel>>(static () => new PhonesPage());
 
         #endregion
 

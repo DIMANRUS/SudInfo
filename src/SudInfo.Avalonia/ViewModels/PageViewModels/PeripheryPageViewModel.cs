@@ -50,7 +50,7 @@ public class PeripheryPageViewModel : BaseRoutableViewModel
         _navigationService = navigationService;
         #endregion
 
-        eventHandlerClosedWindowDialog = async (s, e) => await LoadPeripheries();
+        EventHandlerClosedWindowDialog = async (s, e) => await LoadPeripheries();
     }
 
     #endregion
@@ -66,14 +66,14 @@ public class PeripheryPageViewModel : BaseRoutableViewModel
 
     public async Task OpenAddPeripheryWindow()
     {
-        await _navigationService.ShowPeripheryWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog);
+        await _navigationService.ShowPeripheryWindowDialog(WindowType.Add, EventHandlerClosedWindowDialog);
     }
 
     public async Task OpenEditPeripheryWindow()
     {
         if (SelectedPeriphery == null)
             return;
-        await _navigationService.ShowPeripheryWindowDialog(WindowType.Edit, eventHandlerClosedWindowDialog, SelectedPeriphery.Id);
+        await _navigationService.ShowPeripheryWindowDialog(WindowType.Edit, EventHandlerClosedWindowDialog, SelectedPeriphery.Id);
     }
 
     public async Task RemovePeriphery()
@@ -102,14 +102,14 @@ public class PeripheryPageViewModel : BaseRoutableViewModel
         {
             return;
         }
-        Peripheries = PeripheriesFromDatabase.Where(x => x.Name!.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase) ||
+        Peripheries = [.. PeripheriesFromDatabase.Where(x => x.Name!.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase) ||
                                                              (x.InventarNumber?.Contains(SearchText) == true) ||
                                                              x.SerialNumber!.Contains(SearchText) ||
                                                              (x.Computer != null &&
-                                                             x.Computer.User?.FIO.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase) == true)).ToList();
+                                                             x.Computer.User?.FIO.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase) == true))];
         if (IsPeripheryTypeFilter)
         {
-            Peripheries = Peripheries.Where(x => IsPeripheryTypeFilter && x.Type == SelectedPeripheryType).ToList();
+            Peripheries = [.. Peripheries.Where(x => IsPeripheryTypeFilter && x.Type == SelectedPeripheryType)];
         }
     }
 

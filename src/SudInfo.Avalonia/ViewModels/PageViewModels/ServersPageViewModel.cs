@@ -31,13 +31,13 @@ public class ServersPageViewModel : BaseRoutableViewModel
 
         #endregion
 
-        eventHandlerClosedWindowDialog = async (s, e) => await LoadServerRacks();
+        EventHandlerClosedWindowDialog = async (s, e) => await LoadServerRacks();
 
         #region Commands Initialization
 
         OpenAddServerWindowCommand = ReactiveCommand.Create<ServerRack>(async (ServerRack serverRack) =>
         {
-            await _navigationService.ShowServerWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog, serverRack: serverRack);
+            await _navigationService.ShowServerWindowDialog(WindowType.Add, EventHandlerClosedWindowDialog, serverRack: serverRack);
         });
 
         RemoveServerCommand = ReactiveCommand.Create<int>(async (int id) =>
@@ -64,7 +64,7 @@ public class ServersPageViewModel : BaseRoutableViewModel
 
         EditServerCommand = ReactiveCommand.Create<int>(async (int id) =>
         {
-            await _navigationService.ShowServerWindowDialog(WindowType.Edit, eventHandlerClosedWindowDialog, id);
+            await _navigationService.ShowServerWindowDialog(WindowType.Edit, EventHandlerClosedWindowDialog, id);
         });
 
         ViewServerCommand = ReactiveCommand.Create<int>(async (int id) =>
@@ -97,7 +97,7 @@ public class ServersPageViewModel : BaseRoutableViewModel
 
     public async Task OpenAddServerRackWindow()
     {
-        await _navigationService.ShowServerRackWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog);
+        await _navigationService.ShowServerRackWindowDialog(WindowType.Add, EventHandlerClosedWindowDialog);
     }
 
     public async Task LoadServerRacks()

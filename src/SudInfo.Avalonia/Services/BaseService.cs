@@ -7,9 +7,6 @@ public class BaseService<T>(SudInfoDatabaseContext context) where T : class
     protected readonly SudInfoDatabaseContext context = context;
 
     #endregion
-    #region Ctors
-
-    #endregion
 
     #region Methods
 

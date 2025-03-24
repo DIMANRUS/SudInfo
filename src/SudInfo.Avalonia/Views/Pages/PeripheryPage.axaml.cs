@@ -3,7 +3,7 @@ public partial class PeripheryPage : ReactiveUserControl<PeripheryPageViewModel>
 {
     public PeripheryPage()
     {
-        this.WhenActivated(disposables => { });
+        this.WhenActivated(static disposables => { });
         InitializeComponent();
     }
 }

@@ -2,10 +2,6 @@
 
 public class PeripheryService(SudInfoDatabaseContext context) : BaseService<Periphery>(context)
 {
-    #region Ctors
-
-    #endregion
-
     #region Get Methods
 
     public async Task<Result<Periphery>> Get(int id)
@@ -25,8 +21,8 @@ public class PeripheryService(SudInfoDatabaseContext context) : BaseService<Peri
 
     public async Task<IReadOnlyCollection<Periphery>> Get()
     {
-        return await context.Peripheries.Include(x => x.Computer)
-                                                   .ThenInclude(x => x.User)
+        return await context.Peripheries.Include(static x => x.Computer)
+                                                   .ThenInclude(static x => x.User)
                                                    .ToListAsync();
     }
 

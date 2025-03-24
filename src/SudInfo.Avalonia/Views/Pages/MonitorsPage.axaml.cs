@@ -3,7 +3,7 @@ public partial class MonitorsPage : ReactiveUserControl<MonitorsPageViewModel>
 {
     public MonitorsPage()
     {
-        this.WhenActivated(disposables => { });
+        this.WhenActivated(static disposables => { });
         InitializeComponent();
     }
 }

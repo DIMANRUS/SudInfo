@@ -2,10 +2,6 @@
 
 public class ServerRackService(SudInfoDatabaseContext context) : BaseService<ServerRack>(context)
 {
-    #region Ctors
-
-    #endregion
-
     #region Get Methods
 
     public async Task<Result<IReadOnlyCollection<ServerRack>>> Get()
@@ -13,12 +9,11 @@ public class ServerRackService(SudInfoDatabaseContext context) : BaseService<Ser
         try
         {
             var serverRacks = await context.ServerRacks.AsNoTracking()
-                                                       .Include(x => x.Servers)
+                                                       .Include(static x => x.Servers)
                                                        .ToListAsync();
             foreach (var serverRack in serverRacks)
             {
-                serverRack.Servers = serverRack.Servers.OrderBy(x => x.PosiitionInServerRack)
-                                                       .ToList();
+                serverRack.Servers = [.. serverRack.Servers.OrderBy(static x => x.PosiitionInServerRack)];
             }
             return new(serverRacks, true);
         }

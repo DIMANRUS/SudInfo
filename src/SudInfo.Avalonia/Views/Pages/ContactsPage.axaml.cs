@@ -4,7 +4,7 @@ public partial class ContactsPage : ReactiveUserControl<ContactsPageViewModel>
 {
     public ContactsPage()
     {
-        this.WhenActivated(disposables => { });
+        this.WhenActivated(static disposables => { });
         InitializeComponent();
     }
 }

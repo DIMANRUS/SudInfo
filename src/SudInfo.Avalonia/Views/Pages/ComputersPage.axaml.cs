@@ -4,7 +4,7 @@ public partial class ComputersPage : ReactiveUserControl<ComputersPageViewModel>
 {
     public ComputersPage()
     {
-        this.WhenActivated(disposables => { });
+        this.WhenActivated(static disposables => { });
         InitializeComponent();
     }
 }

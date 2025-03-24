@@ -12,15 +12,15 @@ namespace SudInfo.EfDataAccessLibrary.Migrations
         {
             migrationBuilder.CreateTable(
                 name: "AppSettings",
-                columns: table => new
+                columns: static table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Theme = table.Column<string>(type: "TEXT", maxLength: 10, nullable: false)
                 },
-                constraints: table =>
+                constraints: static table =>
                 {
-                    table.PrimaryKey("PK_AppSettings", x => x.Id);
+                    table.PrimaryKey("PK_AppSettings", static x => x.Id);
                 });
 
             migrationBuilder.InsertData(

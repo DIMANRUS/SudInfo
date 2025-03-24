@@ -1,6 +1,4 @@
-﻿using SudInfo.EfDataAccessLibrary.Models;
-
-namespace SudInfo.Avalonia.ViewModels.PageViewModels;
+﻿namespace SudInfo.Avalonia.ViewModels.PageViewModels;
 
 public class PhonesPageViewModel : BaseRoutableViewModel
 {
@@ -59,13 +57,10 @@ public class PhonesPageViewModel : BaseRoutableViewModel
             }
             if (keyEventArgs.Key != Key.Enter || PhonesFromDataBase == null)
                 return;
-            Phones = PhonesFromDataBase.Where(x => x.Name!.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase) ||
-                                                                (x.InventarNumber != null && 
-                                                                x.InventarNumber.Contains(SearchText)) ||
+            Phones = [.. PhonesFromDataBase.Where(x => x.Name!.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase) ||
+                                                                (x.InventarNumber?.Contains(SearchText) == true) ||
                                                                 x.SerialNumber!.Contains(SearchText) ||
-                                                                (x.User != null &&
-                                                                x.User.FIO.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase)))
-                                             .ToList();
+                                                                (x.User?.FIO.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase) == true))];
         });
     }
 

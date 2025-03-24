@@ -3,7 +3,7 @@ public partial class RutokensPage : ReactiveUserControl<RutokensPageViewModel>
 {
     public RutokensPage()
     {
-        this.WhenActivated(disposables => { });
+        this.WhenActivated(static disposables => { });
         InitializeComponent();
     }
 }

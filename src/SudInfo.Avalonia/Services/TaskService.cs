@@ -2,10 +2,6 @@
 
 public class TaskService(SudInfoDatabaseContext context) : BaseService<TaskEntity>(context)
 {
-    #region Ctors
-
-    #endregion
-
     public async Task<IReadOnlyCollection<TaskEntity>> Get()
     {
         return await context.Tasks.AsNoTracking()

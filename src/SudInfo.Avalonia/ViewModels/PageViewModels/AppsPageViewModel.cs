@@ -38,7 +38,7 @@ public class AppsPageViewModel : BaseRoutableViewModel
         _navigationService = navigationService;
         #endregion
 
-        eventHandlerClosedWindowDialog = async (s, e) => await LoadApps();
+        EventHandlerClosedWindowDialog = async (s, e) => await LoadApps();
     }
 
     #endregion
@@ -57,14 +57,14 @@ public class AppsPageViewModel : BaseRoutableViewModel
 
     public async Task OpenAddAppWindow()
     {
-        await _navigationService.ShowAppWindowDialog(WindowType.Add, eventHandlerClosedWindowDialog);
+        await _navigationService.ShowAppWindowDialog(WindowType.Add, EventHandlerClosedWindowDialog);
     }
 
     public async Task OpenEditAppWindow()
     {
         if (SelectedApp == null)
             return;
-        await _navigationService.ShowAppWindowDialog(WindowType.Edit, eventHandlerClosedWindowDialog, SelectedApp.Id);
+        await _navigationService.ShowAppWindowDialog(WindowType.Edit, EventHandlerClosedWindowDialog, SelectedApp.Id);
     }
 
     public async Task RemoveApp()

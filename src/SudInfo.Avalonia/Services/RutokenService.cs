@@ -1,13 +1,7 @@
-﻿using DocumentFormat.OpenXml.Vml.Office;
-
-namespace SudInfo.Avalonia.Services;
+﻿namespace SudInfo.Avalonia.Services;
 
 public class RutokenService(SudInfoDatabaseContext context) : BaseService<Rutoken>(context)
 {
-    #region Ctors
-
-    #endregion
-
     #region Get Methods
 
     public async Task<Result<Rutoken>> Get(int id)
@@ -29,7 +23,7 @@ public class RutokenService(SudInfoDatabaseContext context) : BaseService<Rutoke
     public async Task<IReadOnlyCollection<Rutoken>> Get()
     {
         return await context.Rutokens
-            .Include(x => x.User)
+            .Include(static x => x.User)
             .ToListAsync();
     }
 
