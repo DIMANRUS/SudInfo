@@ -1,4 +1,4 @@
-namespace SudInfo.Avalonia;
+﻿namespace SudInfo.Avalonia;
 
 public class App : Application
 {
@@ -13,6 +13,7 @@ public class App : Application
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
+        this.AttachDeveloperTools();
     }
 
     public async override void OnFrameworkInitializationCompleted()
