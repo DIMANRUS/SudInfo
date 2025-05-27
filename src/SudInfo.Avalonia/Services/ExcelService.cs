@@ -11,20 +11,29 @@ public static class ExcelService
         var ws = wb.Worksheets.Add(nameof(entity));
         ws.Cell(1, 1).InsertTable(entity);
         ws.Columns().AdjustToContents();
-        SaveFileDialog saveFileDialog = new()
+
+        var storageProvider = App.MainWindow.StorageProvider;
+        if (storageProvider == null)
+            return;
+
+        var saveFilePickerOptions = new FilePickerSaveOptions
         {
             Title = "Выберите путь сохранения",
-            InitialFileName = "Table.xlsx",
-            Filters =
+            SuggestedFileName = "Table.xlsx",
+            FileTypeChoices =
             [
-                new()
+                new FilePickerFileType("Excel")
                 {
-                    Name = "Excel",
-                    Extensions = ["xlsx"]
+                    Patterns = ["*.xlsx"]
                 }
             ]
         };
-        var dialogResult = await saveFileDialog.ShowAsync(App.MainWindow);
-        wb.SaveAs(dialogResult);
+
+        var fileResult = await storageProvider.SaveFilePickerAsync(saveFilePickerOptions);
+        if (fileResult != null)
+        {
+            await using var stream = await fileResult.OpenWriteAsync();
+            wb.SaveAs(stream);
+        }
     }
 }

@@ -1,10 +1,12 @@
 ﻿global using Avalonia;
 global using Avalonia.Controls;
 global using Avalonia.Data.Converters;
+global using Avalonia.Input;
 global using Avalonia.Interactivity;
 global using Avalonia.Markup.Xaml;
 global using Avalonia.Media.Imaging;
 global using Avalonia.Platform;
+global using Avalonia.Platform.Storage;
 global using Avalonia.ReactiveUI;
 global using Avalonia.Styling;
 
@@ -40,4 +42,3 @@ global using System.Globalization;
 global using System.Linq;
 global using System.Reactive;
 global using System.Threading.Tasks;
-global using Avalonia.Input;
