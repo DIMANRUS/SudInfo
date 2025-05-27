@@ -15,7 +15,7 @@
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<RepositoryUrl>https://github.com/DIMANRUS/SudInfo</RepositoryUrl>
 		<Title>СудИнфо</Title>
-		<Version>2.4.0</Version>
+		<Version>2.5.0</Version>
 		<Authors>DIMANRUS</Authors>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
