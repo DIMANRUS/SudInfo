@@ -38,8 +38,7 @@
     <DataGrid ItemsSource="{Binding Contacts}"
               SelectedItem="{Binding SelectedContact}"
               Grid.Row="1"
-              Grid.ColumnSpan="3"
-              x:DataType="models:Contact">
+              Grid.ColumnSpan="3">
       <DataGrid.ContextMenu>
         <ContextMenu>
           <MenuItem Header="Редактировать" Command="{Binding OpenEditContactWindow}"/>
